@@ -1,0 +1,15 @@
+doctrine:
+    orm:
+        mappings:
+            eckinox:
+                type: annotation
+                dir: '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Entity'
+                is_bundle: false
+                prefix: Eckinox\Entity
+                alias: Eckinox
+
+framework:
+    assets:
+        packages:
+            eckinox:
+                base_path: bundles/eckinox/

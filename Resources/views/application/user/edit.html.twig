@@ -1,0 +1,47 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>
+        {{ title }}
+    </h2>
+{% endblock %}
+
+{% block content %}
+    <div class="user-form">
+
+        {{ form_start(form, { 'attr' : { 'autocomplete' : 'off' } }) }}
+
+            <div class="block-wrapper">
+
+                <div class="block block-left">
+                    <div class="fields">{{ form_widget(form.left) }}</div>
+                </div>
+                <div class="block block-right">
+                    <div class="fields">
+
+                        {% if app.user.hasPrivilege('USER_EDIT_PRIVILEGES') %}
+                            <div class="field-wrapper select privileges-group">
+                                <label>{% trans %}user.label.privilegesGroups{% endtrans %}</label>
+                                <select id="privileges_group" name="privileges_group">
+                                    <option value="">{% trans %}user.label.definePrivileges{% endtrans %}</option>
+                                    {% for privilegeId, values in privilegesGroups  %}
+                                        <option value="{{ privilegeId }}">{{ ('privileges.groups.' ~ privilegeId)|trans }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+
+                        {{ form_widget(form.right) }}
+                    </div>
+                </div>
+
+            </div>
+            <input type="submit" class="button" value="{% trans %}general.buttons.save{% endtrans %}" />
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

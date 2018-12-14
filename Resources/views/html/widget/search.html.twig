@@ -1,0 +1,48 @@
+{% trans_default_domain listing.domain %}
+
+<div class="row head search">
+    <div class="column checkbox"></div>
+    {% for field in listing.fields %}
+        <div class="column {{ field.name }} {{ field.class }}" data-name="{{ field.name }}">
+            {% if status is defined and 'status' in field.name|lower %}
+                <div class="actions-button status">
+                    <label for="status_checkbox" class="actions"><div class="icon"><i class="fas fa-check-circle"></i></div> <i class="fa fa-caret-down" aria-hidden="true"></i></label>
+                    <input type="checkbox" id="status_checkbox" name="status_checkbox">
+                    <ul class="dropdown">
+                        <li>
+                            <ul class="fields">
+                                {% for key, value in status %}
+                                    <li>
+                                        <input id="status_{{ key }}"
+                                            type="checkbox"
+                                            name="search[{{ field.name }}][]"
+                                            value="{{ key }}"
+                                            {% if field.search.unchecked is defined and key in field.search.unchecked %} data-unchecked {% else %} checked="checked" {% endif %}
+                                        />
+                                        <label for="status_{{ key }}">{{ key|icon|raw }} {{ value|trans }}</label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            {% elseif field.search is defined and field.search.choices is defined %}
+
+                <select name="search[{{ field.name }}]" value="">
+                    <option value="">{{ "placeholders.select"|trans([], 'general') }}</option>
+                    {% for key, value in field.search.choices %}
+                        <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                </select>
+
+            {% else %}
+                <input type="text" name="search[{{ field.name }}]" value="" />
+            {% endif %}
+
+        </div>
+    {% endfor %}
+    <div class="column cancel">
+        <label><i class="fas fa-times-circle red"></i></label>
+    </div>
+</div>

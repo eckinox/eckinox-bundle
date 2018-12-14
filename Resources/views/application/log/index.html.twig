@@ -1,0 +1,40 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>{% trans %}log.title.list{% endtrans %}</h2>
+{% endblock %}
+
+{% block content %}
+
+    <!--div class="action-nav">
+        <a class="button" href=""></a>
+    </div-->
+
+    <div class="logs-list list">
+        <div class="row head">
+            <div class="column message">{% trans %}log.fields.message{% endtrans %}</div>
+            <div class="column name">{% trans %}log.fields.user{% endtrans %}</div>
+            <div class="column date">{% trans %}log.fields.date{% endtrans %}</div>
+            <div class="column edit-link"></div>
+        </div>
+
+        {% for log in logs %}
+            <div class="row item-{{ log.id }}">
+                <div class="column message link">{{ log.message }}</div>
+                <div class="column name link">{{ log.user.fullName }}</div>
+                <div class="column date link">{{ log.createdAt|date("Y-m-d H:i:s") }}</div>
+                <a class="column edit-link" href="{{ path("logs_json", {"id": log.id}) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+            </div>
+        {% endfor %}
+
+        {% if logs|length == 0 %}
+            <div class="empty">
+                {% trans %}log.emptyList{% endtrans %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% include '@Eckinox/html/pagination.html.twig' with {'view': 'index_log', 'nbPages': nbPages, 'currentPage': currentPage} %}
+
+{% endblock %}

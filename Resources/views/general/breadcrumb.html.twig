@@ -1,0 +1,13 @@
+{% if breadcrumb is defined %}
+<ul>
+{% for key, obj in breadcrumb %}      
+    <li class="item-{{ key|replace({ '_' : '-' }) }}">
+    {% if obj.link %}
+        <a class="" href="{{path(key)}}">{{ obj.name|replace(obj.vars) }}</a>
+    {% else %}
+        <span class="" href="#parent">{{ obj.name|replace(obj.vars) }}</span>
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+{% endif %}

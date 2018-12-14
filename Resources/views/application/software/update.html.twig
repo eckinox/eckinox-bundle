@@ -1,0 +1,57 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>
+        {{ title }}
+    </h2>
+{% endblock %}
+
+{% block content %}
+    <section class="software-update">
+        <h3 class="title">Mise-à-jour</h3>
+
+        <div class="current-version">
+            <div class="branch">Le logiciel suit présentement la branche <strong>{{ git_branch() }}</strong> datant du <strong>{{ git_commit_date("%d %B %Y à %Hh%M") }}</strong>.</div>
+        </div>
+
+        <form method="POST" class="current-status">
+            {% if update_available %}
+                <div>
+                    <span>Nombre de mise(s) à jour disponible(s) depuis cette date: </span><span class="count">{{ update_available }}</span>
+                </div>
+
+                <button {% if updatable == false %}disabled="disabled"{% endif %} name="action" value="update" class="button launch-update">Lancer la mise à jour maintenant</button>
+                {% if updatable == false %}
+                    <div class="box error">
+                        <div class="box-title">{% trans %}software.update.warning.codeChangedTitle{% endtrans %}</div>
+                        <div class="box-content">{% trans %}software.update.warning.codeChangedMessage{% endtrans %}</div>
+                    </div>
+                {% endif %}
+
+            {% else %}
+                <div class="status up-to-date">
+                    <i class="fas fa-check-circle green"></i> Votre logiciel est à jour
+                </div>
+            {% endif %}
+
+            {% if updatable %}
+                <div class="status not-up-to-date">
+                    <i class="fas fa-exclamation-circle yellow"></i> Votre logiciel peut bénéficier d'une mise à jour
+                </div>
+
+            {% endif %}
+        </form>
+
+        {% if update_available and not updatable and shell %}
+            <div class="box dark">
+                <div class="box-title">{% trans %}software.update.shellOutput{% endtrans %}</div>
+                <pre class="box-content shell-output">{{ shell }}</pre>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{# block javascripts %}
+    <script src="{{ asset('js/software.js') }}"></script>
+{% endblock #}

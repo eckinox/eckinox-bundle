@@ -1,0 +1,43 @@
+{% trans_default_domain 'general' %}
+
+{% block main_left_nav %}
+    <nav id="main-navigation">
+        <div class="link-item" data-panel="admin">
+            <a class="link-detail" href="#">
+                <i class="fas fa-cogs"></i>
+                <div class="main-title">{% trans %}navigation.modules.admin.title{% endtrans %}</div>
+            </a>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block main_left_subnav %}
+    <nav id="main-subnavigation">
+        <div class="panel" data-panel="admin">
+            <div class="panel-title">{% trans %}navigation.modules.admin.title{% endtrans %}</div>
+
+            <div class="panel-subtitle">{% trans %}navigation.modules.admin.user.title{% endtrans %}</div>
+            <div class="links">
+                <a class="link-detail" href="{{ path('index_user') }}">{% trans %}navigation.modules.admin.user.links.list{% endtrans %}</a>
+                <a class="link-detail" href="{{ path('create_user') }}">{% trans %}navigation.modules.admin.user.links.create{% endtrans %}</a>
+            </div>
+
+            <div class="panel-subtitle">{% trans %}navigation.modules.admin.email.title{% endtrans %}</div>
+            <div class="links">
+                <a class="link-detail" href="{{ path('create_email') }}">{% trans %}navigation.modules.admin.email.links.create{% endtrans %}</a>
+                <a class="link-detail" href="{{ path('index_email') }}">{% trans %}navigation.modules.admin.email.links.list{% endtrans %}</a>
+                {% if app.user.hasPrivilege('EMAIL_TEMPLATES') %}
+                <a class="link-detail" href="{{ path('index_email_templates') }}">{% trans %}navigation.modules.admin.email.links.listTemplates{% endtrans %}</a>
+                {% endif %}
+            </div>
+
+            {% if app.user.hasPrivilege('SOFTWARE_UPDATE') %}
+            <div class="panel-subtitle">{% trans %}navigation.modules.admin.software.title{% endtrans %}</div>
+            <div class="links">
+                <a class="link-detail" href="{{ path('index_software_data') }}">{% trans %}navigation.modules.admin.software.links.data{% endtrans %}</a>
+                <a class="link-detail" href="{{ path('index_software') }}">{% trans %}navigation.modules.admin.software.links.update{% endtrans %}</a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+{% endblock %}

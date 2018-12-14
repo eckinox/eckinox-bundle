@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include '@Eckinox/html/head.html.twig' %}
+        <style>
+            #modal, #flash { padding-left: 0px; padding-right: 0px; }
+            #flash { max-width: 500px }
+        </style>
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-form">
+                <div class="logo">
+                    <img src="{{ asset('image/logo.png', 'eckinox') }}" />
+                </div>
+
+                <form action="{{ path('login') }}" method="post">
+
+                    <div class="field-wrapper username">
+                        <label for="username">Courriel</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" autocomplete="off" placeholder="Courriel" />
+                    </div>
+
+                    <div class="field-wrapper password">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="_password" autocomplete="off" placeholder="Mot de passe" />
+                    </div>
+
+                    <div class="button-container">
+                        <button type="submit">Connexion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% include "@Eckinox/html/modal.html.twig" %}
+
+    </body>
+</html>

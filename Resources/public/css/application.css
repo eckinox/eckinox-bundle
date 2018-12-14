@@ -1,0 +1,38 @@
+/**
+ * Editable json application
+ */
+.json-row {background:rgba(0,0,0,0.1);padding:7px 0px 7px 5px;margin-top:-7px;}
+.json-row * {vertical-align: top;margin-bottom:5px}
+.json-row .json-key   { width: calc(20% - 4px);}
+.json-row .json-value { width: 80%; }
+.json-row input {margin-top:8px;}
+.json-row .json-key > input {border:1px solid rgba(0,0,0,0.5); color:#555}
+.json-row .json-value > input {border:1px solid #fff}
+.json-row .json-add {float:right;margin-right:5px;}
+.json-filename {margin:7px 0; line-height:40px;font-size:25px;background:#444;color:#fff;font-weight:bold;padding:5px 10px;}
+.json-filename .readonly {float:right;font-size:0.666em; color:#bfbfbf;}
+
+/*
+ * Login form
+ */
+.login-container { display: flex; width: 100%; height: 100%; align-items: center; background-color: #0172ba; }
+.login-form { width: 85%; max-width: 400px; margin: auto; padding: 40px 40px; background-color: #fff; }
+.login-form label { display: none; }
+.login-form button { width: 100%; }
+.login-container .logo { margin-bottom: 25px; }
+.login-container .logo img { display: block; width: 90%; max-width: 300px; margin: auto; }
+.login-form button { height: 50px; border: 1px solid #0172ba; background-color: #0172ba; font-size: 1em; color: #fff; cursor: pointer; text-align: center; transition: background-color .3s ease; border-radius: none; }
+.login-form button:hover { background-color: #fff; color: #0172ba; }
+
+
+
+/*
+ *  Software
+*/
+.software-update .count {display:inline-block;padding-right:5px;font-weight:bold; text-decoration: underline}
+.software-update .current-version {margin:1em auto;}
+.software-update .shell-output {white-space: pre-line;font-size: 0.8em;line-height: 1.7em;}
+.software-update .status {padding:6px 0; font-weight:600}
+.software-update .status.up-to-date {color:#31ac5f}
+.software-update .status.not-up-to-date {color:#fec202}
+.software-update button[value="update"] {display:inline-block;margin-top:15px;}

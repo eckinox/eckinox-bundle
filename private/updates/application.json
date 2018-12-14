@@ -1,0 +1,7 @@
+{
+    "EmailTemplate": {
+        "entity" : "\\Eckinox\\Entity\\Application\\Email",
+        "update_key" : "template_name",
+        "data" : []
+    }
+}

@@ -1,0 +1,146 @@
+/*
+ * Attachments widget
+ */
+#attachments {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background: rgba(0, 0, 0, 0);
+    overflow: hidden;
+}
+
+#attachments .count {
+    color: #333;
+    font-size: .7em;
+    line-height: 1.1em;
+    display: inline-block;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: none;
+    margin-left: auto;
+}
+
+#attachments .attachments-content > div { padding: 15px 20px; }
+#attachments .wrapper {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-left: none;
+    border-right: none;
+    max-height: calc((100vh - 10vh) - 225px);
+    overflow: auto;
+}
+#attachments .title {
+    font-family: 'Oswald';
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+#attachments .error-message {
+    padding-left: 16px;
+    font-size: .85em;
+    color: #f85757;
+    font-weight: 600;
+}
+
+#attachments .title i{ margin-right: 10px; }
+
+#attachments.open { background: rgba(0, 0, 0, .35); opacity: 1; z-index: 1000; transition: z-index .4s step-start, all .4s ease; }
+#attachments .attachments-content {
+    width: 95%;
+    max-width: 600px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: -10%;
+    opacity: 0;
+    transition: all .4s ease;
+    /*padding: 15px;*/
+}
+
+#attachments .button-container { margin: 0; }
+#attachments .button-container .button { margin-right: 0; margin-left: 5px; }
+#attachments.open .attachments-content { top: 10vh; opacity: 1; }
+#attachments .attachments-wrapper { width: 100%; height: 100%; position: relative; }
+
+#attachments {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0px;
+    transition: z-index .4s step-end, all .4s ease;
+    opacity: 0;
+    z-index: -1;
+    font-size: 1.1em;
+}
+
+#attachments .attachments-content {
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 80, 178, 0.15);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+#attachments .folder-name { font-family: 'Oswald', sans-serif; text-transform: uppercase; color: #0050b2; cursor: pointer; }
+#attachments .attachments-tree ul.files { padding-left: 30px; font-size: .9em; line-height: 1.2em; }
+#attachments .attachments-tree ul.folders { padding-left: 25px; }
+#attachments .attachments-tree .folder-content { position: relative; }
+#attachments .attachments-tree .folder-content::after { content: ''; display: block; height: calc(100% - 10px); width: 1px; position: absolute; top: 0; left: 18px; background: #ddd }
+#attachments .attachments-tree .folder.error .folder-content::after { height: calc(100% - 27px); }
+#attachments .attachments-tree .folder.downloading .folder-content::after { height: calc(100% - 21px); }
+#attachments .attachments-tree .folder.success .folder-content::after { height: calc(100% - 12px); }
+#attachments li { position: relative }
+#attachments li input {display:none;}
+#attachments li a { color: #333; display: block; }
+#attachments li.file.error a { color: #f85757; }
+#attachments li.file { display: flex; margin-bottom: 3px; padding: 3px 5px; }
+#attachments li.file.new { display: block; }
+#attachments li.file .file-name {flex-grow:1;}
+#attachments li.file .file-trash {color:#f85757;font-size:1em;cursor:pointer}
+#attachments li.file .file-delete {flex-shrink:1;color:#AF0000;font-size:1em;cursor:pointer;}
+#attachments li.file .file-delete a {color:inherit;font-size:inherit}
+#attachments li.file .file-delete i {margin:0;}
+#attachments li.file .file-delete .button {padding: 2px 0px 4px 0px;display: inline-block;width: 25px;text-align: center;margin:0;}
+#attachments li.file .file-delete .confirm {display:none; color:#fff;}
+#attachments li.file :checked ~ .file-delete .confirm {display:inline-block;}
+#attachments li.file :checked ~ .file-trash {display:none;}
+#attachments li.file.error { color: #f85757; background: rgba(248, 87, 87, 0.08); border-radius: 3px; }
+#attachments li.file.error::after { content: '\f06a'; font-family: Font Awesome\ 5 Pro; font-weight: 900; position: absolute; top: 11px; right: 5px;  }
+#attachments li.file.success {
+    background: rgba(49, 172, 95, .08);
+    border-radius: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+#attachments li.file.success::after { content: '\f058'; font-family: Font Awesome\ 5 Pro; color: #31ac5f; font-weight: 900; position: absolute; top: 4px; right: 5px;  }
+#attachments li.file:not(.empty):hover { background: #e3eaf3; border-radius: 3px; cursor: pointer; }
+#attachments li.file.empty { opacity: .7; font-style: italic; font-size: .92em; }
+#attachments ul.folders li.folder::before,
+#attachments li.file::before {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 8px;
+    position: absolute;
+    background: #ddd;
+}
+#attachments ul.folders li.folder::before { top: 16px; left: -7px; }
+#attachments li.file::before { top: 12px; left: -12px; }
+
+#attachments li.file i { font-size: .8em; margin-right: 3px; }
+#attachments li.folder .folder-name { display: flex; align-items: center; padding: 5px 10px; border-radius: 3px; color:#0050b2; }
+#attachments li.folder[data-count-total-files="0"]  .folder-name {color:#4e4e4e}
+#attachments li.folder.has-files > .folder-name {color:#31ac5f}
+#attachments li.folder .folder-name i { width: 20px; text-align: center; margin-right: 4px; }
+#attachments li.folder > .folder-name:hover,
+#attachments li.folder.dragover > .folder-name { background: #e3eaf3; }
+
+#attachments .progress-bar { width: calc(100% - 16px); margin-left: 15px; background: #ddd; border-radius: 3px; margin-top: 4px; margin-bottom: 2px; overflow: hidden; }
+#attachments .progress-bar .progress {
+    height: 5px;
+    width: 1%;
+    margin-right: auto;
+    background: #31ac5f;
+    border-radius: 3px;
+}

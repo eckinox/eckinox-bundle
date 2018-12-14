@@ -1,0 +1,23 @@
+{% if form is defined %}
+    {% form_theme form 'html/form.html.twig' %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Échafaudage industriel{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.eckinox.net/fontawesome/latest/css/fontawesome-all.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Oswald:300,400,600" rel="stylesheet">
+        <link rel="stylesheet" href="{{ absolute_url(asset('css/main.css')) }}" />
+        <link rel="stylesheet" href="{{ absolute_url(asset('css/pdf.css')) }}" />
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="layout-pdf" {{ page ? 'page=' ~ page : "" }} orientation="{{ orientation is defined ? orientation : "portrait" }}">
+        <section class="page-wrapper">
+            <header class="page-header">{% block header %}{% endblock %}<hr></header>
+            <div class="content">{% block content %}{% endblock %}</div>
+            <footer class="page-footer">{% block footer %}{% endblock %}</footer>
+        </section>
+    </body>
+</html>

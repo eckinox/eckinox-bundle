@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>{% trans %}email.title.list{% endtrans %}</h2>
+{% endblock %}
+
+{% block content %}
+
+    <form name="emails-list-form" action="{{ path('index_email', {'page': currentPage}) }}" method="post"
+          ei-widget-ajax
+          ei-widget-ajax-refresh="form .rows, .scrollable .pagination">
+        <div class="action-nav">
+            <a class="button" href="{{ path('create_email') }}">{% trans %}email.actions.create{% endtrans %}</a>
+            <div class="actions-button">
+                <label for="actions_checkbox" class="button actions">{% trans from 'application' %}general.buttons.actions{% endtrans %}<i class="fa fa-caret-down" aria-hidden="true"></i></label>
+                <input type="checkbox" id="actions_checkbox" name="actions_checkbox" />
+                <ul class="dropdown">
+                    <li><button class="red" type="submit" name="action" value="delete"><i class="fas fa-times-circle" aria-hidden="true"></i>{% trans from 'application' %}email.actions.deleteSelection{% endtrans %}</button type="submit" name="action" value="forward"button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="emails-list list" ei-widget-listing="inventory-email" ei-widget-search>
+            <div class="row head">
+                <div class="column checkbox">
+                    <input type="checkbox" id="location_select_all" name="location_select_all" value="" />
+                    <div class="check"></div>
+                </div>
+
+                {% for field in listing.fields %}
+                    <div class="column {{ field.name }} {{ field.class }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</div>
+                {% endfor %}
+
+                <div class="column more">
+                    <div class="actions-button">
+                        <label for="more_checkbox"><i class="far fa-ellipsis-v"></i></label>
+                        <input type="checkbox" id="more_checkbox" name="more_checkbox">
+                        <ul class="dropdown">
+                            <li>
+                                <ul class="fields">
+                                    {% for field in listing.fields %}
+                                        <li>
+                                            <input type="checkbox" id="field_{{ field.name }}" name="field_{{ field.name }}" value="{{ field.name }}" {% if field.visible %}checked="checked"{% endif %} />
+                                            <label for="field_{{ field.name }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'html/widget/search.html.twig' %}
+
+            <div class="rows">
+                {% for email in emails %}
+                    <div class="row item-{{ email.id }}">
+                        <div class="column checkbox"><input type="checkbox" name="ids[]" value="{{ email.id }}" /><div class="check"></div></div>
+
+                        <div class="column status link">{{ email.status|icon|raw }}</div>
+                        <div class="column from link">{{ email.from }}</div>
+                        <div class="column to link">{{ email.to|join('; ') }}</div>
+                        <div class="column cc link">{{ email.cc|join('; ') }}</div>
+                        <div class="column bcc link">{{ email.bcc|join('; ') }}</div>
+                        <div class="column subject link">{{ email.subject }}</div>
+                        <div class="column module link">{{ email.module }}</div>
+                        <div class="column user link">{{ email.user ? email.user.fullName ~ ' (' ~ email.user.email ~ ')' : '' }}</div>
+
+                        <div class="column createdAt date link">{{ email.createdAt|date("Y-m-d H:i:s") }}</div>
+                        <div class="column updatedAt date link">{{ email.updatedAt|date("Y-m-d H:i:s") }}</div>
+
+                        <a class="column edit-link" href="{{ path('edit_email', {'email_id': email.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </div>
+                {% endfor %}
+
+                {% if emails|length == 0 %}
+                    <div class="empty">
+                        {% trans %}email.emptyList{% endtrans %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="add-row">
+                <a href="{{ path('create_email') }}">
+                    <i class="fas fa-plus-circle"></i>
+                    {% trans %}email.actions.create{% endtrans %}
+                </a>
+            </div>
+        </div>
+
+    </form>
+
+    {% include 'html/pagination.html.twig' with {'view': 'index_email', 'nbPages': nbPages, 'currentPage': currentPage} %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

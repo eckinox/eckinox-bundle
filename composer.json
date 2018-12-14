@@ -1,0 +1,26 @@
+{
+    "name": "eckinox/eckinox-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "description": "Eckinox's Symfony project base",
+    "keywords": [],
+    "homepage": "http://www.eckinox.ca",
+    "authors": [
+        {
+            "name": "Jean-Danyel Routhier",
+            "email": "jd@eckinox.ca"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "bin/console eckinox:install"
+        ]
+    },
+    "autoload": {
+        "psr-4": { "Eckinox\\": "" }
+    }
+}

@@ -1,0 +1,69 @@
+.list .row .input { width: 100%; }
+html[lang=fr] a.edit-form-list::before { content: 'Afficher' }
+html[lang=en] a.edit-form-list::before { content: 'Show' }
+
+html[lang=fr] .row.more .column.open a.edit-form-list::before { content: 'Fermer' }
+html[lang=en] .row.more .column.open a.edit-form-list::before { content: 'Close' }
+
+a.edit-form-list::after { content: '\f0d7'; font-family: Font Awesome\ 5 Pro; font-weight: bold; margin-left: 5px; }
+.row.more .column.open a.edit-form-list::after { content: '\f0d8'; }
+
+.listing > label { display: inline-block; font-size: 1.6em; margin-bottom: 30px; color: #0050b2; font-family: 'Oswald', sans-serif; text-transform: uppercase;}
+.listing .action-nav {text-align: right;float: right; }
+.listing .action-nav .button {padding-top: 7px;padding-bottom: 7px; }
+.listing .list {width: 100%;clear: both; }
+
+.form-list-toggle .form-list .head { border-bottom: 1px solid rgba(0, 80, 178, 0.15) !important; }
+.form-list-toggle  .form-list .row .checkbox,
+.form-list-toggle  .form-list .row .checkbox:not(.head),
+.form-list-toggle .action-nav,
+.form-list-toggle  .form-list .row .column label { display: none }
+
+.form-list-toggle .field-wrapper.form .add-row { display: flex; padding-right: 0; }
+.form-list-toggle .field-wrapper.form .add-row a.save { color: #fff; font-style: normal; margin-top: 10px; margin-right: 0; margin-left:auto; }
+
+.form-list-toggle  .field-wrapper input[type=text], .form-list-toggle  .field-wrapper input[type=email], .form-list-toggle  .field-wrapper input[type=password], .form-list-toggle  .field-wrapper input[type=tel], .form-list-toggle  .field-wrapper select,
+.list .row .input input { width:100%; height: 40px; line-height: 40px; background-color: #fff; padding: 0 10px; border: 1px solid #a9a9a9; font-family: 'Open Sans', sans-serif; font-size: 15px; }
+.list .row .input[style*="display: none"] input { height: 30px; line-height: 30px; border: 1px solid transparent; background-color: transparent !important; color: #0050b2; }
+.list .row .select2-container .select2-selection--single { height: 40px; }
+.list .row .select2-container--default .select2-selection--single .select2-selection__arrow { height: 38px; }
+.list .row .select2-container--default .select2-selection--single .select2-selection__rendered { height: 38px; }
+
+.list .search .select2-container .select2-selection--single { height: 30px; border-radius: 2px; }
+.list .search .select2-container--default .select2-selection--single .select2-selection__arrow { height: 28px; }
+.list .search .select2-container--default .select2-selection--single .select2-selection__rendered { height: 28px; }
+
+
+.form-list-toggle > .field-wrapper { margin-bottom: 0px; background: #fff; padding: 10px; margin: 0 5px 5px 5px; border-radius: 4px; }
+.form-list-toggle > .field-wrapper > label { margin-bottom: 10px; }
+
+.form-list-toggle .list.form-list .head .column { padding: 10px; }
+
+.form-list-toggle  .form-list label.far.fa-trash-alt {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    max-width: 40px;
+    padding: 5px 10px;
+    text-align: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #C41300;
+    cursor: pointer;
+}
+
+.list.editing .form-list-toggle .form-list.list .row.head { padding-right: 40px; }
+.list:not(.editing) .form-list-toggle .form-list.list { margin-bottom: 5px; }
+.list:not(.editing) .form-list-toggle .form-list.list .column::before { content: ''; display: block; width: 100%; height: 100%; position: absolute; top:0; left: 0; z-index: 100; }
+.list:not(.editing) .form-list-toggle .form-list label.far.fa-trash-alt { display: none; }
+.list:not(.editing) .form-list-toggle .field-wrapper.form .add-row { display: none }
+.list:not(.editing) .form-list-toggle .field-wrapper.form input { height: 20px; line-height: 20px; border: none; padding-left: 0; padding-right: 0; background-color: transparent; pointer-events: none; }
+
+.list:not(.editing) .form-list-toggle .select2-container .select2-selection--single { height: 20px; }
+.list:not(.editing) .form-list-toggle .select2-container--default .select2-selection--single .select2-selection__arrow { height: 20px; }
+.list:not(.editing) .form-list-toggle .select2-container--default .select2-selection--single .select2-selection__rendered { height: 20px; }
+.list:not(.editing) .form-list-toggle .select2-container--default .select2-selection--single { background-color: transparent; border: none; }
+.list:not(.editing) .form-list-toggle .select2-container--default .select2-selection--single .select2-selection__arrow { display: none }
+.list:not(.editing) .form-list-toggle .select2-container--default .select2-selection--single .select2-selection__rendered { padding: 0; }

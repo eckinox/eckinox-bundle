@@ -1,0 +1,59 @@
+/*
+ * Validate
+ */
+
+.invalid::after {
+    content: "\f06a";
+    font-family: Font Awesome\ 5 Pro;
+    font-weight: 900;
+    color: #f85757;
+}
+
+.widget-tabs-item.invalid::after { margin-left: 9px; line-height: 1em; }
+li.invalid::after,
+.column.invalid::after,
+.field-wrapper.invalid::after {
+    position: absolute;
+    top: 31px;
+    right: 5px;
+    font-size: 20px;
+    height: 50px;
+    line-height: 50px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+li.invalid::after { top: 0px; right: 5px; }
+.column.invalid::after { top: 42px; right: 10px; }
+
+li.invalid input[type=text],
+li.invalid input[type=email],
+li.invalid input[type=password],
+li.invalid input[type=tel],
+li.invalid .select2-selection,
+li.invalid textarea,
+.column.invalid input[type=text],
+.column.invalid input[type=email],
+.column.invalid input[type=password],
+.column.invalid input[type=tel],
+.column.invalid .select2-selection,
+.column.invalid textarea,
+.field-wrapper.invalid input[type=text],
+.field-wrapper.invalid input[type=email],
+.field-wrapper.invalid input[type=password],
+.field-wrapper.invalid input[type=tel],
+.field-wrapper.invalid .select2-selection,
+.field-wrapper.invalid textarea { padding-right: 40px !important; border-color: #f85757 !important; transition: border-color .4s ease; }
+
+.field-wrapper.required label::after { content: '*'; color: red; margin-left: 5px;  }
+
+
+.content.zen-re-800 .row:not(.editing) .column.invalid input[type=text],
+.content.zen-re-800 .row:not(.editing) .column.invalid input[type=email],
+.content.zen-re-800 .row:not(.editing) .column.invalid input[type=password],
+.content.zen-re-800 .row:not(.editing) .column.invalid input[type=tel],
+.content.zen-re-800 .row:not(.editing) .column.invalid .select2-selection,
+.content.zen-re-800 .row:not(.editing) .column.invalid textarea { border-color: rgba(248, 87, 87, 0.25) !important; }
+.content.zen-re-800 .column.invalid::after { top: 10px; right: 10px; height: 30px; line-height: 30px; transition: all .2s ease; }
+.content.zen-re-800 .row.editing .column.invalid::after { height: 50px; line-height: 50px; }

@@ -1,0 +1,48 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>{% trans %}json.title.dataFile{% endtrans %}</h2>
+{% endblock %}
+
+{% block json_action_nav %}
+   <div class="action-nav">
+        {% if ( readonly == false and writeable == true ) %}
+            <button type="submit" name="action" value="save" class="button">{% trans %}general.buttons.save{% endtrans %}</button>
+            <a class="button red" href="{{ path('index_software_data') }}">{% trans %}general.buttons.cancel{% endtrans %}</a>
+        {% else %}
+            <a class="button red" href="{{ path('index_software_data') }}">{% trans %}general.buttons.return{% endtrans %}</a>
+
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="json-row cf hide">
+        <div class="json-key field-wrapper">
+            <input type="text" {{ readonly ? 'readonly="readonly"' : '' }}>
+        </div>
+
+        <div class="json-value field-wrapper">
+            <input type="text" {{ readonly ? 'readonly="readonly"' : '' }}>
+        </div>
+        <a class="json-add button small" href="#">+</a>
+    </div>
+
+    <form class="json-data" method="post">
+        {{ block("json_action_nav") }}
+
+        <div class="json-filename"><span>{{ filename }}</span><span class="readonly">{{ writeable ? '' : 'json.readonly'|trans }}</span></div>
+
+        {% for key, value in data %}
+            {% include '@Eckinox/application/data/row.html.twig' with { "key" : key, parent_key : "", "value" : value, name : "data", meta : meta } %}
+        {% endfor %}
+
+        {{ block("json_action_nav") }}
+    </form>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('js/application/json.js') }}"></script>
+{% endblock %}

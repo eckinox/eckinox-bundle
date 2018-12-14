@@ -1,0 +1,76 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>{{ title }}</h2>
+{% endblock %}
+
+{% block content %}
+
+    <form name="mastersearch" method="post"
+          ei-widget-ajax
+          ei-widget-ajax-refresh="#search_result">
+
+        <div class="block-wrapper">
+            <div class="block block-full">
+                <div class="fields">
+                    <div class="field-wrapper advanced-search half">
+                        <label for="advanced_search">{% trans %}mastersearch.fields.advancedSearch{% endtrans %}</label>
+                        <input type="text" id="terms" name="terms" class="advanced-search" data-validate="required" value="{{ terms }}" />
+                    </div>
+                    <div class="field-wrapper modules half">
+                        <label>{% trans %}mastersearch.fields.modules{% endtrans %}</label>
+                        <div class="">
+                            <ul>
+                                {% for module in modules %}
+                                    {% set module_name = module.type is defined ? module.type : module.module %}
+                                    <li>
+                                        <input id="module_{{ module_name }}" name="modules[]" type="checkbox" value="{{ module_name }}" {% if module_name in activeModules %}checked="checked"{% endif %} />
+                                        <label for="module_{{ module_name }}">{{ ('mastersearch.modules.' ~ module_name)|trans }}</label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="field-wrapper submit">
+                        <button class="button" type="submit">{% trans %}mastersearch.fields.submit{% endtrans %} &nbsp;<i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="block-wrapper">
+        <div class="block block-full">
+            <div class="fields">
+                <div id="search_result" class="field-wrapper result">
+                    {% if terms %}
+                        <label>{% trans %}mastersearch.fields.result{% endtrans %}</label>
+                        <div class="group">
+                            {% for module in modules %}
+                                {% set module_name = module.type is defined ? module.type : module.module %}
+
+                                {% if module_name in activeModules %}
+                                    {% include '@Eckinox/application/mastersearch/modules/' ~ module_name ~ '.html.twig' with {module: module} %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+    </script>
+
+    <script src="{{ asset('js/mastersearch.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/mastersearch.css') }}" />
+{% endblock %}

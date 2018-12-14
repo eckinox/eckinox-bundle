@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>{{page_title}}</title>
+	<meta http-equiv="Content-Type" content="text/html; ">
+	<meta name="viewport" content="width=device-width">
+	{% include "@Eckinox/application/email/trello/css.html.twig" %}
+</head>
+
+<body style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 14px; font-weight: normal; line-height: 19px; margin: 0; min-width: 100%; padding: 0; text-align: left; width: 100%;">
+	<table class="body" style="border-collapse: collapse; border-spacing: 0; color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 14px; font-weight: normal; height: 100%; line-height: 19px; margin: 0; padding: 0; text-align: left; vertical-align: top; width: 100%;">
+		<tr style="padding: 0; text-align: left; vertical-align: top;">
+			<td class="center" align="center" valign="top" style="-moz-hyphens: auto; -webkit-hyphens: auto; border-collapse: collapse; color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 19px; margin: 0; padding: 0; text-align: center; vertical-align: top; word-break: break-word;">
+				<center style="width: 100%;">
+					<!-- Email Content -->
+					<!--[if (gte mso 9)|(IE)]> <table width="560" align="center"> <tr> <td> <![endif]-->
+					<!-- Header -->
+					<table class="trello-block trello-block-background--trello-blue" style="background-color: #0050b2; border-collapse: collapse; border-spacing: 0; color: #fff; padding: 0; text-align: inherit; vertical-align: top; width: 100%;">
+						<!--[if (gte mso 9)|(IE)]><tr><td height="6" colspan="3">&nbsp;</td></tr><![endif]-->
+						<tr style="padding: 0; text-align: left; vertical-align: top;">
+							<!--[if (gte mso 9)|(IE)]><td height="6">&nbsp;</td> <![endif]-->
+							<td style="-moz-hyphens: auto; -webkit-hyphens: auto; border-collapse: collapse; color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 19px; margin: 0; padding: 0; text-align: left; vertical-align: top; word-break: break-word;">
+								<div class="trello-block-single-column center" style="display: block; margin: 0 auto; max-width: 580px; padding: 12px 16px;">
+									<img class="header-logo-image center" height="auto" width="122" src="{{ absolute_url(asset("image/logo-white.png", 'eckinox')) }}" style="-ms-interpolation-mode: bicubic; clear: both; display: block; float: none; outline: none; text-decoration: none; width: auto; width: 122px; max-width: 122px; height: auto; margin: 5px auto;">
+								</div>
+							</td>
+							<!--[if (gte mso 9)|(IE)]><td height="6">&nbsp;</td> <![endif]-->
+						</tr>
+						<!--[if (gte mso 9)|(IE)]><tr><td height="6" colspan="3">&nbsp;</td></tr><![endif]-->
+					</table>
+					<table class="trello-block trello-block-background--gray" style="background-color: #F0F0F0; border-collapse: collapse; border-spacing: 0; padding: 0; text-align: inherit; vertical-align: top; width: 100%;">
+						<tr style="padding: 0; text-align: left; vertical-align: top;">
+							<td style="-moz-hyphens: auto; -webkit-hyphens: auto; border-collapse: collapse; color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 19px; margin: 0; padding: 16px 10px; padding-bottom: 150px; text-align: left; vertical-align: top; word-break: break-word;">
+								<div class="trello-block-single-column" style="display: block; margin: 0 auto; max-width: 580px; min-height:33vh; padding: 30px;background-color: white;border-radius: 2px;">
+									<!--[if (gte mso 9)|(IE)]><table style="width:100%; background:#fff;border:14px solid #fff;">									<tr><td id="subject" style="color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 12px; padding: 0; text-align: left; word-break: normal;"><![endif]-->
+										<h6 id="subject" style="color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 12px; padding: 0; text-align: left; word-break: normal;">{{page_title}}</h6>
+									<!--[if (gte mso 9)|(IE)]></td></tr><tr><td class="trello-block-single-column" style="display: block; margin: 0 auto; max-width: 580px; min-height:33vh; background-color: white;border-radius: 2px;"><![endif]-->
+										<div id="content">
+										{% block content %}
+											<p>{{content|raw}}</p>
+										{% endblock %}
+										</div>
+									<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+								</div>
+
+								{% if footer != "" %}
+								<!--[if (gte mso 9)|(IE)]><table style="width:100%; background:#fff;border:14px solid #fff;">									<tr><td id="subject" style="color: #4d4d4d; font-family: 'Helvetica', 'Arial', sans-serif; font-size: 20px; font-weight: normal; line-height: 1.3; margin: 0; margin-bottom: 12px; padding: 0; text-align: left; word-break: normal;"><![endif]-->
+									<div class="trello-block-single-column" style="display: block; margin: 0 auto; max-width: 580px; padding: 30px;background-color: white;border-radius: 2px;">
+										<p>{{footer|raw}}</p>
+									</div>
+								<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+								{% endif %}
+							</td>
+						</tr>
+					</table>
+					<!-- End gray background -->
+					<!--[if (gte mso 9)|(IE)]> </td> </tr> </table> <![endif]-->
+					<!-- / Email Content -->
+				</center>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

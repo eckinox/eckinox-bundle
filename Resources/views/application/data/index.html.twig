@@ -1,0 +1,29 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>{% trans %}json.title.list{% endtrans %}</h2>
+{% endblock %}
+
+{% block content %}
+
+    <!--div class="action-nav">
+        <a class="button" href="{{ path('edit_software_data') }}">{% trans %}json.actions.createFile{% endtrans %}</a>
+    </div-->
+
+    <div class="json-list list">
+        <div class="row head">
+            <div class="column name">{% trans %}json.fields.file{% endtrans %}</div>
+            <div class="column email">{% trans %}json.fields.updatedAt{% endtrans %}</div>
+            <div class="column edit-link"></div>
+        </div>
+
+        {% for key, row in list %}
+            <div class="row item-{{key}}">
+                <div class="column name link">{{row.filename}}</div>
+                <div class="column last_mod link">{{row.last_mod ? row.last_mod|date('Y-m-d H:i:s') : "" }}</div>
+                <a class="column edit-link" href="{{ path("edit_software_data", { "file" : row.filename }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

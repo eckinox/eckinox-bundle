@@ -1,0 +1,136 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>
+        {{ title }}
+    </h2>
+{% endblock %}
+
+{% block tabs %}
+    <nav class="widget-tabs-element" ei-widget-tabs="email" unselectable>
+
+        <div class="widget-tabs-wrapper"></div>
+
+        {% if not email.sent or isTemplate%}
+            <div class="widget-tabs-actions">
+                <div class="save-button">
+                    <label id="save_button">
+                        <i class="far fa-save"></i>
+                    </label>
+                </div>
+            </div>
+
+            {% if not isTemplate%}
+            <div class="widget-tabs-actions">
+                <div class="tab-item">
+                    <label  ei-widget-attachments
+                            data-domain="application"
+                            data-module="email"
+                            data-tmp-folder="{{ tmpPath }}"
+                            data-object-id="{{ email.id }}">
+                        <i class="far fa-paperclip"></i> {% trans from 'general' %}actions.attachments{% endtrans %}
+                    </label>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+
+        {% if not isNew and not isTemplate%}
+            <div class="widget-tabs-actions actions-button">
+                <label for="widget-tabs-actions">
+                    <i class="fas fa-plus"></i>
+                </label>
+                <input type="checkbox" id="widget-tabs-actions" name="widget-tabs-actions">
+                <ul class="dropdown">
+                    <li>
+                        <a href="{{ path('forward_email', {'email_id': email.id}) }}"><i class="fas fa-arrow-circle-right"></i> {%trans%}email.actions.forwardEmail{%endtrans%}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('force_send_email', {'email_id': email.id}) }}"><i class="fas fa-share-square"></i> {%trans%}email.actions.forceSend{%endtrans%}</a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="email-form">
+
+        {{ form_start(form, { 'attr' : { 'autocomplete' : 'off' } }) }}
+
+            <div class="block-wrapper" ei-widget-tabs-email="{% trans %}email.tabs.informations{% endtrans %}">
+
+                <div class="block block-left">
+                    <div class="fields">
+
+                        <div class="field-wrapper from">
+                            {{ form_label(form.left.from) }}
+                            {{ form_widget(form.left.from) }}
+                        </div>
+
+                        {% for name, inputs in { 'to': form.left.to, 'cc': form.left.cc, 'bcc': form.left.bcc } %}
+                            <div class="field-wrapper {{ name }}">
+                                {{ form_label(inputs) }}
+                                {{ form_errors(inputs) }}
+
+                                <ul id="{{ name }}-fields-list"
+                                    class="collection"
+                                    data-prototype="{{ form_widget(inputs.vars.prototype)|e }}"
+                                    data-widget-tags="{{ '<li></li>'|e }}">
+                                    {% for emailField in inputs %}
+                                        <li>
+                                            {{ form_errors(emailField) }}
+                                            {{ form_widget(emailField) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                {% if not email.sent or isTemplate%}
+                                    <a href="#"
+                                        class="add-another-collection-widget"
+                                        data-list="#{{ name }}-fields-list"><i class="fas fa-plus-circle"></i> {% trans %}email.actions.addEmail{% endtrans %}</a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+
+                        {{ form_widget(form.left) }}
+                    </div>
+                </div>
+                <div class="block block-right">
+                    <div class="fields">
+                        {{ form_widget(form.right) }}
+                    </div>
+                    <div class="fields preview">
+                        <div class="field-wrapper preview">
+                            <label>{% trans %}email.fields.preview{% endtrans %}</label>
+                            {% set layout = email.layout ?: '@Eckinox/application/email/trello.html.twig' %}
+                            <iframe id="preview" srcdoc="{% filter escape %}{% include layout with {'page_title': email.subject, 'content': email.html, 'footer': ''} %}{% endfilter %}"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% if not email.sent and not isTemplate %}
+                {% set button_label = email.draft ? 'email.button.save' : (forward ? 'email.button.forward' : 'email.button.send') %}
+                <input type="submit" class="button" data-submit-type="{{ forward ? 'forward' : 'send' }}" value="{{ button_label|trans }}" />
+            {% elseif isTemplate %}
+                {% set button_label = 'email.button.save' %}
+                <input type="submit" class="button" data-submit-type="send" value="{{ button_label|trans }}" />
+            {% else %}
+                <a href="{{ path('index_email') }}" class="button blue">{% trans %}email.actions.returnToList{% endtrans %}</a>
+            {% endif %}
+
+            <input type="hidden" name="tmpPath" value="{{ tmpPath }}">
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

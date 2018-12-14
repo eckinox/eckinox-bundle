@@ -1,0 +1,74 @@
+{% trans_default_domain 'general' %}
+
+{% macro recursiveTree(folder, data, path, tmp) %}
+    {% import _self as self %}
+    <li class="folder" data-folder-name="{{ folder.directory }}" data-count-total-files="{{folder.total_files}}" data-count-files="{{ folder.files|length }}" data-count-folders="{{ folder.children|length }}">
+        {% set path = path|merge([folder.directory])  %}
+        <div class="folder-name">
+            <i class="fas fa-folder"></i>
+            {{ folder.name }}
+            <div class="count">
+                <span class="folders-count">{{ folder.children|length }}</span> {% trans %}attachments.folder{% endtrans %} -
+                <span class="files-count">{{ folder.files|length }}</span> {% trans %}attachments.file{% endtrans %}
+            </div>
+        </div>
+        <div class="folder-content">
+            {% if folder.children is defined and folder.children %}
+                <ul class="folders">
+                    {% for child in folder.children %}
+                        {{ self.recursiveTree(child, data, path) }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <ul class="files">
+                {% if folder.files is defined and folder.files %}
+                    {% for file in folder.files %}
+                        {% set uniqkey = "u_" ~ random() %}
+                        <li class="file" data-name="{{ file }}">
+                          <a class="file-name" href="{{ tmp ? "javascript:void(0)" : path('attachments_open', {'domain': data.domain, 'module': data.module, 'objectId': data.objectId ?: 0, 'path': path|join('-'), 'fileName': file}) }}" target="_blank"><i class="far fa-file"></i> {{ file }}</a>
+
+                          <input type="checkbox" value="1" id="{{uniqkey}}">
+                          <label class="file-trash" for="{{uniqkey}}"><i class="far fa-trash-alt"></i></label>
+
+                          <div class="file-delete">
+                            <div class="confirm">
+                                <a class="button green" href="{{ tmp ? "javascript:void(0)" : path('attachments_open', {'domain': data.domain, 'module': data.module, 'objectId': data.objectId ?: 0, 'path': path|join('-'), 'fileName': file, 'action' : 'delete'}) }}">
+                                    <i class="far fa-check"></i>
+                                </a>
+                                <label class="button red" for="{{uniqkey}}"><i class="far fa-times"></i></label>
+                            </div>
+                          </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="file empty">{% trans %}attachments.empty{% endtrans %}</li>
+                {% endif %}
+            </ul>
+        </div>
+    </li>
+{% endmacro %}
+
+{% from _self import recursiveTree %}
+
+{% set data = {'domain': domain, 'module': module, 'objectId': objectId} %}
+
+<div id="attachments" data-domain="{{ domain }}" data-module="{{ module }}" data-object-id="{{ objectId ?: 0 }}" data-tmp-folder="{{ tmpFolder }}" unselectable>
+    <div class="attachments-wrapper">
+        <div class="attachments-content">
+
+            <div class="title"><i class="far fa-paperclip"></i> {% trans %}actions.attachments{% endtrans %}</div>
+
+            <div class="wrapper">
+                <ul class="attachments-tree">
+                    {% for folder in tree %}
+                        {{ recursiveTree(folder, data, [], tmpFolder) }}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="button-container right">
+                <button type="button" id="attachments_close" class="button red" value="close">{% trans %}button.close{% endtrans %}</button>
+            </div>
+        </div>
+    </div>
+</div>

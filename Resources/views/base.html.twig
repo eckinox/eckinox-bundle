@@ -1,0 +1,61 @@
+{% if form is defined %}
+    {% form_theme form '@Eckinox/html/form.html.twig' %}
+{% endif %}
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+    <head>
+        {% include '@Eckinox/html/head.html.twig' %}
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body ei-widget-hotkeys class="layout-application">
+        <div class="page-wrapper">
+            <div class="top-bar" unselectable>
+                <div class="logo">
+                    <a href="{{ path('home') }}"><img src="{{ asset('image/logo-white.png', 'eckinox') }}" /></a>
+                </div>
+                <div class="search">
+                    <form action="{{ path('search_index') }}" method="get">
+                        <input id="search" name="terms" value="" placeholder="{% trans from 'general' %}placeholders.search{% endtrans %}" />
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </form>
+                </div>
+                <label for="user_checkbox" class="user">
+                    <div class="name">{{ app.user.fullName }}</div>
+                    <div class="actions-button">
+                        <div class="dropdown-action">
+                            <i class="fas fa-user"></i>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                        <input type="checkbox" id="user_checkbox" name="user_checkbox">
+                        <ul class="dropdown">
+                            <li class="separator">
+                                <a href="{{ path('edit_user', {"user_id": app.user.id}) }}"><i class="fas fa-edit"></i>{% trans from 'general' %}button.edit_profile{% endtrans %}</a>
+                            </li>
+                            <li>
+                                <a class="red" href="/logout"><i class="fas fa-sign-out-alt"></i>{% trans from 'general' %}button.logout{% endtrans %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </label>
+            </div>
+            <div class="content-wrapper" zen-responsive-element>
+                <div class="left-navigation" unselectable>
+                    {% include '@Eckinox/general/main-nav.html.twig' %}
+                </div>
+                <div class="content application" zen-responsive-element>
+                    <div class="header" unselectable>
+                        {% block header %}{% endblock %}
+                        <div class="breadcrumb">{% include '@Eckinox/general/breadcrumb.html.twig' %}</div>
+                    </div>
+                    {% block tabs %}{% endblock %}
+                    <div class="scrollable">{% block content %}{% endblock %}</div>
+                    {% block stickyMenu %} {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        {% include "@Eckinox/html/modal.html.twig" %}
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
