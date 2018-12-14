@@ -1,4 +1,17 @@
 doctrine:
+	dbal:
+        default_connection:   default
+        connections:
+            default:
+                driver: pdo_mysql
+                dbname: '%env(DATABASE_NAME)%'
+                host: '%env(DATABASE_HOST)%'
+                user: '%env(DATABASE_USER)%'
+                password: '%env(DATABASE_PWD)%'
+                charset: utf8mb4
+                mapping_types:
+                    enum: string
+
     orm:
         mappings:
             eckinox:
