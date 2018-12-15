@@ -9,8 +9,12 @@ doctrine:
                 user: '%env(DATABASE_USER)%'
                 password: '%env(DATABASE_PWD)%'
                 charset: utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
                 mapping_types:
                     enum: string
+                url: null
 
     orm:
         mappings:
