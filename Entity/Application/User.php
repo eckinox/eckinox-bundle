@@ -84,7 +84,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $isActive;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('active', 'inactive', 'deleted')", options={"default":"active"})
+     * @ORM\Column(type="string", length=125)
      */
     private $status;
 

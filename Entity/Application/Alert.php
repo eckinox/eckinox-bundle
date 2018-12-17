@@ -47,7 +47,7 @@ class Alert
     private $module;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('pending', 'resolved', 'deleted')", options={"default":"pending"})
+     * @ORM\Column(type="string", length=125)
      */
     private $status;
 
