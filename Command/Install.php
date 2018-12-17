@@ -40,7 +40,7 @@ class Install extends Command
         ]);
 
         $this->moveConfigFiles();
-        $this->clearCache();
+        //$this->clearCache();
         $this->migrateDatabase();
         $this->installAssets();
         $this->createDeveloperUser();

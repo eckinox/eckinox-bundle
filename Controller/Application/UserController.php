@@ -105,7 +105,7 @@ class UserController extends Controller
         $search = $this->prepareSearch($request, $listing);
 
         $user_repository = $this->getDoctrine()->getRepository(User::class);
-        $maxResults = $this->data('application.user.config.list.items_shown');
+        $maxResults = $this->data('application.user.config.list.items_shown') ?: 10;
 
         $users = $user_repository->getList($page, $maxResults, $search);
         $count = $user_repository->getCount($search);

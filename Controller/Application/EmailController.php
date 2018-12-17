@@ -99,7 +99,7 @@ class EmailController extends Controller
         $search = $this->prepareSearch($request, $listing);
 
         $email_repository = $this->getDoctrine()->getRepository(Email::class);
-        $maxResults = $this->data('application.email.config.list.items_shown');
+        $maxResults = $this->data('application.email.config.list.items_shown') ?: 10;
 
         $emails = $templates ? $email_repository->getTemplates($page, $maxResults, $search) : $email_repository->getList($page, $maxResults, $search);
         $count = $templates ? $email_repository->getCountTemplates($search) : $email_repository->getCount($search);
