@@ -40,7 +40,9 @@ class Install extends Command
         ]);
 
         $this->moveConfigFiles();
+        $this->clearCache();
         $this->migrateDatabase();
+        $this->installAssets();
         $this->createDeveloperUser();
     }
 
@@ -49,6 +51,7 @@ class Install extends Command
         $eckinox_config_path = $this->container->getParameter('app.eckinox_config.path');
         $config = [
             'packages/eckinox.yaml',
+            'packages/security.yaml',
             'routes/eckinox.yaml'
         ];
 
@@ -57,6 +60,14 @@ class Install extends Command
 
             $this->output->writeln('Moved ' . $eckinox_config_path.$path . ' to ' . $symfony_config_path.$path);
         }
+    }
+
+    protected function clearCache() {
+        $this->output->writeln('Running bin/console cache:clear');
+
+        $command = $this->getApplication()->find('cache:clear');
+        $input = new ArrayInput(['command' => 'cache:clear']);
+        $returnCode = $command->run($input, $this->output);
     }
 
     protected function migrateDatabase() {
@@ -70,6 +81,14 @@ class Install extends Command
 
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $input = new ArrayInput(['command' => 'doctrine:migrations:migrate']);
+        $returnCode = $command->run($input, $this->output);
+    }
+
+    protected function installAssets() {
+        $this->output->writeln('Running bin/console assets:install');
+
+        $command = $this->getApplication()->find('assets:install');
+        $input = new ArrayInput(['command' => 'assets:install']);
         $returnCode = $command->run($input, $this->output);
     }
 
