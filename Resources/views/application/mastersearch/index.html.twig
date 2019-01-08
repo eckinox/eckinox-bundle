@@ -19,18 +19,20 @@
                         <input type="text" id="terms" name="terms" class="advanced-search" data-validate="required" value="{{ terms }}" />
                     </div>
                     <div class="field-wrapper modules half">
-                        <label>{% trans %}mastersearch.fields.modules{% endtrans %}</label>
-                        <div class="">
-                            <ul>
-                                {% for module in modules %}
-                                    {% set module_name = module.type is defined ? module.type : module.module %}
-                                    <li>
-                                        <input id="module_{{ module_name }}" name="modules[]" type="checkbox" value="{{ module_name }}" {% if module_name in activeModules %}checked="checked"{% endif %} />
-                                        <label for="module_{{ module_name }}">{{ ('mastersearch.modules.' ~ module_name)|trans }}</label>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                        {% if modules | length %}
+                            <label>{% trans %}mastersearch.fields.modules{% endtrans %}</label>
+                            <div class="">
+                                <ul>
+                                    {% for module in modules %}
+                                        {% set module_name = module.type is defined ? module.type : module.module %}
+                                        <li>
+                                            <input id="module_{{ module_name }}" name="modules[]" type="checkbox" value="{{ module_name }}" {% if module_name in activeModules %}checked="checked"{% endif %} />
+                                            <label for="module_{{ module_name }}">{{ ('mastersearch.modules.' ~ module_name)|trans }}</label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div class="field-wrapper submit">
