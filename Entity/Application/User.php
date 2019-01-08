@@ -93,6 +93,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->isActive = true;
         $this->status = 'active';
         $this->logs = new ArrayCollection();
+        $this->privileges = [];
         $this->variables = [];
         $this->setCreatedAt();
         $this->init();

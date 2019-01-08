@@ -171,6 +171,16 @@ return [
         "default_message" => "Vous n'avez pas les privilèges requis pour effectuer cette action",
     ],
 
+    "dashboard" => [
+        "title" => [
+            "base" => "Tableau de bord"
+        ],
+
+        "breadcrumb" => [
+            "home" => "Tableau de bord"
+        ]
+    ],
+
     "user" => [
         "actions" => [
             "createUser" => "Créer un utilisateur",

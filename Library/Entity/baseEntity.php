@@ -61,4 +61,8 @@ trait baseEntity {
     protected function _datetime($datetime = null) {
         return $datetime ? ( is_string($datetime) ? new \DateTime($datetime) : $datetime ) : new \DateTime('now') ;
     }
+
+    static public function getClassProperties() {
+		return array_keys(get_class_vars(get_called_class()));
+	}
 }
