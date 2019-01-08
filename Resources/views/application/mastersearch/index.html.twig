@@ -48,13 +48,19 @@
                     {% if terms %}
                         <label>{% trans %}mastersearch.fields.result{% endtrans %}</label>
                         <div class="group">
+                            {% set displayed_modules = 0 %}
                             {% for module in modules %}
                                 {% set module_name = module.type is defined ? module.type : module.module %}
 
                                 {% if module_name in activeModules %}
                                     {% include '@Eckinox/application/mastersearch/modules/' ~ module_name ~ '.html.twig' with {module: module} %}
+                                    {% set displayed_modules = displayed_modules + 1 %}
                                 {% endif %}
                             {% endfor %}
+
+                            {% if displayed_modules == 0 %}
+                                <div class="empty-state no-result">{% trans %}mastersearch.noResult{% endtrans %}</div>
+                            {% endif %}
                         </div>
                     {% endif %}
                 </div>

@@ -112,7 +112,7 @@ class MasterSearchController extends Controller
 
     public function getFormTypes($formsPath, $namespace = null, $domain = null) {
         $forms = [];
-        $scan = scandir($formsPath);
+        $scan = file_exists($formsPath) && is_dir($formsPath) ? scandir($formsPath) : [];
 
         foreach($scan as $form) {
             if(!in_array($form, ['.', '..', '.gitignore'])) {
