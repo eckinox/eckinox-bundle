@@ -8,4 +8,4 @@
 bin/console cache:clear
 bin/console doctrine:migrations:diff
 bin/console --no-interaction doctrine:migrations:migrate
-bin/console echafaud:update
+bin/console eckinox:update
