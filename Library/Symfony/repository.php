@@ -85,8 +85,11 @@ trait repository {
         }
 
         $query = $this->createQueryBuilder('o')->select("o.$orm_key");
-        $skip = $query->where( $query->expr()->in("o.$orm_key", array_column($data, $unique_key)) )->getQuery()->getResult();
-        $skip_list = array_column($skip, $orm_key);
+        $skip_list = [];
+        if (array_column($data, $unique_key)) {
+            $skip = $query->where( $query->expr()->in("o.$orm_key", array_column($data, $unique_key)) )->getQuery()->getResult();
+            $skip_list = array_column($skip, $orm_key);
+        }
 
         $savable = [];
 
