@@ -1,0 +1,47 @@
+{% extends '@Eckinox/base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block header %}
+    <h2>{{ title }}</h2>
+{% endblock %}
+
+{% block content %}
+
+    <form name="import" method="post" ajax-action="{{ path('ajax_get_json_from_excel') }}" ajax-type="json">
+        <div class="block-wrapper">
+            <div class="block block-full">
+                <div class="fields">
+                    <div class="field-wrapper import-file half">
+                        <label for="import-file">{% trans %}import.fields.file{% endtrans %}</label>
+                        <input type="file" id="import-file" name="file" class="import-file" data-validate="required" />
+                    </div>
+                    <div class="field-wrapper modules half">
+
+                    </div>
+
+                    <div class="field-wrapper submit">
+                        <button class="button" type="submit">{% trans %}import.fields.load_file{% endtrans %} &nbsp;<i class="fa fa-upload" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="block-wrapper">
+        <div class="block block-full">
+            <div class="fields">
+                <div id="import-preview" class="field-wrapper import-preview">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/import.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/import.css') }}" />
+{% endblock %}

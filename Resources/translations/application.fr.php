@@ -11,6 +11,7 @@ return [
         "forward_email" => "Transfert de « %name% »",
         "index_email" => "Liste des courriels",
         "search_index" => "Recherche avancée",
+        "import_index" => "Import de données",
         "index_software" => "Statut du logiciel",
         "edit_email_template" => "Gabarit « %name% »",
         "create_email_template" => "Nouveau gabarit de courriel",
@@ -289,5 +290,24 @@ return [
             "product" => "Produits"
         ],
         "noResult" => "Aucun résultat"
+    ],
+
+    "import" => [
+        "fields" => [
+            "file" => "Sélectionner le fichier à importer",
+            "load_file" => "Charger le fichier",
+            "import" => "Importer"
+        ],
+        "title" => [
+            "import_index" => "Import",
+        ]
+    ],
+
+    "ajax" => [
+        "excelToJson" => [
+            "errors" => [
+                "noFile" => "Aucun fichier n'a été envoyé."
+            ]
+        ]
     ]
 ];

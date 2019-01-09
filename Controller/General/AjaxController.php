@@ -6,7 +6,9 @@ use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Eckinox\Library\General\Arrays;
+use Eckinox\Library\General\Convert;
 use Eckinox\Library\General\Serializer;
 use Eckinox\Library\Symfony\Annotation\Security;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -410,5 +412,24 @@ class AjaxController extends Controller
         $response->setContent(json_encode($result));
         return $response;
     }
+
+    /**
+     * @Route("/ajax/get/json-from-excel", name="ajax_get_json_from_excel")
+     */
+    public function getJsonFromExcel(Request $request)
+    {
+        $domain = 'application';
+        $file = $request->files->get('file');
+
+        if (!$file) {
+            throw new \Exception($this->get('translator')->trans('ajax.excelToJson.errors.noFile', [], $domain));
+        }
+
+        $filePath = $file->getPathname();
+        $parsedData = $this->get('eckinox.converter')->excelToArray($filePath);
+
+        return new JsonResponse($parsedData);
+    }
+
 
 }
