@@ -55,6 +55,7 @@ class Extension extends AbstractExtension
             new TwigFunction("git_commit", [ $git, "getCommit" ]),
             new TwigFunction("git_branch", [ $git, "getBranch" ] ),
             new TwigFunction("git_commit_date", [ $git, "getCommitDate" ] ),
+            new TwigFunction("get_translations_json", [ $this, "getTranslationsAsJson" ] ),
         ];
     }
 
@@ -125,6 +126,14 @@ class Extension extends AbstractExtension
         }
 
         return new Markup($value, []);
+    }
+
+    /*
+     * Returns all of the available translation messages as JSON
+     */
+    public function getTranslationsAsJson() {
+        $messages = $this->container->get('translator')->getCatalogue()->all();
+        return new Markup(json_encode($messages, true), []);
     }
 
     /*
