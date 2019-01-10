@@ -5,6 +5,7 @@ namespace Eckinox\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Eckinox\Entity\Application\User;
@@ -73,15 +74,24 @@ class Install extends Command
     protected function migrateDatabase() {
         $this->output->writeln('Running bin/console doctrine:migrations:diff');
 
+        $diffOutput = new BufferedOutput();
         $command = $this->getApplication()->find('doctrine:migrations:diff');
         $input = new ArrayInput(['command' => 'doctrine:migrations:diff']);
-        $returnCode = $command->run($input, $this->output);
+        $returnCode = $command->run($input, $diffOutput);
 
-        $this->output->writeln('Running bin/console doctrine:migrations:migrate');
+        $diffResult = $diffOutput->fetch();
+        $this->output->write($diffResult);
 
-        $command = $this->getApplication()->find('doctrine:migrations:migrate');
-        $input = new ArrayInput(['command' => 'doctrine:migrations:migrate']);
-        $returnCode = $command->run($input, $this->output);
+        # Run the "migrate" command only if migrations have been generated
+        if (strpos($diffResult, 'No changes detected in your mapping information') === false) {
+            $this->output->writeln('Running bin/console doctrine:migrations:migrate');
+
+            $command = $this->getApplication()->find('doctrine:migrations:migrate');
+            $input = new ArrayInput(['command' => 'doctrine:migrations:migrate']);
+            $returnCode = $command->run($input, $this->output);
+        } else {
+            $this->output->writeln('No need to run the migrate command: there are no new migrations to apply.');
+        }
     }
 
     protected function installAssets() {
