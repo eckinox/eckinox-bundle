@@ -15,7 +15,7 @@ class Converter {
         $this->translator = $translator;
     }
 
-    public function excelToArray($path, $calculateFormulas = false, $formulasAsNull = true) {
+    public function excelToArray($path, $calculateFormulas = false, $formulasAsNull = true, $trimLeadingRows = true, $trimTrailingRows = true, $trimTrailingColumns = true) {
         if (!file_exists($path)) {
             throw new \Exception($this->translator->trans('converter.errors.fileNotFound', [], static::DOMAIN));
         }
@@ -46,6 +46,78 @@ class Converter {
                     foreach ($row as $colIndex => $value) {
                         if ($value && strpos($value, '=') === 0) {
                             $rows[$rowIndex][$colIndex] = null;
+                        }
+                    }
+                }
+            }
+
+            # Trim trailing empty rows
+            if ($trimLeadingRows) {
+                for ($i = 0; $i < count($rows); $i++) {
+                    foreach ($rows[$i] as $cellValue) {
+                        if ($cellValue) {
+                            # The current row isn't empty, therefore, all trailing empty rows have been removed.
+                            break 2;
+                        }
+                    }
+
+                    unset($rows[$i]);
+                }
+            }
+
+            # Trim trailing empty rows
+            if ($trimTrailingRows) {
+                for ($i = count($rows) - 1; $i >= 0; $i--) {
+                    foreach ($rows[$i] as $cellValue) {
+                        if ($cellValue) {
+                            # The current row isn't empty, therefore, all trailing empty rows have been removed.
+                            break 2;
+                        }
+                    }
+
+                    unset($rows[$i]);
+                }
+
+                $rows = array_values($rows);
+            }
+
+            # Trim trailing empty rows
+            if ($trimTrailingRows) {
+                for ($i = count($rows) - 1; $i >= 0; $i--) {
+                    foreach ($rows[$i] as $cellValue) {
+                        if ($cellValue) {
+                            # The current row isn't empty, therefore, all trailing empty rows have been removed.
+                            break 2;
+                        }
+                    }
+
+                    unset($rows[$i]);
+                }
+            }
+
+            # Trim trailing empty columns
+            if ($trimTrailingColumns) {
+                $columnCount = count($rows) ? count(current($rows)) : 0;
+                $filledColumns = -1;
+
+                # Loop over every row to check which columns are empty
+                foreach ($rows as $cells) {
+                    for ($i = count($cells) - 1; $i >= 0; $i--) {
+                        if ($cells[$i] && $i > $filledColumns) {
+                            $filledColumns = $i;
+                        }
+
+                        if ($filledColumns >= $columnCount) {
+                            break 2;
+                        }
+                    }
+                }
+
+                # Remove the empty columns if any
+                if ($filledColumns + 1 < $columnCount) {
+                    foreach ($rows as $rowIndex => $row) {
+                        for ($columnIndex = $filledColumns + 1; $columnIndex < $columnCount; $columnIndex++) {
+                            unset($rows[$rowIndex][$columnIndex]);
                         }
                     }
                 }
