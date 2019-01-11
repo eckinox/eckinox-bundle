@@ -184,7 +184,7 @@ return [
 
     "user" => [
         "actions" => [
-            "createUser" => "Créer un utilisateur",
+            "create" => "Créer un utilisateur",
         ],
 
         "breadcrumb" => [
