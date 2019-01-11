@@ -39,7 +39,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(name="privileges_list", type="json")
      */
     private $privileges;
 

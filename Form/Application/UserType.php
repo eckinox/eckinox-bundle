@@ -86,7 +86,6 @@ class UserType extends AbstractType
         }
 
         $builder->add($right);
-
     }
 
     static public function getListing($controller = null) {

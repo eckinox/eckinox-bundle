@@ -133,19 +133,34 @@ class EmailType extends AbstractType
                     "name" => "to",
                     "class" => "",
                     "visible" => true,
-                    "filters" => null,
+                    "filters" => [
+                        [
+                            "name" => "join",
+                            "arguments" => ["; "],
+                        ]
+                    ]
                 ],
                 [
                     "name" => "cc",
                     "class" => "",
                     "visible" => false,
-                    "filters" => null,
+                    "filters" => [
+                        [
+                            "name" => "join",
+                            "arguments" => ["; "],
+                        ]
+                    ]
                 ],
                 [
                     "name" => "bcc",
                     "class" => "",
                     "visible" => false,
-                    "filters" => null,
+                    "filters" => [
+                        [
+                            "name" => "join",
+                            "arguments" => ["; "],
+                        ]
+                    ]
                 ],
                 [
                     "name" => "subject",
