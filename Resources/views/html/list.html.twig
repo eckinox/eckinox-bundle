@@ -1,0 +1,107 @@
+{% trans_default_domain listing.domain %}
+
+<form name="{{ listing.module }}-list-form" action="{{ path('index_' ~ listing.module, {'page': currentPage}) }}" method="post">
+    <div class="action-nav">
+        {% block list_actions %}{% endblock %}
+    </div>
+
+    {% block before_list %}{% endblock %}
+
+    <div class="{{ listing.module }}-list list">
+        <div class="row head">
+            <div class="column checkbox">
+                <input type="checkbox" id="{{ listing.module }}_select_all" name="{{ listing.module }}_select_all" value="" />
+                <div class="check"></div>
+            </div>
+
+            {% for field in listing.fields %}
+                <div class="column {{ field.name }} {{ field.class }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</div>
+            {% endfor %}
+
+            <div class="column more">
+                <div class="actions-button">
+                    <label for="more_checkbox"><i class="far fa-ellipsis-v"></i></label>
+                    <input type="checkbox" id="more_checkbox" name="more_checkbox">
+                    <ul class="dropdown">
+                        <li>
+                            <ul class="fields">
+                                {% for field in listing.fields %}
+                                    <li>
+                                        <input type="checkbox" id="field_{{ field.name }}" name="field_{{ field.name }}" value="{{ field.name }}" {% if field.visible %}checked="checked"{% endif %} />
+                                        <label for="field_{{ field.name }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {% include '@Eckinox/html/widget/search.html.twig' %}
+
+        <div class="rows">
+            {% for row in rows %}
+                <div class="row item-{{ row.id }}">
+                    <div class="column checkbox"><input type="checkbox" name="ids[]" value="{{ row.id }}" /><div class="check"></div></div>
+
+                    {% for field in listing.fields %}
+
+                        <div class="column {{ field.name }} link" data-name="{{ field.name }}">
+                            {% if field.entity is defined %}
+                                {% set vars = field.entity|split('.') %}
+                                {% set value = row %}
+
+                                {% for var in vars %}
+                                    {% set value = attribute(value, var) %}
+                                {% endfor %}
+                            {% else %}
+                                {% set value = attribute(row, field.name) %}
+                            {% endif %}
+
+                            {% if value is iterable %}
+                                {% set values = value %}
+
+                                {% for v in values %}
+                                    {% set value = v %}
+
+                                    {% for f in field.filters %}
+                                        {% set value = value|applyFilter(f.name, f.arguments) %}
+                                    {% endfor %}
+
+                                    {{ value }}{% if not loop.last %},{% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for f in field.filters %}
+                                    {% set value = value|applyFilter(f.name, f.arguments) %}
+                                {% endfor %}
+
+                                {{ value }} <br />
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+
+                    <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+            {% endfor %}
+
+            {% if rows|length == 0 %}
+                <div class="empty">
+                    {{ (listing.module ~ '.emptyList')|trans() }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="add-row">
+            <a href="{{ path('create_' ~ listing.module) }}">
+                <i class="fas fa-plus-circle"></i>
+                {{ (listing.module ~ '.actions.create')|trans() }}
+            </a>
+        </div>
+    </div>
+
+    {% block after_list %}{% endblock %}
+</form>
+
+{% include '@Eckinox/html/pagination.html.twig' with {'view': 'index_' ~ listing.module, 'nbPages': nbPages, 'currentPage': currentPage} %}
