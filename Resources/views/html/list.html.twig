@@ -34,6 +34,7 @@
                             </ul>
                         </li>
                     </ul>
+                    <button type="submit" class="hide"></button>
                 </div>
             </div>
         </div>
@@ -47,7 +48,7 @@
 
                     {% for field in listing.fields %}
 
-                        <div class="column {{ field.name }} link" data-name="{{ field.name }}">
+                        <div class="column {{ field.name }} {{ field.class }} link" data-name="{{ field.name }}">
                             {% if field.entity is defined %}
                                 {% set vars = field.entity|split('.') %}
                                 {% set value = row %}

@@ -37,7 +37,7 @@
                 </select>
 
             {% else %}
-                <input type="text" name="search[{{ field.name }}]" value="" />
+                <input type="text" name="search[{{ field.name }}]" value="{{ app.request.request.get('search')[field.name] ?? '' }}" />
             {% endif %}
 
         </div>

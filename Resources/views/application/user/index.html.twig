@@ -12,7 +12,7 @@
         {% trans_default_domain 'application' %}
 
         {% block list_actions %}
-            <a class="button" href="{{ path('create_user') }}">{% trans %}user.actions.createUser{% endtrans %}</a>
+            <a class="button" href="{{ path('create_user') }}">{% trans %}user.actions.create{% endtrans %}</a>
             <div class="actions-button">
                 <label for="actions_checkbox" class="button actions">{% trans %}general.buttons.actions{% endtrans %}<i class="fa fa-caret-down" aria-hidden="true"></i></label>
                 <input type="checkbox" id="actions_checkbox" name="actions_checkbox" />
