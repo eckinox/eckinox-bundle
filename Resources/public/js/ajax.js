@@ -35,7 +35,7 @@ document.addEventListener('submit', function(e) {
 
     // When a response is received, pass it along via the "ajax_reponse" custom event
     xhr.addEventListener('load', function() {
-        if (loadingScreen) {
+        if (loadingScreen && loadingScreen.parentNode) {
             loadingScreen.parentNode.removeChild(loadingScreen);
         }
 
@@ -60,7 +60,7 @@ document.addEventListener('submit', function(e) {
             // Trigger the "ajax-error" event on the form with the error details
             form.dispatchEvent(new CustomEvent('ajax-error', { bubbles: true, detail: xhr.statusText }));
 
-            if (loadingScreen) {
+            if (loadingScreen && loadingScreen.parentNode) {
                 loadingScreen.parentNode.removeChild(loadingScreen);
             }
         }
@@ -71,6 +71,10 @@ document.addEventListener('submit', function(e) {
         xhr.upload.addEventListener('progress', function(e) {
             var percentage = Math.round((e.loaded / e.total) * 100);
             loadingScreenProgress.value = percentage;
+
+            if (percentage >= 100) {
+                loadingScreenProgress.setAttribute('custom-label', trans('ajax.processing', {}, 'application'));
+            }
         });
     }
 
