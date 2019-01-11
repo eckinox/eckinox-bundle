@@ -65,4 +65,8 @@ trait baseEntity {
     static public function getClassProperties() {
 		return array_keys(get_class_vars(get_called_class()));
 	}
+
+    static public function getClassMethods() {
+		return get_class_methods(get_called_class());
+	}
 }
