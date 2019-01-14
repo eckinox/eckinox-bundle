@@ -1,0 +1,15 @@
+.excel-preview { table-layout: fixed; width: 100%; font-size: .8rem; border: none; border-collapse: collapse; }
+.excel-preview td { padding: 0; border: 1px solid #ccc; }
+.excel-preview th { border: 1px solid #ccc; background-color: #f9f9f9; }
+.excel-preview .row { border: none; }
+.excel-preview .row-number { width: 3em; }
+.excel-preview .cell:empty::before { content: ' '; display: block; height: 1.5rem; }
+.excel-preview .cell { padding: 1px 2px; vertical-align: middle; }
+.excel-preview .cell .cell-value { max-height: 100px; overflow: auto; }
+
+.excel-preview.partial tbody tr { display: none; }
+.excel-preview.partial tbody tr:nth-child(-n+20) { display: table-row; }
+
+.excel-preview[select-mode='cell'] td:hover,
+.excel-preview[select-mode='row'] tr:hover > td { background-color: rgba(0, 116, 191, .1); cursor: pointer; }
+.excel-preview[select-mode='row'] tr:hover > th { background-color: rgba(0, 116, 191, .25); cursor: pointer; }
