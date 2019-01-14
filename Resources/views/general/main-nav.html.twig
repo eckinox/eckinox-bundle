@@ -1,43 +1,62 @@
 {% trans_default_domain 'general' %}
 
 {% block main_left_nav %}
-    <nav id="main-navigation">
-        <div class="link-item" data-panel="admin">
-            <a class="link-detail" href="#">
-                <i class="fas fa-cogs"></i>
-                <div class="main-title">{% trans %}navigation.modules.admin.title{% endtrans %}</div>
-            </a>
-        </div>
+    <nav id="main-navigation" class="{{ data("navigation.showTitles") ? "show-titles" : "" }}">
+        {% for item in data("navigation.items") %}
+            {% if item.privilege is not defined or (item.privilege is defined and app.user.hasPrivilege(item.privilege)) %}
+                <div class="link-item" {{ (item.panel is defined ? 'data-panel="' ~ item.panel ~ '"' : '') | raw }}>
+                    <a class="link-detail" href="{{ item.route is defined ? path(item.route) : '#' }}">
+                        <i class="{{ item.icon is defined ? item.icon : '' }}"></i>
+                        <div class="main-title">
+                            {% if item.title is defined %}
+                                {{ item.title | trans }}
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
     </nav>
 {% endblock %}
 
 {% block main_left_subnav %}
     <nav id="main-subnavigation">
-        <div class="panel" data-panel="admin">
-            <div class="panel-title">{% trans %}navigation.modules.admin.title{% endtrans %}</div>
+        {% for item in data("navigation.items") %}
+            {% if (item.privilege is not defined or (item.privilege is defined and app.user.hasPrivilege(item.privilege))) and item.panel is defined %}
+                {% set panel = data("navigation.panel." ~ item.panel) %}
+                {% if panel %}
+                    <div class="panel" data-panel="{{ item.panel }}">
+                        {% if panel.title is defined %}
+                            <div class="panel-title">{{ panel.title | trans }}</div>
+                        {% endif %}
 
-            <div class="panel-subtitle">{% trans %}navigation.modules.admin.user.title{% endtrans %}</div>
-            <div class="links">
-                <a class="link-detail" href="{{ path('index_user') }}">{% trans %}navigation.modules.admin.user.links.list{% endtrans %}</a>
-                <a class="link-detail" href="{{ path('create_user') }}">{% trans %}navigation.modules.admin.user.links.create{% endtrans %}</a>
-            </div>
 
-            <div class="panel-subtitle">{% trans %}navigation.modules.admin.email.title{% endtrans %}</div>
-            <div class="links">
-                <a class="link-detail" href="{{ path('create_email') }}">{% trans %}navigation.modules.admin.email.links.create{% endtrans %}</a>
-                <a class="link-detail" href="{{ path('index_email') }}">{% trans %}navigation.modules.admin.email.links.list{% endtrans %}</a>
-                {% if app.user.hasPrivilege('EMAIL_TEMPLATES') %}
-                <a class="link-detail" href="{{ path('index_email_templates') }}">{% trans %}navigation.modules.admin.email.links.listTemplates{% endtrans %}</a>
+                        {% if panel.sections is defined %}
+                            {% for section in panel.sections %}
+                                {% if section.privilege is not defined or (section.privilege is defined and app.user.hasPrivilege(section.privilege)) %}
+                                    {% if section.title is defined %}
+                                        <div class="panel-subtitle">{{ section.title | trans }}</div>
+                                    {% endif %}
+
+                                    {% if section.items is defined %}
+                                        <div class="links">
+                                        {% for subitem in section.items %}
+                                            {% if subitem.privilege is not defined or (subitem.privilege is defined and app.user.hasPrivilege(subitem.privilege)) %}
+                                                <a class="link-detail" href="{{ subitem.route is defined ? path(subitem.route) : '#' }}">
+                                                    {% if subitem.title is defined %}
+                                                        {{ subitem.title | trans }}
+                                                    {% endif %}
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 {% endif %}
-            </div>
-
-            {% if app.user.hasPrivilege('SOFTWARE_UPDATE') %}
-            <div class="panel-subtitle">{% trans %}navigation.modules.admin.software.title{% endtrans %}</div>
-            <div class="links">
-                <a class="link-detail" href="{{ path('index_software_data') }}">{% trans %}navigation.modules.admin.software.links.data{% endtrans %}</a>
-                <a class="link-detail" href="{{ path('index_software') }}">{% trans %}navigation.modules.admin.software.links.update{% endtrans %}</a>
-            </div>
             {% endif %}
-        </div>
+        {% endfor %}
     </nav>
 {% endblock %}

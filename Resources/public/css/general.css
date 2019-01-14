@@ -6,6 +6,7 @@
 #main-navigation .link-detail { max-height: 100px; display: flex; flex: 1; text-align: center; color: inherit; align-items: center; flex-direction: column; justify-content: center; }
 #main-navigation .link-detail i { font-size: 1.8em; }
 #main-navigation .link-detail .main-title { display: none; }
+#main-navigation.show-titles .link-detail .main-title { display: block; margin-top: 5px; word-break: break-word; hyphens: auto; font-size: 10px; }
 #main-subnavigation, #main-navigation .link-item.active, #main-navigation .link-detail.active { background: #dcdcdc; color: #333; }
 #main-navigation .link-detail:after {/*content:"";*/ width:40%; height:1px;background:#62adde;display:block;margin:2vh auto 5px auto;}
 #main-navigation .link-item:last-child .link-detail:after{display:none;}
