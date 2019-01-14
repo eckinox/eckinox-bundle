@@ -33,7 +33,7 @@ class Extension extends AbstractExtension
             new TwigFilter('city', array($this, 'getCityName')),
             new TwigFilter('region', array($this, 'getRegionName')),
             new TwigFilter('borought', array($this, 'getBoroughtName')),
-            new TwigFilter('data', array($this, 'getData')),
+            new TwigFilter('data', array($this, 'getDataJson')),
             new TwigFilter('asort', array($this, 'asort')),
             new TwigFilter('icon', array($this, 'getIcon')),
 
@@ -56,6 +56,7 @@ class Extension extends AbstractExtension
             new TwigFunction("git_branch", [ $git, "getBranch" ] ),
             new TwigFunction("git_commit_date", [ $git, "getCommitDate" ] ),
             new TwigFunction("get_translations_json", [ $this, "getTranslationsAsJson" ] ),
+            new TwigFunction("data", [ $this, "getData" ] ),
         ];
     }
 
@@ -76,8 +77,12 @@ class Extension extends AbstractExtension
         return $this->data('localities.boroughts')[$key]['name'] ?? null;
     }
 
-    public function getData($key) {
+    public function getDataJson($key) {
         return new Markup(json_encode($this->data($key), true), []);
+    }
+
+    public function getData($key) {
+        return $this->data($key);
     }
 
     public function getIcon($key) {

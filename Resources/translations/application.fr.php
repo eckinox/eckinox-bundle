@@ -127,6 +127,7 @@ return [
             "activateSelection" => "Activer la sélection",
             "deactivateSelection" => "Désactiver la sélection",
             "deleteSelection" => "Supprimer la sélection",
+            "archiveSelection" => "Archiver la sélection",
         ],
         "buttons" => [
             "actions" => "Actions",
@@ -135,6 +136,11 @@ return [
             "save" => "Enregistrer",
             "ok" => "Ok",
         ],
+        "messages" => [
+            "confirm" => [
+                "archiveSelection" => "Êtes-vous certain de vouloir archiver la sélection?"
+            ]
+        ]
     ],
 
     "json" => [
@@ -296,14 +302,20 @@ return [
         "fields" => [
             "file" => "Sélectionner le fichier à importer",
             "load_file" => "Charger le fichier",
-            "import" => "Importer"
+            "change_file" => "Changer le fichier",
+            "import" => "Importer",
+            "worksheet" => "Sélectionner la feuille à importer"
         ],
         "title" => [
             "import_index" => "Import",
+        ],
+        "excel" => [
+            "partialMissingRows" => "%rowCount% autres rangées qui ne sont pas affichées seront également traitées."
         ]
     ],
 
     "ajax" => [
+        "processing" => "Traitement...",
         "excelToJson" => [
             "errors" => [
                 "noFile" => "Aucun fichier n'a été envoyé."

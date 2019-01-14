@@ -5,6 +5,15 @@
 <html lang="{{ app.request.getLocale() }}">
     <head>
         {% include '@Eckinox/html/head.html.twig' %}
+
+        {% for script in data("assets.head.js") %}
+            <script src="{{ asset(script) }}"></script>
+        {% endfor %}
+
+        {% for stylesheet in data("assets.head.css") %}
+            <link rel="stylesheet" href="{{ asset(stylesheet) }}">
+        {% endfor %}
+
         {% block stylesheets %}{% endblock %}
     </head>
     <body ei-widget-hotkeys class="layout-application">
@@ -57,7 +66,12 @@
         {% include "@Eckinox/html/modal.html.twig" %}
         {% include "@Eckinox/html/javascript-translations.html.twig" %}
 
+        {% for script in data("assets.footer.js") %}
+            <script src="{{ asset(script) }}"></script>
+        {% endfor %}
+
         {% block javascripts %}{% endblock %}
-        <script src="{{ asset('js/ajax.js', 'eckinox') }}"></script>
+        <script src="{{ asset('js/list.js', 'eckinox') }}" defer></script>
+        <script src="{{ asset('js/ajax.js', 'eckinox') }}" defer></script>
     </body>
 </html>

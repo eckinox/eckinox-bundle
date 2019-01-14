@@ -9,10 +9,10 @@
 
     <div class="{{ listing.module }}-list list">
         <div class="row head">
-            <div class="column checkbox">
+            <label class="column checkbox">
                 <input type="checkbox" id="{{ listing.module }}_select_all" name="{{ listing.module }}_select_all" value="" />
                 <div class="check"></div>
-            </div>
+            </label>
 
             {% for field in listing.fields %}
                 <div class="column {{ field.name }} {{ field.class }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</div>
@@ -44,7 +44,7 @@
         <div class="rows">
             {% for row in rows %}
                 <div class="row item-{{ row.id }}">
-                    <div class="column checkbox"><input type="checkbox" name="ids[]" value="{{ row.id }}" /><div class="check"></div></div>
+                    <label class="column checkbox"><input type="checkbox" name="ids[]" value="{{ row.id }}" /><div class="check"></div></label>
 
                     {% for field in listing.fields %}
 

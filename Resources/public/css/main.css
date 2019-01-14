@@ -54,9 +54,20 @@ i.red { color: #f85757; }
 
 .form-list .row .column label,
 .field-wrapper > label { margin-bottom: 5px; display: block; color: #0172ba; font-size: 1.2em; text-transform: uppercase; }
-.field-wrapper.form > label {margin-bottom: 30px; font-size: 1.6em; }
-.field-wrapper input[type=text], .field-wrapper input[type=email], .field-wrapper input[type=password], .field-wrapper input[type=tel], .field-wrapper select, .field-wrapper textarea { width: 100%; background: #fff; }
-.field-wrapper input[type=text], .field-wrapper input[type=email], .field-wrapper input[type=password], .field-wrapper input[type=tel], .field-wrapper select { height: 50px; line-height: 50px; border: 1px solid #a9a9a9; padding: 0 10px; font-size: 1em; color: #333; font-family: 'Open Sans', sans-serif; }
+.field-wrapper.form > label { margin-bottom: 30px; font-size: 1.6em; }
+.field-wrapper input[type=text],
+.field-wrapper input[type=email],
+.field-wrapper input[type=number],
+.field-wrapper input[type=password],
+.field-wrapper input[type=tel],
+.field-wrapper select,
+.field-wrapper textarea { width: 100%; background: #fff; }
+.field-wrapper input[type=text],
+.field-wrapper input[type=email],
+.field-wrapper input[type=number],
+.field-wrapper input[type=password],
+.field-wrapper input[type=tel],
+.field-wrapper select { height: 50px; line-height: 50px; border: 1px solid #a9a9a9; padding: 0 10px; font-size: 1em; color: #333; font-family: 'Open Sans', sans-serif; }
 .field-wrapper input[type=radio],
 .field-wrapper input[type=checkbox] { display: block; width: 0; height: 0; transform: scale(0); position: absolute; }
 .field-wrapper input[type=radio] + label,
@@ -324,3 +335,4 @@ ul.legend li i { margin-right: 5px; }
 .loading-screen progress::-webkit-progress-bar { background-color: rgba(255, 255, 255, 0.3); border-radius: 6px; overflow: hidden; }
 .loading-screen progress::-webkit-progress-value { background-color: #0074bf; transition: all .2s ease-in-out; }
 .loading-screen progress[value]::after { content: attr(value) "%"; position: absolute; top: 100%; left: 0; right: 0; margin-top: 10px; font-family: Oswald, sans-serif; font-size: 12px; line-height: 1em; text-shadow: 0 0 3px rgba(0,0,0,.25); }
+.loading-screen progress[custom-label]::after { content: attr(custom-label); }
