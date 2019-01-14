@@ -83,7 +83,11 @@
                     {% endfor %}
 
 
-                    <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    {% if app.user.hasPrivilege(listing.module|upper ~ "_EDIT") %}
+                        <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    {% else %}
+                        <div class="column edit-link"></div>
+                    {% endif %}
                 </div>
             {% endfor %}
 
@@ -94,12 +98,14 @@
             {% endif %}
         </div>
 
-        <div class="add-row">
-            <a href="{{ path('create_' ~ listing.module) }}">
-                <i class="fas fa-plus-circle"></i>
-                {{ (listing.module ~ '.actions.create')|trans() }}
-            </a>
-        </div>
+        {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE") %}
+            <div class="add-row">
+                <a href="{{ path('create_' ~ listing.module) }}">
+                    <i class="fas fa-plus-circle"></i>
+                    {{ (listing.module ~ '.actions.create')|trans() }}
+                </a>
+            </div>
+        {% endif %}
     </div>
 
     {% block after_list %}{% endblock %}
