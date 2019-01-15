@@ -1,0 +1,5583 @@
+{
+    "boroughts": {
+        "REA01": {
+            "name": "Desjardins",
+            "city_key": 25213
+        },
+        "REA02": {
+            "name": "Les Chutes-de-la-Chaudière-Est",
+            "city_key": 25213
+        },
+        "REA03": {
+            "name": "Les Chutes-de-la-Chaudière-Ouest",
+            "city_key": 25213
+        },
+        "REB01": {
+            "name": "Brompton",
+            "city_key": 43027
+        },
+        "REB02": {
+            "name": "Fleurimont",
+            "city_key": 43027
+        },
+        "REB03": {
+            "name": "Lennoxville",
+            "city_key": 43027
+        },
+        "REB04": {
+            "name": "Le Mont-Bellevue",
+            "city_key": 43027
+        },
+        "REB05": {
+            "name": "Rock Forest-St-Élie-Deauville",
+            "city_key": 43027
+        },
+        "REB06": {
+            "name": "Jacques-Cartier",
+            "city_key": 43027
+        },
+        "REC01": {
+            "name": "MacNider",
+            "city_key": 9048
+        },
+        "REG01": {
+            "name": "Calumet",
+            "city_key": 76052
+        },
+        "REG02": {
+            "name": "Grenville",
+            "city_key": 76052
+        },
+        "REL01": {
+            "name": "Le Vieux-Longueuil",
+            "city_key": 58227
+        },
+        "REL03": {
+            "name": "Greenfield Park",
+            "city_key": 58227
+        },
+        "REL06": {
+            "name": "Saint-Hubert",
+            "city_key": 58227
+        },
+        "REM05": {
+            "name": "Outremont",
+            "city_key": 66023
+        },
+        "REM09": {
+            "name": "Anjou",
+            "city_key": 66023
+        },
+        "REM12": {
+            "name": "Verdun",
+            "city_key": 66023
+        },
+        "REM14": {
+            "name": "Saint-Léonard",
+            "city_key": 66023
+        },
+        "REM15": {
+            "name": "Saint-Laurent",
+            "city_key": 66023
+        },
+        "REM16": {
+            "name": "Montréal-Nord",
+            "city_key": 66023
+        },
+        "REM17": {
+            "name": "LaSalle",
+            "city_key": 66023
+        },
+        "REM19": {
+            "name": "Ville-Marie",
+            "city_key": 66023
+        },
+        "REM20": {
+            "name": "Le Sud-Ouest",
+            "city_key": 66023
+        },
+        "REM21": {
+            "name": "Le Plateau-Mont-Royal",
+            "city_key": 66023
+        },
+        "REM22": {
+            "name": "Mercier--Hochelaga-Maisonneuve",
+            "city_key": 66023
+        },
+        "REM23": {
+            "name": "Ahuntsic-Cartierville",
+            "city_key": 66023
+        },
+        "REM24": {
+            "name": "Rosemont--La Petite-Patrie",
+            "city_key": 66023
+        },
+        "REM25": {
+            "name": "Villeray--Saint-Michel--Parc-Ext.",
+            "city_key": 66023
+        },
+        "REM27": {
+            "name": "Lachine",
+            "city_key": 66023
+        },
+        "REM31": {
+            "name": "Pierrefonds-Roxboro",
+            "city_key": 66023
+        },
+        "REM32": {
+            "name": "L'Île-Bizard--Sainte-Geneviève",
+            "city_key": 66023
+        },
+        "REM33": {
+            "name": "Riv.-Prairies-Pte-aux-Trembles",
+            "city_key": 66023
+        },
+        "REM34": {
+            "name": "Côte-des-Neiges-Notre-Dame-de-Grâce",
+            "city_key": 66023
+        },
+        "REQ01": {
+            "name": "La Cité-Limoilou",
+            "city_key": 23027
+        },
+        "REQ02": {
+            "name": "Les Rivières",
+            "city_key": 23027
+        },
+        "REQ03": {
+            "name": "Sainte-Foy--Sillery--Cap-Rouge",
+            "city_key": 23027
+        },
+        "REQ04": {
+            "name": "Charlesbourg",
+            "city_key": 23027
+        },
+        "REQ05": {
+            "name": "Beauport",
+            "city_key": 23027
+        },
+        "REQ06": {
+            "name": "La Haute-Saint-Charles",
+            "city_key": 23027
+        },
+        "RES01": {
+            "name": "Chicoutimi",
+            "city_key": 94068
+        },
+        "RES02": {
+            "name": "Jonquière",
+            "city_key": 94068
+        },
+        "RES03": {
+            "name": "La Baie",
+            "city_key": 94068
+        }
+    },
+    "cities": {
+        "1023": {
+            "name": "Les Îles-de-la-Madeleine",
+            "region_key": 11
+        },
+        "1042": {
+            "name": "Grosse-Île",
+            "region_key": 11
+        },
+        "2005": {
+            "name": "Percé",
+            "region_key": 11
+        },
+        "2010": {
+            "name": "Sainte-Thérèse-de-Gaspé",
+            "region_key": 11
+        },
+        "2015": {
+            "name": "Grande-Rivière",
+            "region_key": 11
+        },
+        "2028": {
+            "name": "Chandler",
+            "region_key": 11
+        },
+        "2047": {
+            "name": "Port-Daniel--Gascons",
+            "region_key": 11
+        },
+        "3005": {
+            "name": "Gaspé",
+            "region_key": 11
+        },
+        "3010": {
+            "name": "Cloridorme",
+            "region_key": 11
+        },
+        "3015": {
+            "name": "Petite-Vallée",
+            "region_key": 11
+        },
+        "3020": {
+            "name": "Grande-Vallée",
+            "region_key": 11
+        },
+        "3025": {
+            "name": "Murdochville",
+            "region_key": 11
+        },
+        "4005": {
+            "name": "Sainte-Madeleine-Riv.-Madeleine",
+            "region_key": 11
+        },
+        "4010": {
+            "name": "Saint-Maxime-du-Mont-Louis",
+            "region_key": 11
+        },
+        "4015": {
+            "name": "Mont-Saint-Pierre",
+            "region_key": 11
+        },
+        "4020": {
+            "name": "Rivière-à-Claude",
+            "region_key": 11
+        },
+        "4025": {
+            "name": "Marsoui",
+            "region_key": 11
+        },
+        "4030": {
+            "name": "La Martre",
+            "region_key": 11
+        },
+        "4037": {
+            "name": "Sainte-Anne-des-Monts",
+            "region_key": 11
+        },
+        "4047": {
+            "name": "Cap-Chat",
+            "region_key": 11
+        },
+        "5010": {
+            "name": "Shigawake",
+            "region_key": 11
+        },
+        "5015": {
+            "name": "Saint-Godefroi",
+            "region_key": 11
+        },
+        "5020": {
+            "name": "Hope Town",
+            "region_key": 11
+        },
+        "5025": {
+            "name": "Hope",
+            "region_key": 11
+        },
+        "5032": {
+            "name": "Paspébiac",
+            "region_key": 11
+        },
+        "5040": {
+            "name": "New Carlisle",
+            "region_key": 11
+        },
+        "5045": {
+            "name": "Bonaventure",
+            "region_key": 11
+        },
+        "5050": {
+            "name": "Saint-Elzéar",
+            "region_key": 11
+        },
+        "5055": {
+            "name": "Saint-Siméon",
+            "region_key": 11
+        },
+        "5060": {
+            "name": "Caplan",
+            "region_key": 11
+        },
+        "5065": {
+            "name": "Saint-Alphonse",
+            "region_key": 11
+        },
+        "5070": {
+            "name": "New Richmond",
+            "region_key": 11
+        },
+        "5077": {
+            "name": "Cascapédia--Saint-Jules",
+            "region_key": 11
+        },
+        "6005": {
+            "name": "Maria",
+            "region_key": 11
+        },
+        "6013": {
+            "name": "Carleton-sur-Mer",
+            "region_key": 11
+        },
+        "6020": {
+            "name": "Nouvelle",
+            "region_key": 11
+        },
+        "6025": {
+            "name": "Escuminac",
+            "region_key": 11
+        },
+        "6030": {
+            "name": "Pointe-à-la-Croix",
+            "region_key": 11
+        },
+        "6035": {
+            "name": "Ristigouche-Partie-Sud-Est",
+            "region_key": 11
+        },
+        "6040": {
+            "name": "Saint-André-de-Restigouche",
+            "region_key": 11
+        },
+        "6045": {
+            "name": "Matapédia",
+            "region_key": 11
+        },
+        "6050": {
+            "name": "Saint-Alexis-de-Matapédia",
+            "region_key": 11
+        },
+        "6055": {
+            "name": "Saint-François-d'Assise",
+            "region_key": 11
+        },
+        "6060": {
+            "name": "L'Ascension-de-Patapédia",
+            "region_key": 11
+        },
+        "7005": {
+            "name": "Sainte-Marguerite-Marie",
+            "region_key": 1
+        },
+        "7010": {
+            "name": "Sainte-Florence",
+            "region_key": 1
+        },
+        "7018": {
+            "name": "Causapscal",
+            "region_key": 1
+        },
+        "7025": {
+            "name": "Albertville",
+            "region_key": 1
+        },
+        "7030": {
+            "name": "Saint-Léon-le-Grand",
+            "region_key": 1
+        },
+        "7035": {
+            "name": "Saint-Zénon-du-Lac-Humqui",
+            "region_key": 1
+        },
+        "7040": {
+            "name": "Sainte-Irène",
+            "region_key": 1
+        },
+        "7047": {
+            "name": "Amqui",
+            "region_key": 1
+        },
+        "7057": {
+            "name": "Lac-au-Saumon",
+            "region_key": 1
+        },
+        "7065": {
+            "name": "Saint-Alexandre-des-Lacs",
+            "region_key": 1
+        },
+        "7070": {
+            "name": "Saint-Tharcisius",
+            "region_key": 1
+        },
+        "7075": {
+            "name": "Saint-Vianney",
+            "region_key": 1
+        },
+        "7080": {
+            "name": "Val-Brillant",
+            "region_key": 1
+        },
+        "7085": {
+            "name": "Sayabec",
+            "region_key": 1
+        },
+        "7090": {
+            "name": "Saint-Cléophas",
+            "region_key": 1
+        },
+        "7095": {
+            "name": "Saint-Moïse",
+            "region_key": 1
+        },
+        "7100": {
+            "name": "Saint-Noêl",
+            "region_key": 1
+        },
+        "7105": {
+            "name": "Saint-Damase",
+            "region_key": 1
+        },
+        "8005": {
+            "name": "Les Méchins",
+            "region_key": 1
+        },
+        "8010": {
+            "name": "Saint-Jean-de-Cherbourg",
+            "region_key": 1
+        },
+        "8015": {
+            "name": "Grosses-Roches",
+            "region_key": 1
+        },
+        "8023": {
+            "name": "Sainte-Félicité",
+            "region_key": 1
+        },
+        "8030": {
+            "name": "Saint-Adelme",
+            "region_key": 1
+        },
+        "8035": {
+            "name": "Saint-René-de-Matane",
+            "region_key": 1
+        },
+        "8040": {
+            "name": "Sainte-Paule",
+            "region_key": 1
+        },
+        "8053": {
+            "name": "Matane",
+            "region_key": 1
+        },
+        "8065": {
+            "name": "Saint-Léandre",
+            "region_key": 1
+        },
+        "8073": {
+            "name": "Saint-Ulric",
+            "region_key": 1
+        },
+        "8080": {
+            "name": "Baie-des-Sables",
+            "region_key": 1
+        },
+        "9005": {
+            "name": "La Rédemption",
+            "region_key": 1
+        },
+        "9010": {
+            "name": "Saint-Charles-Garnier",
+            "region_key": 1
+        },
+        "9015": {
+            "name": "Les Hauteurs",
+            "region_key": 1
+        },
+        "9020": {
+            "name": "Sainte-Jeanne-d'Arc",
+            "region_key": 1
+        },
+        "9025": {
+            "name": "Saint-Gabriel-de-Rimouski",
+            "region_key": 1
+        },
+        "9030": {
+            "name": "Saint-Donat",
+            "region_key": 1
+        },
+        "9035": {
+            "name": "Sainte-Angèle-de-Mérici",
+            "region_key": 1
+        },
+        "9040": {
+            "name": "Padoue",
+            "region_key": 1
+        },
+        "9048": {
+            "name": "Métis-sur-Mer",
+            "region_key": 1
+        },
+        "9055": {
+            "name": "Saint-Octave-de-Métis",
+            "region_key": 1
+        },
+        "9060": {
+            "name": "Grand-Métis",
+            "region_key": 1
+        },
+        "9065": {
+            "name": "Price",
+            "region_key": 1
+        },
+        "9070": {
+            "name": "Saint-Joseph-de-Lepage",
+            "region_key": 1
+        },
+        "9077": {
+            "name": "Mont-Joli",
+            "region_key": 1
+        },
+        "9085": {
+            "name": "Sainte-Flavie",
+            "region_key": 1
+        },
+        "9092": {
+            "name": "Sainte-Luce",
+            "region_key": 1
+        },
+        "10005": {
+            "name": "Esprit-Saint",
+            "region_key": 1
+        },
+        "10010": {
+            "name": "La Trinité-des-Monts",
+            "region_key": 1
+        },
+        "10015": {
+            "name": "Saint-Narcisse-de-Rimouski",
+            "region_key": 1
+        },
+        "10025": {
+            "name": "Saint-Marcellin",
+            "region_key": 1
+        },
+        "10030": {
+            "name": "Saint-Anaclet-de-Lessard",
+            "region_key": 1
+        },
+        "10043": {
+            "name": "Rimouski",
+            "region_key": 1
+        },
+        "10060": {
+            "name": "Saint-Valérien",
+            "region_key": 1
+        },
+        "10070": {
+            "name": "Saint-Fabien",
+            "region_key": 1
+        },
+        "10075": {
+            "name": "Saint-Eugène-de-Ladrière",
+            "region_key": 1
+        },
+        "11005": {
+            "name": "Saint-Clément",
+            "region_key": 1
+        },
+        "11010": {
+            "name": "Saint-Jean-de-Dieu",
+            "region_key": 1
+        },
+        "11015": {
+            "name": "Sainte-Rita",
+            "region_key": 1
+        },
+        "11020": {
+            "name": "Saint-Guy",
+            "region_key": 1
+        },
+        "11025": {
+            "name": "Saint-Médard",
+            "region_key": 1
+        },
+        "11030": {
+            "name": "Sainte-Françoise",
+            "region_key": 1
+        },
+        "11035": {
+            "name": "Saint-Éloi",
+            "region_key": 1
+        },
+        "11040": {
+            "name": "Trois-Pistoles",
+            "region_key": 1
+        },
+        "11045": {
+            "name": "Notre-Dame-des-Neiges",
+            "region_key": 1
+        },
+        "11050": {
+            "name": "Saint-Mathieu-de-Rioux",
+            "region_key": 1
+        },
+        "11055": {
+            "name": "Saint-Simon",
+            "region_key": 1
+        },
+        "12005": {
+            "name": "Saint-Cyprien",
+            "region_key": 1
+        },
+        "12010": {
+            "name": "Saint-Hubert-de-Rivière-du-Loup",
+            "region_key": 1
+        },
+        "12015": {
+            "name": "Saint-Antonin",
+            "region_key": 1
+        },
+        "12020": {
+            "name": "Saint-Modeste",
+            "region_key": 1
+        },
+        "12025": {
+            "name": "Saint-François-Xavier-de-Viger",
+            "region_key": 1
+        },
+        "12030": {
+            "name": "Saint-Épiphane",
+            "region_key": 1
+        },
+        "12035": {
+            "name": "Saint-Paul-de-la-Croix",
+            "region_key": 1
+        },
+        "12043": {
+            "name": "L'Isle-Verte",
+            "region_key": 1
+        },
+        "12045": {
+            "name": "Notre-Dame-des-Sept-Douleurs",
+            "region_key": 1
+        },
+        "12057": {
+            "name": "Cacouna",
+            "region_key": 1
+        },
+        "12065": {
+            "name": "Saint-Arsène",
+            "region_key": 1
+        },
+        "12072": {
+            "name": "Rivière-du-Loup",
+            "region_key": 1
+        },
+        "12080": {
+            "name": "Notre-Dame-du-Portage",
+            "region_key": 1
+        },
+        "13005": {
+            "name": "Dégelis",
+            "region_key": 1
+        },
+        "13010": {
+            "name": "Saint-Jean-de-la-Lande",
+            "region_key": 1
+        },
+        "13015": {
+            "name": "Packington",
+            "region_key": 1
+        },
+        "13020": {
+            "name": "Saint-Marc-du-Lac-Long",
+            "region_key": 1
+        },
+        "13025": {
+            "name": "Rivière-Bleue",
+            "region_key": 1
+        },
+        "13030": {
+            "name": "Saint-Eusèbe",
+            "region_key": 1
+        },
+        "13040": {
+            "name": "Saint-Juste-du-Lac",
+            "region_key": 1
+        },
+        "13045": {
+            "name": "Auclair",
+            "region_key": 1
+        },
+        "13050": {
+            "name": "Lejeune",
+            "region_key": 1
+        },
+        "13055": {
+            "name": "Biencourt",
+            "region_key": 1
+        },
+        "13060": {
+            "name": "Lac-des-Aigles",
+            "region_key": 1
+        },
+        "13065": {
+            "name": "Saint-Michel-du-Squatec",
+            "region_key": 1
+        },
+        "13073": {
+            "name": "Témiscouata-sur-le-Lac",
+            "region_key": 1
+        },
+        "13075": {
+            "name": "Saint-Pierre-de-Lamy",
+            "region_key": 1
+        },
+        "13080": {
+            "name": "Saint-Louis-du-Ha! Ha!",
+            "region_key": 1
+        },
+        "13085": {
+            "name": "Saint-Elzéar-de-Témiscouata",
+            "region_key": 1
+        },
+        "13090": {
+            "name": "Saint-Honoré-de-Témiscouata",
+            "region_key": 1
+        },
+        "13095": {
+            "name": "Pohénégamook",
+            "region_key": 1
+        },
+        "13100": {
+            "name": "Saint-Athanase",
+            "region_key": 1
+        },
+        "14005": {
+            "name": "Mont-Carmel",
+            "region_key": 1
+        },
+        "14010": {
+            "name": "Saint-Bruno-de-Kamouraska",
+            "region_key": 1
+        },
+        "14018": {
+            "name": "Saint-Pascal",
+            "region_key": 1
+        },
+        "14025": {
+            "name": "Sainte-Hélène-de-Kamouraska",
+            "region_key": 1
+        },
+        "14030": {
+            "name": "Saint-Joseph-de-Kamouraska",
+            "region_key": 1
+        },
+        "14035": {
+            "name": "Saint-Alexandre-de-Kamouraska",
+            "region_key": 1
+        },
+        "14040": {
+            "name": "Saint-André",
+            "region_key": 1
+        },
+        "14045": {
+            "name": "Saint-Germain",
+            "region_key": 1
+        },
+        "14050": {
+            "name": "Kamouraska",
+            "region_key": 1
+        },
+        "14055": {
+            "name": "Saint-Denis-De La Bouteillerie",
+            "region_key": 1
+        },
+        "14060": {
+            "name": "Saint-Philippe-de-Néri",
+            "region_key": 1
+        },
+        "14065": {
+            "name": "Rivière-Ouelle",
+            "region_key": 1
+        },
+        "14070": {
+            "name": "Saint-Pacôme",
+            "region_key": 1
+        },
+        "14075": {
+            "name": "Saint-Gabriel-Lalemant",
+            "region_key": 1
+        },
+        "14080": {
+            "name": "Saint-Onésime-d'Ixworth",
+            "region_key": 1
+        },
+        "14085": {
+            "name": "La Pocatière",
+            "region_key": 1
+        },
+        "14090": {
+            "name": "Sainte-Anne-de-la-Pocatière",
+            "region_key": 1
+        },
+        "15005": {
+            "name": "Saint-Irénée",
+            "region_key": 3
+        },
+        "15013": {
+            "name": "La Malbaie",
+            "region_key": 3
+        },
+        "15025": {
+            "name": "Notre-Dame-des-Monts",
+            "region_key": 3
+        },
+        "15030": {
+            "name": "Saint-Aimé-des-Lacs",
+            "region_key": 3
+        },
+        "15035": {
+            "name": "Clermont",
+            "region_key": 3
+        },
+        "15058": {
+            "name": "Saint-Siméon",
+            "region_key": 3
+        },
+        "15065": {
+            "name": "Baie-Sainte-Catherine",
+            "region_key": 3
+        },
+        "16005": {
+            "name": "Petite-Rivière-Saint-François",
+            "region_key": 3
+        },
+        "16013": {
+            "name": "Baie-Saint-Paul",
+            "region_key": 3
+        },
+        "16023": {
+            "name": "L'Isle-aux-Coudres",
+            "region_key": 3
+        },
+        "16048": {
+            "name": "Les Éboulements",
+            "region_key": 3
+        },
+        "16050": {
+            "name": "Saint-Hilarion",
+            "region_key": 3
+        },
+        "16055": {
+            "name": "Saint-Urbain",
+            "region_key": 3
+        },
+        "17005": {
+            "name": "Saint-Omer",
+            "region_key": 12
+        },
+        "17010": {
+            "name": "Saint-Pamphile",
+            "region_key": 12
+        },
+        "17015": {
+            "name": "Saint-Adalbert",
+            "region_key": 12
+        },
+        "17020": {
+            "name": "Saint-Marcel",
+            "region_key": 12
+        },
+        "17025": {
+            "name": "Sainte-Félicité",
+            "region_key": 12
+        },
+        "17030": {
+            "name": "Sainte-Perpétue",
+            "region_key": 12
+        },
+        "17035": {
+            "name": "Tourville",
+            "region_key": 12
+        },
+        "17040": {
+            "name": "Saint-Damase-de-L'Islet",
+            "region_key": 12
+        },
+        "17045": {
+            "name": "Saint-Cyrille-de-Lessard",
+            "region_key": 12
+        },
+        "17055": {
+            "name": "Saint-Aubert",
+            "region_key": 12
+        },
+        "17060": {
+            "name": "Sainte-Louise",
+            "region_key": 12
+        },
+        "17065": {
+            "name": "Saint-Roch-des-Aulnaies",
+            "region_key": 12
+        },
+        "17070": {
+            "name": "Saint-Jean-Port-Joli",
+            "region_key": 12
+        },
+        "17078": {
+            "name": "L'Islet",
+            "region_key": 12
+        },
+        "18005": {
+            "name": "Saint-Just-de-Bretenières",
+            "region_key": 12
+        },
+        "18010": {
+            "name": "Lac-Frontière",
+            "region_key": 12
+        },
+        "18015": {
+            "name": "Saint-Fabien-de-Panet",
+            "region_key": 12
+        },
+        "18020": {
+            "name": "Sainte-Lucie-de-Beauregard",
+            "region_key": 12
+        },
+        "18025": {
+            "name": "Sainte-Apolline-de-Patton",
+            "region_key": 12
+        },
+        "18030": {
+            "name": "Saint-Paul-de-Montminy",
+            "region_key": 12
+        },
+        "18035": {
+            "name": "Sainte-Euphémie-sur-Riv-du-Sud",
+            "region_key": 12
+        },
+        "18040": {
+            "name": "Notre-Dame-du-Rosaire",
+            "region_key": 12
+        },
+        "18045": {
+            "name": "Cap-Saint-Ignace",
+            "region_key": 12
+        },
+        "18050": {
+            "name": "Montmagny",
+            "region_key": 12
+        },
+        "18055": {
+            "name": "Saint-Pierre/Rivière-du-Sud",
+            "region_key": 12
+        },
+        "18060": {
+            "name": "Saint-François-de-la-Rivière-du-Sud",
+            "region_key": 12
+        },
+        "18065": {
+            "name": "Berthier-sur-Mer",
+            "region_key": 12
+        },
+        "18070": {
+            "name": "Saint-Antoine/l'Isle-aux-Grues",
+            "region_key": 12
+        },
+        "19005": {
+            "name": "Saint-Philémon",
+            "region_key": 12
+        },
+        "19010": {
+            "name": "N-Dame-Auxiliatrice-Buckland",
+            "region_key": 12
+        },
+        "19015": {
+            "name": "Saint-Nazaire-de-Dorchester",
+            "region_key": 12
+        },
+        "19020": {
+            "name": "Saint-Léon-de-Standon",
+            "region_key": 12
+        },
+        "19025": {
+            "name": "Saint-Malachie",
+            "region_key": 12
+        },
+        "19030": {
+            "name": "Saint-Damien-de-Buckland",
+            "region_key": 12
+        },
+        "19037": {
+            "name": "Armagh",
+            "region_key": 12
+        },
+        "19045": {
+            "name": "Saint-Nérée-de-Bellechasse",
+            "region_key": 12
+        },
+        "19050": {
+            "name": "Saint-Lazare-de-Bellechasse",
+            "region_key": 12
+        },
+        "19055": {
+            "name": "Sainte-Claire",
+            "region_key": 12
+        },
+        "19062": {
+            "name": "Saint-Anselme",
+            "region_key": 12
+        },
+        "19068": {
+            "name": "Saint-Henri",
+            "region_key": 12
+        },
+        "19070": {
+            "name": "Honfleur",
+            "region_key": 12
+        },
+        "19075": {
+            "name": "Saint-Gervais",
+            "region_key": 12
+        },
+        "19082": {
+            "name": "Saint-Raphaêl",
+            "region_key": 12
+        },
+        "19090": {
+            "name": "La Durantaye",
+            "region_key": 12
+        },
+        "19097": {
+            "name": "Saint-Charles-de-Bellechasse",
+            "region_key": 12
+        },
+        "19105": {
+            "name": "Beaumont",
+            "region_key": 12
+        },
+        "19110": {
+            "name": "Saint-Michel-de-Bellechasse",
+            "region_key": 12
+        },
+        "19117": {
+            "name": "Saint-Vallier",
+            "region_key": 12
+        },
+        "20005": {
+            "name": "Saint-François-de-l'Île-d'Orléans",
+            "region_key": 3
+        },
+        "20010": {
+            "name": "Sainte-Famille",
+            "region_key": 3
+        },
+        "20015": {
+            "name": "Saint-Jean-de-l'Île-d'Orléans",
+            "region_key": 3
+        },
+        "20020": {
+            "name": "Saint-Laurent-de-l'Île-d'Orléans",
+            "region_key": 3
+        },
+        "20025": {
+            "name": "Saint-Pierre-de-l'Île-d'Orléans",
+            "region_key": 3
+        },
+        "20030": {
+            "name": "Sainte-Pétronille",
+            "region_key": 3
+        },
+        "21005": {
+            "name": "Saint-Tite-des-Caps",
+            "region_key": 3
+        },
+        "21010": {
+            "name": "Saint-Ferréol-les-Neiges",
+            "region_key": 3
+        },
+        "21015": {
+            "name": "Saint-Louis/Cap-Tourmente",
+            "region_key": 3
+        },
+        "21020": {
+            "name": "Saint-Joachim",
+            "region_key": 3
+        },
+        "21025": {
+            "name": "Beaupré",
+            "region_key": 3
+        },
+        "21030": {
+            "name": "Sainte-Anne-de-Beaupré",
+            "region_key": 3
+        },
+        "21035": {
+            "name": "ChÃ¢teau-Richer",
+            "region_key": 3
+        },
+        "21040": {
+            "name": "L'Ange-Gardien",
+            "region_key": 3
+        },
+        "21045": {
+            "name": "Boischatel",
+            "region_key": 3
+        },
+        "22005": {
+            "name": "Ste-Catherine-de-la-Jacques-Cartier",
+            "region_key": 3
+        },
+        "22010": {
+            "name": "Fossambault-sur-le-Lac",
+            "region_key": 3
+        },
+        "22015": {
+            "name": "Lac-Saint-Joseph",
+            "region_key": 3
+        },
+        "22020": {
+            "name": "Shannon",
+            "region_key": 3
+        },
+        "22025": {
+            "name": "Saint-Gabriel-de-Valcartier",
+            "region_key": 3
+        },
+        "22030": {
+            "name": "Lac-Delage",
+            "region_key": 3
+        },
+        "22035": {
+            "name": "Stoneham-et-Tewkesbury",
+            "region_key": 3
+        },
+        "22040": {
+            "name": "Lac-Beauport",
+            "region_key": 3
+        },
+        "22045": {
+            "name": "Sainte-Brigitte-de-Laval",
+            "region_key": 3
+        },
+        "23015": {
+            "name": "Notre-Dame-des-Anges",
+            "region_key": 3
+        },
+        "23027": {
+            "name": "Québec",
+            "region_key": 3
+        },
+        "23057": {
+            "name": "L'Ancienne-Lorette",
+            "region_key": 3
+        },
+        "23072": {
+            "name": "Saint-Augustin-de-Desmaures",
+            "region_key": 3
+        },
+        "25213": {
+            "name": "Lévis",
+            "region_key": 12
+        },
+        "26005": {
+            "name": "Frampton",
+            "region_key": 12
+        },
+        "26010": {
+            "name": "Saints-Anges",
+            "region_key": 12
+        },
+        "26015": {
+            "name": "Vallée-Jonction",
+            "region_key": 12
+        },
+        "26022": {
+            "name": "Saint-Elzéar",
+            "region_key": 12
+        },
+        "26030": {
+            "name": "Sainte-Marie",
+            "region_key": 12
+        },
+        "26035": {
+            "name": "Sainte-Marguerite",
+            "region_key": 12
+        },
+        "26040": {
+            "name": "Sainte-Hénédine",
+            "region_key": 12
+        },
+        "26048": {
+            "name": "Scott",
+            "region_key": 12
+        },
+        "26055": {
+            "name": "Saint-Bernard",
+            "region_key": 12
+        },
+        "26063": {
+            "name": "Saint-Isidore",
+            "region_key": 12
+        },
+        "26070": {
+            "name": "Saint-Lambert-de-Lauzon",
+            "region_key": 12
+        },
+        "27008": {
+            "name": "Saint-Victor",
+            "region_key": 12
+        },
+        "27015": {
+            "name": "Saint-Alfred",
+            "region_key": 12
+        },
+        "27028": {
+            "name": "Beauceville",
+            "region_key": 12
+        },
+        "27035": {
+            "name": "Saint-Odilon-de-Cranbourne",
+            "region_key": 12
+        },
+        "27043": {
+            "name": "Saint-Joseph-de-Beauce",
+            "region_key": 12
+        },
+        "27050": {
+            "name": "Saint-Joseph-des-Érables",
+            "region_key": 12
+        },
+        "27055": {
+            "name": "Saint-Jules",
+            "region_key": 12
+        },
+        "27060": {
+            "name": "Tring-Jonction",
+            "region_key": 12
+        },
+        "27065": {
+            "name": "Saint-Frédéric",
+            "region_key": 12
+        },
+        "27070": {
+            "name": "Saint-Séverin",
+            "region_key": 12
+        },
+        "28005": {
+            "name": "Saint-Zacharie",
+            "region_key": 12
+        },
+        "28015": {
+            "name": "Sainte-Aurélie",
+            "region_key": 12
+        },
+        "28020": {
+            "name": "Saint-Prosper",
+            "region_key": 12
+        },
+        "28025": {
+            "name": "Saint-Benjamin",
+            "region_key": 12
+        },
+        "28030": {
+            "name": "Sainte-Rose-de-Watford",
+            "region_key": 12
+        },
+        "28035": {
+            "name": "Saint-Louis-de-Gonzague",
+            "region_key": 12
+        },
+        "28040": {
+            "name": "Saint-Cyprien",
+            "region_key": 12
+        },
+        "28045": {
+            "name": "Sainte-Justine",
+            "region_key": 12
+        },
+        "28053": {
+            "name": "Lac-Etchemin",
+            "region_key": 12
+        },
+        "28060": {
+            "name": "Saint-Luc-de-Bellechasse",
+            "region_key": 12
+        },
+        "28065": {
+            "name": "Sainte-Sabine",
+            "region_key": 12
+        },
+        "28070": {
+            "name": "Saint-Camille-de-Lellis",
+            "region_key": 12
+        },
+        "28075": {
+            "name": "Saint-Magloire",
+            "region_key": 12
+        },
+        "29005": {
+            "name": "Saint-Théophile",
+            "region_key": 12
+        },
+        "29013": {
+            "name": "Saint-Gédéon-de-Beauce",
+            "region_key": 12
+        },
+        "29020": {
+            "name": "Saint-Hilaire-de-Dorset",
+            "region_key": 12
+        },
+        "29025": {
+            "name": "Saint-Évariste-de-Forsyth",
+            "region_key": 12
+        },
+        "29030": {
+            "name": "La Guadeloupe",
+            "region_key": 12
+        },
+        "29038": {
+            "name": "Saint-Honoré-de-Shenley",
+            "region_key": 12
+        },
+        "29045": {
+            "name": "Saint-Martin",
+            "region_key": 12
+        },
+        "29050": {
+            "name": "Saint-René",
+            "region_key": 12
+        },
+        "29057": {
+            "name": "Saint-Côme--Linière",
+            "region_key": 12
+        },
+        "29065": {
+            "name": "Saint-Philibert",
+            "region_key": 12
+        },
+        "29073": {
+            "name": "Saint-Georges",
+            "region_key": 12
+        },
+        "29095": {
+            "name": "Lac-Poulin",
+            "region_key": 12
+        },
+        "29100": {
+            "name": "Saint-BenoÃ®t-Labre",
+            "region_key": 12
+        },
+        "29112": {
+            "name": "Saint-Éphrem-de-Beauce",
+            "region_key": 12
+        },
+        "29120": {
+            "name": "Notre-Dame-des-Pins",
+            "region_key": 12
+        },
+        "29125": {
+            "name": "Saint-Simon-les-Mines",
+            "region_key": 12
+        },
+        "30005": {
+            "name": "Saint-Augustin-de-Woburn",
+            "region_key": 5
+        },
+        "30010": {
+            "name": "Notre-Dame-des-Bois",
+            "region_key": 5
+        },
+        "30015": {
+            "name": "Val-Racine",
+            "region_key": 5
+        },
+        "30020": {
+            "name": "Piopolis",
+            "region_key": 5
+        },
+        "30025": {
+            "name": "Frontenac",
+            "region_key": 5
+        },
+        "30030": {
+            "name": "Lac-Mégantic",
+            "region_key": 5
+        },
+        "30035": {
+            "name": "Marston",
+            "region_key": 5
+        },
+        "30040": {
+            "name": "Milan",
+            "region_key": 5
+        },
+        "30045": {
+            "name": "Nantes",
+            "region_key": 5
+        },
+        "30050": {
+            "name": "Sainte-Cécile-de-Whitton",
+            "region_key": 5
+        },
+        "30055": {
+            "name": "Audet",
+            "region_key": 5
+        },
+        "30070": {
+            "name": "Saint-Robert-Bellarmin",
+            "region_key": 5
+        },
+        "30072": {
+            "name": "Saint-Ludger",
+            "region_key": 5
+        },
+        "30080": {
+            "name": "Lac-Drolet",
+            "region_key": 5
+        },
+        "30085": {
+            "name": "Saint-Sébastien",
+            "region_key": 5
+        },
+        "30090": {
+            "name": "Courcelles",
+            "region_key": 5
+        },
+        "30095": {
+            "name": "Lambton",
+            "region_key": 5
+        },
+        "30100": {
+            "name": "Saint-Romain",
+            "region_key": 5
+        },
+        "30105": {
+            "name": "Stornoway",
+            "region_key": 5
+        },
+        "30110": {
+            "name": "Stratford",
+            "region_key": 5
+        },
+        "31008": {
+            "name": "Beaulac-Garthby",
+            "region_key": 12
+        },
+        "31015": {
+            "name": "Disraeli",
+            "region_key": 12
+        },
+        "31020": {
+            "name": "Disraeli",
+            "region_key": 12
+        },
+        "31025": {
+            "name": "Saint-Jacques/Wolfestown",
+            "region_key": 12
+        },
+        "31030": {
+            "name": "Saint-Fortunat",
+            "region_key": 12
+        },
+        "31035": {
+            "name": "Saint-Julien",
+            "region_key": 12
+        },
+        "31040": {
+            "name": "Irlande",
+            "region_key": 12
+        },
+        "31045": {
+            "name": "Saint-Joseph-de-Coleraine",
+            "region_key": 12
+        },
+        "31050": {
+            "name": "Sainte-Praxède",
+            "region_key": 12
+        },
+        "31056": {
+            "name": "Adstock",
+            "region_key": 12
+        },
+        "31060": {
+            "name": "Sainte-Clotilde-de-Beauce",
+            "region_key": 12
+        },
+        "31084": {
+            "name": "Thetford Mines",
+            "region_key": 12
+        },
+        "31095": {
+            "name": "Saint-Adrien-d'Irlande",
+            "region_key": 12
+        },
+        "31100": {
+            "name": "Saint-Jean-de-Brébeuf",
+            "region_key": 12
+        },
+        "31105": {
+            "name": "Kinnear's Mills",
+            "region_key": 12
+        },
+        "31122": {
+            "name": "East Broughton",
+            "region_key": 12
+        },
+        "31130": {
+            "name": "Sacré-Coeur-de-Jésus",
+            "region_key": 12
+        },
+        "31135": {
+            "name": "Saint-Pierre-de-Broughton",
+            "region_key": 12
+        },
+        "31140": {
+            "name": "Saint-Jacques-de-Leeds",
+            "region_key": 12
+        },
+        "32013": {
+            "name": "Saint-Ferdinand",
+            "region_key": 17
+        },
+        "32023": {
+            "name": "Sainte-Sophie-d'Halifax",
+            "region_key": 17
+        },
+        "32033": {
+            "name": "Princeville",
+            "region_key": 17
+        },
+        "32040": {
+            "name": "Plessisville",
+            "region_key": 17
+        },
+        "32045": {
+            "name": "Plessisville",
+            "region_key": 17
+        },
+        "32050": {
+            "name": "Saint-Pierre-Baptiste",
+            "region_key": 17
+        },
+        "32058": {
+            "name": "Inverness",
+            "region_key": 17
+        },
+        "32065": {
+            "name": "Lyster",
+            "region_key": 17
+        },
+        "32072": {
+            "name": "Laurierville",
+            "region_key": 17
+        },
+        "32080": {
+            "name": "Notre-Dame-de-Lourdes",
+            "region_key": 17
+        },
+        "32085": {
+            "name": "Villeroy",
+            "region_key": 17
+        },
+        "33007": {
+            "name": "Saint-Sylvestre",
+            "region_key": 12
+        },
+        "33017": {
+            "name": "Sainte-Agathe-de-Lotbinière",
+            "region_key": 12
+        },
+        "33025": {
+            "name": "Saint-Patrice-de-Beaurivage",
+            "region_key": 12
+        },
+        "33030": {
+            "name": "Saint-Narcisse-de-Beaurivage",
+            "region_key": 12
+        },
+        "33035": {
+            "name": "Saint-Gilles",
+            "region_key": 12
+        },
+        "33040": {
+            "name": "Dosquet",
+            "region_key": 12
+        },
+        "33045": {
+            "name": "Saint-Agapit",
+            "region_key": 12
+        },
+        "33052": {
+            "name": "Saint-Flavien",
+            "region_key": 12
+        },
+        "33060": {
+            "name": "Laurier-Station",
+            "region_key": 12
+        },
+        "33065": {
+            "name": "Saint-Janvier-de-Joly",
+            "region_key": 12
+        },
+        "33070": {
+            "name": "Val-Alain",
+            "region_key": 12
+        },
+        "33080": {
+            "name": "Saint-Édouard-de-Lotbinière",
+            "region_key": 12
+        },
+        "33085": {
+            "name": "N.-D.-Sacré-Coeur-Issoudun",
+            "region_key": 12
+        },
+        "33090": {
+            "name": "Saint-Apollinaire",
+            "region_key": 12
+        },
+        "33095": {
+            "name": "Saint-Antoine-de-Tilly",
+            "region_key": 12
+        },
+        "33102": {
+            "name": "Sainte-Croix",
+            "region_key": 12
+        },
+        "33115": {
+            "name": "Lotbinière",
+            "region_key": 12
+        },
+        "33123": {
+            "name": "Leclercville",
+            "region_key": 12
+        },
+        "34007": {
+            "name": "Neuville",
+            "region_key": 3
+        },
+        "34017": {
+            "name": "Pont-Rouge",
+            "region_key": 3
+        },
+        "34025": {
+            "name": "Donnacona",
+            "region_key": 3
+        },
+        "34030": {
+            "name": "Cap-Santé",
+            "region_key": 3
+        },
+        "34038": {
+            "name": "Saint-Basile",
+            "region_key": 3
+        },
+        "34048": {
+            "name": "Portneuf",
+            "region_key": 3
+        },
+        "34058": {
+            "name": "Deschambault-Grondines",
+            "region_key": 3
+        },
+        "34060": {
+            "name": "Saint-Gilbert",
+            "region_key": 3
+        },
+        "34065": {
+            "name": "Saint-Marc-des-Carrières",
+            "region_key": 3
+        },
+        "34078": {
+            "name": "Saint-Casimir",
+            "region_key": 3
+        },
+        "34085": {
+            "name": "Saint-Thuribe",
+            "region_key": 3
+        },
+        "34090": {
+            "name": "Saint-Ubalde",
+            "region_key": 3
+        },
+        "34097": {
+            "name": "Saint-Alban",
+            "region_key": 3
+        },
+        "34105": {
+            "name": "Sainte-Christine-d'Auvergne",
+            "region_key": 3
+        },
+        "34115": {
+            "name": "Saint-Léonard-de-Portneuf",
+            "region_key": 3
+        },
+        "34120": {
+            "name": "Lac-Sergent",
+            "region_key": 3
+        },
+        "34128": {
+            "name": "Saint-Raymond",
+            "region_key": 3
+        },
+        "34135": {
+            "name": "Rivière-à-Pierre",
+            "region_key": 3
+        },
+        "35005": {
+            "name": "Notre-Dame-de-Montauban",
+            "region_key": 4
+        },
+        "35010": {
+            "name": "Lac-aux-Sables",
+            "region_key": 4
+        },
+        "35015": {
+            "name": "Saint-Adelphe",
+            "region_key": 4
+        },
+        "35020": {
+            "name": "Saint-Séverin",
+            "region_key": 4
+        },
+        "35027": {
+            "name": "Saint-Tite",
+            "region_key": 4
+        },
+        "35035": {
+            "name": "Hérouxville",
+            "region_key": 4
+        },
+        "35040": {
+            "name": "Grandes-Piles",
+            "region_key": 4
+        },
+        "35045": {
+            "name": "Saint-Roch-de-Mékinac",
+            "region_key": 4
+        },
+        "35050": {
+            "name": "Sainte-Thècle",
+            "region_key": 4
+        },
+        "35055": {
+            "name": "Trois-Rives",
+            "region_key": 4
+        },
+        "36033": {
+            "name": "Shawinigan",
+            "region_key": 4
+        },
+        "37067": {
+            "name": "Trois-Rivières",
+            "region_key": 4
+        },
+        "37205": {
+            "name": "Sainte-Anne-de-la-Pérade",
+            "region_key": 4
+        },
+        "37210": {
+            "name": "Batiscan",
+            "region_key": 4
+        },
+        "37215": {
+            "name": "Sainte-Geneviève-de-Batiscan",
+            "region_key": 4
+        },
+        "37220": {
+            "name": "Champlain",
+            "region_key": 4
+        },
+        "37225": {
+            "name": "Saint-Luc-de-Vincennes",
+            "region_key": 4
+        },
+        "37230": {
+            "name": "Saint-Maurice",
+            "region_key": 4
+        },
+        "37235": {
+            "name": "Notre-Dame-du-Mont-Carmel",
+            "region_key": 4
+        },
+        "37240": {
+            "name": "Saint-Narcisse",
+            "region_key": 4
+        },
+        "37245": {
+            "name": "Saint-Stanislas",
+            "region_key": 4
+        },
+        "37250": {
+            "name": "Saint-Prosper-de-Champlain",
+            "region_key": 4
+        },
+        "38005": {
+            "name": "Saint-Sylvère",
+            "region_key": 17
+        },
+        "38010": {
+            "name": "Bécancour",
+            "region_key": 17
+        },
+        "38015": {
+            "name": "Sainte-Marie-de-Blandford",
+            "region_key": 17
+        },
+        "38020": {
+            "name": "Lemieux",
+            "region_key": 17
+        },
+        "38028": {
+            "name": "Manseau",
+            "region_key": 17
+        },
+        "38035": {
+            "name": "Sainte-Françoise",
+            "region_key": 17
+        },
+        "38040": {
+            "name": "Sainte-Sophie-de-Lévrard",
+            "region_key": 17
+        },
+        "38047": {
+            "name": "Fortierville",
+            "region_key": 17
+        },
+        "38055": {
+            "name": "Parisville",
+            "region_key": 17
+        },
+        "38060": {
+            "name": "Sainte-Cécile-de-Lévrard",
+            "region_key": 17
+        },
+        "38065": {
+            "name": "Saint-Pierre-les-Becquets",
+            "region_key": 17
+        },
+        "38070": {
+            "name": "Deschaillons-sur-Saint-Laurent",
+            "region_key": 17
+        },
+        "39005": {
+            "name": "Saints-Martyrs-Canadiens",
+            "region_key": 17
+        },
+        "39010": {
+            "name": "Ham-Nord",
+            "region_key": 17
+        },
+        "39015": {
+            "name": "Notre-Dame-de-Ham",
+            "region_key": 17
+        },
+        "39020": {
+            "name": "Saint-Rémi-de-Tingwick",
+            "region_key": 17
+        },
+        "39025": {
+            "name": "Tingwick",
+            "region_key": 17
+        },
+        "39030": {
+            "name": "Chesterville",
+            "region_key": 17
+        },
+        "39035": {
+            "name": "Sainte-Hélène-de-Chester",
+            "region_key": 17
+        },
+        "39043": {
+            "name": "Saint-Norbert-d'Arthabaska",
+            "region_key": 17
+        },
+        "39060": {
+            "name": "Saint-Christophe-d'Arthabaska",
+            "region_key": 17
+        },
+        "39062": {
+            "name": "Victoriaville",
+            "region_key": 17
+        },
+        "39077": {
+            "name": "Warwick",
+            "region_key": 17
+        },
+        "39085": {
+            "name": "Saint-Albert",
+            "region_key": 17
+        },
+        "39090": {
+            "name": "Sainte-Élizabeth-de-Warwick",
+            "region_key": 17
+        },
+        "39097": {
+            "name": "Kingsey Falls",
+            "region_key": 17
+        },
+        "39105": {
+            "name": "Sainte-Séraphine",
+            "region_key": 17
+        },
+        "39117": {
+            "name": "Sainte-Clotilde-de-Horton",
+            "region_key": 17
+        },
+        "39130": {
+            "name": "Saint-Samuel",
+            "region_key": 17
+        },
+        "39135": {
+            "name": "Saint-Valère",
+            "region_key": 17
+        },
+        "39145": {
+            "name": "Saint-Rosaire",
+            "region_key": 17
+        },
+        "39152": {
+            "name": "Daveluyville",
+            "region_key": 17
+        },
+        "39165": {
+            "name": "Maddington Falls",
+            "region_key": 17
+        },
+        "39170": {
+            "name": "Saint-Louis-de-Blandford",
+            "region_key": 17
+        },
+        "40005": {
+            "name": "Ham-Sud",
+            "region_key": 5
+        },
+        "40010": {
+            "name": "Saint-Adrien",
+            "region_key": 5
+        },
+        "40017": {
+            "name": "Wotton",
+            "region_key": 5
+        },
+        "40025": {
+            "name": "Saint-Camille",
+            "region_key": 5
+        },
+        "40032": {
+            "name": "Saint-Georges-de-Windsor",
+            "region_key": 5
+        },
+        "40043": {
+            "name": "Asbestos",
+            "region_key": 5
+        },
+        "40047": {
+            "name": "Danville",
+            "region_key": 5
+        },
+        "41012": {
+            "name": "Saint-Isidore-de-Clifton",
+            "region_key": 5
+        },
+        "41020": {
+            "name": "Chartierville",
+            "region_key": 5
+        },
+        "41027": {
+            "name": "La Patrie",
+            "region_key": 5
+        },
+        "41037": {
+            "name": "Newport",
+            "region_key": 5
+        },
+        "41038": {
+            "name": "Cookshire-Eaton",
+            "region_key": 5
+        },
+        "41055": {
+            "name": "Ascot Corner",
+            "region_key": 5
+        },
+        "41060": {
+            "name": "East Angus",
+            "region_key": 5
+        },
+        "41065": {
+            "name": "Westbury",
+            "region_key": 5
+        },
+        "41070": {
+            "name": "Bury",
+            "region_key": 5
+        },
+        "41075": {
+            "name": "Hampden",
+            "region_key": 5
+        },
+        "41080": {
+            "name": "Scotstown",
+            "region_key": 5
+        },
+        "41085": {
+            "name": "Lingwick",
+            "region_key": 5
+        },
+        "41098": {
+            "name": "Weedon",
+            "region_key": 5
+        },
+        "41117": {
+            "name": "Dudswell",
+            "region_key": 5
+        },
+        "42005": {
+            "name": "Stoke",
+            "region_key": 5
+        },
+        "42020": {
+            "name": "Saint-François-Xavier-Brompton",
+            "region_key": 5
+        },
+        "42025": {
+            "name": "Saint-Denis-de-Brompton",
+            "region_key": 5
+        },
+        "42032": {
+            "name": "Racine",
+            "region_key": 5
+        },
+        "42040": {
+            "name": "Bonsecours",
+            "region_key": 5
+        },
+        "42045": {
+            "name": "Lawrenceville",
+            "region_key": 5
+        },
+        "42050": {
+            "name": "Sainte-Anne-de-la-Rochelle",
+            "region_key": 5
+        },
+        "42055": {
+            "name": "Valcourt",
+            "region_key": 5
+        },
+        "42060": {
+            "name": "Valcourt",
+            "region_key": 5
+        },
+        "42065": {
+            "name": "Maricourt",
+            "region_key": 5
+        },
+        "42070": {
+            "name": "Kingsbury",
+            "region_key": 5
+        },
+        "42075": {
+            "name": "Melbourne",
+            "region_key": 5
+        },
+        "42078": {
+            "name": "Ulverton",
+            "region_key": 5
+        },
+        "42088": {
+            "name": "Windsor",
+            "region_key": 5
+        },
+        "42095": {
+            "name": "Val-Joli",
+            "region_key": 5
+        },
+        "42098": {
+            "name": "Richmond",
+            "region_key": 5
+        },
+        "42100": {
+            "name": "Saint-Claude",
+            "region_key": 5
+        },
+        "42110": {
+            "name": "Cleveland",
+            "region_key": 5
+        },
+        "43027": {
+            "name": "Sherbrooke",
+            "region_key": 5
+        },
+        "44003": {
+            "name": "Saint-Malo",
+            "region_key": 5
+        },
+        "44005": {
+            "name": "Saint-Venant-de-Paquette",
+            "region_key": 5
+        },
+        "44010": {
+            "name": "East Hereford",
+            "region_key": 5
+        },
+        "44015": {
+            "name": "Saint-Herménégilde",
+            "region_key": 5
+        },
+        "44023": {
+            "name": "Dixville",
+            "region_key": 5
+        },
+        "44037": {
+            "name": "Coaticook",
+            "region_key": 5
+        },
+        "44045": {
+            "name": "Barnston-Ouest",
+            "region_key": 5
+        },
+        "44050": {
+            "name": "Stanstead-Est",
+            "region_key": 5
+        },
+        "44055": {
+            "name": "Sainte-Edwidge-de-Clifton",
+            "region_key": 5
+        },
+        "44060": {
+            "name": "Martinville",
+            "region_key": 5
+        },
+        "44071": {
+            "name": "Compton",
+            "region_key": 5
+        },
+        "44080": {
+            "name": "Waterville",
+            "region_key": 5
+        },
+        "45008": {
+            "name": "Stanstead",
+            "region_key": 5
+        },
+        "45020": {
+            "name": "Ogden",
+            "region_key": 5
+        },
+        "45025": {
+            "name": "Stanstead",
+            "region_key": 5
+        },
+        "45030": {
+            "name": "Potton",
+            "region_key": 5
+        },
+        "45035": {
+            "name": "Ayer's Cliff",
+            "region_key": 5
+        },
+        "45043": {
+            "name": "Hatley",
+            "region_key": 5
+        },
+        "45050": {
+            "name": "North Hatley",
+            "region_key": 5
+        },
+        "45055": {
+            "name": "Hatley",
+            "region_key": 5
+        },
+        "45060": {
+            "name": "Sainte-Catherine-de-Hatley",
+            "region_key": 5
+        },
+        "45072": {
+            "name": "Magog",
+            "region_key": 5
+        },
+        "45080": {
+            "name": "Saint-BenoÃ®t-du-Lac",
+            "region_key": 5
+        },
+        "45085": {
+            "name": "Austin",
+            "region_key": 5
+        },
+        "45093": {
+            "name": "Eastman",
+            "region_key": 5
+        },
+        "45095": {
+            "name": "Bolton-Est",
+            "region_key": 5
+        },
+        "45100": {
+            "name": "Saint-Étienne-de-Bolton",
+            "region_key": 5
+        },
+        "45105": {
+            "name": "Stukely-Sud",
+            "region_key": 5
+        },
+        "45115": {
+            "name": "Orford",
+            "region_key": 5
+        },
+        "46005": {
+            "name": "Abercorn",
+            "region_key": 16
+        },
+        "46010": {
+            "name": "Frelighsburg",
+            "region_key": 16
+        },
+        "46017": {
+            "name": "Saint-Armand",
+            "region_key": 16
+        },
+        "46025": {
+            "name": "Pike River",
+            "region_key": 16
+        },
+        "46030": {
+            "name": "Stanbridge Station",
+            "region_key": 16
+        },
+        "46035": {
+            "name": "Bedford",
+            "region_key": 16
+        },
+        "46040": {
+            "name": "Bedford",
+            "region_key": 16
+        },
+        "46045": {
+            "name": "Stanbridge East",
+            "region_key": 16
+        },
+        "46050": {
+            "name": "Dunham",
+            "region_key": 16
+        },
+        "46058": {
+            "name": "Sutton",
+            "region_key": 16
+        },
+        "46065": {
+            "name": "Bolton-Ouest",
+            "region_key": 16
+        },
+        "46070": {
+            "name": "Brome",
+            "region_key": 16
+        },
+        "46075": {
+            "name": "Lac-Brome",
+            "region_key": 16
+        },
+        "46078": {
+            "name": "Bromont",
+            "region_key": 16
+        },
+        "46080": {
+            "name": "Cowansville",
+            "region_key": 16
+        },
+        "46085": {
+            "name": "East Farnham",
+            "region_key": 16
+        },
+        "46090": {
+            "name": "Brigham",
+            "region_key": 16
+        },
+        "46095": {
+            "name": "Saint-Ignace-de-Stanbridge",
+            "region_key": 16
+        },
+        "46100": {
+            "name": "Notre-Dame-de-Stanbridge",
+            "region_key": 16
+        },
+        "46105": {
+            "name": "Sainte-Sabine",
+            "region_key": 16
+        },
+        "46112": {
+            "name": "Farnham",
+            "region_key": 16
+        },
+        "47010": {
+            "name": "Saint-Alphonse-de-Granby",
+            "region_key": 16
+        },
+        "47017": {
+            "name": "Granby",
+            "region_key": 16
+        },
+        "47025": {
+            "name": "Waterloo",
+            "region_key": 16
+        },
+        "47030": {
+            "name": "Warden",
+            "region_key": 16
+        },
+        "47035": {
+            "name": "Shefford",
+            "region_key": 16
+        },
+        "47040": {
+            "name": "Saint-Joachim-de-Shefford",
+            "region_key": 16
+        },
+        "47047": {
+            "name": "Roxton Pond",
+            "region_key": 16
+        },
+        "47055": {
+            "name": "Sainte-Cécile-de-Milton",
+            "region_key": 16
+        },
+        "48005": {
+            "name": "Béthanie",
+            "region_key": 16
+        },
+        "48010": {
+            "name": "Roxton Falls",
+            "region_key": 16
+        },
+        "48015": {
+            "name": "Roxton",
+            "region_key": 16
+        },
+        "48020": {
+            "name": "Sainte-Christine",
+            "region_key": 16
+        },
+        "48028": {
+            "name": "Acton Vale",
+            "region_key": 16
+        },
+        "48038": {
+            "name": "Upton",
+            "region_key": 16
+        },
+        "48045": {
+            "name": "Saint-Théodore-d'Acton",
+            "region_key": 16
+        },
+        "48050": {
+            "name": "Saint-Nazaire-d'Acton",
+            "region_key": 16
+        },
+        "49005": {
+            "name": "Saint-Félix-de-Kingsey",
+            "region_key": 17
+        },
+        "49015": {
+            "name": "Durham-Sud",
+            "region_key": 17
+        },
+        "49020": {
+            "name": "Lefebvre",
+            "region_key": 17
+        },
+        "49025": {
+            "name": "L'Avenir",
+            "region_key": 17
+        },
+        "49030": {
+            "name": "Saint-Lucien",
+            "region_key": 17
+        },
+        "49040": {
+            "name": "Wickham",
+            "region_key": 17
+        },
+        "49048": {
+            "name": "Saint-Germain-de-Grantham",
+            "region_key": 17
+        },
+        "49058": {
+            "name": "Drummondville",
+            "region_key": 17
+        },
+        "49070": {
+            "name": "Saint-Cyrille-de-Wendover",
+            "region_key": 17
+        },
+        "49075": {
+            "name": "Notre-Dame-du-Bon-Conseil",
+            "region_key": 17
+        },
+        "49080": {
+            "name": "Notre-Dame-du-Bon-Conseil",
+            "region_key": 17
+        },
+        "49085": {
+            "name": "Sainte-Brigitte-des-Saults",
+            "region_key": 17
+        },
+        "49095": {
+            "name": "Saint-Majorique-de-Grantham",
+            "region_key": 17
+        },
+        "49100": {
+            "name": "Saint-Edmond-de-Grantham",
+            "region_key": 17
+        },
+        "49105": {
+            "name": "Saint-Eugène",
+            "region_key": 17
+        },
+        "49113": {
+            "name": "Saint-Guillaume",
+            "region_key": 17
+        },
+        "49125": {
+            "name": "Saint-Bonaventure",
+            "region_key": 17
+        },
+        "49130": {
+            "name": "Saint-Pie-de-Guire",
+            "region_key": 17
+        },
+        "50005": {
+            "name": "Sainte-Eulalie",
+            "region_key": 17
+        },
+        "50013": {
+            "name": "Aston-Jonction",
+            "region_key": 17
+        },
+        "50023": {
+            "name": "Saint-Wenceslas",
+            "region_key": 17
+        },
+        "50030": {
+            "name": "Saint-Célestin",
+            "region_key": 17
+        },
+        "50035": {
+            "name": "Saint-Célestin",
+            "region_key": 17
+        },
+        "50042": {
+            "name": "Saint-Léonard-d'Aston",
+            "region_key": 17
+        },
+        "50050": {
+            "name": "Sainte-Perpétue",
+            "region_key": 17
+        },
+        "50057": {
+            "name": "Sainte-Monique",
+            "region_key": 17
+        },
+        "50065": {
+            "name": "Grand-Saint-Esprit",
+            "region_key": 17
+        },
+        "50072": {
+            "name": "Nicolet",
+            "region_key": 17
+        },
+        "50085": {
+            "name": "La Visitation-de-Yamaska",
+            "region_key": 17
+        },
+        "50090": {
+            "name": "Saint-Zéphirin-de-Courval",
+            "region_key": 17
+        },
+        "50095": {
+            "name": "Saint-Elphège",
+            "region_key": 17
+        },
+        "50100": {
+            "name": "Baie-du-Febvre",
+            "region_key": 17
+        },
+        "50113": {
+            "name": "Pierreville",
+            "region_key": 17
+        },
+        "50128": {
+            "name": "Saint-François-du-Lac",
+            "region_key": 17
+        },
+        "51008": {
+            "name": "Maskinongé",
+            "region_key": 4
+        },
+        "51015": {
+            "name": "Louiseville",
+            "region_key": 4
+        },
+        "51020": {
+            "name": "Yamachiche",
+            "region_key": 4
+        },
+        "51025": {
+            "name": "Saint-Barnabé",
+            "region_key": 4
+        },
+        "51030": {
+            "name": "Saint-Sévère",
+            "region_key": 4
+        },
+        "51035": {
+            "name": "Saint-Léon-le-Grand",
+            "region_key": 4
+        },
+        "51040": {
+            "name": "Sainte-Ursule",
+            "region_key": 4
+        },
+        "51045": {
+            "name": "Saint-Justin",
+            "region_key": 4
+        },
+        "51050": {
+            "name": "Saint-Édouard-de-Maskinongé",
+            "region_key": 4
+        },
+        "51055": {
+            "name": "Sainte-Angèle-de-Prémont",
+            "region_key": 4
+        },
+        "51060": {
+            "name": "Saint-Paulin",
+            "region_key": 4
+        },
+        "51065": {
+            "name": "Saint-Alexis-des-Monts",
+            "region_key": 4
+        },
+        "51070": {
+            "name": "Saint-Mathieu-du-Parc",
+            "region_key": 4
+        },
+        "51075": {
+            "name": "Saint-Élie-de-Caxton",
+            "region_key": 4
+        },
+        "51080": {
+            "name": "Charette",
+            "region_key": 4
+        },
+        "51085": {
+            "name": "Saint-Boniface",
+            "region_key": 4
+        },
+        "51090": {
+            "name": "Saint-Étienne-des-Grès",
+            "region_key": 4
+        },
+        "52007": {
+            "name": "Lavaltrie",
+            "region_key": 14
+        },
+        "52017": {
+            "name": "Lanoraie",
+            "region_key": 14
+        },
+        "52030": {
+            "name": "Sainte-Élisabeth",
+            "region_key": 14
+        },
+        "52035": {
+            "name": "Berthierville",
+            "region_key": 14
+        },
+        "52040": {
+            "name": "Sainte-Geneviève-de-Berthier",
+            "region_key": 14
+        },
+        "52045": {
+            "name": "Saint-Ignace-de-Loyola",
+            "region_key": 14
+        },
+        "52050": {
+            "name": "La Visitation-de-l'Île-Dupas",
+            "region_key": 14
+        },
+        "52055": {
+            "name": "Saint-Barthélemy",
+            "region_key": 14
+        },
+        "52062": {
+            "name": "Saint-Cuthbert",
+            "region_key": 14
+        },
+        "52070": {
+            "name": "Saint-Norbert",
+            "region_key": 14
+        },
+        "52075": {
+            "name": "Saint-Cléophas-de-Brandon",
+            "region_key": 14
+        },
+        "52080": {
+            "name": "Saint-Gabriel",
+            "region_key": 14
+        },
+        "52085": {
+            "name": "Saint-Gabriel-de-Brandon",
+            "region_key": 14
+        },
+        "52090": {
+            "name": "Saint-Didace",
+            "region_key": 14
+        },
+        "52095": {
+            "name": "Mandeville",
+            "region_key": 14
+        },
+        "53005": {
+            "name": "Saint-David",
+            "region_key": 16
+        },
+        "53010": {
+            "name": "Massueville",
+            "region_key": 16
+        },
+        "53015": {
+            "name": "Saint-Aimé",
+            "region_key": 16
+        },
+        "53020": {
+            "name": "Saint-Robert",
+            "region_key": 16
+        },
+        "53025": {
+            "name": "Sainte-Victoire-de-Sorel",
+            "region_key": 16
+        },
+        "53032": {
+            "name": "Saint-Ours",
+            "region_key": 16
+        },
+        "53040": {
+            "name": "Saint-Roch-de-Richelieu",
+            "region_key": 16
+        },
+        "53050": {
+            "name": "Saint-Joseph-de-Sorel",
+            "region_key": 16
+        },
+        "53052": {
+            "name": "Sorel-Tracy",
+            "region_key": 16
+        },
+        "53065": {
+            "name": "Sainte-Anne-de-Sorel",
+            "region_key": 16
+        },
+        "53072": {
+            "name": "Yamaska",
+            "region_key": 16
+        },
+        "53085": {
+            "name": "Saint-Gérard-Majella",
+            "region_key": 16
+        },
+        "54008": {
+            "name": "Saint-Pie",
+            "region_key": 16
+        },
+        "54017": {
+            "name": "Saint-Damase",
+            "region_key": 16
+        },
+        "54025": {
+            "name": "Sainte-Madeleine",
+            "region_key": 16
+        },
+        "54030": {
+            "name": "Sainte-Marie-Madeleine",
+            "region_key": 16
+        },
+        "54035": {
+            "name": "La Présentation",
+            "region_key": 16
+        },
+        "54048": {
+            "name": "Saint-Hyacinthe",
+            "region_key": 16
+        },
+        "54060": {
+            "name": "Saint-Dominique",
+            "region_key": 16
+        },
+        "54065": {
+            "name": "Saint-Valérien-de-Milton",
+            "region_key": 16
+        },
+        "54072": {
+            "name": "Saint-Liboire",
+            "region_key": 16
+        },
+        "54090": {
+            "name": "Saint-Simon",
+            "region_key": 16
+        },
+        "54095": {
+            "name": "Sainte-Hélène-de-Bagot",
+            "region_key": 16
+        },
+        "54100": {
+            "name": "Saint-Hugues",
+            "region_key": 16
+        },
+        "54105": {
+            "name": "Saint-Barnabé-Sud",
+            "region_key": 16
+        },
+        "54110": {
+            "name": "Saint-Jude",
+            "region_key": 16
+        },
+        "54115": {
+            "name": "Saint-Bernard-de-Michaudville",
+            "region_key": 16
+        },
+        "54120": {
+            "name": "Saint-Louis",
+            "region_key": 16
+        },
+        "54125": {
+            "name": "Saint-Marcel-de-Richelieu",
+            "region_key": 16
+        },
+        "55008": {
+            "name": "Ange-Gardien",
+            "region_key": 16
+        },
+        "55015": {
+            "name": "Saint-Paul-d'Abbotsford",
+            "region_key": 16
+        },
+        "55023": {
+            "name": "Saint-Césaire",
+            "region_key": 16
+        },
+        "55030": {
+            "name": "Sainte-Angèle-de-Monnoir",
+            "region_key": 16
+        },
+        "55037": {
+            "name": "Rougemont",
+            "region_key": 16
+        },
+        "55048": {
+            "name": "Marieville",
+            "region_key": 16
+        },
+        "55057": {
+            "name": "Richelieu",
+            "region_key": 16
+        },
+        "55065": {
+            "name": "Saint-Mathias-sur-Richelieu",
+            "region_key": 16
+        },
+        "56005": {
+            "name": "Venise-en-Québec",
+            "region_key": 16
+        },
+        "56010": {
+            "name": "Saint-Georges-de-Clarenceville",
+            "region_key": 16
+        },
+        "56015": {
+            "name": "Noyan",
+            "region_key": 16
+        },
+        "56023": {
+            "name": "Lacolle",
+            "region_key": 16
+        },
+        "56030": {
+            "name": "Saint-Valentin",
+            "region_key": 16
+        },
+        "56035": {
+            "name": "Saint-Paul-de-l'Île-aux-Noix",
+            "region_key": 16
+        },
+        "56042": {
+            "name": "Henryville",
+            "region_key": 16
+        },
+        "56050": {
+            "name": "Saint-Sébastien",
+            "region_key": 16
+        },
+        "56055": {
+            "name": "Saint-Alexandre",
+            "region_key": 16
+        },
+        "56060": {
+            "name": "Sainte-Anne-de-Sabrevois",
+            "region_key": 16
+        },
+        "56065": {
+            "name": "Saint-Blaise-sur-Richelieu",
+            "region_key": 16
+        },
+        "56083": {
+            "name": "Saint-Jean-sur-Richelieu",
+            "region_key": 16
+        },
+        "56097": {
+            "name": "Mont-Saint-Grégoire",
+            "region_key": 16
+        },
+        "56105": {
+            "name": "Sainte-Brigide-d'Iberville",
+            "region_key": 16
+        },
+        "57005": {
+            "name": "Chambly",
+            "region_key": 16
+        },
+        "57010": {
+            "name": "Carignan",
+            "region_key": 16
+        },
+        "57020": {
+            "name": "Saint-Basile-le-Grand",
+            "region_key": 16
+        },
+        "57025": {
+            "name": "McMasterville",
+            "region_key": 16
+        },
+        "57030": {
+            "name": "Otterburn Park",
+            "region_key": 16
+        },
+        "57033": {
+            "name": "Saint-Jean-Baptiste",
+            "region_key": 16
+        },
+        "57035": {
+            "name": "Mont-Saint-Hilaire",
+            "region_key": 16
+        },
+        "57040": {
+            "name": "Beloeil",
+            "region_key": 16
+        },
+        "57045": {
+            "name": "Saint-Mathieu-de-Beloeil",
+            "region_key": 16
+        },
+        "57050": {
+            "name": "Saint-Marc-sur-Richelieu",
+            "region_key": 16
+        },
+        "57057": {
+            "name": "Saint-Charles-sur-Richelieu",
+            "region_key": 16
+        },
+        "57068": {
+            "name": "Saint-Denis-sur-Richelieu",
+            "region_key": 16
+        },
+        "57075": {
+            "name": "Saint-Antoine-sur-Richelieu",
+            "region_key": 16
+        },
+        "58007": {
+            "name": "Brossard",
+            "region_key": 16
+        },
+        "58012": {
+            "name": "Saint-Lambert",
+            "region_key": 16
+        },
+        "58033": {
+            "name": "Boucherville",
+            "region_key": 16
+        },
+        "58037": {
+            "name": "Saint-Bruno-de-Montarville",
+            "region_key": 16
+        },
+        "58227": {
+            "name": "Longueuil",
+            "region_key": 16
+        },
+        "59010": {
+            "name": "Sainte-Julie",
+            "region_key": 16
+        },
+        "59015": {
+            "name": "Saint-Amable",
+            "region_key": 16
+        },
+        "59020": {
+            "name": "Varennes",
+            "region_key": 16
+        },
+        "59025": {
+            "name": "Verchères",
+            "region_key": 16
+        },
+        "59030": {
+            "name": "Calixa-Lavallée",
+            "region_key": 16
+        },
+        "59035": {
+            "name": "Contrecoeur",
+            "region_key": 16
+        },
+        "60005": {
+            "name": "Charlemagne",
+            "region_key": 14
+        },
+        "60013": {
+            "name": "Repentigny",
+            "region_key": 14
+        },
+        "60020": {
+            "name": "Saint-Sulpice",
+            "region_key": 14
+        },
+        "60028": {
+            "name": "L'Assomption",
+            "region_key": 14
+        },
+        "60035": {
+            "name": "L'Épiphanie",
+            "region_key": 14
+        },
+        "60040": {
+            "name": "L'Épiphanie",
+            "region_key": 14
+        },
+        "61005": {
+            "name": "Saint-Paul",
+            "region_key": 14
+        },
+        "61013": {
+            "name": "Crabtree",
+            "region_key": 14
+        },
+        "61020": {
+            "name": "Saint-Pierre",
+            "region_key": 14
+        },
+        "61025": {
+            "name": "Joliette",
+            "region_key": 14
+        },
+        "61027": {
+            "name": "Saint-Thomas",
+            "region_key": 14
+        },
+        "61030": {
+            "name": "Notre-Dame-des-Prairies",
+            "region_key": 14
+        },
+        "61035": {
+            "name": "Saint-Charles-Borromée",
+            "region_key": 14
+        },
+        "61040": {
+            "name": "Saint-Ambroise-de-Kildare",
+            "region_key": 14
+        },
+        "61045": {
+            "name": "Notre-Dame-de-Lourdes",
+            "region_key": 14
+        },
+        "61050": {
+            "name": "Sainte-Mélanie",
+            "region_key": 14
+        },
+        "62007": {
+            "name": "Saint-Félix-de-Valois",
+            "region_key": 14
+        },
+        "62015": {
+            "name": "Saint-Jean-de-Matha",
+            "region_key": 14
+        },
+        "62020": {
+            "name": "Sainte-Béatrix",
+            "region_key": 14
+        },
+        "62025": {
+            "name": "Saint-Alphonse-Rodriguez",
+            "region_key": 14
+        },
+        "62030": {
+            "name": "Sainte-Marcelline-de-Kildare",
+            "region_key": 14
+        },
+        "62037": {
+            "name": "Rawdon",
+            "region_key": 14
+        },
+        "62047": {
+            "name": "Chertsey",
+            "region_key": 14
+        },
+        "62053": {
+            "name": "Entrelacs",
+            "region_key": 14
+        },
+        "62055": {
+            "name": "Notre-Dame-de-la-Merci",
+            "region_key": 14
+        },
+        "62060": {
+            "name": "Saint-Donat",
+            "region_key": 14
+        },
+        "62065": {
+            "name": "Saint-Côme",
+            "region_key": 14
+        },
+        "62070": {
+            "name": "Sainte-Émélie-de-l'Énergie",
+            "region_key": 14
+        },
+        "62075": {
+            "name": "Saint-Damien",
+            "region_key": 14
+        },
+        "62080": {
+            "name": "Saint-Zénon",
+            "region_key": 14
+        },
+        "62085": {
+            "name": "Saint-Michel-des-Saints",
+            "region_key": 14
+        },
+        "63005": {
+            "name": "Sainte-Marie-Salomé",
+            "region_key": 14
+        },
+        "63013": {
+            "name": "Saint-Jacques",
+            "region_key": 14
+        },
+        "63023": {
+            "name": "Saint-Alexis",
+            "region_key": 14
+        },
+        "63030": {
+            "name": "Saint-Esprit",
+            "region_key": 14
+        },
+        "63035": {
+            "name": "Saint-Roch-de-l'Achigan",
+            "region_key": 14
+        },
+        "63040": {
+            "name": "Saint-Roch-Ouest",
+            "region_key": 14
+        },
+        "63048": {
+            "name": "Saint-Lin--Laurentides",
+            "region_key": 14
+        },
+        "63055": {
+            "name": "Saint-Calixte",
+            "region_key": 14
+        },
+        "63060": {
+            "name": "Sainte-Julienne",
+            "region_key": 14
+        },
+        "63065": {
+            "name": "Saint-Liguori",
+            "region_key": 14
+        },
+        "64008": {
+            "name": "Terrebonne",
+            "region_key": 14
+        },
+        "64015": {
+            "name": "Mascouche",
+            "region_key": 14
+        },
+        "65005": {
+            "name": "Laval",
+            "region_key": "Laval (13)"
+        },
+        "66007": {
+            "name": "Montréal-Est",
+            "region_key": 6
+        },
+        "66023": {
+            "name": "Montréal",
+            "region_key": 6
+        },
+        "66032": {
+            "name": "Westmount",
+            "region_key": 6
+        },
+        "66047": {
+            "name": "Montréal-Ouest",
+            "region_key": 6
+        },
+        "66058": {
+            "name": "Côte-Saint-Luc",
+            "region_key": 6
+        },
+        "66062": {
+            "name": "Hampstead",
+            "region_key": 6
+        },
+        "66072": {
+            "name": "Mont-Royal",
+            "region_key": 6
+        },
+        "66087": {
+            "name": "Dorval",
+            "region_key": 6
+        },
+        "66092": {
+            "name": "L'Île-Dorval",
+            "region_key": 6
+        },
+        "66097": {
+            "name": "Pointe-Claire",
+            "region_key": 6
+        },
+        "66102": {
+            "name": "Kirkland",
+            "region_key": 6
+        },
+        "66107": {
+            "name": "Beaconsfield",
+            "region_key": 6
+        },
+        "66112": {
+            "name": "Baie-D'Urfé",
+            "region_key": 6
+        },
+        "66117": {
+            "name": "Sainte-Anne-de-Bellevue",
+            "region_key": 6
+        },
+        "66127": {
+            "name": "Senneville",
+            "region_key": 6
+        },
+        "66142": {
+            "name": "Dollard-Des Ormeaux",
+            "region_key": 6
+        },
+        "67005": {
+            "name": "Saint-Mathieu",
+            "region_key": 16
+        },
+        "67010": {
+            "name": "Saint-Philippe",
+            "region_key": 16
+        },
+        "67015": {
+            "name": "La Prairie",
+            "region_key": 16
+        },
+        "67020": {
+            "name": "Candiac",
+            "region_key": 16
+        },
+        "67025": {
+            "name": "Delson",
+            "region_key": 16
+        },
+        "67030": {
+            "name": "Sainte-Catherine",
+            "region_key": 16
+        },
+        "67035": {
+            "name": "Saint-Constant",
+            "region_key": 16
+        },
+        "67040": {
+            "name": "Saint-Isidore",
+            "region_key": 16
+        },
+        "67045": {
+            "name": "Mercier",
+            "region_key": 16
+        },
+        "67050": {
+            "name": "ChÃ¢teauguay",
+            "region_key": 16
+        },
+        "67055": {
+            "name": "Léry",
+            "region_key": 16
+        },
+        "68005": {
+            "name": "Saint-Bernard-de-Lacolle",
+            "region_key": 16
+        },
+        "68010": {
+            "name": "Hemmingford",
+            "region_key": 16
+        },
+        "68015": {
+            "name": "Hemmingford",
+            "region_key": 16
+        },
+        "68020": {
+            "name": "Sainte-Clotilde",
+            "region_key": 16
+        },
+        "68025": {
+            "name": "Saint-Patrice-de-Sherrington",
+            "region_key": 16
+        },
+        "68030": {
+            "name": "Napierville",
+            "region_key": 16
+        },
+        "68035": {
+            "name": "Saint-Cyprien-de-Napierville",
+            "region_key": 16
+        },
+        "68040": {
+            "name": "Saint-Jacques-le-Mineur",
+            "region_key": 16
+        },
+        "68045": {
+            "name": "Saint-Édouard",
+            "region_key": 16
+        },
+        "68050": {
+            "name": "Saint-Michel",
+            "region_key": 16
+        },
+        "68055": {
+            "name": "Saint-Rémi",
+            "region_key": 16
+        },
+        "69005": {
+            "name": "Havelock",
+            "region_key": 16
+        },
+        "69010": {
+            "name": "Franklin",
+            "region_key": 16
+        },
+        "69017": {
+            "name": "Saint-Chrysostome",
+            "region_key": 16
+        },
+        "69025": {
+            "name": "Howick",
+            "region_key": 16
+        },
+        "69030": {
+            "name": "Très-Saint-Sacrement",
+            "region_key": 16
+        },
+        "69037": {
+            "name": "Ormstown",
+            "region_key": 16
+        },
+        "69045": {
+            "name": "Hinchinbrooke",
+            "region_key": 16
+        },
+        "69050": {
+            "name": "Elgin",
+            "region_key": 16
+        },
+        "69055": {
+            "name": "Huntingdon",
+            "region_key": 16
+        },
+        "69060": {
+            "name": "Godmanchester",
+            "region_key": 16
+        },
+        "69065": {
+            "name": "Sainte-Barbe",
+            "region_key": 16
+        },
+        "69070": {
+            "name": "Saint-Anicet",
+            "region_key": 16
+        },
+        "69075": {
+            "name": "Dundee",
+            "region_key": 16
+        },
+        "70005": {
+            "name": "Saint-Urbain-Premier",
+            "region_key": 16
+        },
+        "70012": {
+            "name": "Sainte-Martine",
+            "region_key": 16
+        },
+        "70022": {
+            "name": "Beauharnois",
+            "region_key": 16
+        },
+        "70030": {
+            "name": "Saint-Étienne-de-Beauharnois",
+            "region_key": 16
+        },
+        "70035": {
+            "name": "Saint-Louis-de-Gonzague",
+            "region_key": 16
+        },
+        "70040": {
+            "name": "Saint-Stanislas-de-Kostka",
+            "region_key": 16
+        },
+        "70052": {
+            "name": "Salaberry-de-Valleyfield",
+            "region_key": 16
+        },
+        "71005": {
+            "name": "Rivière-Beaudette",
+            "region_key": 16
+        },
+        "71015": {
+            "name": "Saint-Télesphore",
+            "region_key": 16
+        },
+        "71020": {
+            "name": "Saint-Polycarpe",
+            "region_key": 16
+        },
+        "71025": {
+            "name": "Saint-Zotique",
+            "region_key": 16
+        },
+        "71033": {
+            "name": "Les Coteaux",
+            "region_key": 16
+        },
+        "71040": {
+            "name": "Coteau-du-Lac",
+            "region_key": 16
+        },
+        "71045": {
+            "name": "Saint-Clet",
+            "region_key": 16
+        },
+        "71050": {
+            "name": "Les Cèdres",
+            "region_key": 16
+        },
+        "71055": {
+            "name": "Pointe-des-Cascades",
+            "region_key": 16
+        },
+        "71060": {
+            "name": "L'Île-Perrot",
+            "region_key": 16
+        },
+        "71065": {
+            "name": "Notre-Dame-de-l'Île-Perrot",
+            "region_key": 16
+        },
+        "71070": {
+            "name": "Pincourt",
+            "region_key": 16
+        },
+        "71075": {
+            "name": "Terrasse-Vaudreuil",
+            "region_key": 16
+        },
+        "71083": {
+            "name": "Vaudreuil-Dorion",
+            "region_key": 16
+        },
+        "71090": {
+            "name": "Vaudreuil-sur-le-Lac",
+            "region_key": 16
+        },
+        "71095": {
+            "name": "L'Île-Cadieux",
+            "region_key": 16
+        },
+        "71100": {
+            "name": "Hudson",
+            "region_key": 16
+        },
+        "71105": {
+            "name": "Saint-Lazare",
+            "region_key": 16
+        },
+        "71110": {
+            "name": "Sainte-Marthe",
+            "region_key": 16
+        },
+        "71115": {
+            "name": "Sainte-Justine-de-Newton",
+            "region_key": 16
+        },
+        "71125": {
+            "name": "Très-Saint-Rédempteur",
+            "region_key": 16
+        },
+        "71133": {
+            "name": "Rigaud",
+            "region_key": 16
+        },
+        "71140": {
+            "name": "Pointe-Fortune",
+            "region_key": 16
+        },
+        "72005": {
+            "name": "Saint-Eustache",
+            "region_key": 15
+        },
+        "72010": {
+            "name": "Deux-Montagnes",
+            "region_key": 15
+        },
+        "72015": {
+            "name": "Sainte-Marthe-sur-le-Lac",
+            "region_key": 15
+        },
+        "72020": {
+            "name": "Pointe-Calumet",
+            "region_key": 15
+        },
+        "72025": {
+            "name": "Saint-Joseph-du-Lac",
+            "region_key": 15
+        },
+        "72032": {
+            "name": "Oka",
+            "region_key": 15
+        },
+        "72043": {
+            "name": "Saint-Placide",
+            "region_key": 15
+        },
+        "73005": {
+            "name": "Boisbriand",
+            "region_key": 15
+        },
+        "73010": {
+            "name": "Sainte-Thérèse",
+            "region_key": 15
+        },
+        "73015": {
+            "name": "Blainville",
+            "region_key": 15
+        },
+        "73020": {
+            "name": "Rosemère",
+            "region_key": 15
+        },
+        "73025": {
+            "name": "Lorraine",
+            "region_key": 15
+        },
+        "73030": {
+            "name": "Bois-des-Filion",
+            "region_key": 15
+        },
+        "73035": {
+            "name": "Sainte-Anne-des-Plaines",
+            "region_key": 15
+        },
+        "74005": {
+            "name": "Mirabel",
+            "region_key": 15
+        },
+        "75005": {
+            "name": "Saint-Colomban",
+            "region_key": 15
+        },
+        "75017": {
+            "name": "Saint-Jérôme",
+            "region_key": 15
+        },
+        "75028": {
+            "name": "Sainte-Sophie",
+            "region_key": 15
+        },
+        "75040": {
+            "name": "Prévost",
+            "region_key": 15
+        },
+        "75045": {
+            "name": "Saint-Hippolyte",
+            "region_key": 15
+        },
+        "76008": {
+            "name": "Saint-André-d'Argenteuil",
+            "region_key": 15
+        },
+        "76020": {
+            "name": "Lachute",
+            "region_key": 15
+        },
+        "76025": {
+            "name": "Gore",
+            "region_key": 15
+        },
+        "76030": {
+            "name": "Mille-Isles",
+            "region_key": 15
+        },
+        "76035": {
+            "name": "Wentworth",
+            "region_key": 15
+        },
+        "76043": {
+            "name": "Brownsburg-Chatham",
+            "region_key": 15
+        },
+        "76052": {
+            "name": "Grenville-sur-la-Rouge",
+            "region_key": 15
+        },
+        "76055": {
+            "name": "Grenville",
+            "region_key": 15
+        },
+        "76065": {
+            "name": "Harrington",
+            "region_key": 15
+        },
+        "77011": {
+            "name": "Estérel",
+            "region_key": 15
+        },
+        "77012": {
+            "name": "Sainte-Marguerite-du-Lac-Masson",
+            "region_key": 15
+        },
+        "77022": {
+            "name": "Sainte-Adèle",
+            "region_key": 15
+        },
+        "77030": {
+            "name": "Piedmont",
+            "region_key": 15
+        },
+        "77035": {
+            "name": "Sainte-Anne-des-Lacs",
+            "region_key": 15
+        },
+        "77043": {
+            "name": "Saint-Sauveur",
+            "region_key": 15
+        },
+        "77050": {
+            "name": "Morin-Heights",
+            "region_key": 15
+        },
+        "77055": {
+            "name": "Lac-des-Seize-Îles",
+            "region_key": 15
+        },
+        "77060": {
+            "name": "Wentworth-Nord",
+            "region_key": 15
+        },
+        "77065": {
+            "name": "Saint-Adolphe-d'Howard",
+            "region_key": 15
+        },
+        "78005": {
+            "name": "Val-Morin",
+            "region_key": 15
+        },
+        "78010": {
+            "name": "Val-David",
+            "region_key": 15
+        },
+        "78015": {
+            "name": "Lantier",
+            "region_key": 15
+        },
+        "78020": {
+            "name": "Sainte-Lucie-des-Laurentides",
+            "region_key": 15
+        },
+        "78032": {
+            "name": "Sainte-Agathe-des-Monts",
+            "region_key": 15
+        },
+        "78042": {
+            "name": "Ivry-sur-le-Lac",
+            "region_key": 15
+        },
+        "78047": {
+            "name": "Saint-Faustin--Lac-Carré",
+            "region_key": 15
+        },
+        "78050": {
+            "name": "Barkmere",
+            "region_key": 15
+        },
+        "78055": {
+            "name": "Montcalm",
+            "region_key": 15
+        },
+        "78060": {
+            "name": "Arundel",
+            "region_key": 15
+        },
+        "78065": {
+            "name": "Huberdeau",
+            "region_key": 15
+        },
+        "78070": {
+            "name": "Amherst",
+            "region_key": 15
+        },
+        "78075": {
+            "name": "Brébeuf",
+            "region_key": 15
+        },
+        "78095": {
+            "name": "Lac-Supérieur",
+            "region_key": 15
+        },
+        "78100": {
+            "name": "Val-des-Lacs",
+            "region_key": 15
+        },
+        "78102": {
+            "name": "Mont-Tremblant",
+            "region_key": 15
+        },
+        "78115": {
+            "name": "La Conception",
+            "region_key": 15
+        },
+        "78120": {
+            "name": "Labelle",
+            "region_key": 15
+        },
+        "78127": {
+            "name": "Lac-Tremblant-Nord",
+            "region_key": 15
+        },
+        "78130": {
+            "name": "La Minerve",
+            "region_key": 15
+        },
+        "79005": {
+            "name": "Notre-Dame-du-Laus",
+            "region_key": 15
+        },
+        "79010": {
+            "name": "Notre-Dame-de-Pontmain",
+            "region_key": 15
+        },
+        "79015": {
+            "name": "Lac-du-Cerf",
+            "region_key": 15
+        },
+        "79022": {
+            "name": "Saint-Aimé-du-Lac-des-Îles",
+            "region_key": 15
+        },
+        "79025": {
+            "name": "Kiamika",
+            "region_key": 15
+        },
+        "79030": {
+            "name": "Nominingue",
+            "region_key": 15
+        },
+        "79037": {
+            "name": "Rivière-Rouge",
+            "region_key": 15
+        },
+        "79047": {
+            "name": "La Macaza",
+            "region_key": 15
+        },
+        "79050": {
+            "name": "L'Ascension",
+            "region_key": 15
+        },
+        "79060": {
+            "name": "Lac-Saguay",
+            "region_key": 15
+        },
+        "79065": {
+            "name": "Chute-Saint-Philippe",
+            "region_key": 15
+        },
+        "79078": {
+            "name": "Lac-des-Écorces",
+            "region_key": 15
+        },
+        "79088": {
+            "name": "Mont-Laurier",
+            "region_key": 15
+        },
+        "79097": {
+            "name": "Ferme-Neuve",
+            "region_key": 15
+        },
+        "79105": {
+            "name": "Lac-Saint-Paul",
+            "region_key": 15
+        },
+        "79110": {
+            "name": "Mont-Saint-Michel",
+            "region_key": 15
+        },
+        "79115": {
+            "name": "Sainte-Anne-du-Lac",
+            "region_key": 15
+        },
+        "80005": {
+            "name": "Fassett",
+            "region_key": 7
+        },
+        "80010": {
+            "name": "Montebello",
+            "region_key": 7
+        },
+        "80015": {
+            "name": "N.-D.-de-Bonsecours",
+            "region_key": 7
+        },
+        "80020": {
+            "name": "Notre-Dame-de-la-Paix",
+            "region_key": 7
+        },
+        "80027": {
+            "name": "Saint-André-Avellin",
+            "region_key": 7
+        },
+        "80037": {
+            "name": "Papineauville",
+            "region_key": 7
+        },
+        "80045": {
+            "name": "Plaisance",
+            "region_key": 7
+        },
+        "80050": {
+            "name": "Thurso",
+            "region_key": 7
+        },
+        "80055": {
+            "name": "Lochaber",
+            "region_key": 7
+        },
+        "80060": {
+            "name": "Lochaber-Partie-Ouest",
+            "region_key": 7
+        },
+        "80065": {
+            "name": "Mayo",
+            "region_key": 7
+        },
+        "80070": {
+            "name": "Saint-Sixte",
+            "region_key": 7
+        },
+        "80078": {
+            "name": "Ripon",
+            "region_key": 7
+        },
+        "80085": {
+            "name": "Mulgrave-et-Derry",
+            "region_key": 7
+        },
+        "80090": {
+            "name": "Montpellier",
+            "region_key": 7
+        },
+        "80095": {
+            "name": "Lac-Simon",
+            "region_key": 7
+        },
+        "80103": {
+            "name": "Chénéville",
+            "region_key": 7
+        },
+        "80110": {
+            "name": "Namur",
+            "region_key": 7
+        },
+        "80115": {
+            "name": "Boileau",
+            "region_key": 7
+        },
+        "80125": {
+            "name": "Saint-Émile-de-Suffolk",
+            "region_key": 7
+        },
+        "80130": {
+            "name": "Lac-des-Plages",
+            "region_key": 7
+        },
+        "80135": {
+            "name": "Duhamel",
+            "region_key": 7
+        },
+        "80140": {
+            "name": "Val-des-Bois",
+            "region_key": 7
+        },
+        "80145": {
+            "name": "Bowman",
+            "region_key": 7
+        },
+        "81017": {
+            "name": "Gatineau",
+            "region_key": 7
+        },
+        "82005": {
+            "name": "L'Ange-Gardien",
+            "region_key": 7
+        },
+        "82010": {
+            "name": "Notre-Dame-de-la-Salette",
+            "region_key": 7
+        },
+        "82015": {
+            "name": "Val-des-Monts",
+            "region_key": 7
+        },
+        "82020": {
+            "name": "Cantley",
+            "region_key": 7
+        },
+        "82025": {
+            "name": "Chelsea",
+            "region_key": 7
+        },
+        "82030": {
+            "name": "Pontiac",
+            "region_key": 7
+        },
+        "82035": {
+            "name": "La Pêche",
+            "region_key": 7
+        },
+        "83005": {
+            "name": "Denholm",
+            "region_key": 7
+        },
+        "83010": {
+            "name": "Low",
+            "region_key": 7
+        },
+        "83015": {
+            "name": "Kazabazua",
+            "region_key": 7
+        },
+        "83020": {
+            "name": "Lac-Sainte-Marie",
+            "region_key": 7
+        },
+        "83032": {
+            "name": "Gracefield",
+            "region_key": 7
+        },
+        "83040": {
+            "name": "Cayamant",
+            "region_key": 7
+        },
+        "83045": {
+            "name": "Blue Sea",
+            "region_key": 7
+        },
+        "83050": {
+            "name": "Bouchette",
+            "region_key": 7
+        },
+        "83055": {
+            "name": "Sainte-Thérèse-de-la-Gatineau",
+            "region_key": 7
+        },
+        "83060": {
+            "name": "Messines",
+            "region_key": 7
+        },
+        "83065": {
+            "name": "Maniwaki",
+            "region_key": 7
+        },
+        "83070": {
+            "name": "Déléage",
+            "region_key": 7
+        },
+        "83075": {
+            "name": "Egan-Sud",
+            "region_key": 7
+        },
+        "83085": {
+            "name": "Bois-Franc",
+            "region_key": 7
+        },
+        "83088": {
+            "name": "Montcerf-Lytton",
+            "region_key": 7
+        },
+        "83090": {
+            "name": "Aumond",
+            "region_key": 7
+        },
+        "83095": {
+            "name": "Grand-Remous",
+            "region_key": 7
+        },
+        "84005": {
+            "name": "Bristol",
+            "region_key": 7
+        },
+        "84010": {
+            "name": "Shawville",
+            "region_key": 7
+        },
+        "84015": {
+            "name": "Clarendon",
+            "region_key": 7
+        },
+        "84020": {
+            "name": "Portage-du-Fort",
+            "region_key": 7
+        },
+        "84025": {
+            "name": "Bryson",
+            "region_key": 7
+        },
+        "84030": {
+            "name": "Campbell's Bay",
+            "region_key": 7
+        },
+        "84035": {
+            "name": "L'Île-du-Grand-Calumet",
+            "region_key": 7
+        },
+        "84040": {
+            "name": "Litchfield",
+            "region_key": 7
+        },
+        "84045": {
+            "name": "Thorne",
+            "region_key": 7
+        },
+        "84050": {
+            "name": "Alleyn-et-Cawood",
+            "region_key": 7
+        },
+        "84055": {
+            "name": "Otter Lake",
+            "region_key": 7
+        },
+        "84060": {
+            "name": "Fort-Coulonge",
+            "region_key": 7
+        },
+        "84065": {
+            "name": "Mansfield-et-Pontefract",
+            "region_key": 7
+        },
+        "84070": {
+            "name": "Waltham",
+            "region_key": 7
+        },
+        "84082": {
+            "name": "L'Isle-aux-Allumettes",
+            "region_key": 7
+        },
+        "84090": {
+            "name": "Chichester",
+            "region_key": 7
+        },
+        "84095": {
+            "name": "Sheenboro",
+            "region_key": 7
+        },
+        "84100": {
+            "name": "Rapides-des-Joachims",
+            "region_key": 7
+        },
+        "85005": {
+            "name": "Témiscaming",
+            "region_key": 8
+        },
+        "85010": {
+            "name": "Kipawa",
+            "region_key": 8
+        },
+        "85015": {
+            "name": "Saint-Édouard-de-Fabre",
+            "region_key": 8
+        },
+        "85020": {
+            "name": "Béarn",
+            "region_key": 8
+        },
+        "85025": {
+            "name": "Ville-Marie",
+            "region_key": 8
+        },
+        "85030": {
+            "name": "Duhamel-Ouest",
+            "region_key": 8
+        },
+        "85037": {
+            "name": "Lorrainville",
+            "region_key": 8
+        },
+        "85045": {
+            "name": "Saint-Bruno-de-Guigues",
+            "region_key": 8
+        },
+        "85050": {
+            "name": "Laverlochère",
+            "region_key": 8
+        },
+        "85055": {
+            "name": "Fugèreville",
+            "region_key": 8
+        },
+        "85060": {
+            "name": "Latulipe-et-Gaboury",
+            "region_key": 8
+        },
+        "85065": {
+            "name": "Belleterre",
+            "region_key": 8
+        },
+        "85070": {
+            "name": "Laforce",
+            "region_key": 8
+        },
+        "85075": {
+            "name": "Moffet",
+            "region_key": 8
+        },
+        "85080": {
+            "name": "Angliers",
+            "region_key": 8
+        },
+        "85085": {
+            "name": "Saint-Eugène-de-Guigues",
+            "region_key": 8
+        },
+        "85090": {
+            "name": "Notre-Dame-du-Nord",
+            "region_key": 8
+        },
+        "85095": {
+            "name": "Guérin",
+            "region_key": 8
+        },
+        "85100": {
+            "name": "Nédélec",
+            "region_key": 8
+        },
+        "85105": {
+            "name": "Rémigny",
+            "region_key": 8
+        },
+        "86042": {
+            "name": "Rouyn-Noranda",
+            "region_key": 8
+        },
+        "87005": {
+            "name": "Duparquet",
+            "region_key": 8
+        },
+        "87010": {
+            "name": "Rapide-Danseur",
+            "region_key": 8
+        },
+        "87015": {
+            "name": "Roquemaure",
+            "region_key": 8
+        },
+        "87020": {
+            "name": "Gallichan",
+            "region_key": 8
+        },
+        "87025": {
+            "name": "Palmarolle",
+            "region_key": 8
+        },
+        "87030": {
+            "name": "Sainte-Germaine-Boulé",
+            "region_key": 8
+        },
+        "87035": {
+            "name": "Poularies",
+            "region_key": 8
+        },
+        "87042": {
+            "name": "Taschereau",
+            "region_key": 8
+        },
+        "87050": {
+            "name": "Authier",
+            "region_key": 8
+        },
+        "87058": {
+            "name": "Macamic",
+            "region_key": 8
+        },
+        "87070": {
+            "name": "Sainte-Hélène-de-Mancebourg",
+            "region_key": 8
+        },
+        "87075": {
+            "name": "Clerval",
+            "region_key": 8
+        },
+        "87080": {
+            "name": "La Reine",
+            "region_key": 8
+        },
+        "87085": {
+            "name": "Dupuy",
+            "region_key": 8
+        },
+        "87090": {
+            "name": "La Sarre",
+            "region_key": 8
+        },
+        "87095": {
+            "name": "Chazel",
+            "region_key": 8
+        },
+        "87100": {
+            "name": "Authier-Nord",
+            "region_key": 8
+        },
+        "87105": {
+            "name": "Val-Saint-Gilles",
+            "region_key": 8
+        },
+        "87110": {
+            "name": "Clermont",
+            "region_key": 8
+        },
+        "87115": {
+            "name": "Normétal",
+            "region_key": 8
+        },
+        "87120": {
+            "name": "Saint-Lambert",
+            "region_key": 8
+        },
+        "88005": {
+            "name": "Champneuf",
+            "region_key": 8
+        },
+        "88010": {
+            "name": "Rochebaucourt",
+            "region_key": 8
+        },
+        "88015": {
+            "name": "La Morandière",
+            "region_key": 8
+        },
+        "88022": {
+            "name": "Barraute",
+            "region_key": 8
+        },
+        "88030": {
+            "name": "La Corne",
+            "region_key": 8
+        },
+        "88035": {
+            "name": "Landrienne",
+            "region_key": 8
+        },
+        "88040": {
+            "name": "Saint-Marc-de-Figuery",
+            "region_key": 8
+        },
+        "88045": {
+            "name": "La Motte",
+            "region_key": 8
+        },
+        "88050": {
+            "name": "Saint-Mathieu-d'Harricana",
+            "region_key": 8
+        },
+        "88055": {
+            "name": "Amos",
+            "region_key": 8
+        },
+        "88060": {
+            "name": "Saint-Félix-de-Dalquier",
+            "region_key": 8
+        },
+        "88065": {
+            "name": "Saint-Dominique-du-Rosaire",
+            "region_key": 8
+        },
+        "88070": {
+            "name": "Berry",
+            "region_key": 8
+        },
+        "88075": {
+            "name": "Trécesson",
+            "region_key": 8
+        },
+        "88080": {
+            "name": "Launay",
+            "region_key": 8
+        },
+        "88085": {
+            "name": "Sainte-Gertrude-Manneville",
+            "region_key": 8
+        },
+        "88090": {
+            "name": "Preissac",
+            "region_key": 8
+        },
+        "89008": {
+            "name": "Val-d'Or",
+            "region_key": 8
+        },
+        "89010": {
+            "name": "Rivière-Héva",
+            "region_key": 8
+        },
+        "89015": {
+            "name": "Malartic",
+            "region_key": 8
+        },
+        "89040": {
+            "name": "Senneterre",
+            "region_key": 8
+        },
+        "89045": {
+            "name": "Senneterre",
+            "region_key": 8
+        },
+        "89050": {
+            "name": "Belcourt",
+            "region_key": 8
+        },
+        "90012": {
+            "name": "La Tuque",
+            "region_key": 4
+        },
+        "90017": {
+            "name": "La Bostonnais",
+            "region_key": 4
+        },
+        "90027": {
+            "name": "Lac-Édouard",
+            "region_key": 4
+        },
+        "91005": {
+            "name": "Lac-Bouchette",
+            "region_key": 2
+        },
+        "91010": {
+            "name": "Saint-André-du-Lac-Saint-Jean",
+            "region_key": 2
+        },
+        "91015": {
+            "name": "Saint-François-de-Sales",
+            "region_key": 2
+        },
+        "91020": {
+            "name": "Chambord",
+            "region_key": 2
+        },
+        "91025": {
+            "name": "Roberval",
+            "region_key": 2
+        },
+        "91030": {
+            "name": "Sainte-Hedwidge",
+            "region_key": 2
+        },
+        "91035": {
+            "name": "Saint-Prime",
+            "region_key": 2
+        },
+        "91042": {
+            "name": "Saint-Félicien",
+            "region_key": 2
+        },
+        "91050": {
+            "name": "La Doré",
+            "region_key": 2
+        },
+        "92005": {
+            "name": "Saint-Augustin",
+            "region_key": 2
+        },
+        "92010": {
+            "name": "Péribonka",
+            "region_key": 2
+        },
+        "92015": {
+            "name": "Sainte-Jeanne-d'Arc",
+            "region_key": 2
+        },
+        "92022": {
+            "name": "Dolbeau-Mistassini",
+            "region_key": 2
+        },
+        "92030": {
+            "name": "Albanel",
+            "region_key": 2
+        },
+        "92040": {
+            "name": "Normandin",
+            "region_key": 2
+        },
+        "92045": {
+            "name": "Saint-Thomas-Didyme",
+            "region_key": 2
+        },
+        "92050": {
+            "name": "Saint-Edmond-les-Plaines",
+            "region_key": 2
+        },
+        "92055": {
+            "name": "Girardville",
+            "region_key": 2
+        },
+        "92060": {
+            "name": "Notre-Dame-de-Lorette",
+            "region_key": 2
+        },
+        "92065": {
+            "name": "Saint-Eugène-d'Argentenay",
+            "region_key": 2
+        },
+        "92070": {
+            "name": "Saint-Stanislas",
+            "region_key": 2
+        },
+        "93005": {
+            "name": "Desbiens",
+            "region_key": 2
+        },
+        "93012": {
+            "name": "Métabetchouan--Lac-à-la-Croix",
+            "region_key": 2
+        },
+        "93020": {
+            "name": "Hébertville",
+            "region_key": 2
+        },
+        "93025": {
+            "name": "Hébertville-Station",
+            "region_key": 2
+        },
+        "93030": {
+            "name": "Saint-Bruno",
+            "region_key": 2
+        },
+        "93035": {
+            "name": "Saint-Gédéon",
+            "region_key": 2
+        },
+        "93042": {
+            "name": "Alma",
+            "region_key": 2
+        },
+        "93045": {
+            "name": "Saint-Nazaire",
+            "region_key": 2
+        },
+        "93055": {
+            "name": "Labrecque",
+            "region_key": 2
+        },
+        "93060": {
+            "name": "Lamarche",
+            "region_key": 2
+        },
+        "93065": {
+            "name": "L'Ascension-de-Notre-Seigneur",
+            "region_key": 2
+        },
+        "93070": {
+            "name": "Saint-Henri-de-Taillon",
+            "region_key": 2
+        },
+        "93075": {
+            "name": "Sainte-Monique",
+            "region_key": 2
+        },
+        "93080": {
+            "name": "Saint-Ludger-de-Milot",
+            "region_key": 2
+        },
+        "94068": {
+            "name": "Saguenay",
+            "region_key": 2
+        },
+        "94205": {
+            "name": "Petit-Saguenay",
+            "region_key": 2
+        },
+        "94210": {
+            "name": "L'Anse-Saint-Jean",
+            "region_key": 2
+        },
+        "94215": {
+            "name": "Rivière-Éternité",
+            "region_key": 2
+        },
+        "94220": {
+            "name": "Ferland-et-Boilleau",
+            "region_key": 2
+        },
+        "94225": {
+            "name": "Saint-Félix-d'Otis",
+            "region_key": 2
+        },
+        "94230": {
+            "name": "Sainte-Rose-du-Nord",
+            "region_key": 2
+        },
+        "94235": {
+            "name": "Saint-Fulgence",
+            "region_key": 2
+        },
+        "94240": {
+            "name": "Saint-Honoré",
+            "region_key": 2
+        },
+        "94245": {
+            "name": "Saint-David-de-Falardeau",
+            "region_key": 2
+        },
+        "94250": {
+            "name": "Bégin",
+            "region_key": 2
+        },
+        "94255": {
+            "name": "Saint-Ambroise",
+            "region_key": 2
+        },
+        "94260": {
+            "name": "Saint-Charles-de-Bourget",
+            "region_key": 2
+        },
+        "94265": {
+            "name": "Larouche",
+            "region_key": 2
+        },
+        "95005": {
+            "name": "Tadoussac",
+            "region_key": 9
+        },
+        "95010": {
+            "name": "Sacré-Coeur",
+            "region_key": 9
+        },
+        "95018": {
+            "name": "Les Bergeronnes",
+            "region_key": 9
+        },
+        "95025": {
+            "name": "Les Escoumins",
+            "region_key": 9
+        },
+        "95032": {
+            "name": "Longue-Rive",
+            "region_key": 9
+        },
+        "95040": {
+            "name": "Portneuf-sur-Mer",
+            "region_key": 9
+        },
+        "95045": {
+            "name": "Forestville",
+            "region_key": 9
+        },
+        "95050": {
+            "name": "Colombier",
+            "region_key": 9
+        },
+        "96005": {
+            "name": "Baie-Trinité",
+            "region_key": 9
+        },
+        "96010": {
+            "name": "Godbout",
+            "region_key": 9
+        },
+        "96015": {
+            "name": "Franquelin",
+            "region_key": 9
+        },
+        "96020": {
+            "name": "Baie-Comeau",
+            "region_key": 9
+        },
+        "96025": {
+            "name": "Pointe-Lebel",
+            "region_key": 9
+        },
+        "96030": {
+            "name": "Pointe-aux-Outardes",
+            "region_key": 9
+        },
+        "96035": {
+            "name": "Chute-aux-Outardes",
+            "region_key": 9
+        },
+        "96040": {
+            "name": "Ragueneau",
+            "region_key": 9
+        },
+        "97007": {
+            "name": "Sept-Îles",
+            "region_key": 9
+        },
+        "97022": {
+            "name": "Port-Cartier",
+            "region_key": 9
+        },
+        "97035": {
+            "name": "Fermont",
+            "region_key": 9
+        },
+        "97040": {
+            "name": "Schefferville",
+            "region_key": 9
+        },
+        "98005": {
+            "name": "Blanc-Sablon",
+            "region_key": 9
+        },
+        "98010": {
+            "name": "Bonne-Espérance",
+            "region_key": 9
+        },
+        "98012": {
+            "name": "Saint-Augustin",
+            "region_key": 9
+        },
+        "98014": {
+            "name": "Gros-Mécatina",
+            "region_key": 9
+        },
+        "98015": {
+            "name": "Côte-Nord-du-Golfe-du-Saint-Laurent",
+            "region_key": 9
+        },
+        "98020": {
+            "name": "L'Île-d'Anticosti",
+            "region_key": 9
+        },
+        "98025": {
+            "name": "Natashquan",
+            "region_key": 9
+        },
+        "98030": {
+            "name": "Aguanish",
+            "region_key": 9
+        },
+        "98035": {
+            "name": "Baie-Johan-Beetz",
+            "region_key": 9
+        },
+        "98040": {
+            "name": "Havre-Saint-Pierre",
+            "region_key": 9
+        },
+        "98045": {
+            "name": "Longue-Pointe-de-Mingan",
+            "region_key": 9
+        },
+        "98050": {
+            "name": "Rivière-Saint-Jean",
+            "region_key": 9
+        },
+        "98055": {
+            "name": "Rivière-au-Tonnerre",
+            "region_key": 9
+        },
+        "99005": {
+            "name": "Lebel-sur-Quévillon",
+            "region_key": 10
+        },
+        "99010": {
+            "name": "Waswanipi",
+            "region_key": 10
+        },
+        "99015": {
+            "name": "Matagami",
+            "region_key": 10
+        },
+        "99020": {
+            "name": "Chapais",
+            "region_key": 10
+        },
+        "99025": {
+            "name": "Chibougamau",
+            "region_key": 10
+        },
+        "99030": {
+            "name": "Mistissini",
+            "region_key": 10
+        },
+        "99035": {
+            "name": "Waskaganish",
+            "region_key": 10
+        },
+        "99040": {
+            "name": "Nemaska",
+            "region_key": 10
+        },
+        "99045": {
+            "name": "Eastmain",
+            "region_key": 10
+        },
+        "99050": {
+            "name": "Wemindji",
+            "region_key": 10
+        },
+        "99055": {
+            "name": "Chisasibi",
+            "region_key": 10
+        },
+        "99060": {
+            "name": "G.R. d'Eeyou Istchee Baie-James",
+            "region_key": 10
+        },
+        "99065": {
+            "name": "Kawawachikamach",
+            "region_key": 9
+        },
+        "99070": {
+            "name": "Whapmagoostui",
+            "region_key": 10
+        },
+        "99075": {
+            "name": "Kuujjuarapik",
+            "region_key": 10
+        },
+        "99080": {
+            "name": "Umiujaq",
+            "region_key": 10
+        },
+        "99085": {
+            "name": "Inukjuak",
+            "region_key": 10
+        },
+        "99090": {
+            "name": "Kangiqsualujjuaq",
+            "region_key": 10
+        },
+        "99095": {
+            "name": "Kuujjuaq",
+            "region_key": 10
+        },
+        "99100": {
+            "name": "Tasiujaq",
+            "region_key": 10
+        },
+        "99105": {
+            "name": "Aupaluk",
+            "region_key": 10
+        },
+        "99110": {
+            "name": "Kangirsuk",
+            "region_key": 10
+        },
+        "99115": {
+            "name": "Quaqtaq",
+            "region_key": 10
+        },
+        "99120": {
+            "name": "Puvirnituq",
+            "region_key": 10
+        },
+        "99125": {
+            "name": "Akulivik",
+            "region_key": 10
+        },
+        "99130": {
+            "name": "Kangiqsujuaq",
+            "region_key": 10
+        },
+        "99135": {
+            "name": "Salluit",
+            "region_key": 10
+        },
+        "99140": {
+            "name": "Ivujivik",
+            "region_key": 10
+        }
+    },
+    "countries": {
+        "CA": {
+            "name": "Canada"
+        },
+        "US": {
+            "name": "États-unis"
+        },
+        "AF": {
+            "name": "Afghanistan"
+        },
+        "ZA": {
+            "name": "Afrique Du Sud"
+        },
+        "AX": {
+            "name": "Åland, Îles"
+        },
+        "AL": {
+            "name": "Albanie"
+        },
+        "DZ": {
+            "name": "Algérie"
+        },
+        "DE": {
+            "name": "Allemagne"
+        },
+        "AD": {
+            "name": "Andorre"
+        },
+        "AO": {
+            "name": "Angola"
+        },
+        "AI": {
+            "name": "Anguilla"
+        },
+        "AQ": {
+            "name": "Antarctique"
+        },
+        "AG": {
+            "name": "Antigua-et-barbuda"
+        },
+        "SA": {
+            "name": "Arabie Saoudite"
+        },
+        "AR": {
+            "name": "Argentine"
+        },
+        "AM": {
+            "name": "Arménie"
+        },
+        "AW": {
+            "name": "Aruba"
+        },
+        "AU": {
+            "name": "Australie"
+        },
+        "AT": {
+            "name": "Autriche"
+        },
+        "AZ": {
+            "name": "Azerbaïdjan"
+        },
+        "BS": {
+            "name": "Bahamas"
+        },
+        "BH": {
+            "name": "Bahreïn"
+        },
+        "BD": {
+            "name": "Bangladesh"
+        },
+        "BB": {
+            "name": "Barbade"
+        },
+        "BY": {
+            "name": "Bélarus"
+        },
+        "BE": {
+            "name": "Belgique"
+        },
+        "BZ": {
+            "name": "Belize"
+        },
+        "BJ": {
+            "name": "Bénin"
+        },
+        "BM": {
+            "name": "Bermudes"
+        },
+        "BT": {
+            "name": "Bhoutan"
+        },
+        "BO": {
+            "name": "Bolivie, L'état Plurinational De"
+        },
+        "BQ": {
+            "name": "Bonaire, Saint-eustache Et Saba"
+        },
+        "BA": {
+            "name": "Bosnie-herzégovine"
+        },
+        "BW": {
+            "name": "Botswana"
+        },
+        "BV": {
+            "name": "Bouvet, Île"
+        },
+        "BR": {
+            "name": "Brésil"
+        },
+        "BN": {
+            "name": "Brunei Darussalam"
+        },
+        "BG": {
+            "name": "Bulgarie"
+        },
+        "BF": {
+            "name": "Burkina Faso"
+        },
+        "BI": {
+            "name": "Burundi"
+        },
+        "KY": {
+            "name": "Caïmans, Îles"
+        },
+        "KH": {
+            "name": "Cambodge"
+        },
+        "CM": {
+            "name": "Cameroun"
+        },
+        "CV": {
+            "name": "Cap-vert"
+        },
+        "CF": {
+            "name": "Centrafricaine, République"
+        },
+        "CL": {
+            "name": "Chili"
+        },
+        "CN": {
+            "name": "Chine"
+        },
+        "CX": {
+            "name": "Christmas, Île"
+        },
+        "CY": {
+            "name": "Chypre"
+        },
+        "CC": {
+            "name": "Cocos (keeling), Îles"
+        },
+        "CO": {
+            "name": "Colombie"
+        },
+        "KM": {
+            "name": "Comores"
+        },
+        "CG": {
+            "name": "Congo"
+        },
+        "CD": {
+            "name": "Congo, La République Démocratique Du"
+        },
+        "CK": {
+            "name": "Cook, Îles"
+        },
+        "KR": {
+            "name": "Corée, République De"
+        },
+        "KP": {
+            "name": "Corée, République Populaire Démocratique De"
+        },
+        "CR": {
+            "name": "Costa Rica"
+        },
+        "CI": {
+            "name": "Côte D'ivoire"
+        },
+        "HR": {
+            "name": "Croatie"
+        },
+        "CU": {
+            "name": "Cuba"
+        },
+        "CW": {
+            "name": "Curaçao"
+        },
+        "DK": {
+            "name": "Danemark"
+        },
+        "DJ": {
+            "name": "Djibouti"
+        },
+        "DO": {
+            "name": "Dominicaine, République"
+        },
+        "DM": {
+            "name": "Dominique"
+        },
+        "EG": {
+            "name": "Égypte"
+        },
+        "SV": {
+            "name": "El Salvador"
+        },
+        "AE": {
+            "name": "Émirats Arabes Unis"
+        },
+        "EC": {
+            "name": "Équateur"
+        },
+        "ER": {
+            "name": "Érythrée"
+        },
+        "ES": {
+            "name": "Espagne"
+        },
+        "EE": {
+            "name": "Estonie"
+        },
+        "ET": {
+            "name": "Éthiopie"
+        },
+        "FK": {
+            "name": "Falkland, Îles (malvinas)"
+        },
+        "FO": {
+            "name": "Féroé, Îles"
+        },
+        "FJ": {
+            "name": "Fidji"
+        },
+        "FI": {
+            "name": "Finlande"
+        },
+        "FR": {
+            "name": "France"
+        },
+        "GA": {
+            "name": "Gabon"
+        },
+        "GM": {
+            "name": "Gambie"
+        },
+        "GE": {
+            "name": "Géorgie"
+        },
+        "GS": {
+            "name": "Géorgie Du Sud-et-les Îles Sandwich Du Sud"
+        },
+        "GH": {
+            "name": "Ghana"
+        },
+        "GI": {
+            "name": "Gibraltar"
+        },
+        "GR": {
+            "name": "Grèce"
+        },
+        "GD": {
+            "name": "Grenade"
+        },
+        "GL": {
+            "name": "Groenland"
+        },
+        "GP": {
+            "name": "Guadeloupe"
+        },
+        "GU": {
+            "name": "Guam"
+        },
+        "GT": {
+            "name": "Guatemala"
+        },
+        "GG": {
+            "name": "Guernesey"
+        },
+        "GN": {
+            "name": "Guinée"
+        },
+        "GW": {
+            "name": "Guinée-bissau"
+        },
+        "GQ": {
+            "name": "Guinée équatoriale"
+        },
+        "GY": {
+            "name": "Guyana"
+        },
+        "GF": {
+            "name": "Guyane Française"
+        },
+        "HT": {
+            "name": "Haïti"
+        },
+        "HM": {
+            "name": "Heard-et-Îles Macdonald, Île"
+        },
+        "HN": {
+            "name": "Honduras"
+        },
+        "HK": {
+            "name": "Hong Kong"
+        },
+        "HU": {
+            "name": "Hongrie"
+        },
+        "IM": {
+            "name": "Île De Man"
+        },
+        "UM": {
+            "name": "Îles Mineures éloignées Des états-unis"
+        },
+        "VG": {
+            "name": "Îles Vierges Britanniques"
+        },
+        "VI": {
+            "name": "Îles Vierges Des états-unis"
+        },
+        "IN": {
+            "name": "Inde"
+        },
+        "ID": {
+            "name": "Indonésie"
+        },
+        "IR": {
+            "name": "Iran, République Islamique D'"
+        },
+        "IQ": {
+            "name": "Iraq"
+        },
+        "IE": {
+            "name": "Irlande"
+        },
+        "IS": {
+            "name": "Islande"
+        },
+        "IL": {
+            "name": "Israël"
+        },
+        "IT": {
+            "name": "Italie"
+        },
+        "JM": {
+            "name": "Jamaïque"
+        },
+        "JP": {
+            "name": "Japon"
+        },
+        "JE": {
+            "name": "Jersey"
+        },
+        "JO": {
+            "name": "Jordanie"
+        },
+        "KZ": {
+            "name": "Kazakhstan"
+        },
+        "KE": {
+            "name": "Kenya"
+        },
+        "KG": {
+            "name": "Kirghizistan"
+        },
+        "KI": {
+            "name": "Kiribati"
+        },
+        "KW": {
+            "name": "Koweït"
+        },
+        "LA": {
+            "name": "Lao, République Démocratique Populaire"
+        },
+        "LS": {
+            "name": "Lesotho"
+        },
+        "LV": {
+            "name": "Lettonie"
+        },
+        "LB": {
+            "name": "Liban"
+        },
+        "LR": {
+            "name": "Libéria"
+        },
+        "LY": {
+            "name": "Libye"
+        },
+        "LI": {
+            "name": "Liechtenstein"
+        },
+        "LT": {
+            "name": "Lituanie"
+        },
+        "LU": {
+            "name": "Luxembourg"
+        },
+        "MO": {
+            "name": "Macao"
+        },
+        "MK": {
+            "name": "Macédoine, L'ex-république Yougoslave De"
+        },
+        "MG": {
+            "name": "Madagascar"
+        },
+        "MY": {
+            "name": "Malaisie"
+        },
+        "MW": {
+            "name": "Malawi"
+        },
+        "MV": {
+            "name": "Maldives"
+        },
+        "ML": {
+            "name": "Mali"
+        },
+        "MT": {
+            "name": "Malte"
+        },
+        "MP": {
+            "name": "Mariannes Du Nord, Îles"
+        },
+        "MA": {
+            "name": "Maroc"
+        },
+        "MH": {
+            "name": "Marshall, Îles"
+        },
+        "MQ": {
+            "name": "Martinique"
+        },
+        "MU": {
+            "name": "Maurice"
+        },
+        "MR": {
+            "name": "Mauritanie"
+        },
+        "YT": {
+            "name": "Mayotte"
+        },
+        "MX": {
+            "name": "Mexique"
+        },
+        "FM": {
+            "name": "Micronésie, États Fédérés De"
+        },
+        "MD": {
+            "name": "Moldova, République De"
+        },
+        "MC": {
+            "name": "Monaco"
+        },
+        "MN": {
+            "name": "Mongolie"
+        },
+        "ME": {
+            "name": "Monténégro"
+        },
+        "MS": {
+            "name": "Montserrat"
+        },
+        "MZ": {
+            "name": "Mozambique"
+        },
+        "MM": {
+            "name": "Myanmar"
+        },
+        "NA": {
+            "name": "Namibie"
+        },
+        "NR": {
+            "name": "Nauru"
+        },
+        "NP": {
+            "name": "Népal"
+        },
+        "NI": {
+            "name": "Nicaragua"
+        },
+        "NE": {
+            "name": "Niger"
+        },
+        "NG": {
+            "name": "Nigéria"
+        },
+        "NU": {
+            "name": "Niué"
+        },
+        "NF": {
+            "name": "Norfolk, Île"
+        },
+        "NO": {
+            "name": "Norvège"
+        },
+        "NC": {
+            "name": "Nouvelle-calédonie"
+        },
+        "NZ": {
+            "name": "Nouvelle-zélande"
+        },
+        "IO": {
+            "name": "Océan Indien, Territoire Britannique De L'"
+        },
+        "OM": {
+            "name": "Oman"
+        },
+        "UG": {
+            "name": "Ouganda"
+        },
+        "UZ": {
+            "name": "Ouzbékistan"
+        },
+        "PK": {
+            "name": "Pakistan"
+        },
+        "PW": {
+            "name": "Palaos"
+        },
+        "PS": {
+            "name": "Palestinien Occupé, Territoire"
+        },
+        "PA": {
+            "name": "Panama"
+        },
+        "PG": {
+            "name": "Papouasie-nouvelle-guinée"
+        },
+        "PY": {
+            "name": "Paraguay"
+        },
+        "NL": {
+            "name": "Pays-bas"
+        },
+        "PE": {
+            "name": "Pérou"
+        },
+        "PH": {
+            "name": "Philippines"
+        },
+        "PN": {
+            "name": "Pitcairn"
+        },
+        "PL": {
+            "name": "Pologne"
+        },
+        "PF": {
+            "name": "Polynésie Française"
+        },
+        "PR": {
+            "name": "Porto Rico"
+        },
+        "PT": {
+            "name": "Portugal"
+        },
+        "QA": {
+            "name": "Qatar"
+        },
+        "RE": {
+            "name": "Réunion"
+        },
+        "RO": {
+            "name": "Roumanie"
+        },
+        "GB": {
+            "name": "Royaume-uni"
+        },
+        "RU": {
+            "name": "Russie, Fédération De"
+        },
+        "RW": {
+            "name": "Rwanda"
+        },
+        "EH": {
+            "name": "Sahara Occidental"
+        },
+        "BL": {
+            "name": "Saint-barthélemy"
+        },
+        "SH": {
+            "name": "Sainte-hélène, Ascension Et Tristan Da Cunha"
+        },
+        "LC": {
+            "name": "Sainte-lucie"
+        },
+        "KN": {
+            "name": "Saint-kitts-et-nevis"
+        },
+        "SM": {
+            "name": "Saint-marin"
+        },
+        "MF": {
+            "name": "Saint-martin (partie Française)"
+        },
+        "SX": {
+            "name": "Saint-martin (partie Néerlandaise)"
+        },
+        "PM": {
+            "name": "Saint-pierre-et-miquelon"
+        },
+        "VA": {
+            "name": "Saint-siège (état De La Cité Du Vatican)"
+        },
+        "VC": {
+            "name": "Saint-vincent-et-les Grenadines"
+        },
+        "SB": {
+            "name": "Salomon, Îles"
+        },
+        "WS": {
+            "name": "Samoa"
+        },
+        "AS": {
+            "name": "Samoa Américaines"
+        },
+        "ST": {
+            "name": "Sao Tomé-et-principe"
+        },
+        "SN": {
+            "name": "Sénégal"
+        },
+        "RS": {
+            "name": "Serbie"
+        },
+        "SC": {
+            "name": "Seychelles"
+        },
+        "SL": {
+            "name": "Sierra Leone"
+        },
+        "SG": {
+            "name": "Singapour"
+        },
+        "SK": {
+            "name": "Slovaquie"
+        },
+        "SI": {
+            "name": "Slovénie"
+        },
+        "SO": {
+            "name": "Somalie"
+        },
+        "SD": {
+            "name": "Soudan"
+        },
+        "SS": {
+            "name": "Soudan Du Sud"
+        },
+        "LK": {
+            "name": "Sri Lanka"
+        },
+        "SE": {
+            "name": "Suède"
+        },
+        "CH": {
+            "name": "Suisse"
+        },
+        "SR": {
+            "name": "Suriname"
+        },
+        "SJ": {
+            "name": "Svalbard Et Île Jan Mayen"
+        },
+        "SZ": {
+            "name": "Swaziland"
+        },
+        "SY": {
+            "name": "Syrienne, République Arabe"
+        },
+        "TJ": {
+            "name": "Tadjikistan"
+        },
+        "TW": {
+            "name": "Taïwan, Province De Chine"
+        },
+        "TZ": {
+            "name": "Tanzanie, République-unie De"
+        },
+        "TD": {
+            "name": "Tchad"
+        },
+        "CZ": {
+            "name": "TchÈque, République"
+        },
+        "TF": {
+            "name": "Terres Australes Françaises"
+        },
+        "TH": {
+            "name": "Thaïlande"
+        },
+        "TL": {
+            "name": "Timor-leste"
+        },
+        "TG": {
+            "name": "Togo"
+        },
+        "TK": {
+            "name": "Tokelau"
+        },
+        "TO": {
+            "name": "Tonga"
+        },
+        "TT": {
+            "name": "Trinité-et-tobago"
+        },
+        "TN": {
+            "name": "Tunisie"
+        },
+        "TM": {
+            "name": "Turkménistan"
+        },
+        "TC": {
+            "name": "Turks-et-caïcos, Îles"
+        },
+        "TR": {
+            "name": "Turquie"
+        },
+        "TV": {
+            "name": "Tuvalu"
+        },
+        "UA": {
+            "name": "Ukraine"
+        },
+        "UY": {
+            "name": "Uruguay"
+        },
+        "VU": {
+            "name": "Vanuatu"
+        },
+        "VE": {
+            "name": "Venezuela, République Bolivarienne Du"
+        },
+        "VN": {
+            "name": "Viet Nam"
+        },
+        "WF": {
+            "name": "Wallis Et Futuna"
+        },
+        "YE": {
+            "name": "Yémen"
+        },
+        "ZM": {
+            "name": "Zambie"
+        },
+        "ZW": {
+            "name": "Zimbabwe"
+        }
+    },
+    "provinces": {
+        "AB": {
+            "name": "Alberta",
+            "country_key": "CA"
+        },
+        "BC": {
+            "name": "Colombie-Britannique",
+            "country_key": "CA"
+        },
+        "MB": {
+            "name": "Manitoba",
+            "country_key": "CA"
+        },
+        "NB": {
+            "name": "Nouveau-Brunswick",
+            "country_key": "CA"
+        },
+        "NL": {
+            "name": "Terre-Neuve-et-Labrador",
+            "country_key": "CA"
+        },
+        "NS": {
+            "name": "Nouvelle-Écosse",
+            "country_key": "CA"
+        },
+        "NT": {
+            "name": "Territoires du Nord-Ouest",
+            "country_key": "CA"
+        },
+        "NU": {
+            "name": "Nunavut",
+            "country_key": "CA"
+        },
+        "ON": {
+            "name": "Ontario",
+            "country_key": "CA"
+        },
+        "PE": {
+            "name": "Île-du-Prince-Édouard",
+            "country_key": "CA"
+        },
+        "QC": {
+            "name": "Québec",
+            "country_key": "CA"
+        },
+        "SK": {
+            "name": "Saskatchewan",
+            "country_key": "CA"
+        },
+        "YT": {
+            "name": "Yukon",
+            "country_key": "CA"
+        }
+    },
+    "regions": {
+        "1": {
+            "name": "Bas-Saint-Laurent",
+            "province_key": "QC"
+        },
+        "2": {
+            "name": "Saguenay–Lac-Saint-Jean",
+            "province_key": "QC"
+        },
+        "3": {
+            "name": "Capitale Nationale",
+            "province_key": "QC"
+        },
+        "4": {
+            "name": "Mauricie",
+            "province_key": "QC"
+        },
+        "5": {
+            "name": "Estrie",
+            "province_key": "QC"
+        },
+        "6": {
+            "name": "Montréal",
+            "province_key": "QC"
+        },
+        "7": {
+            "name": "Outaouais",
+            "province_key": "QC"
+        },
+        "8": {
+            "name": "Abitibi-Témiscamingue",
+            "province_key": "QC"
+        },
+        "9": {
+            "name": "Côte-Nord",
+            "province_key": "QC"
+        },
+        "10": {
+            "name": "Nord-du-Québec",
+            "province_key": "QC"
+        },
+        "11": {
+            "name": "Gaspésie–Îles-de-la-Madeleine",
+            "province_key": "QC"
+        },
+        "12": {
+            "name": "Chaudière-Appalaches",
+            "province_key": "QC"
+        },
+        "13": {
+            "name": "Laval",
+            "province_key": "QC"
+        },
+        "14": {
+            "name": "Lanaudière",
+            "province_key": "QC"
+        },
+        "15": {
+            "name": "Laurentides",
+            "province_key": "QC"
+        },
+        "16": {
+            "name": "Montérégie",
+            "province_key": "QC"
+        },
+        "17": {
+            "name": "Centre-du-Québec",
+            "province_key": "QC"
+        }
+    }
+}

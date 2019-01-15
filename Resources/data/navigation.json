@@ -1,0 +1,65 @@
+{
+    "showTitles": true,
+
+    "items": {
+        "admin": {
+            "icon": "fas fa-cogs",
+            "title": "navigation.modules.admin.title",
+            "panel": "admin",
+            "order": 50
+        }
+    },
+
+    "panel": {
+        "admin": {
+            "title": "navigation.modules.admin.title",
+            "sections": [
+                {
+                    "title": "navigation.modules.admin.user.title",
+                    "items": [
+                        {
+                            "title": "navigation.modules.admin.user.links.list",
+                            "route": "index_user"
+                        },
+                        {
+                            "title": "navigation.modules.admin.user.links.create",
+                            "route": "create_user"
+                        }
+                    ]
+                },
+                {
+                    "title": "navigation.modules.admin.email.title",
+                    "items": [
+                        {
+                            "title": "navigation.modules.admin.email.links.create",
+                            "route": "create_email"
+                        },
+                        {
+                            "title": "navigation.modules.admin.email.links.list",
+                            "route": "index_email"
+                        },
+                        {
+                            "title": "navigation.modules.admin.email.links.listTemplates",
+                            "route": "index_email_templates",
+                            "privilege": "EMAIL_TEMPLATES"
+                        }
+                    ]
+                },
+                {
+                    "title": "navigation.modules.admin.software.title",
+                    "privilege": "SOFTWARE_UPDATE",
+                    "items": [
+                        {
+                            "title": "navigation.modules.admin.software.links.data",
+                            "route": "index_software_data"
+                        },
+                        {
+                            "title": "navigation.modules.admin.software.links.update",
+                            "route": "index_software"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

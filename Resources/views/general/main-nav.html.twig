@@ -2,7 +2,7 @@
 
 {% block main_left_nav %}
     <nav id="main-navigation" class="{{ data("navigation.showTitles") ? "show-titles" : "" }}">
-        {% for item in data("navigation.items") %}
+        {% for item in data("navigation.items")|sortByField('order') %}
             {% if item.privilege is not defined or (item.privilege is defined and app.user.hasPrivilege(item.privilege)) %}
                 <div class="link-item" {{ (item.panel is defined ? 'data-panel="' ~ item.panel ~ '"' : '') | raw }}>
                     <a class="link-detail" href="{{ item.route is defined ? path(item.route) : '#' }}">

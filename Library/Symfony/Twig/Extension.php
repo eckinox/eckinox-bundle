@@ -8,6 +8,7 @@ use Twig\TwigFunction;
 use Twig\Environment;
 use Twig\Markup;
 use Eckinox\Library\General\Git;
+use Eckinox\Library\General\Data;
 
 # This needs to be moved !
 setlocale(LC_COLLATE, 'fr_CA.UTF-8');
@@ -36,6 +37,7 @@ class Extension extends AbstractExtension
             new TwigFilter('data', array($this, 'getDataJson')),
             new TwigFilter('asort', array($this, 'asort')),
             new TwigFilter('icon', array($this, 'getIcon')),
+            new TwigFilter('sortByField', array($this, 'sortByField')),
 
             /*
              * Call filters dynamically
@@ -131,6 +133,27 @@ class Extension extends AbstractExtension
         }
 
         return new Markup($value, []);
+    }
+
+    public function sortByField($array, $fieldKey = null, $direction = 'asc') {
+        if (!is_array($array)) {
+            return $array;
+        }
+
+        uasort($array, function($a, $b) use ($fieldKey, $direction) {
+            $dataA = is_array($a) ? Data::array_get($a, $fieldKey) : null;
+            $dataB = is_array($b) ? Data::array_get($b, $fieldKey) : null;
+
+            if ($dataA == $dataB) {
+                return 0;
+            }
+
+            $result = $dataA > $dataB ? 1 : -1;
+
+            return strtolower($direction) == 'asc' ? $result : $result * -1;
+        });
+
+        return $array;
     }
 
     /*

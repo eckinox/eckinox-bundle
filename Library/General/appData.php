@@ -17,7 +17,9 @@ trait appData {
         $dataFile = array_shift($keys);
 
         if( ! Data::get($dataFile) ) {
-            foreach([ $this->getParameter('app.data.path'), $this->getParameter('app.data.path_custom') ] as $filepath) {
+            foreach([ $this->getParameter('app.data.path_bundle'),
+                      $this->getParameter('app.data.path'),
+                      $this->getParameter('app.data.path_custom') ] as $filepath) {
                 $dataFilePath = $filepath . $dataFile . '.json';
 
                 if( file_exists($dataFilePath) ) {

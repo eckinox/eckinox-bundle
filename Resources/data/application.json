@@ -1,0 +1,43 @@
+{
+    "log": {
+        "config": {
+            "list": {
+                "items_shown": 40
+            }
+        }
+    },
+
+    "user": {
+        "config": {
+            "list": {
+                "items_shown": 20
+            }
+        }
+    },
+
+    "email": {
+        "config": {
+            "attachments": {
+                "tree": [
+                    {
+                        "name": "Pièces jointes",
+                        "directory": "files",
+                        "children": []
+                    }
+                ]
+            },
+
+            "list": {
+                "items_shown": 20
+            }
+        }
+    },
+
+    "mastersearch": {
+        "config": {
+            "list": {
+                "items_shown": 999
+            }
+        }
+    }
+}

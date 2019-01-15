@@ -21,14 +21,18 @@ return [
     "privileges" => [
         "default_message" => "Vous n'avez pas les privilèges requis pour effectuer cette action",
         "modules" => [
-            "user" => "Utilisateurs"
+            "user" => "Utilisateurs",
+            "software" => "Logiciel"
         ],
         "labels" => [
     		"user" => [
     			"USER_EDIT_PRIVILEGES" => "Modifier les privilèges d'un utilisateur",
     			"USER_CREATE_EDIT" => "Créer / éditer un utilisateur",
     			"USER_LIST" => "Lister les utilisateurs"
-    		]
+    		],
+            "software" => [
+                "SOFTWARE_UPDATE" => "Modifier les données du logiciel"
+            ]
         ]
     ],
 

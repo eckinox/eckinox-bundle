@@ -1,0 +1,14 @@
+{
+	"groups": {  },
+
+	"privileges": {
+		"user": [
+			"USER_EDIT_PRIVILEGES",
+			"USER_CREATE_EDIT",
+			"USER_LIST"
+		],
+        "software": [
+            "SOFTWARE_UPDATE"
+        ]
+	}
+}

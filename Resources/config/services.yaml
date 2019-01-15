@@ -8,6 +8,7 @@ parameters:
     app.data.privileges: '%kernel.project_dir%/data/privileges.json'
     app.data.path: '%kernel.project_dir%/data/'
     app.data.path_custom: '%kernel.project_dir%/var/data/'
+    app.data.path_bundle: '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Resources/data/'
     app.translations.custom: '%kernel.project_dir%/var/translations/'
     app.public.directory: '%kernel.project_dir%/public'
     app.attachments.path: '%kernel.project_dir%/private/attachments/'
