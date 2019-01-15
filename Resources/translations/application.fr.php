@@ -18,6 +18,20 @@ return [
         "index_email_templates" => "Liste des gabarits de courriel",
     ],
 
+    "privileges" => [
+        "default_message" => "Vous n'avez pas les privilèges requis pour effectuer cette action",
+        "modules" => [
+            "user" => "Utilisateurs"
+        ],
+        "labels" => [
+    		"user" => [
+    			"USER_EDIT_PRIVILEGES" => "Modifier les privilèges d'un utilisateur",
+    			"USER_CREATE_EDIT" => "Créer / éditer un utilisateur",
+    			"USER_LIST" => "Lister les utilisateurs"
+    		]
+        ]
+    ],
+
     "email" => [
         "actions" => [
             "addEmail" => "Ajouter un courriel",
@@ -172,10 +186,6 @@ return [
         "title" => [
             "list" => "Liste des journaux d'événements",
         ],
-    ],
-
-    "privileges" => [
-        "default_message" => "Vous n'avez pas les privilèges requis pour effectuer cette action",
     ],
 
     "dashboard" => [

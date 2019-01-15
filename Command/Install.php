@@ -117,7 +117,7 @@ class Install extends Command
             $user->setFullName('Eckinox User')
                 ->setEmail($user_email)
                 ->setUsername($user_email)
-                ->setPrivileges([]);
+                ->setPrivileges(['USER_LIST', 'USER_CREATE_EDIT', 'USER_EDIT_PRIVILEGES']);
 
             $encoder = $this->container->get('security.password_encoder');
             $encoded = $encoder->encodePassword($user, $user_password);

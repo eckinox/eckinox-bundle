@@ -84,11 +84,11 @@ class SecurityListener {
              */
             $privileges_messages = array();
 
-            foreach($controller->data('privileges.privileges') as $namespaces) {
-                foreach($namespaces as $moduleName => $modules) {
-                    foreach($modules as $privilegeId => $values) {
-                        $privileges_messages[$privilegeId] = $values["message"];
-                    }
+            foreach($controller->data('privileges.privileges') as $moduleName => $items) {
+                foreach($items as $privilegeId) {
+                    $messageKey = implode('.', ['privileges', 'messages', $moduleName, $privilegeId]);
+                    $translation = $this->translator->trans($messageKey, [], 'application');
+                    $privileges_messages[$privilegeId] = $translation != $messageKey ? $messageKey : null;
                 }
             }
 

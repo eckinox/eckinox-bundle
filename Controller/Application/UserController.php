@@ -29,7 +29,7 @@ class UserController extends Controller
 
     /**
      * @Route("/user/{page}", name="index_user", requirements={"page"="\d+"})
-     * Security(privilege="USER_LIST")
+     * @Security(privilege="USER_LIST")
      * @Breadcrumb(parent="home")
      */
     public function index(Request $request, $page = 1)
@@ -126,7 +126,7 @@ class UserController extends Controller
     /**
      * @Route("/user/create", name="create_user")
      * @Route("/user/edit/{user_id}", name="edit_user", requirements={"user_id"="\d+"})
-     * Security(privilege="USER_CREATE_EDIT")
+     * @Security(privilege="USER_CREATE_EDIT")
      * @Breadcrumb(parent="index_user")
      */
     public function edit(Request $request, $user_id = null, AuthorizationCheckerInterface $authChecker)
@@ -155,11 +155,10 @@ class UserController extends Controller
         $privileges = [];
 
         if($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES')) {
-            foreach($this->data('privileges.privileges') as $namespaces) {
-                foreach($namespaces as $moduleName => $modules) {
-                    foreach($modules as $privilegeId => $values) {
-                        $privileges[$moduleName][$values['name']] = $privilegeId;
-                    }
+            foreach($this->data('privileges.privileges') as $moduleName => $items) {
+                $cleanModuleName = $this->get('translator')->trans(implode('.', ['privileges', 'modules', $moduleName]), [], 'application');
+                foreach($items as $privilegeId) {
+                    $privileges[$cleanModuleName][$this->get('translator')->trans(implode('.', ['privileges', 'labels', $moduleName, $privilegeId]), [], 'application')] = $privilegeId;
                 }
             }
         }
