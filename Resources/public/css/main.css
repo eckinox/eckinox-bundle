@@ -56,6 +56,7 @@ i.red { color: #f85757; }
 .field-wrapper > label { margin-bottom: 5px; display: block; color: #0172ba; font-size: 1.2em; text-transform: uppercase; }
 .field-wrapper.form > label { margin-bottom: 30px; font-size: 1.6em; }
 .field-wrapper input[type=text],
+.field-wrapper input[type=date],
 .field-wrapper input[type=email],
 .field-wrapper input[type=number],
 .field-wrapper input[type=password],
@@ -63,6 +64,7 @@ i.red { color: #f85757; }
 .field-wrapper select,
 .field-wrapper textarea { width: 100%; background: #fff; }
 .field-wrapper input[type=text],
+.field-wrapper input[type=date],
 .field-wrapper input[type=email],
 .field-wrapper input[type=number],
 .field-wrapper input[type=password],
@@ -225,6 +227,7 @@ i.red { color: #f85757; }
 .list .column.number { max-width: 150px; }
 .list .row .column.form-list-toggle { width: 100%; flex: none; }
 .list .row.head { border-bottom: 1px solid rgba(0, 80, 178, 0.15); }
+.list .row.head.fields { border-bottom: none; }
 .list .row.head:not(.search) { font-weight: 500; font-family: 'Oswald', sans-serif; text-transform: uppercase; line-height: 1.2em; }
 .list .row.head:not(.search) .column.status { font-size: 0; }
 .list .row.head.search .column {
