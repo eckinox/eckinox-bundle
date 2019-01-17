@@ -3,6 +3,7 @@ class BundleUI {
         BundleUI.initConfirmClick();
         BundleUI.initDropdownClose();
         BundleUI.initNavigationPanels();
+        BundleUI.initFlashMessageDismissal();
     }
 
     // Confirms clicks on [confirm-click] elements with a custom message defined in the attribute
@@ -71,6 +72,24 @@ class BundleUI {
         });
     }
 
+    static initFlashMessageDismissal() {
+        document.addEventListener('click', function(e) {
+            let item = e.target;
+
+            if (e.target.matches('.flash-message') || (item = e.target.closest('.flash-message'))) {
+                item.classList.add('fade-out', 'slide-down');
+                setTimeout(function(){
+                    let parent = item.parentNode;
+                    parent.removeChild(item);
+
+                    if (!parent.childNodes.length) {
+                        parent.closest('#flash').classList.remove('open');
+                    }
+                }, 250);
+            }
+        });
+    }
+
     static empty(element) {
         while (element.firstChild) {
             element.removeChild(element.firstChild);
@@ -98,6 +117,23 @@ class BundleUI {
         } else if (typeof content == 'Node') {
             element.appendChild(content);
         }
+    }
+
+    static showFlashMessage(type, message, timeout) {
+        let wrapper = document.querySelector('#flash .flash-content');
+        let html = `<div class="flash-message ${type}">
+                        ${message}
+                    </div>`;
+        BundleUI.appendTo(wrapper, html);
+
+        if (!wrapper.closest('#flash').classList.contains('open')) {
+            wrapper.closest('#flash').classList.add('open');
+        }
+    }
+
+    static clearFlashMessages() {
+        let wrapper = document.querySelector('#flash .flash-content');
+        wrapper.innerHTML = '';
     }
 }
 

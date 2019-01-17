@@ -11,6 +11,7 @@ use Eckinox\Entity\Application\Log;
 use Eckinox\Form\Application\UserType;
 use Eckinox\Library\General\Arrays;
 use Eckinox\Library\General\Serializer;
+use Eckinox\Library\General\StringEdit;
 use Eckinox\Library\Symfony\Annotation\Security;
 use Eckinox\Library\Symfony\Annotation\Breadcrumb;
 use Eckinox\Library\Symfony\Annotation\Lang;
@@ -160,6 +161,12 @@ class UserController extends Controller
                 foreach($items as $privilegeId) {
                     $privileges[$cleanModuleName][$this->get('translator')->trans(implode('.', ['privileges', 'labels', $moduleName, $privilegeId]), [], 'application')] = $privilegeId;
                 }
+            }
+
+            foreach ($this->data('import') as $importType => $settings) {
+                $cleanModuleName = $this->get('translator')->trans('privileges.modules.import'    , [], 'application');
+                $privilegeId = 'IMPORT_' . strtoupper(StringEdit::camelToSnakeCase($importType));
+                $privileges[$cleanModuleName][$this->get('translator')->trans(implode('.', ['privileges', 'labels', 'import', $privilegeId]), [], 'application')] = $privilegeId;
             }
         }
 

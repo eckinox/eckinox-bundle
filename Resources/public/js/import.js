@@ -58,12 +58,50 @@ class ImportFlow {
         // Starting line handling
         document.addEventListener('change', function(e) {
             if (e.target.matches('select[name^="assignation["]')) {
+                let duplicateAssignations = document.querySelectorAll(`select[name^="assignation["]:not([name="${e.target.getAttribute('name')}"]) option[value="${e.target.value}"]:checked`);
+                for (let option of duplicateAssignations) {
+                    option.closest('select').value = '';
+                }
+
                 importFlow.updateAssignations();
             }
         });
 
         importFlow.previewWrapper.addEventListener('submit', function(e){
-            e.preventDefault();
+            BundleUI.clearFlashMessages();
+
+            // Check that all required properties have been assigned to a column
+            let properties = typeof importFlow.settings.properties != 'undefined' ? JSON.parse(JSON.stringify(importFlow.settings.properties)) : {};
+
+            // Remove optional properties from the list
+            for (let property of Object.keys(properties)) {
+                if (typeof properties[property].required == 'undefined' || !properties[property].required) {
+                    delete properties[property];
+                }
+            }
+
+            // Check that all remaining properties have been assigned
+            for (let select of document.querySelectorAll('select[name^="assignation["]')) {
+                if (select.value && typeof properties[select.value] != 'undefined') {
+                    delete properties[select.value];
+                }
+            }
+
+            // Remaining properties are required and unassigned.
+            if (Object.keys(properties).length) {
+                e.preventDefault();
+
+                let propertyLabels = [];
+                for (let property of Object.keys(properties)) {
+                    propertyLabels.push(document.querySelector('option[value="' + property + '"]').innerHTML.trim());
+                }
+
+                BundleUI.showFlashMessage('error', trans('import.errors.assignations.requiredProperties', { '%properties%': propertyLabels.join(', ') }, 'application'));
+
+                return false;
+            }
+
+            importFlow.previewWrapper.querySelector('input[name="data"]').value = JSON.stringify(importFlow.computeData());
         });
     }
 
@@ -134,7 +172,6 @@ class ImportFlow {
     }
 
     computeData() {
-        // @TODO
         return this.rawData ? this.rawData[this.sheetInput.value]['rows'] : [];
     }
 

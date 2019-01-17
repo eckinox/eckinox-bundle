@@ -15,7 +15,7 @@ class Converter {
         $this->translator = $translator;
     }
 
-    public function excelToArray($path, $calculateFormulas = false, $formulasAsNull = true, $trimLeadingRows = true, $trimTrailingRows = true, $trimTrailingColumns = true) {
+    public function excelToArray($path, $calculateFormulas = false, $formulasAsNull = true, $stripBackslashes = true, $trimLeadingRows = true, $trimTrailingRows = true, $trimTrailingColumns = true) {
         if (!file_exists($path)) {
             throw new \Exception($this->translator->trans('converter.errors.fileNotFound', [], static::DOMAIN));
         }
@@ -40,13 +40,17 @@ class Converter {
             $sheet = $spreadsheet->getSheet($sheetIndex);
             $highestPoint = $sheet->getHighestRowAndColumn();
 
-            if ($formulasAsNull) {
-                $rows = $sheet->rangeToArray('A1:' . $highestPoint['column'] . $highestPoint['row'], null, $calculateFormulas);
-                foreach ($rows as $rowIndex => $row) {
-                    foreach ($row as $colIndex => $value) {
+            $rows = $sheet->rangeToArray('A1:' . $highestPoint['column'] . $highestPoint['row'], null, $calculateFormulas);
+            foreach ($rows as $rowIndex => $row) {
+                foreach ($row as $colIndex => $value) {
+                    if ($formulasAsNull) {
                         if ($value && strpos($value, '=') === 0) {
                             $rows[$rowIndex][$colIndex] = null;
                         }
+                    }
+
+                    if ($stripBackslashes && $rows[$rowIndex][$colIndex]) {
+                        $rows[$rowIndex][$colIndex] = str_replace('\\', '', $rows[$rowIndex][$colIndex]);
                     }
                 }
             }

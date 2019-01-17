@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    <form name="import" method="post" ajax-action="{{ path('ajax_get_json_from_excel') }}" ajax-type="json">
+    <form name="import" method="post" ajax-action="{{ path('ajax_get_json_from_excel') }}" ajax-type="json" id="upload-form">
         <div class="block-wrapper">
             <div class="block block-full file-selector">
                 <div class="fields">
@@ -23,14 +23,23 @@
             </div>
 
             <div class="block block-full change-file hide">
-                <button class="button red import-reset" type="button">{% trans %}import.fields.change_file{% endtrans %} &nbsp;<i class="fa fa-undo" aria-hidden="true"></i></button>
+                <div class="fields">
+                    <div class="field-wrapper half">
+                        <button class="button red import-reset" type="button">{% trans %}import.fields.change_file{% endtrans %} &nbsp;<i class="fa fa-undo" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="field-wrapper half text-right">
+                        <button type="submit" form="import-form" class="button import">{% trans %}import.fields.import{% endtrans %} &nbsp;<i class="fa fa-file-import" aria-hidden="true"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
 
     <div class="block-wrapper import-processing hide">
         <div class="block block-full">
-            <form class="import-preview hide">
+            <form class="import-preview hide" id="import-form" method="POST" action="{{ path('import_process', { importType: importType }) }}">
+                <input type="hidden" name="data">
+
                 <div class="fields">
                     <div class="field-wrapper half select-sheet">
                         <label for="worksheet">{% trans %}import.fields.worksheet{% endtrans %}</label>
@@ -64,8 +73,12 @@
                     </div>
                 </div>
                 <div class="fields">
-                    <div class="field-wrapper preview-wrapper">
+                    <div class="field-wrapper full preview-wrapper">
                         <table class="excel-preview partial"></table>
+                    </div>
+
+                    <div class="field-wrapper button-container">
+                        <button type="submit" class="button import">{% trans %}import.fields.import{% endtrans %} &nbsp;<i class="fa fa-file-import" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </form>

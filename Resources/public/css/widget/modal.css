@@ -59,7 +59,7 @@
     border: 1px solid rgba(0, 80, 178, 0.15);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
 }
-#flash .flash-message { display: flex; justify-content: flex-start; align-items: center; padding: 10px 15px; margin-bottom: 15px; }
+#flash .flash-message { display: flex; justify-content: flex-start; align-items: center; padding: 10px 15px; margin-bottom: 15px; cursor: pointer; }
 
 #flash .flash-message::before {
     content: "\f058";

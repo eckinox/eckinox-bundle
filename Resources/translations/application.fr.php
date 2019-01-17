@@ -22,7 +22,8 @@ return [
         "default_message" => "Vous n'avez pas les privilèges requis pour effectuer cette action",
         "modules" => [
             "user" => "Utilisateurs",
-            "software" => "Logiciel"
+            "software" => "Logiciel",
+            "import" => "Importation"
         ],
         "labels" => [
     		"user" => [
@@ -333,9 +334,13 @@ return [
             "partialMissingRows" => "%rowCount% autres rangées qui ne sont pas affichées seront également traitées."
         ],
         "errors" => [
+            "privilege" => "Vous n'avez pas les privilèges nécéssaires afin de procéder à ce type d'importation.",
             "settings" => [
                 "undefinedType" => "Aucune importation n'est définie pour « %importType% ».",
                 "undefinedEntity" => "Le type d'entité à importer, « %entity% », n'est pas défini.",
+            ],
+            "assignations" => [
+                "requiredProperties" => "Les champs suivants doivent être assignés afin de procéder à l'importation: « %properties% »."
             ]
         ]
     ],

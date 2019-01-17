@@ -2,10 +2,11 @@
 
 namespace Eckinox\Controller\Application;
 
-use Eckinox\Library\Symfony\Controller,
-    Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\Routing\Annotation\Route,
-    Eckinox\Library\Symfony\Annotation\Lang;
+use Eckinox\Library\Symfony\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Eckinox\Library\Symfony\Annotation\Lang;
+use Eckinox\Library\General\StringEdit;
 
 /**
  *  @Lang(domain="application", default_key="import")
@@ -24,8 +25,38 @@ class ImportController extends Controller
         $activeModules = $request->request->get('modules') ?: $request->query->get('modules');
         $terms = $request->request->get('terms') ?: $request->query->get('terms');
 
-        # If there's an error in the import settings, redirect to the dashboard with an error message
+        # If there's an error in the import settings or privileges, redirect to the dashboard with an error message
         try {
+            $this->checkImportPrivilege($importType);
+            $settings = $this->loadImportSettings($importType);
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('home');
+        }
+
+        $entity = new $settings['entity']();
+
+        return $this->renderModView('@Eckinox/application/import/index.html.twig', array(
+            'importType' => $importType,
+            'modules' => $modules,
+            'settings' => $settings,
+            'entity' => $entity,
+            'title' => $this->lang('title.'.$request->get('_route')),
+        ), $request);
+    }
+
+    /**
+     * @Route("/import/{importType}/process", name="import_process")
+     */
+    public function process(Request $request, $importType)
+    {
+        $modules = [];
+        $activeModules = $request->request->get('modules') ?: $request->query->get('modules');
+        $terms = $request->request->get('terms') ?: $request->query->get('terms');
+
+        # If there's an error in the import settings or privileges, redirect to the dashboard with an error message
+        try {
+            $this->checkImportPrivilege($importType);
             $settings = $this->loadImportSettings($importType);
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());
@@ -70,5 +101,12 @@ class ImportController extends Controller
         }
 
         return $settings;
+    }
+
+    protected function checkImportPrivilege($importType) {
+        if (!$this->getUser()->hasPrivilege('IMPORT_' . strtoupper(StringEdit::camelToSnakeCase($importType)))) {
+            $error = $this->get('translator')->trans('import.errors.privilege', [], 'application');
+            throw new \Exception($error);
+        }
     }
 }
