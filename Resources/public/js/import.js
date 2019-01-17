@@ -73,7 +73,7 @@ class ImportFlow {
         this.previewWrapper.classList.remove('hide');
         this.processingWrapper.classList.remove('hide');
 
-        if (this.rawData.length) {
+        if (this.rawData.length > 1) {
             this.sheetSelector.classList.remove('hide');
 
             let optionsHtml = '';
@@ -86,8 +86,35 @@ class ImportFlow {
             this.sheetSelector.classList.add('hide');
         }
 
+        this.selectDefaultWorksheet();
+
         // Trigger the change event to initialize settings and display the preview
         this.sheetInput.dispatchEvent(new Event('change'));
+    }
+
+    selectDefaultWorksheet() {
+        if (typeof this.settings.defaults.worksheet == 'undefined') {
+            return;
+        }
+
+        let bestMatch = null;
+        let bestMatchSimilarity = 0;
+
+        for (let option of this.sheetInput.querySelectorAll('option')) {
+            let label = option.innerHTML.trim();
+
+            for (let title of this.settings.defaults.worksheet) {
+                let similarity = stringSimilarity(label, title.trim());
+                if (similarity > bestMatchSimilarity) {
+                    bestMatch = option;
+                    bestMatchSimilarity = similarity;
+                }
+            }
+        }
+
+        if (bestMatch) {
+            bestMatch.selected = true;
+        }
     }
 
     updateSettingsInputs() {
