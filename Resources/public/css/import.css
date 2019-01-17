@@ -1,6 +1,8 @@
 .excel-preview { table-layout: fixed; width: 100%; font-size: .8rem; border: none; border-collapse: collapse; }
 .excel-preview td { padding: 0; border: 1px solid #ccc; }
-.excel-preview th { border: 1px solid #ccc; background-color: #f9f9f9; }
+.excel-preview th { border: 1px solid #ccc; background-color: #f9f9f9; position: relative; transition: all .25s ease; }
+.excel-preview thead th:hover { background-color: #f1f1f1; }
+.excel-preview thead th select { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 .excel-preview .row { border: none; }
 .excel-preview .row-number { width: 3em; }
 .excel-preview .cell:empty::before { content: ' '; display: block; height: 1.5rem; }
@@ -13,3 +15,7 @@
 .excel-preview[select-mode='cell'] td:hover,
 .excel-preview[select-mode='row'] tr:hover > td { background-color: rgba(0, 116, 191, .1); cursor: pointer; }
 .excel-preview[select-mode='row'] tr:hover > th { background-color: rgba(0, 116, 191, .25); cursor: pointer; }
+
+.assignation-row { display: inline-block; padding-right: 10px; margin-top: 5px; margin-right: 8px; border: 1px solid #ccc; border-radius: 50px; overflow: hidden; }
+.assignation-row .column { display: inline-block; padding: 5px 10px; padding-right: 5px; font-weight: 600; vertical-align: middle; }
+.assignation-row .field { font-size: .85em; vertical-align: middle; }

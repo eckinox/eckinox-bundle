@@ -1,5 +1,6 @@
 class ImportFlow {
-    constructor() {
+    constructor(settings) {
+        this.settings = settings;
         this.form = document.querySelector('form[name="import"]');
         this.fileSelector = this.form.querySelector('.file-selector');
         this.processingWrapper = document.querySelector('.import-processing');
@@ -14,8 +15,8 @@ class ImportFlow {
         this.initProcessing();
     }
 
-    static init() {
-        return new ImportFlow();
+    static init(settings) {
+        return new ImportFlow(settings);
     }
 
     initFileUpload() {
@@ -46,11 +47,19 @@ class ImportFlow {
         importFlow.sheetInput.addEventListener('change', function(e) {
             importFlow.updateSettingsInputs();
             importFlow.generatePreview();
+            importFlow.updateAssignations();
         });
 
         // Starting line handling
         importFlow.startingLineInput.addEventListener('change', function(e) {
             importFlow.generatePreview();
+        });
+
+        // Starting line handling
+        document.addEventListener('change', function(e) {
+            if (e.target.matches('select[name^="assignation["]')) {
+                importFlow.updateAssignations();
+            }
         });
 
         importFlow.previewWrapper.addEventListener('submit', function(e){
@@ -102,6 +111,29 @@ class ImportFlow {
         return this.rawData ? this.rawData[this.sheetInput.value]['rows'] : [];
     }
 
+    createAssignationSelect(columnIndex) {
+        let assignationSelectTemplate = document.querySelector('.fields.assignations select');
+        let columnName = ImportFlow.getColumnNameFromNumber(columnIndex);
+        let select = assignationSelectTemplate.cloneNode(true);
+        let defaultValue;
+
+        try {
+            defaultValue = this.settings.defaults.columns[columnName];
+        } catch (e) {
+            defaultValue = null;
+        }
+
+        select.classList.remove('hide');
+        select.setAttribute('name', 'assignation[' + columnIndex + ']');
+
+        let defaultOption = select.querySelector(`option[value="${defaultValue}"]`);
+        if (defaultOption) {
+            defaultOption.setAttribute('selected', 'selected');
+        }
+
+        return select;
+    }
+
     generatePreview() {
         let data = this.computeData();
         let html = `<thead>
@@ -109,7 +141,12 @@ class ImportFlow {
 
         if (data.length) {
             for (let i = 0; i < data[0].length; i++) {
-                html += `<th class="column-number">${ImportFlow.getColumnNameFromNumber(i)}</th>`;
+
+
+                html += `<th class="column-number">
+                            <span class='number'>${ImportFlow.getColumnNameFromNumber(i)}</span>
+                            ${this.createAssignationSelect(i).outerHTML}
+                        </th>`;
             }
         }
 
@@ -147,6 +184,28 @@ class ImportFlow {
         this.preview.innerHTML = html;
     }
 
+    updateAssignations() {
+        let data = this.computeData();
+        let wrapper = document.querySelector('.fields.assignations .columns');
+        let assignationSelects = document.querySelectorAll('select[name^="assignation["]');
+
+        BundleUI.empty(wrapper);
+
+        for (let select of assignationSelects) {
+            let selectedOption = select.querySelector('option:checked');
+            if (selectedOption && selectedOption.value) {
+                let columnName = select.previousElementSibling.innerHTML.trim();
+                let valueLabel = selectedOption.innerHTML.trim();
+                let groupLabel = selectedOption.parentNode.getAttribute('label').trim();
+
+                BundleUI.appendTo(wrapper, `<div class="assignation-row">
+                                                <span class="column">${columnName}</span>
+                                                <span class="field">${groupLabel}: ${valueLabel}</span>
+                                            </div>`);
+            }
+        }
+    }
+
     static getColumnNameFromNumber(number) {
         let alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let numeric = number % 26;
@@ -160,5 +219,3 @@ class ImportFlow {
         return letter;
     }
 }
-
-ImportFlow.init();

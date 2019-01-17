@@ -36,11 +36,31 @@
                         <label for="worksheet">{% trans %}import.fields.worksheet{% endtrans %}</label>
                         <select id="worksheet" name="worksheet" class="worksheet"></select>
                     </div>
-                </div>
-                <div class="fields">
                     <div class="field-wrapper half starting-line">
                         <label for="starting-line">{% trans %}import.fields.startingLine{% endtrans %}</label>
                         <input type="number" id="starting-line" name="starting_line" class="starting-line" value="1" min="1" max="1">
+                    </div>
+                </div>
+                <div class="fields custom-fields">
+
+                </div>
+                <div class="fields assignations">
+                    <select class="assignation-select-template hide">
+                        <option value="">{% trans %}import.excel.assignations.select{% endtrans %}</option>
+                        <optgroup label="{{ (entity.transKey ~ '.title') | trans }}">
+                            {% for property in entity.getClassProperties() %}
+                                {% if (settings.properties[property].disabled is not defined or not settings.properties[property].disabled) and
+                                      (settings.properties[property].relation is not defined or not settings.properties[property].relation) and
+                                      settings.properties[property].value is not defined and
+                                      property not in ["createdAt", "updatedAt"] %}
+                                    <option value="{{ property }}">{{ (entity.transKey ~ '.fields.' ~ property) | trans }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                    <div class="field-wrapper">
+                        <label>{% trans %}import.fields.assignations{% endtrans %}</label>
+                        <div class="columns"></div>
                     </div>
                 </div>
                 <div class="fields">
@@ -55,6 +75,9 @@
 
 {% block javascripts %}
     <script src="{{ asset('js/import.js', 'eckinox') }}"></script>
+    <script>
+        let flow = ImportFlow.init({{ settings | json_encode() | raw }});
+    </script>
 {% endblock %}
 
 {% block stylesheets %}

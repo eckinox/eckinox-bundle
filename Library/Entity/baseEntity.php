@@ -69,4 +69,14 @@ trait baseEntity {
     static public function getClassMethods() {
 		return get_class_methods(get_called_class());
 	}
+
+    static public function getClassName() {
+        return get_called_class();
+    }
+
+    static public function getTransKey() {
+        $class = get_called_class();
+        $key = substr($class, strrpos($class, '\\') + 1);
+        return lcfirst($key);
+    }
 }

@@ -318,13 +318,25 @@ return [
             "load_file" => "Charger le fichier",
             "change_file" => "Changer le fichier",
             "import" => "Importer",
-            "worksheet" => "Sélectionner la feuille à importer"
+            "worksheet" => "Sélectionner la feuille à importer",
+            "startingLine" => "Ligne de départ",
+            "columnField" => "Colonne %column%",
+            "assignations" => "Assignation des colonnes"
         ],
         "title" => [
             "import_index" => "Import",
         ],
         "excel" => [
+            "assignations" => [
+                "select" => "Sélectionner..."
+            ],
             "partialMissingRows" => "%rowCount% autres rangées qui ne sont pas affichées seront également traitées."
+        ],
+        "errors" => [
+            "settings" => [
+                "undefinedType" => "Aucune importation n'est définie pour « %importType% ».",
+                "undefinedEntity" => "Le type d'entité à importer, « %entity% », n'est pas défini.",
+            ]
         ]
     ],
 

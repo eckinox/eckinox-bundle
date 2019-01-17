@@ -70,6 +70,35 @@ class BundleUI {
             }
         });
     }
+
+    static empty(element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
+    static createNodeFromString(html) {
+        let div = document.createElement('div');
+        div.innerHTML = html.trim();
+        return div.firstChild;
+    }
+
+    static createNodesFromString(html) {
+        let div = document.createElement('div');
+        div.innerHTML = html.trim();
+        return div.childNodes;
+    }
+
+    static appendTo(element, content) {
+        if (typeof content == 'string') {
+            content = BundleUI.createNodesFromString(content);
+            for (let i = 0; i < content.length; i++) {
+                element.appendChild(content[i]);
+            }
+        } else if (typeof content == 'Node') {
+            element.appendChild(content);
+        }
+    }
 }
 
 // On load, initiate the basic UI listeners and behaviors
