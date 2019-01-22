@@ -6,26 +6,6 @@
     <head>
         {% include '@Eckinox/html/head.html.twig' %}
 
-        {% for script in data("assets.head.js") %}
-            <script src="{{ asset(script) }}"></script>
-        {% endfor %}
-
-        {% set css_vars = data('assets.theme.css_vars') %}
-
-        {% if css_vars %}
-            <style>
-                :root {
-                    {% for var, value in css_vars %}
-                        --{{ var }}: {{ value }};
-                    {% endfor %}
-                }
-            </style>
-        {% endif %}
-
-        {% for stylesheet in data("assets.head.css") %}
-            <link rel="stylesheet" href="{{ asset(stylesheet) }}">
-        {% endfor %}
-
         {% block stylesheets %}{% endblock %}
     </head>
     <body class="layout-application">

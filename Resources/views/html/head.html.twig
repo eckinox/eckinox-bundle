@@ -9,6 +9,26 @@
 <link rel="stylesheet" href="{{ asset('css/widget/modal.css', 'eckinox') }}" />
 <link rel="stylesheet" href="{{ asset('css/widget/tabs.css', 'eckinox') }}" />
 
+{% set css_vars = data('assets.theme.css_vars') %}
+
+{% if css_vars %}
+    <style>
+        :root {
+            {% for var, value in css_vars %}
+                --{{ var }}: {{ value }};
+            {% endfor %}
+        }
+    </style>
+{% endif %}
+
+{% for script in data("assets.head.js") %}
+    <script src="{{ asset(script) }}"></script>
+{% endfor %}
+
+{% for stylesheet in data("assets.head.css") %}
+    <link rel="stylesheet" href="{{ asset(stylesheet) }}">
+{% endfor %}
+
 {% set favicon_url = data('assets.theme.favicon') %}
 {% if favicon_url %}
     <link href="{{ asset(favicon_url) }}" rel="shortcut icon" type="image/x-icon">

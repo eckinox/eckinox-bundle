@@ -21,10 +21,7 @@
 .login-form button { width: 100%; }
 .login-container .logo { margin-bottom: 25px; }
 .login-container .logo img { display: block; width: 90%; max-width: 300px; margin: auto; }
-.login-form button { height: 50px; border: 1px solid var(--main-color); background-color: var(--main-color); font-size: 1em; color: #fff; cursor: pointer; text-align: center; transition: background-color .3s ease; border-radius: none; }
-.login-form button:hover { background-color: #fff; color: var(--main-color); }
-
-
+.login-form button { height: 50px; }
 
 /*
  *  Software
