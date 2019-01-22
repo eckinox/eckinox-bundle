@@ -11,7 +11,13 @@
         <div class="login-container">
             <div class="login-form">
                 <div class="logo">
-                    <img src="{{ asset('image/logo.png', 'eckinox') }}" />
+                    {% set logo_url = data('assets.theme.logo.login') %}
+
+                    {% if logo_url %}
+                        <img src="{{ asset(logo_url) }}" />
+                    {% else %}
+                        <img src="{{ asset('image/logo.png', 'eckinox') }}" />
+                    {% endif %}
                 </div>
 
                 <form action="{{ path('login') }}" method="post">

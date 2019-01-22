@@ -1,7 +1,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>{% if title is defined %}{{ title }}{% endif %}</title>
-<link rel="stylesheet" href="{{ asset('css/select2.min.css', 'eckinox') }}" />
 <link rel="stylesheet" href="{{ asset('css/fonts.css', 'eckinox') }}" />
 <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.css', 'eckinox') }}" />
 <link rel="stylesheet" href="{{ asset('css/main.css', 'eckinox') }}" />
@@ -9,4 +8,8 @@
 <link rel="stylesheet" href="{{ asset('css/application.css', 'eckinox') }}" />
 <link rel="stylesheet" href="{{ asset('css/widget/modal.css', 'eckinox') }}" />
 <link rel="stylesheet" href="{{ asset('css/widget/tabs.css', 'eckinox') }}" />
-<link href="{{ asset('image/favicon.png') }}" rel="shortcut icon" type="image/x-icon">
+
+{% set favicon_url = data('assets.theme.favicon') %}
+{% if favicon_url %}
+    <link href="{{ asset(favicon_url) }}" rel="shortcut icon" type="image/x-icon">
+{% endif %}

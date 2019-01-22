@@ -86,7 +86,7 @@
                     {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") %}
                         <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     {% else %}
-                        <div class="column edit-link"></div>
+                        <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     {% endif %}
                 </div>
             {% endfor %}

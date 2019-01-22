@@ -1,0 +1,37 @@
+{
+    "head": {
+        "css": [
+
+        ],
+
+        "js": [
+
+        ]
+    },
+
+    "footer": {
+        "js": [
+
+        ]
+    },
+
+    "theme": {
+        "css_vars": {
+            "main-color": "#0172ba",
+            "dark-grey": "#222",
+            "light-grey": "#f9f9f9",
+            "default-button-color": "#0172ba",
+            "red": "#C41300",
+            "blue": "#0172ba",
+            "green": "#31ac5f",
+            "yellow": "#fec202",
+            "orange": "#FF9800",
+            "grey": "#8f8f8f",
+            "link-color": "#0172ba",
+            "label-color": "#0172ba",
+            "list-head-color": "#f9f9f9",
+            "list-row-even-color": "#f9f9f9",
+            "list-row-odd-color": "#fff"
+        }
+    }
+}

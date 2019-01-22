@@ -30,7 +30,7 @@
 /*
  * Layout
  */
-.top-bar { display: flex; width: 100%; height: 60px; padding: 0 20px; background: #0172ba; align-items: center; color: #fff; }
+.top-bar { display: flex; width: 100%; height: 60px; padding: 0 20px; background: var(--main-color); align-items: center; color: #fff; }
 .top-bar .logo { margin-top: 5px; }
 .top-bar .logo img { max-width: 95px; margin-left: 8px; }
 .top-bar .search {  position: relative; margin-left: auto; margin-right: 30px; width: 100%; max-width: 250px; }
@@ -48,7 +48,7 @@
 .top-bar .user { display: flex; align-items: center; }
 .top-bar .user svg { width: 40px; height: 40px; }
 .top-bar .user svg path { fill: rgb(245, 248, 252); }
-.top-bar .user .name { font-size: 1.2em; }
+.top-bar .user .name { font-size: 1em; }
 .top-bar .user .photo { width: 40px; height: 40px; border-radius: 20px; margin-left: 10px; background: rgba(255,255,255,.15); }
 .content-wrapper { display: flex; min-height: calc(100vh - 60px); }
 .content-wrapper .content { display: flex; flex-wrap: wrap; flex: 1; height: calc(100vh - 60px); flex-direction: column; }
@@ -71,11 +71,11 @@
 
 
 .panel .links { display: flex; flex-direction: column; }
-.panel .panel-title { font-size: 1.7em; line-height: 1.2em; text-align: center; margin-bottom: 25px; font-weight: 400; text-transform: uppercase; }
+.panel .panel-title { font-size: 1.3em; line-height: 1.2em; text-align: center; margin-bottom: 25px; font-weight: 600; }
 
-.panel .panel-subtitle { font-size: 1.3em; text-align: center; line-height: 2.5em; font-weight: 400; text-transform: uppercase; }
+.panel .panel-subtitle { font-size: 1.1em; text-align: center; line-height: 2.5em; font-weight: 600; }
 .panel .panel-subtitle ~ .panel-subtitle { margin-top: 20px; }
 
-.panel .links a { font-size: 1.4em; font-weight: 300; padding-top: 7px; padding-bottom: 10px; text-align: center; border-top: 1px solid rgba(0, 80, 178, 0.2); }
+.panel .links a { font-size: 1em; font-weight: 400; padding-top: 7px; padding-bottom: 10px; text-align: center; border-top: 1px solid rgba(0, 80, 178, 0.2); }
 .panel .links a:last-of-type { border-bottom: 1px solid rgba(0, 80, 178, 0.2); }
 .panel .links a:hover { color: #2a6bbd; }

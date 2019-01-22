@@ -10,17 +10,37 @@
             <script src="{{ asset(script) }}"></script>
         {% endfor %}
 
+        {% set css_vars = data('assets.theme.css_vars') %}
+
+        {% if css_vars %}
+            <style>
+                :root {
+                    {% for var, value in css_vars %}
+                        --{{ var }}: {{ value }};
+                    {% endfor %}
+                }
+            </style>
+        {% endif %}
+
         {% for stylesheet in data("assets.head.css") %}
             <link rel="stylesheet" href="{{ asset(stylesheet) }}">
         {% endfor %}
 
         {% block stylesheets %}{% endblock %}
     </head>
-    <body ei-widget-hotkeys class="layout-application">
+    <body class="layout-application">
         <div class="page-wrapper">
             <div class="top-bar" unselectable>
                 <div class="logo">
-                    <a href="{{ path('home') }}"><img src="{{ asset('image/logo-white.png', 'eckinox') }}" /></a>
+                    <a href="{{ path('home') }}">
+                        {% set logo_url = data('assets.theme.logo.top_bar') %}
+
+                        {% if logo_url %}
+                            <img src="{{ asset(logo_url) }}" />
+                        {% else %}
+                            <img src="{{ asset('image/logo-white.png', 'eckinox') }}" />
+                        {% endif %}
+                    </a>
                 </div>
                 <div class="search">
                     <form action="{{ path('search_index') }}" method="get">

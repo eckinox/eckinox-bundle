@@ -1,3 +1,6 @@
 eckinox_controllers:
-        resource: '../vendor/eckinox/eckinox-bundle/Controller/'
-        type:     annotation
+    resource: '../vendor/eckinox/eckinox-bundle/Controller/'
+    type:     annotation
+
+logout:
+    path: /logout
