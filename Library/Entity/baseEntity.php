@@ -58,6 +58,47 @@ trait baseEntity {
         return $this;
     }
 
+    public function set($property, $value) {
+        $methodName = 'set' . ucfirst($property);
+
+        if (method_exists($this, $methodName)) {
+            $this->$methodName($value);
+        } else if (property_exists($this, $property)) {
+            $this->$property = $value;
+        } else {
+            throw new \Exception("There is no corresponding property or method for \"" . $property . "\" in " . static::class);
+        }
+
+        return $this;
+    }
+
+    public function get($property) {
+        $methodName = 'get' . ucfirst($property);
+
+        if (method_exists($this, $methodName)) {
+            return $this->$methodName();
+        } else if (property_exists($this, $property)) {
+            return $this->$property = $value;
+        } else {
+            throw new \Exception("There is no corresponding property or method for \"" . $property . "\" in " . static::class);
+        }
+
+        return null;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeDatetimes()
+    {
+        if (!$this->createdAt) {
+            $this->createdAt = $this->_datetime();
+        }
+
+        $this->updatedAt = $this->_datetime();
+    }
+
     protected function _datetime($datetime = null) {
         return $datetime ? ( is_string($datetime) ? new \DateTime($datetime) : $datetime ) : new \DateTime('now') ;
     }

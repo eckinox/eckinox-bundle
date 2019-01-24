@@ -190,7 +190,7 @@ class ImportFlow {
         select.classList.remove('hide');
         select.setAttribute('name', 'assignation[' + columnIndex + ']');
 
-        let defaultOption = select.querySelector(`option[value="${defaultValue}"]`);
+        let defaultOption = select.querySelector(`option[data-key="${defaultValue}"]`);
         if (defaultOption) {
             defaultOption.setAttribute('selected', 'selected');
         }

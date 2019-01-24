@@ -11,7 +11,7 @@ return [
         "forward_email" => "Transfert de « %name% »",
         "index_email" => "Liste des courriels",
         "search_index" => "Recherche avancée",
-        "import_index" => "Import de données",
+        "index_import" => "Import de données",
         "index_software" => "Statut du logiciel",
         "edit_email_template" => "Gabarit « %name% »",
         "create_email_template" => "Nouveau gabarit de courriel",
@@ -325,7 +325,7 @@ return [
             "assignations" => "Assignation des colonnes"
         ],
         "title" => [
-            "import_index" => "Import",
+            "index_import" => "Import",
         ],
         "excel" => [
             "assignations" => [
@@ -342,7 +342,8 @@ return [
             "assignations" => [
                 "requiredProperties" => "Les champs suivants doivent être assignés afin de procéder à l'importation: « %properties% »."
             ]
-        ]
+        ],
+        "success" => "Les données ont été importées avec succès."
     ],
 
     "ajax" => [

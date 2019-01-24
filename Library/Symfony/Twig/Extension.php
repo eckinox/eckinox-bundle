@@ -37,6 +37,7 @@ class Extension extends AbstractExtension
             new TwigFilter('data', array($this, 'getDataJson')),
             new TwigFilter('asort', array($this, 'asort')),
             new TwigFilter('icon', array($this, 'getIcon')),
+            new TwigFilter('lcfirst', array($this, 'lcfirstFilter')),
             new TwigFilter('sortByField', array($this, 'sortByField')),
 
             /*
@@ -59,6 +60,7 @@ class Extension extends AbstractExtension
             new TwigFunction("git_commit_date", [ $git, "getCommitDate" ] ),
             new TwigFunction("get_translations_json", [ $this, "getTranslationsAsJson" ] ),
             new TwigFunction("data", [ $this, "getData" ] ),
+            new TwigFunction("custom_field", [ $this, "generateCustomField" ] ),
         ];
     }
 
@@ -135,6 +137,10 @@ class Extension extends AbstractExtension
         return new Markup($value, []);
     }
 
+    public function lcfirstFilter($string) {
+        return lcfirst($string);
+    }
+
     public function sortByField($array, $fieldKey = null, $direction = 'asc') {
         if (!is_array($array)) {
             return $array;
@@ -164,6 +170,46 @@ class Extension extends AbstractExtension
         return new Markup(json_encode($messages, true), []);
     }
 
+    public function generateCustomField($name, $field) {
+        $field['name'] = $name;
+        $field['type'] = $field['type'] ?? 'input';
+        $field['choices'] = $field['choices'] ?? [];
+        $field['attrs'] = $field['attrs'] ?? [];
+
+        if ($entityClass = $field['entity'] ?? null) {
+            $em = $this->container->get('doctrine')->getManager();
+            $entity = new $entityClass();
+
+            $queryEntityName = str_replace('Entity:', '', str_replace('\\', ':', $entityClass));
+            $queryString = 'SELECT e FROM ' . $queryEntityName . ' e WHERE 1 = 1 ';
+
+            # Don't load archived entities...
+            if (property_exists($entity, 'isArchived')) {
+                $queryString .= ' AND e.isArchived = false';
+            }
+            # Or deleted ones...
+            if (property_exists($entity, 'isDeleted')) {
+                $queryString .= ' AND e.isDeleted = false';
+            }
+            # Or deleted ones, using statuses...
+            if (property_exists($entity, 'status')) {
+                $queryString .= ' AND e.status != "deleted"';
+            }
+
+            $query = $em->createQuery($queryString);
+            $query->useQueryCache(false);
+
+            $entities = $query->getResult();
+
+            foreach ($entities as $entity) {
+                $field['choices'][$entity->getId()] = $entity->_toString();
+            }
+        }
+
+        $html = $this->container->get('twig')->render('@Eckinox/html/input/' . $field['type'] . '.html.twig', ['infos' => $field]);
+        return new Markup($html, []);
+    }
+
     /*
      * Get app parameters
      */
@@ -183,7 +229,7 @@ class Extension extends AbstractExtension
             return $value;
         }
 
-        if($twigFilter->needsEnvironment()) {
+        if ($twigFilter->needsEnvironment()) {
             $arguments = array_merge([$env], $arguments);
         }
 
