@@ -11,7 +11,7 @@ return [
         "forward_email" => "Transfert de « %name% »",
         "index_email" => "Liste des courriels",
         "search_index" => "Recherche avancée",
-        "import_index" => "Import de données",
+        "index_import" => "Import de données",
         "index_software" => "Statut du logiciel",
         "edit_email_template" => "Gabarit « %name% »",
         "create_email_template" => "Nouveau gabarit de courriel",
@@ -22,7 +22,8 @@ return [
         "default_message" => "Vous n'avez pas les privilèges requis pour effectuer cette action",
         "modules" => [
             "user" => "Utilisateurs",
-            "software" => "Logiciel"
+            "software" => "Logiciel",
+            "import" => "Importation"
         ],
         "labels" => [
     		"user" => [
@@ -318,14 +319,31 @@ return [
             "load_file" => "Charger le fichier",
             "change_file" => "Changer le fichier",
             "import" => "Importer",
-            "worksheet" => "Sélectionner la feuille à importer"
+            "worksheet" => "Sélectionner la feuille à importer",
+            "startingLine" => "Ligne de départ",
+            "columnField" => "Colonne %column%",
+            "assignations" => "Assignation des colonnes"
         ],
         "title" => [
-            "import_index" => "Import",
+            "index_import" => "Import",
         ],
         "excel" => [
+            "assignations" => [
+                "select" => "Sélectionner..."
+            ],
             "partialMissingRows" => "%rowCount% autres rangées qui ne sont pas affichées seront également traitées."
-        ]
+        ],
+        "errors" => [
+            "privilege" => "Vous n'avez pas les privilèges nécéssaires afin de procéder à ce type d'importation.",
+            "settings" => [
+                "undefinedType" => "Aucune importation n'est définie pour « %importType% ».",
+                "undefinedEntity" => "Le type d'entité à importer, « %entity% », n'est pas défini.",
+            ],
+            "assignations" => [
+                "requiredProperties" => "Les champs suivants doivent être assignés afin de procéder à l'importation: « %properties% »."
+            ]
+        ],
+        "success" => "Les données ont été importées avec succès."
     ],
 
     "ajax" => [

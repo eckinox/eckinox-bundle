@@ -48,6 +48,10 @@ return [
 
     "navigation" => [
         "modules" => [
+            "import" => [
+                "title" => "Importation",
+            ],
+
             "admin" => [
                 "title" => "Administration",
 

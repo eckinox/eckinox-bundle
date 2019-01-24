@@ -10,6 +10,9 @@ a { color: var(--link-color); text-decoration: none; }
 .icon { display: inline-block; }
 .float {float:left;}
 .float.right {float:right;}
+.text-right { text-align: right; }
+.fade-out { opacity: 0; transition: all .25s ease-in-out; }
+.fade-out.slide-down { transform: translateY(25px); }
 /*li { margin: 0 0 -3px 0; }
 li:last-child { margin: 0 0 0 0; }*/
 

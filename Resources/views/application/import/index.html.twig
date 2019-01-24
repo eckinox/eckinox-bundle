@@ -7,16 +7,13 @@
 
 {% block content %}
 
-    <form name="import" method="post" ajax-action="{{ path('ajax_get_json_from_excel') }}" ajax-type="json">
+    <form name="import" method="post" ajax-action="{{ path('ajax_get_json_from_excel') }}" ajax-type="json" id="upload-form">
         <div class="block-wrapper">
-            <div class="block block-full">
+            <div class="block block-full file-selector">
                 <div class="fields">
                     <div class="field-wrapper import-file half">
                         <label for="import-file">{% trans %}import.fields.file{% endtrans %}</label>
-                        <input type="file" id="import-file" name="file" class="import-file" data-validate="required" />
-                    </div>
-                    <div class="field-wrapper modules half">
-
+                        <input type="file" id="import-file" name="file" class="import-file" accept=".xlsx,.xls,.csv" required />
                     </div>
 
                     <div class="field-wrapper submit">
@@ -24,24 +21,99 @@
                     </div>
                 </div>
             </div>
+
+            <div class="block block-full change-file hide">
+                <div class="fields">
+                    <div class="field-wrapper half">
+                        <button class="button red import-reset" type="button">{% trans %}import.fields.change_file{% endtrans %} &nbsp;<i class="fa fa-undo" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="field-wrapper half text-right">
+                        <button type="submit" form="import-form" class="button import">{% trans %}import.fields.import{% endtrans %} &nbsp;<i class="fa fa-file-import" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 
-    <div class="block-wrapper">
+    <div class="block-wrapper import-processing hide">
         <div class="block block-full">
-            <div class="fields">
-                <div id="import-preview" class="field-wrapper import-preview">
+            <form class="import-preview hide" id="import-form" method="POST" action="{{ path('process_import', { importType: importType }) }}">
+                <input type="hidden" name="data">
 
+                <div class="fields">
+                    <div class="field-wrapper half select-sheet">
+                        <label for="worksheet">{% trans %}import.fields.worksheet{% endtrans %}</label>
+                        <select id="worksheet" name="worksheet" class="worksheet"></select>
+                    </div>
+                    <div class="field-wrapper half starting-line">
+                        <label for="starting-line">{% trans %}import.fields.startingLine{% endtrans %}</label>
+                        <input type="number" id="starting-line" name="starting_line" class="starting-line" value="1" min="1" max="1">
+                    </div>
                 </div>
-            </div>
+                <div class="fields custom-fields">
+                    {% for name, field in settings.customFields %}
+                        <div class="field-wrapper half {{ name }}">
+                            <label for="">{{ field.label | trans }}</label>
+                            {{ custom_field(name, field) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="fields assignations">
+                    <select class="assignation-select-template hide">
+                        <option value="">{% trans %}import.excel.assignations.select{% endtrans %}</option>
+
+                        {# Outputting the basic properties the entity #}
+                        <optgroup label="{{ (entity.transKey ~ '.title') | trans }}">
+                            {% for property in entity.getClassProperties() %}
+                                {% if (settings.properties[property].disabled is not defined or not settings.properties[property].disabled) and
+                                      (settings.properties[property].relation is not defined or not settings.properties[property].relation) and
+                                      settings.properties[property].value is not defined and
+                                      property not in ["createdAt", "updatedAt"] %}
+                                    <option value="{{ property }}" data-key="{{ property }}">{{ (entity.transKey ~ '.fields.' ~ property) | trans }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </optgroup>
+
+                        {# Outputting the relation groups with their properties #}
+                        {% for property, propertyInfos in (settings.properties is defined ? settings.properties : []) %}
+                            {% if (propertyInfos.disabled is not defined or not propertyInfos.disabled) and
+                                  (propertyInfos.relation is defined and propertyInfos.relation) and
+                                  (propertyInfos.allowedProperties is defined and propertyInfos.allowedProperties | length) %}
+                                  {% set transKey = propertyInfos.relation | split('\\') | last | lcfirst %}
+                                <optgroup label="{{ (transKey ~ '.title') | trans }}">
+                                    {% for relationProperty in propertyInfos.allowedProperties %}
+                                        <option value="{{ property ~ '.' ~ relationProperty }}" data-key="{{ property ~ '.' ~ relationProperty }}">{{ (transKey ~ '.fields.' ~ relationProperty) | trans }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <div class="field-wrapper">
+                        <label>{% trans %}import.fields.assignations{% endtrans %}</label>
+                        <div class="columns"></div>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field-wrapper full preview-wrapper">
+                        <table class="excel-preview partial"></table>
+                    </div>
+
+                    <div class="field-wrapper button-container">
+                        <button type="submit" class="button import">{% trans %}import.fields.import{% endtrans %} &nbsp;<i class="fa fa-file-import" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/import.js') }}"></script>
+    <script src="{{ asset('js/modules/import.js', 'eckinox') }}"></script>
+    <script>
+        let flow = ImportFlow.init({{ settings | json_encode() | raw }});
+    </script>
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/import.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/modules/import.css', 'eckinox') }}" />
 {% endblock %}

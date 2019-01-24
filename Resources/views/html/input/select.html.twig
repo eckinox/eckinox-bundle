@@ -1,0 +1,10 @@
+{% trans_default_domain 'application' %}
+
+<select name="{{ infos.name is defined ? infos.name : '' }}" {{ infos.required is defined and infos.required ? 'required' : '' }}>
+    {% if infos.required is not defined or not infos.required %}
+        <option value="">{% trans %}import.excel.assignations.select{% endtrans %}</option>
+    {% endif %}
+    {% for choice, label in (infos.choices is defined ? infos.choices : {}) %}
+        <option value="{{ choice }}" {{ infos.value is defined and choice == infos.value ? 'selected' : '' }}>{{ label }}</option>
+    {% endfor %}
+</select>

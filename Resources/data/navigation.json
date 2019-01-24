@@ -2,6 +2,12 @@
     "showTitles": true,
 
     "items": {
+        "import": {
+            "icon": "fas fa-cloud-download-alt",
+            "title": "navigation.modules.import.title",
+            "panel": "import",
+            "order": 40
+        },
         "admin": {
             "icon": "fas fa-cogs",
             "title": "navigation.modules.admin.title",
@@ -11,6 +17,11 @@
     },
 
     "panel": {
+        "import": {
+            "title": "navigation.modules.import.title",
+            "sections": []
+        },
+
         "admin": {
             "title": "navigation.modules.admin.title",
             "sections": [

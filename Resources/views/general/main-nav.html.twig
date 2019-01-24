@@ -5,7 +5,7 @@
         {% for item in data("navigation.items")|sortByField('order') %}
             {% if item.privilege is not defined or (item.privilege is defined and app.user.hasPrivilege(item.privilege)) %}
                 <div class="link-item" {{ (item.panel is defined ? 'data-panel="' ~ item.panel ~ '"' : '') | raw }}>
-                    <a class="link-detail" href="{{ item.route is defined ? path(item.route) : '#' }}">
+                    <a class="link-detail" href="{{ item.route is defined ? path(item.route, (item.route_parameters is defined ? item.route_parameters : {})) : '#' }}">
                         <i class="{{ item.icon is defined ? item.icon : '' }}"></i>
                         <div class="main-title">
                             {% if item.title is defined %}
@@ -42,7 +42,7 @@
                                         <div class="links">
                                         {% for subitem in section.items %}
                                             {% if subitem.privilege is not defined or (subitem.privilege is defined and app.user.hasPrivilege(subitem.privilege)) %}
-                                                <a class="link-detail" href="{{ subitem.route is defined ? path(subitem.route) : '#' }}">
+                                                <a class="link-detail" href="{{ subitem.route is defined ? path(subitem.route, (subitem.route_parameters is defined ? subitem.route_parameters : {})) : '#' }}">
                                                     {% if subitem.title is defined %}
                                                         {{ subitem.title | trans }}
                                                     {% endif %}
