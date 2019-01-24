@@ -13,6 +13,7 @@ trait repository {
             $clause = $field['clause'] ?? 'andWhere';
             $expr = $field['expr'] ?? 'andX';
             $type = $field['type'] ?? 'text';
+            $exact = $field['exact'] ?? false;
             $column = $entity.'.'.$field['name'];
             $num++;
 
@@ -26,11 +27,11 @@ trait repository {
                     $query->$clause($this->setJsonTerms($query, $entity, $field, $joined_column, $terms, $expr));
 
                 } else {
-                    $query->$clause($this->setTerms($query, $joined_column, $terms, $expr));
+                    $query->$clause($this->setTerms($query, $joined_column, $terms, $expr, $exact));
                 }
 
             } else {
-                $query->$clause($this->setTerms($query, $column, $terms, $expr));
+                $query->$clause($this->setTerms($query, $column, $terms, $expr, $exact));
             }
         }
 
@@ -102,14 +103,14 @@ trait repository {
         return $savable;
     }
 
-    private function setTerms(&$query, $column, $terms, $expr = 'andX') {
+    private function setTerms(&$query, $column, $terms, $expr = 'andX', $exact = false) {
         $expr = $query->expr()->$expr();
 
         foreach($terms as $term) {
             $param = ':param'.uniqid();
 
             $expr->add($query->expr()->like($column, $param));
-            $query->setParameter($param, '%'.$term.'%');
+            $query->setParameter($param, ($exact ? $term : '%'.$term.'%'));
         }
 
         return $expr;

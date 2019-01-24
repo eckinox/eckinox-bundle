@@ -32,7 +32,8 @@
                 <select name="search[{{ field.name }}]" value="">
                     <option value="">{{ "placeholders.select"|trans([], 'general') }}</option>
                     {% for key, value in field.search.choices %}
-                        <option value="{{ key }}">{{ value }}</option>
+                        {% set selected = (app.request.request.get('search') ?? [])[field.name] is defined and (app.request.request.get('search') ?? [])[field.name] == key %}
+                        <option value="{{ key }}" {{ selected ? 'selected' : '' }}>{{ value }}</option>
                     {% endfor %}
                 </select>
 

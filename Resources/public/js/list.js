@@ -15,3 +15,18 @@ document.addEventListener('change', function(e) {
          }
      }
 });
+
+// Edit shortcut when clicking on the row
+document.querySelector('body').addEventListener('click', function(e){
+	if (e.target.matches('.list .rows .row *')) {
+		if (e.target.matches('a, button, input') || e.target.closest('a, button, input')) {
+			return;
+    	}
+
+    	let editLink = e.target.closest('.row').querySelector('.edit-link');
+		if (editLink) {
+			editLink.click();
+        }
+    }
+
+});

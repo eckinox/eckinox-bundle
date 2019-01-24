@@ -215,14 +215,9 @@ i.red { color: var(--red); }
 .list .row.head.search .column {
     padding: 7px 10px;
 }
-.list .row.head .column input {
-    width: 100%;
-    border: 1px solid #a9a9a9;
-    border-radius: 2px;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 7px;
-}
+.list .row.head .column input,
+.list .row.head .column select { width: 100%; height: 30px; padding: 0 7px; line-height: 30px; border: 1px solid #a9a9a9; border-radius: 2px; background-color: white; }
+.list .row.head .column select { background-image: url('data:image/svg+xml;base64,ICAgIDxzdmcgYXJpYS1oaWRkZW49InRydWUiIGRhdGEtcHJlZml4PSJmYWwiIGRhdGEtaWNvbj0iYW5nbGUtZG93biIgY2xhc3M9InN2Zy1pbmxpbmUtLWZhIGZhLWFuZ2xlLWRvd24gZmEtdy04IiByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI1NiA1MTIiPjxwYXRoIGZpbGw9IiNhOWE5YTkiIGQ9Ik0xMTkuNSAzMjYuOUwzLjUgMjA5LjFjLTQuNy00LjctNC43LTEyLjMgMC0xN2w3LjEtNy4xYzQuNy00LjcgMTIuMy00LjcgMTcgMEwxMjggMjg3LjNsMTAwLjQtMTAyLjJjNC43LTQuNyAxMi4zLTQuNyAxNyAwbDcuMSA3LjFjNC43IDQuNyA0LjcgMTIuMyAwIDE3TDEzNi41IDMyN2MtNC43IDQuNi0xMi4zIDQuNi0xNy0uMXoiPjwvcGF0aD48L3N2Zz4K'); background-size: 10px auto; background-position: center right 10px; background-repeat: no-repeat; }
 .list .row .checkbox, .list .row .status { max-width: 40px; text-align: center; }
 .list .row .column.date { max-width: 200px; }
 .list .row .column.lbs { max-width: 125px }
