@@ -6,8 +6,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
+use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Eckinox\Entity\Application\User;
 
 class Install extends Command
@@ -74,16 +77,21 @@ class Install extends Command
     protected function migrateDatabase() {
         $this->output->writeln('Running bin/console doctrine:migrations:diff');
 
+        $runMigrations = true;
         $diffOutput = new BufferedOutput();
-        $command = $this->getApplication()->find('doctrine:migrations:diff');
-        $input = new ArrayInput(['command' => 'doctrine:migrations:diff']);
-        $returnCode = $command->run($input, $diffOutput);
+        try {
+            $command = $this->getApplication()->find('doctrine:migrations:diff');
+            $input = new ArrayInput(['command' => 'doctrine:migrations:diff']);
+            $returnCode = $command->run($input, $diffOutput);
+        } catch (\Doctrine\Migrations\Generator\Exception\NoChangesDetected $e) {
+            $runMigrations = false;
+        }
 
         $diffResult = $diffOutput->fetch();
         $this->output->write($diffResult);
 
         # Run the "migrate" command only if migrations have been generated
-        if (strpos($diffResult, 'No changes detected in your mapping information') === false) {
+        if ($runMigrations) {
             $this->output->writeln('Running bin/console doctrine:migrations:migrate');
 
             $command = $this->getApplication()->find('doctrine:migrations:migrate');
