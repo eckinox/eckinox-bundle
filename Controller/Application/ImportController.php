@@ -257,8 +257,8 @@ class ImportController extends Controller
                     $key = explode(':', $originKey)[1];
                     $value = $_POST[$key] ?? null;
 
-                    if (isset($this->settings['customFields'][$key]['entity']) && $value) {
-                        $relation->set($relationKey, $this->getDoctrine()->getRepository($this->settings['customFields'][$key]['entity'])->find($value));
+                    if (isset($this->settings['customFields'][$key]['entity'])) {
+                        $relation->set($relationKey, $value ? $this->getDoctrine()->getRepository($this->settings['customFields'][$key]['entity'])->find($value) : null);
                     } else {
                         $relation->set($relationKey, $value);
                     }
