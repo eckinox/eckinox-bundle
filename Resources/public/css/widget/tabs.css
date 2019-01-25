@@ -38,7 +38,7 @@
 .widget-tabs-element .actions-button ul.dropdown .field-wrapper select {width:auto;padding:0 15px; height: 30px;line-height: 30px;}
 .widget-tabs-element .actions-button ul.dropdown .field-wrapper .js-datepicker {max-width: 105px;text-align:center; margin:0 10px;}
 
-.ei-widget-content:not(.active) {display:none!important;}
+.widget-content:not(.active) {display:none!important;}
 
 body.scrolling .widget-tabs-element {font-size:1em;}
 body.scrolling .widget-tabs-element .widget-tabs-item {line-height:1.5em; padding:3px 12px;}

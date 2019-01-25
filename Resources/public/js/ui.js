@@ -4,6 +4,7 @@ class BundleUI {
         BundleUI.initDropdownClose();
         BundleUI.initNavigationPanels();
         BundleUI.initFlashMessageDismissal();
+        BundleUI.initTabWidgets();
     }
 
     // Confirms clicks on [confirm-click] elements with a custom message defined in the attribute
@@ -86,6 +87,27 @@ class BundleUI {
                         parent.closest('#flash').classList.remove('open');
                     }
                 }, 250);
+            }
+        });
+    }
+
+    static initTabWidgets() {
+        document.addEventListener('click', function(e){
+        	if (!e.target.matches('[widget-tabs] [widget-tab], [widget-tabs] [widget-tab] *')) {
+                return;
+            }
+
+            let tabElement = e.target.matches('[widget-tabs] [widget-tab]') ? e.target : e.target.closest('[widget-tabs] [widget-tab]');
+
+            if (!tabElement) {
+                return;
+            }
+
+            let tabCategory = tabElement.closest('[widget-tabs]').getAttribute('widget-tabs');
+            let tab = tabElement.getAttribute('widget-tab');
+
+            for (let contentElement of document.querySelectorAll('[widget-tabs-content="' + tabCategory + '"] [widget-tab], [widget-tabs="' + tabCategory + '"] [widget-tab]')) {
+                contentElement.classList.toggle('active', contentElement.getAttribute('widget-tab') == tab);
             }
         });
     }

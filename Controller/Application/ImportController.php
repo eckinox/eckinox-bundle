@@ -149,19 +149,6 @@ class ImportController extends Controller
         $queryString = 'SELECT e FROM ' . $queryEntityName . ' e WHERE 1 = 1 ';
         $parameters = [];
 
-        # Don't load archived entities...
-        if (property_exists($entity, 'isArchived')) {
-            $queryString .= ' AND e.isArchived = false';
-        }
-        # Or deleted ones...
-        if (property_exists($entity, 'isDeleted')) {
-            $queryString .= ' AND e.isDeleted = false';
-        }
-        # Or deleted ones, using statuses...
-        if (property_exists($entity, 'status')) {
-            $queryString .= ' AND e.status != "deleted"';
-        }
-
         foreach ($loadingFields as $field) {
             if (isset($this->assignations[$field]) && isset($row[$this->assignations[$field]])) {
                 $queryString .= ' AND e.' . $field . ' = :' . $field;

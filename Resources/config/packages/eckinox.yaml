@@ -7,6 +7,10 @@ doctrine:
                 is_bundle: false
                 prefix: Eckinox\Entity
                 alias: Eckinox
+        filters:
+            archivedFilter:
+                class: Eckinox\Library\Symfony\Doctrine\ArchivedFilter
+                enabled: true
 
 framework:
     assets:

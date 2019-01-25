@@ -17,9 +17,9 @@ document.addEventListener('change', function(e) {
 });
 
 // Edit shortcut when clicking on the row
-document.querySelector('body').addEventListener('click', function(e){
+document.addEventListener('click', function(e){
 	if (e.target.matches('.list .rows .row *')) {
-		if (e.target.matches('a, button, input') || e.target.closest('a, button, input')) {
+		if (e.target.matches('a, button, input, label') || e.target.closest('a, button, input, label')) {
 			return;
     	}
 
@@ -28,5 +28,16 @@ document.querySelector('body').addEventListener('click', function(e){
 			editLink.click();
         }
     }
+});
 
+// Edit shortcut when clicking on the row
+document.addEventListener('change', function(e){
+	if (e.target.matches('.row.head.fields .column.checkbox input')) {
+        let masterCheckbox = e.target;
+        let checkAll = masterCheckbox.matches(':checked');
+
+        for (let checkbox of masterCheckbox.closest('.list').querySelectorAll('.rows .row input[name="ids[]"]')) {
+            checkbox.checked = checkAll;
+        }
+    }
 });

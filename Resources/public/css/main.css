@@ -197,13 +197,15 @@ i.red { color: var(--red); }
 .list .column.more { color: var(--link-color); overflow: visible !important; }
 .list .column.cancel,
 .list .column.more,
-.list .column.edit-link { max-width: 40px; padding: 5px 10px; text-align: center; justify-content: center; }
+.list .column.edit-link,
+.list .column.archive-link { max-width: 40px; padding: 5px 10px; text-align: center; justify-content: center; }
 .list .column.cancel label i,
 .list .column.more label i { font-size: 21px; }
 .list .column.cancel label { cursor: pointer; }
 .list .column.form-list { max-width: 125px; }
 .list .column.form-list i,
-.list .column.edit-link i { font-size: 18px; }
+.list .column.edit-link i,
+.list .column.archive-link i { font-size: 18px; }
 .list .column.form-list a { margin-right: 10px }
 .list .column.form-list a:last-of-type { margin-right: 0 }
 .list .column.number { max-width: 150px; }
