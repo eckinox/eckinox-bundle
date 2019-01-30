@@ -110,6 +110,19 @@ class BundleUI {
                 contentElement.classList.toggle('active', contentElement.getAttribute('widget-tab') == tab);
             }
         });
+
+        // Open a tab when we have a hash in the url
+        let hash = window.location.hash;
+
+        if(hash) {
+            let tabName = hash.replace('#', ''),
+                tab = document.querySelector('.widget-tabs-element [widget-tab="' + tabName + '"]');
+
+            tab.click();
+
+            // Remove the hash to keep the URL clean :)
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        }
     }
 
     static empty(element) {
