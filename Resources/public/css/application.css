@@ -22,6 +22,7 @@
 .login-container .logo { margin-bottom: 25px; }
 .login-container .logo img { display: block; width: 90%; max-width: 300px; margin: auto; }
 .login-form button { height: 50px; }
+.login-form .field-wrapper { margin: 0; }
 
 /*
  *  Software
