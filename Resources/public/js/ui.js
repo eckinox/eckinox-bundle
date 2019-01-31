@@ -166,7 +166,6 @@ class BundleUI {
             wrapper.closest('#flash').classList.add('open');
         }
 
-console.log(timeout);
         if (typeof timeout != 'undefined') {
             setTimeout(function(){
                 if (node) {
