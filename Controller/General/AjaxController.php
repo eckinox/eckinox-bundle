@@ -432,4 +432,53 @@ class AjaxController extends Controller
     }
 
 
+    /**
+     * @Route("/ajax/get/autocomplete-entities", name="ajax_get_autocomplete_entities")
+     */
+    public function getAutocompleteEntities(Request $request)
+    {
+        $data = [];
+        $entityClass = $request->request->get('entity');
+        $searchFields = $request->request->get('search') ? json_decode($request->request->get('search')) : null;
+        $orderByFields = $request->request->get('order') ? json_decode($request->request->get('order')) : [];
+        $key = $request->request->get('key') ? $request->request->get('key') : 'id';
+        $label = $request->request->get('label') ? $request->request->get('label') : 'id';
+
+        if ($entityClass && class_exists($entityClass) && $searchFields) {
+            $entities = $this->getDoctrine()
+                ->getRepository($request->request->get('entity'))
+                ->findAll();
+
+            $queryString = 'SELECT e FROM ' . $entityClass . ' e WHERE 1 = 0';
+            $parameters = [];
+
+            foreach ($searchFields as $index => $field) {
+                if (property_exists($entityClass, $field)) {
+                    $queryString .= ' OR e.' . $field . ' LIKE :term' . $index;
+                    $parameters['term' . $index] = '%' . $request->request->get('query') . '%';
+                }
+            }
+
+            $firstOrdering = true;
+            foreach ($orderByFields as $field => $direction) {
+                if (property_exists($entityClass, $field) && in_array(strtoupper($direction), ['ASC', 'DESC'])) {
+                    $queryString .= ($firstOrdering ? 'ORDER BY' : ',') . ' e.' . $field . ' ' . $direction;
+                    $firstOrdering = false;
+                }
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery($queryString)
+                    ->setParameters($parameters);
+            $entities = $query->execute();
+
+            foreach ($entities as $entity) {
+                $data[] = ['key' => $entity->get($key), 'label' => $entity->get($label), 'object' => method_exists($entity, 'getRawObject') ? $entity->getRawObject() : json_decode(json_encode($entity))];
+            }
+            try {
+            } catch (\Exception $e) {}
+        }
+
+        return new JsonResponse($data);
+    }
 }

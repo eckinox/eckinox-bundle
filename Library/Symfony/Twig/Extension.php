@@ -39,6 +39,8 @@ class Extension extends AbstractExtension
             new TwigFilter('icon', array($this, 'getIcon')),
             new TwigFilter('lcfirst', array($this, 'lcfirstFilter')),
             new TwigFilter('sortByField', array($this, 'sortByField')),
+            new TwigFilter('camelToSnakeCase', array('Eckinox\Library\General\StringEdit', 'camelToSnakeCase')),
+            new TwigFilter('normalize', array('Eckinox\Library\General\StringEdit', 'normalize')),
 
             /*
              * Call filters dynamically
@@ -61,6 +63,8 @@ class Extension extends AbstractExtension
             new TwigFunction("get_translations_json", [ $this, "getTranslationsAsJson" ] ),
             new TwigFunction("data", [ $this, "getData" ] ),
             new TwigFunction("custom_field", [ $this, "generateCustomField" ] ),
+            new TwigFunction("autocomplete", [ $this, "generateAutocompleteField" ] ),
+            new TwigFunction("uniqid", [ $this, "getUniqid" ] ),
         ];
     }
 
@@ -208,6 +212,18 @@ class Extension extends AbstractExtension
 
         $html = $this->container->get('twig')->render('@Eckinox/html/input/' . $field['type'] . '.html.twig', ['infos' => $field]);
         return new Markup($html, []);
+    }
+
+    public function generateAutocompleteField($settings) {
+        if (isset($settings['entity'])) {
+            $settings['entity'] = str_replace('\\', '\\\\', $settings['entity']);
+        }
+        $html = $this->container->get('twig')->render('@Eckinox/html/input/autocomplete.html.twig', ['settings' => $settings]);
+        return new Markup($html, []);
+    }
+
+    public function getUniqid() {
+        return uniqid();
     }
 
     /*
