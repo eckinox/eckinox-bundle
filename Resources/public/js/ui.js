@@ -136,7 +136,7 @@ class BundleUI {
             for (let i = 0; i < content.length; i++) {
                 element.appendChild(content[i]);
             }
-        } else if (typeof content == 'Node') {
+        } else if (['Node', 'object'].indexOf(typeof content) != -1) {
             element.appendChild(content);
         }
     }
@@ -146,10 +146,20 @@ class BundleUI {
         let html = `<div class="flash-message ${type}">
                         ${message}
                     </div>`;
-        BundleUI.appendTo(wrapper, html);
+        let node = BundleUI.createNodeFromString(html);
+        BundleUI.appendTo(wrapper, node);
 
         if (!wrapper.closest('#flash').classList.contains('open')) {
             wrapper.closest('#flash').classList.add('open');
+        }
+
+console.log(timeout);
+        if (typeof timeout != 'undefined') {
+            setTimeout(function(){
+                if (node) {
+                    node.click();
+                }
+            }, timeout);
         }
     }
 
