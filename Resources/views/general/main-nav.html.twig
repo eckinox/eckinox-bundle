@@ -1,10 +1,12 @@
 {% trans_default_domain 'general' %}
 
+{% set currentModule = app.request.attributes.get("_controller") | split('\\') | last | split('::') | first | replace({ 'Controller': '' }) | lcfirst %}
+
 {% block main_left_nav %}
     <nav id="main-navigation" class="{{ data("navigation.showTitles") ? "show-titles" : "" }}">
         {% for item in data("navigation.items")|sortByField('order') %}
             {% if item.privilege is not defined or (item.privilege is defined and app.user.hasPrivilege(item.privilege)) %}
-                <div class="link-item" {{ (item.panel is defined ? 'data-panel="' ~ item.panel ~ '"' : '') | raw }}>
+                <div class="link-item {{ item.modules is defined and currentModule in item.modules ? 'current' : '' }}" {{ (item.panel is defined ? 'data-panel="' ~ item.panel ~ '"' : '') | raw }}>
                     <a class="link-detail" href="{{ item.route is defined ? path(item.route, (item.route_parameters is defined ? item.route_parameters : {})) : '#' }}">
                         <i class="{{ item.icon is defined ? item.icon : '' }}"></i>
                         <div class="main-title">

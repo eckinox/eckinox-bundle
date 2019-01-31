@@ -11,7 +11,7 @@ return [
         "forward_email" => "Transfert de « %name% »",
         "index_email" => "Liste des courriels",
         "search_index" => "Recherche avancée",
-        "index_import" => "Import de données",
+        "index_import" => "Importation de données",
         "index_software" => "Statut du logiciel",
         "edit_email_template" => "Gabarit « %name% »",
         "create_email_template" => "Nouveau gabarit de courriel",
