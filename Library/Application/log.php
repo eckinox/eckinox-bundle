@@ -16,6 +16,8 @@ trait log {
         $log->setUser($user);
 
         $em->persist($log);
+
+        return $log;
     }
 
     public function logBuildAction($function) {

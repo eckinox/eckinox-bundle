@@ -105,7 +105,10 @@ class Controller extends SymfonyController {
 
         foreach($form as $sections) {
             foreach($sections as $field) {
-                $values[$field->getName()] = $field->getViewData();
+                $value = $field->getViewData();
+                $field_name = $field->getName();
+
+                $values[$field_name] = $value;
             }
         }
 
