@@ -2,7 +2,7 @@
 {% trans_default_domain 'application' %}
 
 {% block header %}
-    <h2>{{ title }}</h2>
+    <h2>{{ ('privileges.labels.import.IMPORT_' ~ (importType | camelToSnakeCase | upper )) | trans }}</h2>
 {% endblock %}
 
 {% block content %}
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="fields custom-fields">
-                    {% for name, field in settings.customFields %}
+                    {% for name, field in (settings.customFields is defined ? settings.customFields : []) %}
                         <div class="field-wrapper half {{ name }}">
                             <label for="">{{ field.label | trans }}</label>
                             {{ custom_field(name, field) }}
@@ -68,7 +68,7 @@
                                 {% if (settings.properties[property].disabled is not defined or not settings.properties[property].disabled) and
                                       (settings.properties[property].relation is not defined or not settings.properties[property].relation) and
                                       settings.properties[property].value is not defined and
-                                      property not in ["createdAt", "updatedAt"] %}
+                                      property not in ["createdAt", "updatedAt", "isArchived", "_temporaryData"] %}
                                     <option value="{{ property }}" data-key="{{ property }}">{{ (entity.transKey ~ '.fields.' ~ property) | trans }}</option>
                                 {% endif %}
                             {% endfor %}

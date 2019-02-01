@@ -4,12 +4,14 @@
     "items": {
         "import": {
             "icon": "fas fa-cloud-download-alt",
+            "modules": ["import"],
             "title": "navigation.modules.import.title",
             "panel": "import",
             "order": 40
         },
         "admin": {
             "icon": "fas fa-cogs",
+            "modules": ["data", "email", "user"],
             "title": "navigation.modules.admin.title",
             "panel": "admin",
             "order": 50
