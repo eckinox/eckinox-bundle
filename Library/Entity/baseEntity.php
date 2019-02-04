@@ -77,7 +77,11 @@ trait baseEntity {
         if (method_exists($this, $methodName)) {
             return $this->$methodName();
         } else if (property_exists($this, $property)) {
-            return $this->$property;
+            try {
+                return $this->$property;
+            } catch(\Exception $e) {
+                return $this::$$property;
+            }
         } else {
             throw new \Exception("There is no corresponding property or method for \"" . $property . "\" in " . static::class);
         }
