@@ -154,6 +154,10 @@ class BundleUI {
         }
     }
 
+    static insertAfter(element, referenceElement) {
+        referenceElement.parentNode.insertBefore(element, referenceElement.nextElementSibling);
+    }
+
     static showFlashMessage(type, message, timeout) {
         let wrapper = document.querySelector('#flash .flash-content');
         let html = `<div class="flash-message ${type}">
