@@ -40,7 +40,7 @@ class ArchivedFilter extends SQLFilter
 
         # Or deleted ones, using statuses...
         if ($isStatusDeletable) {
-            $queryString .= ($queryString ? ' AND ' : '') . $targetTableAlias . '.status != \'deleted\'';
+            $queryString .= ($queryString ? ' AND ' : '') . $targetTableAlias . '.status != \'deleted\' or ' . $targetTableAlias . '.status is NULL';
         }
 
         return $queryString;
