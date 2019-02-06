@@ -210,7 +210,12 @@ class Extension extends AbstractExtension
             }
         }
 
-        $html = $this->container->get('twig')->render('@Eckinox/html/input/' . $field['type'] . '.html.twig', ['infos' => $field]);
+        $input = 'input';
+        if ($field['type'] == 'select' || (in_array($field['type'], ['checkbox', 'radio']) && count($field['choices']))) {
+            $input = $field['type'];
+        }
+
+        $html = $this->container->get('twig')->render('@Eckinox/html/input/' . $input . '.html.twig', ['infos' => $field]);
         return new Markup($html, []);
     }
 
