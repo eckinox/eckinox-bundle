@@ -21,7 +21,6 @@ trait baseEntity {
      */
     private $updatedAt;
 
-
     /*
      * Getters & setters
      */
@@ -78,12 +77,26 @@ trait baseEntity {
         if (method_exists($this, $methodName)) {
             return $this->$methodName();
         } else if (property_exists($this, $property)) {
-            return $this->$property = $value;
+            try {
+                return $this->$property;
+            } catch(\Exception $e) {
+                return $this::$$property;
+            }
         } else {
             throw new \Exception("There is no corresponding property or method for \"" . $property . "\" in " . static::class);
         }
 
         return null;
+    }
+
+    public function getRawObject() {
+        $data = [];
+
+        foreach (static::getClassProperties() as $property) {
+            $data[$property] = $this->get($property);
+        }
+
+        return $data;
     }
 
     /**
@@ -120,4 +133,5 @@ trait baseEntity {
         $key = substr($class, strrpos($class, '\\') + 1);
         return lcfirst($key);
     }
+
 }

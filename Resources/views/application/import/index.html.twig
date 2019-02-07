@@ -2,7 +2,7 @@
 {% trans_default_domain 'application' %}
 
 {% block header %}
-    <h2>{{ title }}</h2>
+    <h2>{{ ('privileges.labels.import.IMPORT_' ~ (importType | camelToSnakeCase | upper )) | trans }}</h2>
 {% endblock %}
 
 {% block content %}
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="fields custom-fields">
-                    {% for name, field in settings.customFields %}
+                    {% for name, field in (settings.customFields is defined ? settings.customFields : []) %}
                         <div class="field-wrapper half {{ name }}">
                             <label for="">{{ field.label | trans }}</label>
                             {{ custom_field(name, field) }}
@@ -68,7 +68,7 @@
                                 {% if (settings.properties[property].disabled is not defined or not settings.properties[property].disabled) and
                                       (settings.properties[property].relation is not defined or not settings.properties[property].relation) and
                                       settings.properties[property].value is not defined and
-                                      property not in ["createdAt", "updatedAt"] %}
+                                      property not in ["createdAt", "updatedAt", "isArchived", "_temporaryData"] %}
                                     <option value="{{ property }}" data-key="{{ property }}">{{ (entity.transKey ~ '.fields.' ~ property) | trans }}</option>
                                 {% endif %}
                             {% endfor %}
@@ -79,10 +79,12 @@
                             {% if (propertyInfos.disabled is not defined or not propertyInfos.disabled) and
                                   (propertyInfos.relation is defined and propertyInfos.relation) and
                                   (propertyInfos.allowedProperties is defined and propertyInfos.allowedProperties | length) %}
-                                  {% set transKey = propertyInfos.relation | split('\\') | last | lcfirst %}
-                                <optgroup label="{{ (transKey ~ '.title') | trans }}">
+                                {% set transKey = propertyInfos.relation | split('\\') | last | lcfirst %}
+                                {% set repeatable = propertyInfos.repeatable is defined ? propertyInfos.repeatable : false %}
+                                <optgroup label="{{ (propertyInfos.title is defined ? propertyInfos.title : (transKey ~ '.title')) | trans }}{{ repeatable ? ' (1)' : '' }}" original-label="{{ (propertyInfos.title is defined ? propertyInfos.title : (transKey ~ '.title')) | trans }}" class="relation-group" property="{{ property }}" data-index="0">
                                     {% for relationProperty in propertyInfos.allowedProperties %}
-                                        <option value="{{ property ~ '.' ~ relationProperty }}" data-key="{{ property ~ '.' ~ relationProperty }}">{{ (transKey ~ '.fields.' ~ relationProperty) | trans }}</option>
+                                        {% set relationPropertyKey = property ~ '.' ~ (repeatable ? '0.' : '') ~ relationProperty %}
+                                        <option value="{{ relationPropertyKey }}" data-key="{{ property ~ '.' ~ relationProperty }}">{{ (transKey ~ '.fields.' ~ relationProperty) | trans }}</option>
                                     {% endfor %}
                                 </optgroup>
                             {% endif %}

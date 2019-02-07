@@ -1,18 +1,18 @@
 {
     "head": {
-        "css": [
+        "css": {
+            "autocomplete": "bundles/eckinox/css/lib/auto-complete.css"
+        },
 
-        ],
-
-        "js": [
-
-        ]
+        "js": {
+            "autocomplete": "bundles/eckinox/js/lib/auto-complete.min.js"
+        }
     },
 
     "footer": {
-        "js": [
+        "js": {
 
-        ]
+        }
     },
 
     "theme": {

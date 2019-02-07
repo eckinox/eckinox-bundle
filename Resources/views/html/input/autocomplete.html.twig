@@ -1,0 +1,67 @@
+{% set id = uniqid() %}
+
+<input type="text" id="autocomplete_{{ id }}"
+{% for key, value in (settings.attributes is defined ? settings.attributes : {}) %}
+    {{ key | raw }}="{{ value | raw }}"
+{% endfor %}
+>
+
+<script>
+    let xhr_{{ id }};
+    let inputSelector_{{ id }} = 'input#autocomplete_{{ id }}';
+    new autoComplete({
+        selector: inputSelector_{{ id }},
+        minChars: 2,
+        source: function(term, response){
+            try { xhr.abort(); } catch(e){}
+
+            let data = new FormData();
+            {% for key, value in settings %}
+                data.append('{{ key }}', '{{ (value is iterable ? value|json_encode() : value) | raw }}');
+            {% endfor %}
+            data.append('query', term);
+
+            xhr_{{ id }} = new XMLHttpRequest();
+            xhr_{{ id }}.open('POST', '{{ path('ajax_get_autocomplete_entities') }}', true);
+
+            xhr_{{ id }}.onload = function() {
+                if (xhr_{{ id }}.status >= 200 && xhr_{{ id }}.status < 400) {
+                    response(JSON.parse(xhr_{{ id }}.responseText));
+                } else {
+                    response();
+                }
+            };
+
+            xhr_{{ id }}.onerror = function() {
+                response();
+            };
+
+            xhr_{{ id }}.send(data);
+        },
+        renderItem: function(item, search) {
+            search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            let re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+            let label = {{ (settings.key is not defined or settings.key == 'id' ? 'item.label' : 'item.label + " (" + item.key + ")"') | raw }};
+
+            let element = document.createElement('div');
+            element.classList.add('autocomplete-suggestion');
+            element.setAttribute('data-val', label);
+            element.setAttribute('data-key', item.key);
+            element.setAttribute('data-label', item.label);
+            element.setAttribute('data-obj', JSON.stringify(item.object));
+            element.innerHTML = label.replace(re, "<b>$1</b>");
+
+            return element.outerHTML;
+        },
+        onSelect: function(e, term, item) {
+            let event = new CustomEvent('autocomplete', { detail: JSON.parse(item.getAttribute('data-obj')) });
+            document.querySelector(inputSelector_{{ id }}).dispatchEvent(event);
+        }
+    });
+
+    document.querySelector(inputSelector_{{ id }}).addEventListener('keypress', function(e) {
+        if (e.which == 13){
+            e.preventDefault();
+        }
+    });
+</script>

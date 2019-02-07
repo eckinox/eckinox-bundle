@@ -2,7 +2,8 @@
  * Navigation
  */
 #main-navigation { display: flex; flex-direction: column; width: 80px; color: #bdbdbd; background: #222; }
-#main-navigation .link-item { display: flex; flex: 1; color: #bdbdbd; transition: all .15s ease; }
+#main-navigation .link-item { display: flex; max-height: 100px; flex: 1; color: #bdbdbd; transition: all .15s ease; }
+#main-navigation .link-item.current { background-color: rgba(255, 255, 255, .1); color: white; }
 #main-navigation .link-detail { max-height: 100px; display: flex; flex: 1; text-align: center; color: inherit; align-items: center; flex-direction: column; justify-content: center; }
 #main-navigation .link-detail i { font-size: 1.8em; }
 #main-navigation .link-detail .main-title { display: none; }

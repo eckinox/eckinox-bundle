@@ -47,25 +47,10 @@ class Controller extends SymfonyController {
         return $this->render($view, $parameters, $response);
     }
 
-    public function renderJson($content) {
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
-        $response->setContent(json_encode($content));
-
-        return $response;
-    }
-
     public function renderText($content) {
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContent($content);
-
-        return $response;
-    }
-
-    public function renderHtml($viewPath, $vars) {
-        $response = new Response();
-        $response->setContent($this->renderView($viewPath, $vars));
 
         return $response;
     }
@@ -105,7 +90,10 @@ class Controller extends SymfonyController {
 
         foreach($form as $sections) {
             foreach($sections as $field) {
-                $values[$field->getName()] = $field->getViewData();
+                $value = $field->getViewData();
+                $field_name = $field->getName();
+
+                $values[$field_name] = $value;
             }
         }
 

@@ -149,9 +149,13 @@ class BundleUI {
             for (let i = 0; i < content.length; i++) {
                 element.appendChild(content[i]);
             }
-        } else if (typeof content == 'Node') {
+        } else if (['Node', 'object'].indexOf(typeof content) != -1) {
             element.appendChild(content);
         }
+    }
+
+    static insertAfter(element, referenceElement) {
+        referenceElement.parentNode.insertBefore(element, referenceElement.nextElementSibling);
     }
 
     static showFlashMessage(type, message, timeout) {
@@ -159,10 +163,19 @@ class BundleUI {
         let html = `<div class="flash-message ${type}">
                         ${message}
                     </div>`;
-        BundleUI.appendTo(wrapper, html);
+        let node = BundleUI.createNodeFromString(html);
+        BundleUI.appendTo(wrapper, node);
 
         if (!wrapper.closest('#flash').classList.contains('open')) {
             wrapper.closest('#flash').classList.add('open');
+        }
+
+        if (typeof timeout != 'undefined') {
+            setTimeout(function(){
+                if (node) {
+                    node.click();
+                }
+            }, timeout);
         }
     }
 
