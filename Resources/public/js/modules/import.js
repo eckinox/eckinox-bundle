@@ -107,6 +107,44 @@ class ImportFlow {
 
             importFlow.previewWrapper.querySelector('input[name="data"]').value = JSON.stringify(importFlow.computeData());
         });
+
+        // Columns highlighting when hovering the assignations
+        document.querySelector("body").addEventListener("mouseenter", function(e){
+        	if (!e.target.matches(".assignation-row, .assignation-row *")) {
+        		return;
+            }
+
+        	let highlightColor = '#f8f8f8';
+        	let indicator = e.target.matches(".assignation-row") ? e.target : e.target.closest(".assignation-row");
+            let columnKey = indicator.querySelector(".column").innerHTML.trim();
+
+        	// Highlight the indicator
+            indicator.style.backgroundColor = highlightColor;
+
+        	// Higlight column inside the table
+        	let columnCells = document.querySelectorAll(".excel-preview [data-number='" + columnKey + "']");
+        	for (let cell of columnCells) {
+        		cell.style.backgroundColor = highlightColor;
+            }
+        }, true);
+        // Undo column highlighting on mouseleave
+        document.querySelector("body").addEventListener("mouseleave", function(e){
+        	if (!e.target.matches(".assignation-row, .assignation-row *")) {
+        		return;
+            }
+
+        	let indicator = e.target.matches(".assignation-row") ? e.target : e.target.closest(".assignation-row");
+            let columnKey = indicator.querySelector(".column").innerHTML.trim();
+
+        	// Highlight the indicator
+            indicator.style.backgroundColor = null;
+
+        	// Higlight column inside the table
+        	let columnCells = document.querySelectorAll(".excel-preview [data-number='" + columnKey + "']");
+        	for (let cell of columnCells) {
+        		cell.style.backgroundColor = null;
+            }
+        }, true);
     }
 
     initLoadedFile() {
@@ -221,7 +259,7 @@ class ImportFlow {
             for (let i = 0; i < data[0].length; i++) {
 
 
-                html += `<th class="column-number">
+                html += `<th class="column-number" data-number="${ImportFlow.getColumnNameFromNumber(i)}">
                             <span class='number'>${ImportFlow.getColumnNameFromNumber(i)}</span>
                             ${(typeof existingSelects[i] != 'undefined' ? existingSelects[i] : this.createAssignationSelect(i)).outerHTML}
                         </th>`;
@@ -243,7 +281,7 @@ class ImportFlow {
 
             for (let colIndex = 0; colIndex < row.length; colIndex++) {
                 let cell = row[colIndex];
-                rowHtml += `<td class="cell">${cell ? '<div class="cell-value">' + cell + '</div>' : ''}</td>`;
+                rowHtml += `<td class="cell" data-number="${ImportFlow.getColumnNameFromNumber(colIndex)}">${cell ? '<div class="cell-value">' + cell + '</div>' : ''}</td>`;
             }
 
             html += `<tr class="row">${rowHtml}</tr>`;

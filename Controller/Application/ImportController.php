@@ -413,7 +413,11 @@ class ImportController extends Controller
                 # format: "this.property"
                 # this refers to the current entity, not the relation itself.
                 $queryString .= ' AND e.' . $relationProperty . ' = :' . str_replace('.', '_property_', $field);
-                $parameters[str_replace('.', '_property_', $field)] = $entity->get(str_replace('this.', '', $field));
+                $value = $entity->get(str_replace('this.', '', $field));
+                if (is_object($value) && property_exists($value, 'id') && !$value->getId()) {
+                    $value = null;
+                }
+                $parameters[str_replace('.', '_property_', $field)] = $value;
                 $validQuery = true;
             } else if (strpos($field, 'custom:') === 0) {
                 # format: "custom:fieldName"
