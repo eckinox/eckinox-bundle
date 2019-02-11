@@ -1,6 +1,35 @@
-eckinox-popup {box-shadow:0px 0px 0px 9999px rgba(0, 0, 0, 0.5);z-index:100;transition:all 0.3s ease-out;background:#fff;position:fixed!important;top:0;left: 50%;transform:translate(-50%, 15%);}
+eckinox-popup {
+    box-shadow:0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
+    z-index:100;
+    transition:all 0.3s ease-out;
+    background:#fff;
+    position:fixed!important;
+    top:0;
+    left: 50%;
+    transform:translate(-50%, 15%);
+    border-radius: 3px;
+    border: 1px solid rgba(0, 80, 178, 0.15);
+}
+
+eckinox-popup header, eckinox-popup footer { background-color: #f9f9f9; }
+
 eckinox-popup:not(.visible) {transform: translate(-50%, -100%);transition-timing-function: ease-in;translate(-50%, -100%);box-shadow:none;}
-eckinox-popup .button-list {text-align:center;}
-eckinox-popup .button-list .button {padding: 0px 7%;}
-eckinox-popup .message {background: transparent}
+eckinox-popup .button-list {text-align:right;padding: 15px 20px;}
+eckinox-popup .button-list .button { padding: 7px 15px; }
+eckinox-popup .button-list .button:last-of-type { margin-right: 0; }
+eckinox-popup .title {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+eckinox-popup .message {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-left: none;
+    border-right: none;
+    padding: 20px;
+    overflow: auto;
+}
 eckinox-popup:before {left:0;right:0;top:0;bottom:0;background:rgba(0,0,0,0.1);content:" ";}

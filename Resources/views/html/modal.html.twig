@@ -1,23 +1,6 @@
 {% trans_default_domain 'general' %}
 
-<div id="modal">
-    <div class="modal-wrapper">
-        <div class="modal-content">
-            <div class="title"></div>
-            <div class="message"></div>
-            <div class="button-container right">
-                <button id="modal_ok" class="button blue" value="ok">{% trans %}modal.buttons.ok{% endtrans %}</button>
-                <button id="modal_yes" class="button blue" value="yes">{% trans %}modal.buttons.yes{% endtrans %}</button>
-                <button id="modal_no" class="button red" value="no">{% trans %}modal.buttons.no{% endtrans %}</button>
-                <button id="modal_confirm" class="button green" value="confirm">{% trans %}modal.buttons.confirm{% endtrans %}</button>
-                <button id="modal_close" class="button red" value="close">{% trans %}modal.buttons.close{% endtrans %}</button>
-                <button id="modal_cancel" class="button red" value="cancel">{% trans %}modal.buttons.cancel{% endtrans %}</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
+{% include "@Eckinox/webcomponent/popup.html.twig" %}
 
 <div id="flash" class="{{ app.session.flashbag.peekAll|length > 0 ? 'open' : '' }}">
     <div class="flash-content">

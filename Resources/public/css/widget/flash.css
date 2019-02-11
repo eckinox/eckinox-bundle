@@ -1,0 +1,55 @@
+/*
+ * Flash-message
+ */
+#flash {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 150px;
+    transition: z-index .4s step-end, all .4s ease;
+    opacity: 0;
+    z-index: -1;
+    font-size: 1.1em;
+}
+
+#flash { max-width: 900px; bottom: 50px; }
+
+#flash.open { opacity: 1; z-index: 1000; transition: z-index .4s step-start, all .4s ease; }
+
+#flash .flash-message.success { background-color: #31ac5f; color: #fff; }
+#flash .flash-message.warning { background-color: #ffd241; color: #222; }
+#flash .flash-message.error { background-color: #f85757; color: #fff; }
+#flash .flash-message.info { background-color: #599BF7; color: #fff; }
+
+#flash .flash-message {
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 80, 178, 0.15);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+}
+#flash .flash-message { display: flex; justify-content: flex-start; align-items: center; padding: 10px 15px; margin-bottom: 15px; cursor: pointer; }
+
+#flash .flash-message::before {
+    content: "\f058";
+    font-weight: 900;
+    font-family: Font Awesome\ 5 Pro;
+    margin-right: 12px;
+}
+
+#flash .flash-message.success::before {
+    content: "\f058";
+}
+
+#flash .flash-message.warning::before {
+    content: "\f06a";
+}
+
+#flash .flash-message.error::before {
+    content: "\f06a";
+}
+
+#flash .flash-message.info::before {
+    content: "\f05a";
+}

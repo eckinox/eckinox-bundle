@@ -1,7 +1,9 @@
 {
     "head": {
         "css": {
-            "autocomplete": "bundles/eckinox/css/lib/auto-complete.css"
+            "autocomplete": "bundles/eckinox/css/lib/auto-complete.css",
+            "popup": "bundles/eckinox/css/webcomponent/popup.css"
+
         },
 
         "js": {
@@ -11,7 +13,7 @@
 
     "footer": {
         "js": {
-
+            "popup": "bundles/eckinox/js/webcomponent/popup.js"
         }
     },
 
