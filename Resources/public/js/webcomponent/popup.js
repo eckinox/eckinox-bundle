@@ -51,10 +51,12 @@
                     case "ok":
                         this.hide();
 
-                        element.removeEventListener('click', this.trigger_action.bind(this));
-                        element.dispatchEvent(new Event('click'));
+                        //element.removeEventListener('click', this.trigger_action.bind(this));
+
                         break;
                 }
+
+                this.dispatchEvent(new CustomEvent('action:' + element.attributes.action.value));
 
             }
 
