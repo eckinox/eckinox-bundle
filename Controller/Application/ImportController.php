@@ -153,6 +153,8 @@ class ImportController extends Controller
             return $entity;
         }
 
+        $this->preloadEssentialRelations($entity, $row);
+
         $queryEntityName = str_replace('Entity:', '', str_replace('\\', ':', $this->settings['entity']));
         $queryString = 'SELECT e FROM ' . $queryEntityName . ' e WHERE 1 = 1 ';
         $parameters = [];
@@ -161,6 +163,9 @@ class ImportController extends Controller
             if (isset($this->assignations[$field]) && isset($row[$this->assignations[$field]])) {
                 $queryString .= ' AND e.' . $field . ' = :' . $field;
                 $parameters[$field] = $row[$this->assignations[$field]];
+            } else if ($this->settings['properties'][$field]['relation'] ?? null) {
+                $queryString .= ' AND e.' . $field . ' = :' . $field;
+                $parameters[$field] = $entity->get($field) && $entity->get($field)->getId() ? $entity->get($field) : null;
             }
         }
 
@@ -177,6 +182,34 @@ class ImportController extends Controller
         return $entity;
     }
 
+    /*
+     * Attempts to load any relation that is mentionned in the loadFrom fields for this entity
+     */
+    protected function preloadEssentialRelations(&$entity, $row) {
+        $loadingFields = $this->settings['loadFrom'] ?? false;
+        $properties = $this->settings['properties'] ?? [];
+        $entity = new $this->settings['entity']();
+
+        # If no loading fields are defined, return a new entity everytime
+        if (!$loadingFields) {
+            return $entity;
+        }
+
+        foreach ($loadingFields as $field) {
+            if (isset($properties[$field]['relation'])) {
+                foreach ($properties[$field]['loadFrom'] as $subField) {
+                    if (strpos($subField, 'this.') === 0) {
+                        $sourceField = str_replace('this.', '', $subField);
+                        if (!$entity->get($sourceField)) {
+                            $this->updateRelationFromRow($entity, $sourceField, $properties[$sourceField], $row);
+                        }
+                    }
+                }
+
+                $this->updateRelationFromRow($entity, $field, $properties[$field], $row);
+            }
+        }
+    }
 
     /*
      * Loops over relation properties and calls another method to load/create the relation entity and update it based on the given row.
@@ -258,11 +291,19 @@ class ImportController extends Controller
      * If an index is provided, the relation is treated as repeatable, and therefore the index is used to fetch the data within the POST.
      */
     protected function getRelationFromEntityProperty(&$entity, $property, $row, $index = null) {
+        static $createdRelations = [];
         $relation = null;
+        $newRelation = false;
 
-        if ($entity->get($property) instanceof \Doctrine\Common\Collections\ArrayCollection || $entity->get($property) instanceof \Doctrine\ORM\PersistentCollection) {
+        if ($entity->get($property) instanceof \Doctrine\Common\Collections\ArrayCollection || $entity->get($property) instanceof \Doctrine\ORM\PersistentCollection || count($createdRelations[$property] ?? [])) {
             # Check if one of the collection's items is a match for our current entity
-            foreach ($entity->get($property) as $collectionItem) {
+            $itemsToCheck = $createdRelations[$property] ?? [];
+
+            if ($entity->get($property) instanceof \Doctrine\Common\Collections\ArrayCollection || $entity->get($property) instanceof \Doctrine\ORM\PersistentCollection) {
+                $itemsToCheck = array_merge($entity->get($property)->toArray(), $itemsToCheck);
+            }
+
+            foreach ($itemsToCheck as $collectionItem) {
                 $matching = true;
 
                 foreach ($this->settings['properties'][$property]['loadFrom'] as $relationKey => $originKey) {
@@ -300,14 +341,17 @@ class ImportController extends Controller
 
                 if ($matching) {
                     $relation = $collectionItem;
+                    if (!$collectionItem->getId()) {
+                        $newRelation = true;
+                    }
                     break;
                 }
             }
-        } else if ($entity->get($property) instanceof $this->settings['properties'][$property]['relation']) {
-            $relation = $entity->get($property);
         }
 
-        $newRelation = false;
+        if (!$relation && $entity->get($property) instanceof $this->settings['properties'][$property]['relation']) {
+            $relation = $entity->get($property);
+        }
 
         # If no relation entity could be fetched from the current entity, see if it can be loaded from the database
         # It might already exist even if it's not linked to the current $entity (mostly for ManyToMany relations)
@@ -364,6 +408,8 @@ class ImportController extends Controller
                     }
                 }
             }
+
+            $createdRelations[$property][] = $relation;
         }
 
 
