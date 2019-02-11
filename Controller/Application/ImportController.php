@@ -18,7 +18,7 @@ class ImportController extends Controller
     use \Eckinox\Library\General\appData;
 
     protected $settings;
-    protected $em;
+    public $em;
 
     /**
      * @Route("/import/{importType}", name="index_import")
@@ -51,6 +51,7 @@ class ImportController extends Controller
 
     /**
      * @Route("/import/{importType}/process", name="process_import")
+     * This wraps the entire backend import processing, calling events at different stages
      */
     public function process(Request $request, $importType)
     {
@@ -113,6 +114,9 @@ class ImportController extends Controller
         return $this->redirectToRoute('index_import', ['importType' => $importType]);
     }
 
+    /*
+     * Loops over the entity's properties and updates from the specified row's data
+     */
     protected function updateEntityFromRow(&$entity, $row) {
         foreach ($entity->getClassProperties() as $property) {
             if ($this->settings['properties'][$property]['disabled'] ?? false) {
@@ -136,6 +140,10 @@ class ImportController extends Controller
         }
     }
 
+    /*
+     * Loads or creates the import-type entity for the specified row and returns it.
+     * The loading of existing entities is based on the loadFrom configurations.
+     */
     protected function getEntityFromRow($row) {
         $loadingFields = $this->settings['loadFrom'] ?? false;
         $entity = new $this->settings['entity']();
@@ -169,6 +177,10 @@ class ImportController extends Controller
         return $entity;
     }
 
+
+    /*
+     * Loops over relation properties and calls another method to load/create the relation entity and update it based on the given row.
+     */
     protected function updateEntityRelationsFromRow(&$entity, $row) {
         foreach ($this->settings['properties'] as $property => $infos) {
             $relationClass = $this->settings['properties'][$property]['relation'] ?? null;
@@ -177,12 +189,44 @@ class ImportController extends Controller
                 continue;
             }
 
-            $relation = $this->getRelationFromEntityProperty($entity, $property);
-            $updated = false;
+            if ($this->settings['properties'][$property]['repeatable'] ?? false) {
+                for ($i = 0; $this->repeatableRelationIndexExists($property, $i); $i++) {
+                    $this->updateRelationFromRow($entity, $property, $infos, $row, $i);
+                }
+            } else {
+                $this->updateRelationFromRow($entity, $property, $infos, $row);
+            }
+        }
+    }
 
-            # Loop over allowed properties defined in the configs to update them
-            foreach ($infos['allowedProperties'] as $relationProperty) {
-                $relationPropertyKey = $property . '.' . $relationProperty;
+    /*
+     * Checks whether the specified index exists for the specified repeatable relation property
+     * This does so by looking inside the assignation POST data to see if anything is assigned to this index
+     */
+    protected function repeatableRelationIndexExists($property, $index) {
+        foreach (($_POST['assignation'] ?? []) as $column => $assignedProperty) {
+            if (strpos($assignedProperty, $property . '.' . $index . '.') === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Loops over the relation's alllowed properties from the configuration file and updates them based on the given row.
+     * If an index is provided, the relation is treated as repeatable, and therefore the index is used to fetch the data inside the row.
+     */
+    protected function updateRelationFromRow(&$entity, $property, $infos, $row, $index = null) {
+        $relation = $this->getRelationFromEntityProperty($entity, $property, $row, $index);
+        $updated = false;
+
+        $this->dispatchEvent('container_relation_pre_processing', $entity, $relation, $this);
+
+        # Loop over allowed properties defined in the configs to update them
+        foreach ($infos['allowedProperties'] as $relationProperty) {
+            $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $relationProperty;
+            try {
                 if (isset($this->settings['properties'][$property]['values'][$relationProperty])) {
                     if ($relation->get($relationProperty) != $this->settings['properties'][$property]['values'][$relationProperty]) {
                         $relation->set($relationProperty, $this->settings['properties'][$property]['values'][$relationProperty]);
@@ -192,16 +236,28 @@ class ImportController extends Controller
                     $relation->set($relationProperty, $row[$this->assignations[$relationPropertyKey]]);
                     $updated = true;
                 }
+            } catch (\TypeError $e) {
+                # If the relation isn't marked as optional in the configuration, throw the error as it might be a source of data corruption for the system.
+                if (!($this->settings['properties'][$property]['optional'] ?? false)) {
+                    throw $e;
+                }
             }
+        }
 
-            # Only persist the relation entity if it's been updated and/or contains values other than the association fields
-            if ($updated) {
-                $this->em->persist($relation);
-            }
+        $this->dispatchEvent('container_relation_post_processing', $entity, $relation, $updated, $this);
+
+        # Only persist the relation entity if it's been updated and/or contains values other than the association fields
+        if ($updated || !$relation->getId()) {
+            $this->em->persist($relation);
         }
     }
 
-    protected function getRelationFromEntityProperty(&$entity, $property) {
+    /*
+     * Loads or creates the relation entity for the specified row and returns it.
+     * The loading of existing entities is based on the loadFrom from the relation property's configurations.
+     * If an index is provided, the relation is treated as repeatable, and therefore the index is used to fetch the data within the POST.
+     */
+    protected function getRelationFromEntityProperty(&$entity, $property, $row, $index = null) {
         $relation = null;
 
         if ($entity->get($property) instanceof \Doctrine\Common\Collections\ArrayCollection || $entity->get($property) instanceof \Doctrine\ORM\PersistentCollection) {
@@ -210,18 +266,35 @@ class ImportController extends Controller
                 $matching = true;
 
                 foreach ($this->settings['properties'][$property]['loadFrom'] as $relationKey => $originKey) {
-                    if ($originKey == 'this' && $entity != $collectionItem->get($relationKey)) {
-                        $matching = false;
-                    } else if (strpos($originKey, 'custom:') === 0) {
-                        $key = explode(':', $originKey)[1];
-                        $value = $_POST[$key] ?? null;
-                        if (isset($this->settings['customFields'][$key]['entity']) && $value && ((!$collectionItem->get($relationKey) || !$value) || ($collectionItem->get($relationKey) && $collectionItem->get($relationKey)->getId() != $value))) {
-                            $matching = false;
-                        } else if (!isset($this->settings['customFields'][$key]['entity']) && $value != $collectionItem->get($relationKey)) {
+                    if ($originKey == 'this') {
+                        # format: "this"
+                        # this refers to the current entity, not the relation itself.
+                        if ($entity != $collectionItem->get($relationKey)) {
                             $matching = false;
                         }
-                    } else if ($originKey != 'this' && $entity->get($originKey) != $collectionItem->get($relationKey)) {
-                        $matching = false;
+                    } else if (strpos($originKey, 'this.') === 0) {
+                        # format: "this.property"
+                        # this refers to the current entity, not the relation itself.
+                        if ($entity->get(str_replace('this.', '', $originKey)) != $collectionItem->get($relationKey)) {
+                            $matching = false;
+                        }
+                    } else if (strpos($originKey, 'custom:') === 0) {
+                        # format: "custom:fieldName"
+                        $key = explode(':', $originKey)[1];
+                        $value = $_POST[$key] ?? null;
+                        $representsEntity = isset($this->settings['customFields'][$key]['entity']);
+
+                        if ($representsEntity && (($collectionItem->get($relationKey) && !$value || !$collectionItem->get($relationKey) && $value) || ($collectionItem->get($relationKey) && $collectionItem->get($relationKey)->getId() != $value))) {
+                            $matching = false;
+                        } else if (!$representsEntity && $value != $collectionItem->get($relationKey)) {
+                            $matching = false;
+                        }
+                    } else {
+                        $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
+                        if (!isset($row[$this->assignations[$relationPropertyKey]]) || $collectionItem->get($relationKey) != $row[$this->assignations[$relationPropertyKey]]) {
+                            # format: "property"
+                            $matching = false;
+                        }
                     }
                 }
 
@@ -234,13 +307,47 @@ class ImportController extends Controller
             $relation = $entity->get($property);
         }
 
-        # If no relation entity was found, create a new one
+        $newRelation = false;
+
+        # If no relation entity could be fetched from the current entity, see if it can be loaded from the database
+        # It might already exist even if it's not linked to the current $entity (mostly for ManyToMany relations)
         if (!$relation) {
+            $relation = $this->loadRelationEntityFromDatabase($entity, $property, $row, $index);
+            if ($relation) {
+                $newRelation = true;
+            }
+        }
+
+        # If no relation entity was found still, create a new one
+        if (!$relation) {
+            $newRelation = true;
             $relation = new $this->settings['properties'][$property]['relation']();
             foreach ($this->settings['properties'][$property]['loadFrom'] as $relationKey => $originKey) {
                 if ($originKey == 'this') {
-                    $relation->set($relationKey, $entity);
+                    # format: "this"
+                    # this refers to the current entity, not the relation itself.
+                    if ($relation->get($relationKey) instanceof \Doctrine\Common\Collections\ArrayCollection || $relation->get($relationKey) instanceof \Doctrine\ORM\PersistentCollection) {
+                        # Add to the collection for ManyToMany or OneToMany relations
+                        if (!$relation->get($relationKey)->contains($entity)) {
+                            $relation->get($relationKey)->add($entity);
+                        }
+                    } else {
+                        # Assign the current entity as "parent" for OneToOne of ManyToOne relations
+                        $relation->set($relationKey, $entity);
+                    }
+                } else if (strpos($originKey, 'this.') === 0) {
+                    # format: "this.property"
+                    # this refers to the current entity, not the relation itself.
+                    $value = $entity->get(str_replace('this.', '', $originKey));
+                    if ($relation->get($relationKey) instanceof \Doctrine\Common\Collections\ArrayCollection || $relation->get($relationKey) instanceof \Doctrine\ORM\PersistentCollection) {
+                        if (!$relation->get($relationKey)->contains($value)) {
+                            $relation->get($relationKey)->add($value);
+                        }
+                    } else {
+                        $relation->set($relationKey, $value);
+                    }
                 } else if (strpos($originKey, 'custom:') === 0) {
+                    # format: "custom:fieldName"
                     $key = explode(':', $originKey)[1];
                     $value = $_POST[$key] ?? null;
 
@@ -250,14 +357,109 @@ class ImportController extends Controller
                         $relation->set($relationKey, $value);
                     }
                 } else {
-                    $relation->set($relationKey, $entity->get($originKey));
+                    # format: "property"
+                    $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
+                    if (isset($row[$this->assignations[$relationPropertyKey]])) {
+                        $relation->set($relationKey, $row[$this->assignations[$relationPropertyKey]]);
+                    }
                 }
+            }
+        }
+
+
+        # New relations have to be linked to the entity
+        # For ManyToMany or OneToMany, it's important that $relationProperty is the owning side of the relation, otherwise entities won't be persisted correctly.
+        if ($newRelation) {
+            # Add the new relation to the entity's relation property
+            $relationProperty = $entity->get($property);
+            if ($relationProperty instanceof \Doctrine\Common\Collections\ArrayCollection || $relationProperty instanceof \Doctrine\ORM\PersistentCollection) {
+                if (!$relationProperty->contains($relation)) {
+                    $relationProperty->add($relation);
+                }
+            } else {
+                $entity->set($property, $relation);
             }
         }
 
         return $relation;
     }
 
+    /*
+     * Attempts to load an existing entity that satisfies the relation's loadingFrom requirements
+     * This is mostly for ManyToMany relations, where entities can exist on their own prior to being linked to other entities.
+     */
+    protected function loadRelationEntityFromDatabase($entity, $property, $row, $index = null) {
+        $loadingFields = $this->settings['properties'][$property]['loadFrom'] ?? false;
+        $relation = null;
+        $validQuery = false;
+
+        # If no loading fields are defined, return a null value - a relation
+        if (!$loadingFields) {
+            return $relation;
+        }
+
+        $queryEntityName = str_replace('Entity:', '', str_replace('\\', ':', $this->settings['properties'][$property]['relation']));
+        $queryString = 'SELECT e FROM ' . $queryEntityName . ' e WHERE 1 = 1 ';
+        $parameters = [];
+
+        foreach ($loadingFields as $relationProperty => $field) {
+            if ($field == 'this') {
+                # format: "this"
+                # this refers to the current entity, not the relation itself.
+                $queryString .= ' AND e.' . $relationProperty . ' = :' . $field;
+                $parameters[$field] = $entity->getId() ? $entity : null;
+                $validQuery = true;
+            } else if (strpos($field, 'this.') === 0) {
+                # format: "this.property"
+                # this refers to the current entity, not the relation itself.
+                $queryString .= ' AND e.' . $relationProperty . ' = :' . str_replace('.', '_property_', $field);
+                $value = $entity->get(str_replace('this.', '', $field));
+                if (is_object($value) && property_exists($value, 'id') && !$value->getId()) {
+                    $value = null;
+                }
+                $parameters[str_replace('.', '_property_', $field)] = $value;
+                $validQuery = true;
+            } else if (strpos($field, 'custom:') === 0) {
+                # format: "custom:fieldName"
+                $key = explode(':', $field)[1];
+                $value = $_POST[$key] ?? null;
+                if (isset($this->settings['customFields'][$key]['entity'])) {
+                    $value = $value ? $this->getDoctrine()->getRepository($this->settings['customFields'][$key]['entity'])->find($value) : null;
+                }
+                $queryString .= ' AND e.' . $relationProperty . ' = :' . str_replace(':', '_field_', $field);
+                $parameters[str_replace(':', '_field_', $field)] = $value;
+                $validQuery = true;
+            } else {
+                # format: "property"
+                $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $field;
+                if (isset($this->assignations[$relationPropertyKey]) && isset($row[$this->assignations[$relationPropertyKey]])) {
+                    $queryString .= ' AND e.' . $relationProperty . ' = :' . $field;
+                    $parameters[$field] = $row[$this->assignations[$relationPropertyKey]];
+                    $validQuery = true;
+                }
+            }
+        }
+
+        $query = $this->em->createQuery($queryString);
+        $query->setParameters($parameters);
+        $query->useQueryCache(true);
+
+        # In some cases, the query might be invalid if relation fields are empty in the row.
+        if ($validQuery) {
+            try {
+                $relation = $query->getOneOrNullResult();
+            } catch (NonUniqueResultException $e) {
+                throw new \Exception("The relation's loadingFrom fields specified in the import settings don't always result in a single unique record.");
+            }
+        }
+
+        return $relation;
+    }
+
+    /*
+     * Verifies that all of the submitted information seems valid and cleans it up.
+     * Returns the clean data that's ready for processing.
+     */
     protected function getProcessingData() {
         if (empty($_POST)) {
             throw new \Exception("No POST data to process.");
@@ -288,6 +490,9 @@ class ImportController extends Controller
         return $data;
     }
 
+    /*
+     * Loads the import settings for the provided import type, and assigns it to the settings property of this controller instance.
+     */
     protected function loadImportSettings($importType) {
         $settings = $this->data('import.' . $importType);
         $error = null;
@@ -318,6 +523,10 @@ class ImportController extends Controller
         $this->settings = $settings;
     }
 
+    /*
+     * Checks whether the current user has the required security privileges to access the specified import type.
+     * If they do not, throw an error, which is catched by the wrapping method in order to trigger a redirection.
+     */
     protected function checkImportPrivilege($importType) {
         if (!$this->getUser()->hasPrivilege('IMPORT_' . strtoupper(StringEdit::camelToSnakeCase($importType)))) {
             $error = $this->get('translator')->trans('import.errors.privilege', [], 'application');
@@ -325,6 +534,10 @@ class ImportController extends Controller
         }
     }
 
+    /*
+     * Calls all registered listeners for the specified event with the provided parameters
+     * Listeners can accept parameters by reference in order to affect them during or after the processing.
+     */
     protected function dispatchEvent($event, &...$args) {
         if (!isset($this->settings['events'][$event])) {
             return;

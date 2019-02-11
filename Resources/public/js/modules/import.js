@@ -63,6 +63,10 @@ class ImportFlow {
                     option.closest('select').value = '';
                 }
 
+                for (let option of document.querySelectorAll('option[selected]:not(:checked)')) {
+                    option.removeAttribute('selected');
+                }
+
                 importFlow.updateAssignations();
             }
         });
@@ -103,6 +107,44 @@ class ImportFlow {
 
             importFlow.previewWrapper.querySelector('input[name="data"]').value = JSON.stringify(importFlow.computeData());
         });
+
+        // Columns highlighting when hovering the assignations
+        document.querySelector("body").addEventListener("mouseenter", function(e){
+        	if (!e.target.matches(".assignation-row, .assignation-row *")) {
+        		return;
+            }
+
+        	let highlightColor = '#f8f8f8';
+        	let indicator = e.target.matches(".assignation-row") ? e.target : e.target.closest(".assignation-row");
+            let columnKey = indicator.querySelector(".column").innerHTML.trim();
+
+        	// Highlight the indicator
+            indicator.style.backgroundColor = highlightColor;
+
+        	// Higlight column inside the table
+        	let columnCells = document.querySelectorAll(".excel-preview [data-number='" + columnKey + "']");
+        	for (let cell of columnCells) {
+        		cell.style.backgroundColor = highlightColor;
+            }
+        }, true);
+        // Undo column highlighting on mouseleave
+        document.querySelector("body").addEventListener("mouseleave", function(e){
+        	if (!e.target.matches(".assignation-row, .assignation-row *")) {
+        		return;
+            }
+
+        	let indicator = e.target.matches(".assignation-row") ? e.target : e.target.closest(".assignation-row");
+            let columnKey = indicator.querySelector(".column").innerHTML.trim();
+
+        	// Highlight the indicator
+            indicator.style.backgroundColor = null;
+
+        	// Higlight column inside the table
+        	let columnCells = document.querySelectorAll(".excel-preview [data-number='" + columnKey + "']");
+        	for (let cell of columnCells) {
+        		cell.style.backgroundColor = null;
+            }
+        }, true);
     }
 
     initLoadedFile() {
@@ -199,6 +241,16 @@ class ImportFlow {
     }
 
     generatePreview() {
+        // Before we get started, get all existing assignations selects
+        // We'll be reusing them to avoid losing assignations that are already set-up
+        let assignationSelects = document.querySelectorAll('select[name^="assignation["]');
+        let existingSelects = [];
+        for (let select of assignationSelects) {
+            let newSelect = select.cloneNode(true);
+            newSelect.querySelector('option[value="' + select.value + '"]').setAttribute('selected', 'selected');
+            existingSelects.push(newSelect);
+        }
+
         let data = this.computeData();
         let html = `<thead>
                         <th class="row-number"></th>`;
@@ -207,9 +259,9 @@ class ImportFlow {
             for (let i = 0; i < data[0].length; i++) {
 
 
-                html += `<th class="column-number">
+                html += `<th class="column-number" data-number="${ImportFlow.getColumnNameFromNumber(i)}">
                             <span class='number'>${ImportFlow.getColumnNameFromNumber(i)}</span>
-                            ${this.createAssignationSelect(i).outerHTML}
+                            ${(typeof existingSelects[i] != 'undefined' ? existingSelects[i] : this.createAssignationSelect(i)).outerHTML}
                         </th>`;
             }
         }
@@ -229,7 +281,7 @@ class ImportFlow {
 
             for (let colIndex = 0; colIndex < row.length; colIndex++) {
                 let cell = row[colIndex];
-                rowHtml += `<td class="cell">${cell ? '<div class="cell-value">' + cell + '</div>' : ''}</td>`;
+                rowHtml += `<td class="cell" data-number="${ImportFlow.getColumnNameFromNumber(colIndex)}">${cell ? '<div class="cell-value">' + cell + '</div>' : ''}</td>`;
             }
 
             html += `<tr class="row">${rowHtml}</tr>`;
@@ -246,9 +298,101 @@ class ImportFlow {
         }
 
         this.preview.innerHTML = html;
+        this.updateAssignations();
+    }
+
+    updateRepeatableRelationOptgroups() {
+        let assignationSelects = document.querySelectorAll('select[name^="assignation["]');
+
+        // Handle repeatable relations
+        if (typeof this.settings.properties == 'undefined' || !assignationSelects.length) {
+            return;
+        }
+
+        let newRelationOptgroups = {};
+        for (let propertyKey in this.settings.properties) {
+            let property = this.settings.properties[propertyKey];
+
+            if (typeof property.relation == 'undefined' || typeof property.repeatable == 'undefined' || !property.repeatable) {
+                continue;
+            }
+
+            // First, make sure there's no unused relation optgroups with used optgroups for the same relation at a higher index
+            let usedOptgroups = [];
+            let selectedOptions = document.querySelectorAll('select[name^="assignation["] optgroup[property="' + propertyKey + '"] option:checked');
+            for (let option of selectedOptions) {
+                let optgroupIndex = option.closest('optgroup').getAttribute('data-index');
+                if (usedOptgroups.indexOf(optgroupIndex) == -1) {
+                    usedOptgroups.push(parseInt(optgroupIndex));
+                }
+            }
+
+            let unusedIndex = null;
+            let sampleSelectOptgroups = document.querySelector('select[name^="assignation["]').querySelectorAll('optgroup[property="' + propertyKey + '"]');
+            if (usedOptgroups.length < sampleSelectOptgroups.length - 1) {
+                for (let i = 0; i < sampleSelectOptgroups.length; i++) {
+                    if (usedOptgroups.indexOf(i) == -1) {
+                        unusedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (unusedIndex !== null) {
+                for (let select of assignationSelects) {
+                    for (let optgroup of select.querySelectorAll('optgroup[property="' + propertyKey + '"]')) {
+                        if (parseInt(optgroup.getAttribute('data-index')) == unusedIndex) {
+                            optgroup.parentNode.removeChild(optgroup);
+                        } else if (parseInt(optgroup.getAttribute('data-index')) > unusedIndex) {
+                            optgroup.setAttribute('label', optgroup.getAttribute('original-label') + ' (' + optgroup.getAttribute('data-index') + ')');
+                            optgroup.setAttribute('data-index', parseInt(optgroup.getAttribute('data-index')) - 1);
+                            for (let option of optgroup.querySelectorAll('option')) {
+                                option.setAttribute('value', option.getAttribute('value').replace(/\.[0-9]+\./, '.' + parseInt(optgroup.getAttribute('data-index')) + '.'));
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If need be, create new option group in each select for the next instance of the relation
+            for (let select of assignationSelects) {
+                let optgroups = select.querySelectorAll('optgroup[property="' + propertyKey + '"]');
+
+                if (optgroups.length) {
+                    let lastOptgroup = optgroups[optgroups.length - 1];
+                    if (lastOptgroup.querySelector('option:checked')) {
+                        let newOptgroup = lastOptgroup.cloneNode(true);
+                        newOptgroup.setAttribute('label', lastOptgroup.getAttribute('original-label') + ' (' + (optgroups.length + 1) + ')');
+                        newOptgroup.setAttribute('data-index', optgroups.length);
+
+                        if (newOptgroup.querySelector('option:checked')) {
+                            newOptgroup.querySelector('option:checked').checked = false;
+                        }
+
+                        for (let option of newOptgroup.querySelectorAll('option')) {
+                            option.setAttribute('value', option.getAttribute('value').replace(/\.[0-9]+\./, '.' + optgroups.length + '.'));
+                        }
+
+                        newRelationOptgroups[propertyKey] = newOptgroup;
+                    }
+                }
+            }
+        }
+
+        // Insert the new relation optgroups, if any
+        if (Object.keys(newRelationOptgroups).length) {
+            for (let select of assignationSelects) {
+                for (let propertyKey in newRelationOptgroups) {
+                    let optgroups = select.querySelectorAll('optgroup[property="' + propertyKey + '"]');
+                    BundleUI.insertAfter(newRelationOptgroups[propertyKey].cloneNode(true), optgroups[optgroups.length - 1]);
+                }
+            }
+        }
     }
 
     updateAssignations() {
+        this.updateRepeatableRelationOptgroups();
+
         let data = this.computeData();
         let wrapper = document.querySelector('.fields.assignations .columns');
         let assignationSelects = document.querySelectorAll('select[name^="assignation["]');
