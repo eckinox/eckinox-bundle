@@ -67,7 +67,7 @@ services:
     eckinox.breadcrumb.event_listener:
         class: Eckinox\Library\Symfony\EventListener\BreadcrumbListener
         arguments: ["@annotation_reader", "@security.token_storage", "@router"]
-        #autowire: true
+        autowire: true
         tags:
            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 

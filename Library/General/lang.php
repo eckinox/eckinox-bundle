@@ -9,7 +9,7 @@ use Eckinox\Library\Symfony\Annotation\Lang as LangAnnotation,
 
 trait lang {
     public function lang($path, $params = [], $domain = null, $prependDefaultKey = false) {
-        return $this->get('translator')->trans(
+        return $this->translator->trans(
             ($prependDefaultKey ? $this->lang_get_default_key()."." : ""). $path,
             $params,
             $this->lang_get_domain($domain)
@@ -24,7 +24,7 @@ trait lang {
         $retval = [];
         $len = strlen($path);
 
-        foreach($this->get('translator')->getCatalogue()->all($this->lang_get_domain($domain)) as $key => $value) {
+        foreach($this->translator->getCatalogue()->all($this->lang_get_domain($domain)) as $key => $value) {
             if ( substr( $key, 0, $len ) === $path ) {
                 $retval[substr( $key, $len + 1 )] = $value;
             }

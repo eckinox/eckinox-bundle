@@ -4,7 +4,6 @@ namespace Eckinox\Entity\Application;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Eckinox\Entity\Application\Log;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
@@ -13,7 +12,7 @@ use Doctrine\Common\Collections\Criteria;
  * @ORM\Table(name="ei_users")
  * @ORM\Entity(repositoryClass="Eckinox\Repository\Application\UserRepository")
  */
-class User implements AdvancedUserInterface, \Serializable
+class User implements UserInterface, \Serializable
 {
     use \Eckinox\Library\Entity\baseEntity;
     use \Eckinox\Library\Entity\loggableEntity;

@@ -2,13 +2,13 @@
 
 namespace Eckinox\Controller\Application;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Eckinox\Entity\Application\Log;
 use Eckinox\Library\General\Arrays;
 
-class LogController extends Controller
+class LogController extends AbstractController
 {
     use \Eckinox\Library\Application\log;
     use \Eckinox\Library\General\appData;

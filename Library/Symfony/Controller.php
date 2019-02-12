@@ -2,9 +2,10 @@
 
 namespace Eckinox\Library\Symfony;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller as SymfonyController,
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController,
     Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\Request;
+    Symfony\Component\HttpFoundation\Request,
+    Symfony\Contracts\Translation\TranslatorInterface;
 
 use Eckinox\Library\{
     Application\log,
@@ -12,10 +13,15 @@ use Eckinox\Library\{
     Symfony\Annotation\Breadcrumb
 };
 
-class Controller extends SymfonyController {
+class Controller extends AbstractController {
     use log, appData;
 
     protected $securityRedirect = 'home';
+    public $translator = null;
+
+    public function __construct(TranslatorInterface $translator) {
+        $this->translator = $translator;
+    }
 
     public function getSecurityRedirect() {
         return $this->securityRedirect;
@@ -105,7 +111,7 @@ class Controller extends SymfonyController {
 
         foreach ($form as $child) {
              foreach ($child->getErrors() as $error) {
-                 $field_name = $this->get('translator')->trans(
+                 $field_name = $this->translator->trans(
                      $child->getConfig()->getOption('label') ?: $child->getName(),
                      [],
                      $this->lang_get_domain()
@@ -143,6 +149,14 @@ class Controller extends SymfonyController {
         }
 
         return $search;
+    }
+
+    public function trans(...$args) {
+        return $this->translator->trans(...$args);
+    }
+
+    public function transChoice(...$args) {
+        return $this->translator->transChoice(...$args);
     }
 
     public function getLocalities($type, $key = null, $return_response = false) {

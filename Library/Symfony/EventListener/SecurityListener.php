@@ -76,7 +76,7 @@ class SecurityListener {
             $currentRoute = $request->attributes->get('_route');
 
             if($currentRoute === $redirectRoute) {
-                $redirectRoute = (new Controller())->getSecurityRedirect();
+                $redirectRoute = (new Controller($this->translator))->getSecurityRedirect();
             }
 
             /*

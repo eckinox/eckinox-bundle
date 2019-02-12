@@ -47,7 +47,7 @@ class Breadcrumb
                 $key = key($annotation);
                 $breadcrumb_obj = $annotation[$key];
 
-                $ctrl = new $key();
+                $ctrl = new $key($controller->translator);
 
                 $breadcrumb[$parent] = [
                     'name' => $controller->lang($ctrl->lang_get_default_key().".breadcrumb.$parent", [], $ctrl->lang_get_domain(), false),
