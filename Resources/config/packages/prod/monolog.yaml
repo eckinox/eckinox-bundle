@@ -1,0 +1,24 @@
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            # 500 errors are logged at the critical level
+            action_level: critical
+            # to also log 400 level errors (but not 404's):
+            # action_level: error
+            # excluded_404s:
+            #     - ^/
+            handler:      deduplicated
+        deduplicated:
+            type:    deduplication
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: 'dev@eckinox.ca'
+            to_email:   '%env(DEBUG_EMAIL)%'
+            # or list of recipients
+            # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
+            subject:    'An Error Occurred! %%message%%'
+            level:      debug
+            formatter:  monolog.formatter.html
+            content_type: text/html

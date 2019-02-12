@@ -89,11 +89,21 @@ trait baseEntity {
         return null;
     }
 
-    public function getRawObject() {
+    public function getRawObject($return_entity_id = false, $date_format = null) {
         $data = [];
 
         foreach (static::getClassProperties() as $property) {
-            $data[$property] = $this->get($property);
+            $value = $this->get($property);
+
+            if(is_object($value)) {
+                if($return_entity_id && method_exists($value, 'getId')) {
+                    $value =  $value->getId();
+                } else if($date_format && method_exists($value, 'format')) {
+                    $value = $value->format($date_format);
+                }
+            }
+
+            $data[$property] = $value;
         }
 
         return $data;

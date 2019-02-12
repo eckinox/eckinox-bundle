@@ -56,6 +56,7 @@ class Install extends Command
         $config = [
             'packages/eckinox.yaml',
             'packages/security.yaml',
+            'packages/prod/monolog.yaml',
             'routes/eckinox.yaml'
         ];
 
