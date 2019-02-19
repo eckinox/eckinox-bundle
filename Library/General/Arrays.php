@@ -37,7 +37,15 @@ abstract class Arrays {
                         $difference[$key] = $new_diff;
                     }
                 }
-            } else if(!array_key_exists($key, $array2) || $array2[$key] !== $value) {
+            } else if(array_key_exists($key, $array2)) {
+                if(is_numeric($array2[$key]) && is_numeric($value)) {
+                    if($array2[$key] != $value) {
+                        $difference[$key] = $value;
+                    }
+                } else if($array2[$key] !== $value) {
+                    $difference[$key] = $value;
+                }
+            } else if(!array_key_exists($key, $array2)) {
                 $difference[$key] = $value;
             }
         }

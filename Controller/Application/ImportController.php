@@ -109,7 +109,7 @@ class ImportController extends Controller
             }
         }
 
-        $this->addFlash('success', $this->get('translator')->trans('import.success', [], 'application'));
+        $this->addFlash('success', $this->trans('import.success', [], 'application'));
 
         return $this->redirectToRoute('index_import', ['importType' => $importType]);
     }
@@ -545,7 +545,7 @@ class ImportController extends Controller
 
         # Check if this import type is defined in the import.json data file
         if (!$settings) {
-            $error = $this->get('translator')->trans(
+            $error = $this->trans(
                 'import.errors.settings.undefinedType',
                 ['%importType%' => $importType],
                 'application'
@@ -554,7 +554,7 @@ class ImportController extends Controller
 
         # If an entity is defined, check if it exists
         if (isset($settings['entity']) && !class_exists($settings['entity'])) {
-            $error = $this->get('translator')->trans(
+            $error = $this->trans(
                 'import.errors.settings.undefinedEntity',
                 ['%entity%' => $settings['entity']],
                 'application'
@@ -575,7 +575,7 @@ class ImportController extends Controller
      */
     protected function checkImportPrivilege($importType) {
         if (!$this->getUser()->hasPrivilege('IMPORT_' . strtoupper(StringEdit::camelToSnakeCase($importType)))) {
-            $error = $this->get('translator')->trans('import.errors.privilege', [], 'application');
+            $error = $this->trans('import.errors.privilege', [], 'application');
             throw new \Exception($error);
         }
     }
