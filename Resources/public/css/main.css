@@ -250,7 +250,8 @@ i.red { color: var(--red); }
 
 /* Lists with sticky headers */
 .list.sticky-header { position: relative; }
-.list.sticky-header .row.head { position: -webkit-sticky; position: sticky; top: 0; z-index: 100; }
+.list.sticky-header .row.head:first-child { position: -webkit-sticky; position: sticky; top: 0; border-bottom: 1px solid rgba(0, 80, 178, 0.15); z-index: 100; }
+.list.sticky-header .row.head:first-child + .row.head { position: static; z-index: 1; }
 
 .list:not(.form-list) .rows > .row { background-color: var(--list-row-even-color); }
 .list:not(.form-list) .rows > .row:nth-child(2n + 1) { background-color: var(--list-row-odd-color); }
