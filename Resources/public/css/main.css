@@ -232,6 +232,10 @@ i.red { color: var(--red); }
 .list .row .column.column-icon { flex-grow: 0.1; }
 .list .row:not(.head) .column { color: var(--label-color); }
 
+/* Generic column sizing based on flex-grow */
+.list .row .column.flex-small { flex-grow: 0.5; }
+.list .row .column.flex-large { flex-grow: 2; }
+
 .list .column.status { padding: 5px 10px; }
 .list .column.status i { font-size: 20px; }
 .list .head.search .column.status i {
@@ -243,6 +247,10 @@ i.red { color: var(--red); }
 
 .list .column.signed { max-width: 56px;  }
 .list .row:not(.head) .column.signed { justify-content: center; }
+
+/* Lists with sticky headers */
+.list.sticky-header { position: relative; }
+.list.sticky-header .row.head { position: -webkit-sticky; position: sticky; top: 0; z-index: 100; }
 
 .list:not(.form-list) .rows > .row { background-color: var(--list-row-even-color); }
 .list:not(.form-list) .rows > .row:nth-child(2n + 1) { background-color: var(--list-row-odd-color); }
