@@ -5,6 +5,7 @@
 .widget-tabs-element .widget-tabs-actions label,
 .widget-tabs-element .widget-tabs-item {display: inline-block;padding: 6px 15px;color: #0050b2;line-height: 25px;cursor: pointer;border-radius: 4px 4px 0 0;margin-top: 1px;}
 .widget-tabs-element .widget-tabs-item.active {background: white;color: #333;}
+.widget-tabs-element .widget-tabs-item label { cursor: pointer; }
 
 .widget-tabs-element .widget-tabs-actions { display: block; float: right; margin-left: 5px; }
 .widget-tabs-element .widget-tabs-actions label { font-size: .8em; background: white; }
