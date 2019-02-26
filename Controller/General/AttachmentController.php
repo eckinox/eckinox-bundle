@@ -23,17 +23,6 @@ class AttachmentController extends Controller
     protected $securityRedirect = 'home';
 
     /**
-     * @Route("/attachments/test", name="attachments_test")
-     */
-    public function test() {
-        ini_set('post_max_size', '64M');
-        ini_set('upload_max_filesize', '64M');
-
-        phpinfo();
-
-    }
-
-    /**
      * @Route("/attachments/tree", name="attachments_tree")
      */
     public function tree(Request $request) {
@@ -49,7 +38,7 @@ class AttachmentController extends Controller
             $result = [
                 'result' => 'error',
                 'message' => [
-                    'error' => $this->get('translator')->trans(
+                    'error' => $this->trans(
                         'attachments.message.error.you_must_save',
                         [],
                         'general'
@@ -106,7 +95,7 @@ class AttachmentController extends Controller
             $result = [
                 'result' => 'error',
                 'message' => [
-                    'error' => $this->get('translator')->trans(
+                    'error' => $this->trans(
                         'attachments.message.error.already_exists',
                         [],
                         'general'

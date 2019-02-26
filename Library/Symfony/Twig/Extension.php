@@ -211,7 +211,7 @@ class Extension extends AbstractExtension
         }
 
         $input = 'input';
-        if ($field['type'] == 'select' || (in_array($field['type'], ['checkbox', 'radio']) && count($field['choices']))) {
+        if (in_array($field['type'], ['select', 'checkbox', 'radio'])) {
             $input = $field['type'];
         }
 

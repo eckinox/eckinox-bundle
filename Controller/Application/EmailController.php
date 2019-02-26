@@ -51,7 +51,7 @@ class EmailController extends Controller
                         if($email->isSent() && $action === "delete" && !$templates){
                             $this->addFlash(
                                 'warning',
-                                $this->get('translator')->transChoice(
+                                $this->transChoice(
                                     'email.messages.warning.actionDelete',
                                     1,
                                     ["%subject%" => $email->getSubject()],
@@ -68,7 +68,7 @@ class EmailController extends Controller
                 $em->flush();
 
                 $this->log(
-                    $this->get('translator')->trans(
+                    $this->trans(
                         'email.logs.actions',
                         [],
                         'application'
@@ -83,7 +83,7 @@ class EmailController extends Controller
                 if(count($subjects)){
                     $this->addFlash(
                         'success',
-                        $this->get('translator')->transChoice(
+                        $this->transChoice(
                             'email.messages.success.action'.ucfirst($action),
                             count($subjects),
                             ["%subjects%" => implode(', ', $subjects)],
@@ -271,7 +271,7 @@ class EmailController extends Controller
             }
 
             $this->log(
-                $this->get('translator')->trans(
+                $this->trans(
                     $isNew ? 'email.logs.created' : 'email.logs.updated',
                     ["%name%" => $email->getSubject()],
                     'application'
@@ -285,7 +285,7 @@ class EmailController extends Controller
 
             $this->addFlash(
                 'success',
-                $this->get('translator')->trans(
+                $this->trans(
                     $isNew ? 'email.messages.success.hasBeenCreated' : 'email.messages.success.hasBeenUpdated',
                     ["%name%" => $email->getSubject()],
                     'application'
@@ -306,7 +306,7 @@ class EmailController extends Controller
             'isNew' => $isNew,
             'isTemplate' => $templates,
             'email' => $email,
-            'title' => $this->get('translator')->trans(
+            'title' => $this->trans(
                 $transTitle,
                 ["%name%" => $email->getSubject()],
                 'application'
@@ -420,7 +420,7 @@ class EmailController extends Controller
             }
 
             $this->log(
-                $this->get('translator')->trans(
+                $this->trans(
                     'email.logs.forwarded',
                     ["%name%" => $email->getSubject()],
                     'application'
@@ -434,7 +434,7 @@ class EmailController extends Controller
 
             $this->addFlash(
                 'success',
-                $this->get('translator')->trans(
+                $this->trans(
                     'email.messages.success.hasBeenForwarded',
                     ["%name%" => $email->getSubject()],
                     'application'
@@ -530,7 +530,7 @@ class EmailController extends Controller
 
         $this->addFlash(
                 'success',
-                $this->get('translator')->trans(
+                $this->trans(
                     'email.messages.success.hasBeenForceSent',
                     ["%name%" => $email->getSubject()],
                     'application'

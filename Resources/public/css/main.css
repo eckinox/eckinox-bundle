@@ -8,8 +8,10 @@ h1 { font-size: 1.2em; margin: 0; padding: 0 }
 ul, ol { padding: 0; margin: 0; list-style: none; }
 a { color: var(--link-color); text-decoration: none; }
 .icon { display: inline-block; }
-.float {float:left;}
-.float.right {float:right;}
+.float { float: left; }
+.float.right { float: right; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
 .text-right { text-align: right; }
 .fade-out { opacity: 0; transition: all .25s ease-in-out; }
 .fade-out.slide-down { transform: translateY(25px); }
@@ -88,6 +90,13 @@ i.red { color: var(--red); }
 .field-wrapper input[type=checkbox] + label::before,
 .actions-button input[type=checkbox] + label::before,
 .checkboxes input[type=checkbox] + label::before{ content: ''; display: inline-block; width: 12px; height: 12px; border: 1px solid #333; border-radius: 3px; margin-right: 8px; }
+
+.field-wrapper input[type=radio] + label:empty::before,
+.actions-button input[type=radio] + label:empty::before,
+.radios input[type=radio] + label:empty::before,
+.field-wrapper input[type=checkbox] + label:empty::before,
+.actions-button input[type=checkbox] + label:empty::before,
+.checkboxes input[type=checkbox] + label:empty::before { margin-right: 0; }
 
 .field-wrapper input[type=radio] + label::before,
 .actions-button input[type=radio] + label::before,
@@ -171,7 +180,8 @@ i.red { color: var(--red); }
 
 .field-wrapper .group { background-color: var(--light-grey); padding: 10px; margin-bottom: 20px; }
 .field-wrapper .group:last-child { margin-bottom: 0; }
-.field-wrapper .group .group-title { font-weight: 600; line-height: 1em; margin-bottom: 10px; }
+.field-wrapper .group .group-title { font-weight: 600; line-height: 1em; margin-bottom: 10px; cursor: pointer; transition: all .15s ease; }
+.field-wrapper .group .group-title:hover { color: #777; }
 .field-wrapper .group li label { color: var(--label-color); cursor: pointer; }
 /*.field-wrapper .group .choices li { margin-bottom: 5px; }*/
 .field-wrapper .group .choices li:last-child { margin-bottom: 0 }
@@ -235,6 +245,11 @@ i.red { color: var(--red); }
 /* Generic column sizing based on flex-grow */
 .list .row .column.flex-small { flex-grow: 0.5; }
 .list .row .column.flex-large { flex-grow: 2; }
+
+/* Content alignment for columns */
+.list .row .column.text-center { justify-content: center; }
+.list .row .column.text-left { justify-content: flex-start; }
+.list .row .column.text-right { justify-content: flex-end; }
 
 .list .column.status { padding: 5px 10px; }
 .list .column.status i { font-size: 20px; }
