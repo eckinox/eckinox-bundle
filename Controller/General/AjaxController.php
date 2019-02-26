@@ -11,6 +11,7 @@ use Eckinox\Library\General\Arrays;
 use Eckinox\Library\General\Convert;
 use Eckinox\Library\General\Serializer;
 use Eckinox\Library\Symfony\Annotation\Security;
+use Eckinox\Library\Symfony\Service\Converter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -21,13 +22,15 @@ class AjaxController extends Controller
     use \Eckinox\Library\General\appData;
 
     protected $securityRedirect = 'home';
+    protected $converter;
 
     /**
     * @param ContainerInterface $container
     */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, Converter $converter)
     {
         $this->container = $container;
+        $this->converter = $converter;
     }
 
     /**
@@ -392,7 +395,7 @@ class AjaxController extends Controller
 
                 $result = [
                     "result" => "success",
-                    "message" => $this->get('translator')->trans(
+                    "message" => $this->trans(
                         implode('.', [lcfirst($module), 'list', $name, 'messages', 'success', "hasBeenUpdated"]),
                         [],
                         lcfirst($domain)
@@ -422,11 +425,11 @@ class AjaxController extends Controller
         $file = $request->files->get('file');
 
         if (!$file) {
-            throw new \Exception($this->get('translator')->trans('ajax.excelToJson.errors.noFile', [], $domain));
+            throw new \Exception($this->trans('ajax.excelToJson.errors.noFile', [], $domain));
         }
 
         $filePath = $file->getPathname();
-        $parsedData = $this->get('eckinox.converter')->excelToArray($filePath);
+        $parsedData = $this->converter->excelToArray($filePath);
 
         return new JsonResponse($parsedData);
     }
@@ -438,19 +441,46 @@ class AjaxController extends Controller
     public function getAutocompleteEntities(Request $request)
     {
         $data = [];
-        $entityClass = $request->request->get('entity');
+        $entityClass = str_replace('\\\\', '\\', $request->request->get('entity'));
+        $wheres = $request->request->get('where') ? json_decode($request->request->get('where')) : [];
         $searchFields = $request->request->get('search') ? json_decode($request->request->get('search')) : null;
         $orderByFields = $request->request->get('order') ? json_decode($request->request->get('order')) : [];
         $key = $request->request->get('key') ? $request->request->get('key') : 'id';
         $label = $request->request->get('label') ? $request->request->get('label') : 'id';
+        $em = $this->getDoctrine()->getManager();
 
         if ($entityClass && class_exists($entityClass) && $searchFields) {
             $entities = $this->getDoctrine()
-                ->getRepository($request->request->get('entity'))
+                ->getRepository($entityClass)
                 ->findAll();
 
-            $queryString = 'SELECT e FROM ' . $entityClass . ' e WHERE 1 = 0';
+            $queryString = 'SELECT e FROM ' . $entityClass . ' e WHERE 1 = 1';
             $parameters = [];
+
+            $whereIndex = 0;
+            foreach ($wheres as $field => $value) {
+                if (property_exists($entityClass, $field)) {
+                    if (is_array($value)) {
+                        $queryString .= ' AND e.' . $field . ' IN (:where_term' . $whereIndex . ')';
+                        $parameters['where_term' . $whereIndex] = $value;
+                    } else if (is_object($value) && property_exists($value, 'entity') && property_exists($value, 'id')) {
+                        $queryString .= ' AND e.' . $field . ' = :where_term' . $whereIndex;
+                        $parameters['where_term' . $whereIndex] = $em->getReference($value->entity, $value->id);
+                    } else if (is_numeric($value)) {
+                        $queryString .= ' AND e.' . $field . ' = :where_term' . $whereIndex;
+                        $parameters['where_term' . $whereIndex] = $value;
+                    } else {
+                        $queryString .= ' AND e.' . $field . ' LIKE :where_term' . $whereIndex;
+                        $parameters['where_term' . $whereIndex] = $value;
+                    }
+                } else {
+
+                }
+
+                $whereIndex++;
+            }
+
+            $queryString .= ' AND (1 = 0';
 
             foreach ($searchFields as $index => $field) {
                 if (property_exists($entityClass, $field)) {
@@ -458,6 +488,8 @@ class AjaxController extends Controller
                     $parameters['term' . $index] = '%' . $request->request->get('query') . '%';
                 }
             }
+
+            $queryString .= ')';
 
             $firstOrdering = true;
             foreach ($orderByFields as $field => $direction) {
@@ -467,7 +499,6 @@ class AjaxController extends Controller
                 }
             }
 
-            $em = $this->getDoctrine()->getManager();
             $query = $em->createQuery($queryString)
                     ->setParameters($parameters);
             $entities = $query->execute();

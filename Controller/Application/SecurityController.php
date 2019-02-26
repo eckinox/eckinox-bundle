@@ -29,7 +29,7 @@ class SecurityController extends Controller
         $error = $authUtils->getLastAuthenticationError();
 
         if($error) {
-            $this->addFlash('error', $this->get('translator')->trans(
+            $this->addFlash('error', $this->trans(
                 $error->getMessageKey(),
                 $error->getMessageData(),
                 'security'

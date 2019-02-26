@@ -56,7 +56,7 @@ class UserController extends Controller
                         if($this->getUser()->getId() == $user->getId()) {
                             $this->addFlash(
                                 'warning',
-                                $this->get('translator')->trans(
+                                $this->trans(
                                     'user.messages.warning.actionOwn',
                                     [],
                                     'application'
@@ -76,7 +76,7 @@ class UserController extends Controller
                     $em->flush();
 
                     $this->log(
-                        $this->get('translator')->trans(
+                        $this->trans(
                             'user.logs.actions',
                             [],
                             'application'
@@ -90,7 +90,7 @@ class UserController extends Controller
 
                     $this->addFlash(
                         'success',
-                        $this->get('translator')->transChoice(
+                        $this->transChoice(
                             'user.messages.success.action' . ucfirst($action),
                             count($names),
                             ["%names%" => implode(', ', $names)],
@@ -157,16 +157,16 @@ class UserController extends Controller
 
         if($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES')) {
             foreach($this->data('privileges.privileges') as $moduleName => $items) {
-                $cleanModuleName = $this->get('translator')->trans(implode('.', ['privileges', 'modules', $moduleName]), [], 'application');
+                $cleanModuleName = $this->trans(implode('.', ['privileges', 'modules', $moduleName]), [], 'application');
                 foreach($items as $privilegeId) {
-                    $privileges[$cleanModuleName][$this->get('translator')->trans(implode('.', ['privileges', 'labels', $moduleName, $privilegeId]), [], 'application')] = $privilegeId;
+                    $privileges[$cleanModuleName][$this->trans(implode('.', ['privileges', 'labels', $moduleName, $privilegeId]), [], 'application')] = $privilegeId;
                 }
             }
 
             foreach ($this->data('import') as $importType => $settings) {
-                $cleanModuleName = $this->get('translator')->trans('privileges.modules.import'    , [], 'application');
+                $cleanModuleName = $this->trans('privileges.modules.import'    , [], 'application');
                 $privilegeId = 'IMPORT_' . strtoupper(StringEdit::camelToSnakeCase($importType));
-                $privileges[$cleanModuleName][$this->get('translator')->trans(implode('.', ['privileges', 'labels', 'import', $privilegeId]), [], 'application')] = $privilegeId;
+                $privileges[$cleanModuleName][$this->trans(implode('.', ['privileges', 'labels', 'import', $privilegeId]), [], 'application')] = $privilegeId;
             }
         }
 
@@ -225,7 +225,7 @@ class UserController extends Controller
             $em->flush();
 
             $this->log(
-                $this->get('translator')->trans(
+                $this->trans(
                     $isNew ? 'user.logs.created' : 'user.logs.updated',
                     ["%name%" => $user->getFullName()],
                     'application'
@@ -239,7 +239,7 @@ class UserController extends Controller
 
             $this->addFlash(
                 'success',
-                $this->get('translator')->trans(
+                $this->trans(
                     $isNew ? 'user.messages.success.hasBeenCreated' : 'user.messages.success.hasBeenUpdated',
                     ["%name%" => $user->getFullName()],
                     'application'

@@ -36,7 +36,7 @@ class UserType extends AbstractType
                 ))
                 ->add('email', TextType::class, array(
                     'label' => 'user.fields.email',
-                    'attr' => array('class' => 'email', 'data-validate' => 'required email')
+                    'attr' => array('class' => 'email', 'data-validate' => 'required email', 'autocomplete' => 'off')
                 ))
                 ->add('homePhone', TelType::class, array(
                     'label' => 'user.fields.homePhone',

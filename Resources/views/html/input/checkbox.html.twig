@@ -1,0 +1,12 @@
+{% trans_default_domain 'application' %}
+
+{% set inputId = infos.attrs is defined and infos.attrs.id is defined ? infos.attrs.id : 'input_' ~ uniqid() %}
+
+<input  type="checkbox"
+        name="{{ (infos.name is defined ? infos.name : (infos.attrs.name is defined ? infos.attrs.name : '')) | escape('html_attr') }}"
+        value="{{ (infos.value is defined ? infos.value : (infos.attrs.value is defined ? infos.attrs.value : '')) | escape('html_attr') }}"
+        id="{{ inputId | escape('html_attr') }}"
+        {{ (infos.checked is defined and infos.checked ? 'checked' : '')}}
+        {% for attribute, value in (infos.attrs is defined ? infos.attrs : {}) if attribute not in ['id', 'value', 'name', 'type', 'required'] %}{{ attribute }}="{{ value | escape('html_attr') }}"{% endfor %}
+        {{ infos.required is defined and infos.required ? 'required' : '' }}>
+<label for="{{ inputId }}">{{ infos.label is defined ? infos.label : '' }}</label>

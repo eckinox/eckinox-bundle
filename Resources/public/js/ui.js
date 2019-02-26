@@ -1,10 +1,13 @@
 class BundleUI {
     static init() {
-        BundleUI.initConfirmClick();
-        BundleUI.initDropdownClose();
-        BundleUI.initNavigationPanels();
-        BundleUI.initFlashMessageDismissal();
-        BundleUI.initTabWidgets();
+        window.addEventListener('load', function(){
+            BundleUI.initConfirmClick();
+            BundleUI.initDropdownClose();
+            BundleUI.initNavigationPanels();
+            BundleUI.initFlashMessageDismissal();
+            BundleUI.initTabWidgets();
+            BundleUI.initGroupedCheckboxes();
+        }, false);
     }
 
     // Confirms clicks on [confirm-click] elements with a custom message defined in the attribute
@@ -125,6 +128,28 @@ class BundleUI {
         }
     }
 
+    static initGroupedCheckboxes() {
+        document.querySelector('body').addEventListener('click', function(e){
+        	if (!e.target.matches('.field-wrapper .group .group-title')) {
+        		return;
+            }
+
+        	e.preventDefault();
+
+        	let groupTitle = e.target;
+        	let checkboxes = groupTitle.parentNode.querySelectorAll('.choices input[type="checkbox"]');
+        	let alreadyChecked = true;
+
+        	for (let checkbox of checkboxes) {
+        		alreadyChecked = alreadyChecked && checkbox.checked;
+            }
+
+        	for (let checkbox of checkboxes) {
+        		checkbox.checked = !alreadyChecked;
+            }
+        });
+    }
+
     static empty(element) {
         while (element.firstChild) {
             element.removeChild(element.firstChild);
@@ -182,6 +207,72 @@ class BundleUI {
     static clearFlashMessages() {
         let wrapper = document.querySelector('#flash .flash-content');
         wrapper.innerHTML = '';
+    }
+
+    static initAucompleteInput(hashId, settings) {
+        if (typeof settings == 'undefined') {
+            settings = JSON.parse(document.querySelector('#autocomplete_' + hashId).getAttribute('autocomplete-settings'));
+        }
+
+        let vars = {};
+        vars['xhr_' + hashId] = null;
+        vars['inputSelector_' + hashId] = 'input#autocomplete_' + hashId;
+
+        new autoComplete({
+            selector: vars['inputSelector_' + hashId],
+            minChars: 2,
+            source: function(term, response){
+                try { xhr.abort(); } catch(e){}
+
+                let data = new FormData();
+                for (let key in settings) {
+                    data.append(key, typeof settings[key] == 'object' ? JSON.stringify(settings[key]) : settings[key]);
+                }
+                data.append('query', term);
+
+                vars['xhr_' + hashId] = new XMLHttpRequest();
+                vars['xhr_' + hashId].open('POST', '/ajax/get/autocomplete-entities', true);
+
+                vars['xhr_' + hashId].onload = function() {
+                    if (vars['xhr_' + hashId].status >= 200 && vars['xhr_' + hashId].status < 400) {
+                        response(JSON.parse(vars['xhr_' + hashId].responseText));
+                    } else {
+                        response();
+                    }
+                };
+
+                vars['xhr_' + hashId].onerror = function() {
+                    response();
+                };
+
+                vars['xhr_' + hashId].send(data);
+            },
+            renderItem: function(item, search) {
+                search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                let re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                let label = item.label + (typeof settings.key != 'undefined' && settings.key != 'id' ? (" (" + item.key + ")") : '');
+                let element = document.createElement('div');
+
+                element.classList.add('autocomplete-suggestion');
+                element.setAttribute('data-val', label);
+                element.setAttribute('data-key', item.key);
+                element.setAttribute('data-label', item.label);
+                element.setAttribute('data-obj', JSON.stringify(item.object));
+                element.innerHTML = label.replace(re, "<b>$1</b>");
+
+                return element.outerHTML;
+            },
+            onSelect: function(e, term, item) {
+                let event = new CustomEvent('autocomplete', { detail: JSON.parse(item.getAttribute('data-obj')) });
+                document.querySelector(vars['inputSelector_' + hashId]).dispatchEvent(event);
+            }
+        });
+
+        document.querySelector(vars['inputSelector_' + hashId]).addEventListener('keypress', function(e) {
+            if (e.which == 13){
+                e.preventDefault();
+            }
+        });
     }
 }
 
