@@ -252,6 +252,11 @@ class ImportController extends Controller
      */
     protected function updateRelationFromRow(&$entity, $property, $infos, $row, $index = null) {
         $relation = $this->getRelationFromEntityProperty($entity, $property, $row, $index);
+
+        if (!$relation) {
+            return;
+        }
+
         $updated = false;
 
         $this->dispatchEvent('container_relation_pre_processing', $entity, $relation, $this);
@@ -409,7 +414,24 @@ class ImportController extends Controller
                 }
             }
 
-            $createdRelations[$property][] = $relation;
+            # If all of the loading fields are null, skip this relation.
+            $newRelationIsInvalid = true;
+            if ($this->settings['properties'][$property]['optional'] ?? false) {
+                foreach ($this->settings['properties'][$property]['loadFrom'] as $relationKey => $originKey) {
+                    if ($relation->get($relationKey) !== null) {
+                        $newRelationIsInvalid = false;
+                        break;
+                    }
+                }
+            }
+
+            if ($newRelationIsInvalid) {
+                $relation = null;
+                $newRelation = false;
+            } else {
+                $createdRelations[$property][] = $relation;
+            }
+
         }
 
 
@@ -478,7 +500,7 @@ class ImportController extends Controller
             } else {
                 # format: "property"
                 $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $field;
-                if (isset($this->assignations[$relationPropertyKey]) && isset($row[$this->assignations[$relationPropertyKey]])) {
+                if (isset($this->assignations[$relationPropertyKey]) && array_key_exists($this->assignations[$relationPropertyKey], $row)) {
                     $queryString .= ' AND e.' . $relationProperty . ' = :' . $field;
                     $parameters[$field] = $row[$this->assignations[$relationPropertyKey]];
                     $validQuery = true;
@@ -486,16 +508,15 @@ class ImportController extends Controller
             }
         }
 
-        $query = $this->em->createQuery($queryString);
-        $query->setParameters($parameters);
-        $query->useQueryCache(true);
-
         # In some cases, the query might be invalid if relation fields are empty in the row.
         if ($validQuery) {
             try {
+                $query = $this->em->createQuery($queryString);
+                $query->setParameters($parameters);
+                $query->useQueryCache(true);
                 $relation = $query->getOneOrNullResult();
             } catch (NonUniqueResultException $e) {
-                throw new \Exception("The relation's loadingFrom fields specified in the import settings don't always result in a single unique record.");
+                throw new \Exception("The '" . $property . "' relation's loadingFrom fields specified in the import settings don't always result in a single unique record.");
             }
         }
 

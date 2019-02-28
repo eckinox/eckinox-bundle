@@ -21,7 +21,7 @@ class Converter {
         }
 
         $file = new File($path);
-        $supportedExtensions = ['csv', 'xls', 'xlsx'];
+        $supportedExtensions = ['csv', 'xls', 'xlsx', 'xlsm'];
 
         if (!$file->isReadable()) {
             throw new \Exception($this->translator->trans('converter.errors.fileUnreadable', [], static::DOMAIN));
