@@ -10,6 +10,13 @@
 
                 this.attach();
                 this.render();
+
+                document.addEventListener('keyup', function(e) {
+                    // There's no real value in checking if the popup is shown or not.
+                    if ( e.keyCode == 27 ) {
+                        this.hide();
+                    }
+                }.bind(this));
             }
 
             attach() {
@@ -17,7 +24,7 @@
 
                 if ( triggers ) {
                     triggers.forEach(function(item) {
-                        item.addEventListener('click', this.trigger_action.bind(this));
+                        item.addEventListener('click', this.trigger_action.bind(this, item));
                     }.bind(this));
                 }
             }
@@ -26,7 +33,7 @@
                 let btn = this._get_slot("buttons");
 
                 if ( btn ) {
-                    this.querySelectorAll('[action]').forEach(function(element) {
+                    btn.querySelectorAll('[action]').forEach(function(element) {
                         element.addEventListener("click", this.action.bind(this, element), false);
                     }.bind(this));
                 }
@@ -43,30 +50,22 @@
                     case "cancel":
                     case "no":
                     case "close":
-                        this.hide();
-                        break;
-
                     case "confirm":
                     case "yes":
                     case "ok":
                         this.hide();
-
-                        //element.removeEventListener('click', this.trigger_action.bind(this));
-
-                        break;
+                    break;
                 }
 
                 this.dispatchEvent(new CustomEvent('action:' + element.attributes.action.value));
-
+                e.preventDefault();
             }
 
             hide() {
-//                this.style.display = "none";
                 this.classList.remove('visible');
             }
 
             show() {
-//                this.style.display = "block";
                 this.classList.add('visible');
             }
 
