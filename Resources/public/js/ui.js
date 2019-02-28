@@ -292,6 +292,26 @@ class BundleUI {
                 e.preventDefault();
             }
         });
+
+        if (typeof settings.use_hidden_id != 'undefined' && settings.use_hidden_id) {
+            document.querySelector(vars['inputSelector_' + hashId]).addEventListener('autocomplete', function(e) {
+                if (typeof e.detail == 'undefined' || !e.detail) {
+                    this.previousElementSibling.value = '';
+                } else {
+                    this.previousElementSibling.value = typeof e.detail.id != 'undefined' ? e.detail.id : e.detail[settings.key];
+                }
+            });
+
+            document.querySelector(vars['inputSelector_' + hashId]).addEventListener('keydown', function(e) {
+                let input = this;
+                let previousValue = input.value;
+                setTimeout(function(){
+                    if (previousValue != input.value) {
+                        input.previousElementSibling.value = '';
+                    }
+                }, 250);
+            });
+        }
     }
 }
 

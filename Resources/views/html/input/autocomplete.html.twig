@@ -1,5 +1,9 @@
 {% set id = uniqid() %}
 
+{% if settings.use_hidden_id is defined and settings.use_hidden_id %}
+    <input type="hidden" name="{{ settings.attributes.name }}" value="{{ settings.attributes.value is defined and settings.attributes.value.id is defined ? settings.attributes.value.id : '' }}">
+{% endif %}
+
 <input type="text" id="autocomplete_{{ id }}"
 {% for key, value in (settings.attributes is defined ? settings.attributes : {}) %}
     {% if key == 'value' and value.id is defined %}
@@ -8,6 +12,8 @@
         {% else %}
             value="{{ (value.get(settings.label) ~ ' (' ~ value.get(settings.key) ~ ')') | escape('html_attr') }}"
         {% endif %}
+    {% elseif key == 'name' and settings.use_hidden_id is defined and settings.use_hidden_id %}
+        {{ key | raw }}="_{{ value | escape('html_attr') }}"
     {% else %}
         {{ key | raw }}="{{ value | escape('html_attr') }}"
     {% endif %}
