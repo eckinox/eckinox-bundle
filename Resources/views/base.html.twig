@@ -64,6 +64,11 @@
             </div>
         </div>
 
+        {% if form is defined %}
+            {% include "@Eckinox/webcomponent/textarea.html.twig" %}
+            <script src="{{ asset('js/webcomponent/textarea.js', 'eckinox') }}"></script>
+        {% endif %}
+
         {% block popup %}{% endblock %}
         {% include "@Eckinox/html/modal.html.twig" %}
         {% include "@Eckinox/html/javascript-translations.html.twig" %}
