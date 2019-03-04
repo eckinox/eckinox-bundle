@@ -87,10 +87,9 @@
                     {% endfor %}
 
 
-                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") %}
+                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (readonly is not defined or not readonly) %}
                         <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     {% else %}
-                        <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -102,7 +101,7 @@
             {% endif %}
         </div>
 
-        {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") %}
+        {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (readonly is not defined or not readonly) %}
             <div class="add-row">
                 <a href="{{ path('create_' ~ listing.module) }}">
                     <i class="fas fa-plus-circle"></i>
