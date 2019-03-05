@@ -166,6 +166,10 @@ i.red { color: var(--red); }
 .actions-button ul.dropdown li.fontSize a[size="medium"]    { font-size: 15px; }
 .actions-button ul.dropdown li.fontSize a[size="large"]     { font-size: 18px; }
 
+.input-wrapper.percentage { position: relative; }
+.input-wrapper.percentage::after { display: flex; width: 30px; height: 100%; justify-content: center; align-items: center; align-content: center; content: '\f295'; font-family: "Font Awesome 5 Pro"; font-weight: 300; color: var(--main-color); position: absolute; top: 0; right: 0; pointer-events: none; }
+.input-wrapper.percentage input { width: 100px; padding-right: 20px; text-align: right; }
+
 .user .actions-button { margin-left: 5px; }
 .user .name {cursor:pointer;}
 .user .actions-button .dropdown-action { display: flex; cursor: pointer; justify-content: center; align-items: center; }
@@ -236,6 +240,7 @@ i.red { color: var(--red); }
 .list .row .column.price { max-width: 150px }
 .list.form-list .row .column.price { max-width: none; }
 .list .row .column.quantity, .list .row .column.small { max-width: 100px }
+.list .row .column.percentage { max-width: 150px; }
 .list .row.head.search .column.status { overflow: visible; padding-left: 0; padding-right: 0; }
 .list .row .checkbox, .list .row:not(.head) .column.status { display: flex; cursor: pointer; justify-content: center; align-items: center; }
 .list .row .column { display: flex; align-items: center; flex: 1; position: relative; /*overflow: hidden;*/ }
