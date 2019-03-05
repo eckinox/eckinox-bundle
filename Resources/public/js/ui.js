@@ -1,6 +1,7 @@
 class BundleUI {
     static init() {
         window.addEventListener('load', function(){
+            BundleUI.clearUnwantedAutofills();
             BundleUI.initConfirmClick();
             BundleUI.initDropdownClose();
             BundleUI.initNavigationPanels();
@@ -8,6 +9,24 @@ class BundleUI {
             BundleUI.initTabWidgets();
             BundleUI.initGroupedCheckboxes();
         }, false);
+    }
+
+    // On page load, waits a short while for Chrome's autofill to load and removes the unwanted ones.
+    // Unwanted autofills are inputs with the [autocomplete='off'] attribute and a pre-filled value, based on Chrome's internal selectors
+    static clearUnwantedAutofills() {
+        setTimeout(function() {
+            try {
+                for (let input of document.querySelectorAll("input:-internal-autofill-selected, textarea:-internal-autofill-previewed, textarea:-internal-autofill-selected, select:-internal-autofill-previewed, select:-internal-autofill-selected")) {
+                    if (input.getAttribute('autocomplete') == 'off') {
+                        let originalValue = input.value;
+                        input.value = '';
+                        input.value = originalValue;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not clear unwanted autofills, as the Chromium selectors are not supported by this browser.');
+            }
+        }, 50);
     }
 
     // Confirms clicks on [confirm-click] elements with a custom message defined in the attribute
@@ -273,6 +292,26 @@ class BundleUI {
                 e.preventDefault();
             }
         });
+
+        if (typeof settings.use_hidden_id != 'undefined' && settings.use_hidden_id) {
+            document.querySelector(vars['inputSelector_' + hashId]).addEventListener('autocomplete', function(e) {
+                if (typeof e.detail == 'undefined' || !e.detail) {
+                    this.previousElementSibling.value = '';
+                } else {
+                    this.previousElementSibling.value = typeof e.detail.id != 'undefined' ? e.detail.id : e.detail[settings.key];
+                }
+            });
+
+            document.querySelector(vars['inputSelector_' + hashId]).addEventListener('keydown', function(e) {
+                let input = this;
+                let previousValue = input.value;
+                setTimeout(function(){
+                    if (previousValue != input.value) {
+                        input.previousElementSibling.value = '';
+                    }
+                }, 250);
+            });
+        }
     }
 }
 

@@ -6,7 +6,7 @@ trait repository {
     private function search(&$query, $search, $entity = 'e') {
         $num = 0;
 
-        foreach($search as $field) {
+        foreach ($search as $field) {
 
             $terms = (array)$field['terms'];
             $field = isset($field['search']) ? array_merge($field, $field['search']) : $field;
@@ -17,12 +17,28 @@ trait repository {
             $column = $entity.'.'.$field['name'];
             $num++;
 
-            if(isset($field['entity'])) {
-                 $as = $field['name'][0].$num;
-                 $joined_column = str_replace($field['name'], $as, $field['entity']);
+            if (isset($field['entity'])) {
+                # Split the entity field on the dots:
+                # The last item is the targetted property
+                # Every other item is a relation property from the previous one
+                $entityParts = explode('.', $field['entity']);
 
-                $query->join($column, $as);
+                # Loop through the relations to join the required tables
+                $previousRelationAs = $entity;
+                while (count($entityParts) >= 2) {
+                    $relationName = array_shift($entityParts);
+                    $relationAs = $relationName[0].$num;
 
+                    $query->join($previousRelationAs . '.' . $relationName, $relationAs);
+
+                    $previousRelationAs = $relationAs;
+                    $num++;
+                }
+                # Once the loop is over, the only "part" remaining is the targetted property
+                # The previousRelationAs contains the alias of the targetted property's parent entity, which has been joined above
+                $joined_column = $previousRelationAs . '.' . array_shift($entityParts);
+
+                # Below is the classic filtering (where clause, generally) based on the targetted property's value
                 if($type === 'json') {
                     $query->$clause($this->setJsonTerms($query, $entity, $field, $joined_column, $terms, $expr));
 

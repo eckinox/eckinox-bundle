@@ -15,7 +15,7 @@
             </label>
 
             {% for field in listing.fields %}
-                <div class="column {{ field.name }} {{ field.class }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</div>
+                <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</div>
             {% endfor %}
 
             <div class="column more">
@@ -48,13 +48,17 @@
 
                     {% for field in listing.fields %}
 
-                        <div class="column {{ field.name }} {{ field.class }} link" data-name="{{ field.name }}">
+                        <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }} link" data-name="{{ field.name }}">
                             {% if field.entity is defined %}
                                 {% set vars = field.entity|split('.') %}
                                 {% set value = row %}
 
                                 {% for var in vars %}
-                                    {% set value = attribute(value, var) %}
+                                    {% if value is null %}
+                                        {% set value = null %}
+                                    {% else %}
+                                        {% set value = attribute(value, var) %}
+                                    {% endif %}
                                 {% endfor %}
                             {% else %}
                                 {% set value = attribute(row, field.name) %}
@@ -83,10 +87,10 @@
                     {% endfor %}
 
 
-                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") %}
+                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (readonly is not defined or not readonly) %}
                         <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     {% else %}
-                        <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <div class="column edit-link"></div>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -98,7 +102,7 @@
             {% endif %}
         </div>
 
-        {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") %}
+        {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (readonly is not defined or not readonly) %}
             <div class="add-row">
                 <a href="{{ path('create_' ~ listing.module) }}">
                     <i class="fas fa-plus-circle"></i>

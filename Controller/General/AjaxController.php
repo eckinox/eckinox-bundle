@@ -482,11 +482,33 @@ class AjaxController extends Controller
 
             $queryString .= ' AND (1 = 0';
 
-            foreach ($searchFields as $index => $field) {
-                if (property_exists($entityClass, $field)) {
-                    $queryString .= ' OR e.' . $field . ' LIKE :term' . $index;
-                    $parameters['term' . $index] = '%' . $request->request->get('query') . '%';
+            if ($request->request->get('mode') == 'strict') {
+                foreach ($searchFields as $index => $field) {
+                    if (property_exists($entityClass, $field)) {
+                        $queryString .= ' OR e.' . $field . ' LIKE :term' . $index;
+                        $parameters['term' . $index] = '%' . $request->request->get('query') . '%';
+                    }
                 }
+            } else {
+                $searchQuery = $request->request->get('query');
+                if ($searchQuery && substr($searchQuery, -1) == ')' && strpos($searchQuery, ' (') !== false) {
+                    $searchQuery = substr($searchQuery, 0, strlen($searchQuery) - 1);
+                    $searchQuery = str_replace(' (', ' ', $searchQuery);
+                }
+
+                $searchQueryParts = array_filter(explode(' ', $searchQuery));
+                $queryString .= ' OR ((1 = 1) ';
+                foreach ($searchQueryParts as $wordIndex => $word) {
+                    $queryString .= ' AND (0 = 1';
+                    foreach ($searchFields as $index => $field) {
+                        if (property_exists($entityClass, $field)) {
+                            $queryString .= ' OR e.' . $field . ' LIKE :term' . $wordIndex . '_' . $index;
+                            $parameters['term' . $wordIndex . '_' . $index] = '%' . $word . '%';
+                        }
+                    }
+                    $queryString .= ')';
+                }
+                $queryString .= ')';
             }
 
             $queryString .= ')';

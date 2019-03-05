@@ -65,6 +65,10 @@
 
 {% endblock choice_widget_expanded %}
 
+{%- block autocomplete_widget -%}
+    {% include '@Eckinox/html/input/autocomplete.html.twig' with { settings: form.vars.settings } %}
+{%- endblock autocomplete_widget -%}
+
 {%- block checkbox_widget -%}
     <div class="choice">
         <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />

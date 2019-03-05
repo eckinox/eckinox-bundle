@@ -3,7 +3,7 @@
 <div class="row head search">
     <div class="column checkbox"></div>
     {% for field in listing.fields %}
-        <div class="column {{ field.name }} {{ field.class }}" data-name="{{ field.name }}">
+        <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }}" data-name="{{ field.name }}">
             {% if status is defined and 'status' in field.name|lower %}
                 <div class="actions-button status">
                     <label for="status_checkbox" class="actions"><div class="icon"><i class="fas fa-check-circle"></i></div> <i class="fa fa-caret-down" aria-hidden="true"></i></label>
