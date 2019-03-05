@@ -59,7 +59,9 @@ class FormListener implements EventSubscriberInterface
         # Check to inflate children
         if ($form->count()) {
             foreach ($form->all() as $child) {
-                $this->inflateAutocompletes($child, array_merge($keys, [$config->getName()]));
+                if ($child instanceof \Symfony\Component\Form\Form) {
+                    $this->inflateAutocompletes($child, array_merge($keys, [$config->getName()]));
+                }
             }
         }
     }
