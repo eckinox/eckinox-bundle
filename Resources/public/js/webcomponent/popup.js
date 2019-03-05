@@ -20,7 +20,7 @@
             }
 
             attach() {
-                let triggers = document.querySelectorAll('[eckinox-popup]');
+                let triggers = document.querySelectorAll('[eckinox-popup="' + this.getAttribute('name') + '"]');
 
                 if ( triggers ) {
                     triggers.forEach(function(item) {
@@ -69,10 +69,10 @@
                 this.classList.add('visible');
             }
 
-            trigger_action(e) {
+            trigger_action(item, e) {
                 e.preventDefault();
 
-                this.trigger = e.target;
+                this.trigger = item;
                 this.show();
             }
 

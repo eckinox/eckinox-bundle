@@ -1,3 +1,11 @@
+{%- block uitextarea_widget -%}
+    <ui-textarea toolbar="{{ toolbar }}">
+        <div slot="input">
+            <textarea {{ block('widget_attributes') }} rows="{{ rows }}">{{ value }}</textarea>
+        </div>
+    </ui-textarea>
+{%- endblock uitextarea_widget -%}
+
 {% block form_widget_compound %}
     {% if form is rootform %}
         {{ form_errors(form) }}
@@ -7,7 +15,6 @@
 {% endblock form_widget_compound %}
 
 {% block form_row %}
-
         {% set class = '' %}
         {% if attr.class is defined %}
             {% set class = attr.class %}

@@ -45,7 +45,7 @@
             }
 
             render() {
-                document.execCommand("DefaultParagraphSeparator", false, "p");
+                document.execCommand("DefaultParagraphSeparator", false, "div");
                 this.content.innerHTML = this.textarea.value.trim();
 
                 this.content.addEventListener("input", function(e, d) {
