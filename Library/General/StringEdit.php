@@ -28,4 +28,14 @@ class StringEdit {
 
         return $str;
     }
+
+    public static function wbr($string) {
+        $characters = ['/', '_', '-'];
+
+        foreach ($characters as $character) {
+            $string = str_replace($character, $character . '<wbr>', $string);
+        }
+
+        return $string;
+    }
 }
