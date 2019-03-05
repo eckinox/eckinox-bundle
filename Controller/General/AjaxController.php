@@ -447,6 +447,7 @@ class AjaxController extends Controller
         $orderByFields = $request->request->get('order') ? json_decode($request->request->get('order')) : [];
         $key = $request->request->get('key') ? $request->request->get('key') : 'id';
         $label = $request->request->get('label') ? $request->request->get('label') : 'id';
+        $uniqueLabel = $request->request->get('unique_label') ? (bool)$request->request->get('unique_label') : false;
         $em = $this->getDoctrine()->getManager();
 
         if ($entityClass && class_exists($entityClass) && $searchFields) {
@@ -525,8 +526,14 @@ class AjaxController extends Controller
                     ->setParameters($parameters);
             $entities = $query->execute();
 
+            $foundLabels = [];
             foreach ($entities as $entity) {
+                if ($uniqueLabel && in_array($entity->get($label), $foundLabels)) {
+                    continue;
+                }
+
                 $data[] = ['key' => $entity->get($key), 'label' => $entity->get($label), 'object' => method_exists($entity, 'getRawObject') ? $entity->getRawObject() : json_decode(json_encode($entity))];
+                $foundLabels[] = $entity->get($label);
             }
             try {
             } catch (\Exception $e) {}

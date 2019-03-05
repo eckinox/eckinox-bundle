@@ -239,7 +239,7 @@ class BundleUI {
 
         new autoComplete({
             selector: vars['inputSelector_' + hashId],
-            minChars: 2,
+            minChars: typeof settings.minChars != 'undefined' ? settings.minChars : 2,
             source: function(term, response){
                 try { xhr.abort(); } catch(e){}
 
