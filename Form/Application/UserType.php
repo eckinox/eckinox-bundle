@@ -36,7 +36,7 @@ class UserType extends AbstractType
                 ))
                 ->add('email', TextType::class, array(
                     'label' => 'user.fields.email',
-                    'attr' => array('class' => 'email', 'data-validate' => 'required email', 'autocomplete' => 'off')
+                    'attr' => array('class' => 'email' . ($options['emailIsValid'] ? '' : ' invalid'), 'data-validate' => 'required email', 'autocomplete' => 'off')
                 ))
                 ->add('homePhone', TelType::class, array(
                     'label' => 'user.fields.homePhone',
@@ -174,6 +174,7 @@ class UserType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'privileges' => [],
+            'emailIsValid' => true,
             'translation_domain' => 'application',
             'csrf_protection' => false,
             "attr" => [

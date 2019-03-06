@@ -261,7 +261,7 @@ return [
                 "actionOwn" => "Vous ne pouvez pas faire cette action sur votre propre utilisateur",
             ],
             "error" => [
-
+                "emailAlreadyExists" => "Le courriel « %email% » est associé à un autre utilisateur"
             ],
         ],
 

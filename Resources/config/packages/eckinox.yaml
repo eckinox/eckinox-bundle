@@ -14,6 +14,7 @@ doctrine:
 
 framework:
     assets:
+        version_strategy: 'Eckinox\Library\General\Asset'
         packages:
             eckinox:
                 base_path: bundles/eckinox/
