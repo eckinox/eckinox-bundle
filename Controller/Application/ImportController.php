@@ -423,6 +423,8 @@ class ImportController extends Controller
                         break;
                     }
                 }
+            } else {
+                $newRelationIsInvalid = false;
             }
 
             if ($newRelationIsInvalid) {
