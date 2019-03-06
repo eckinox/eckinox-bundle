@@ -3,18 +3,21 @@
         .wrapper {position:relative;max-width:100%;}
         .wrapper:before {content: " ";display: block;position: absolute;height: 100%;top: 0;transition:all ease-in-out 0.3s;background: #fff;z-index: 0;border: 1px solid #bebebe;width: calc(100% - 2px);left: 2px}
         .wrapper:after {content: " ";display: block;position: absolute;width:auto;height:calc(100% - 40px);left: 25px; right:25px;top: 20px; z-index: 0;background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAYAAAABxvaqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QcLAh4Qvp/CQwAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAQSURBVAjXY2CgF3jx4sV/AAmVA7iKudk/AAAAAElFTkSuQmCC')}
+    .wrapper [contenteditable=true]:empty:before{content: attr(placeholder);display: block;/* For Firefox */font-style: italic;color: #c4c4c4;font-weight: 300;}
 
-        .content {position:relative;font-family:Helvetica;white-space: pre-wrap;padding: 20px 30px 20px 30px;margin:0;max-width:100%;left:0;right:0;top:0;bottom:0;cursor:text;z-index: 3;font:inherit;min-height:7em;line-height:22px;outline:0;font-size:0.9em}
+        .content {position:relative;font-family:Helvetica;white-space: pre-wrap;padding: 20px 30px 20px 30px;max-width:100%;left:0;right:0;top:0;bottom:0;cursor:text;z-index: 3;font:inherit;min-height:7em;line-height:22px;outline:0;font-size:0.9em;margin:0;}
         .content::-moz-selection {background: rgba(0,0,0,0.10);color:#365766}
         .content::selection {background: rgba(0,0,0,0.10);color:#365766}
         .content *::-moz-selection {background: rgba(0,0,0,0.10);color:#365766}
         .content *::selection {background: rgba(0,0,0,0.10);color:#365766}
         .content b {font-weight:bold;}
         .content i {font-style:italic}
+        .content p {margin-bottom: 0;margin-top: 0;}
 
         .toolbar { position:absolute;color: #000;padding: 4px;transition:all 0.3s ease-in;top:0;right: 10px;opacity:0.0;z-index:0;background:#eee;border:1px solid #ccc;text-align:center;}
         .toolbar:hover, .content:focus + .toolbar {opacity:1.0;z-index:20;top: -20px;}
-        .toolbar .icon {color:#adadad;display:inline-block;cursor:pointer;width:30px;height:30px;line-height:30px;vertical-align:middle;}
+        .toolbar .is-action {display:none;}
+        .toolbar .icon {color:#adadad;cursor:pointer;width:30px;height:30px;line-height:30px;vertical-align:middle;}
         .toolbar .icon svg {max-width: 50%;max-height: 50%;}
         .toolbar .icon:hover{color:#555;background:rgba(0,0,0,0.15);}
         .toolbar .icon:before{color:inherit;}
@@ -25,10 +28,15 @@
         .toolbar-lite .toolbar [data-action="align"],
         .toolbar-lite .toolbar .font-color {display:none;}
 
-        .lite .content {min-height:auto;}
-
-        /* Temporary */
-        .toolbar [data-action="align"] {display:none}
+        .toolbar[action~="color"] .font-color,
+        .toolbar[action~="italic"] .font-style,
+        .toolbar[action~="align-left"] .align-left,
+        .toolbar[action~="align-right"] .align-right,
+        .toolbar[action~="align-center"] .align-center,
+        .toolbar[action~="align-justify"] .align-justify,
+        .toolbar[action~="undo"] .undo,
+        .toolbar[action~="redo"] .redo,
+        .toolbar[action~="bold"] .font-weight {display:inline-block}
     </style>
 
     <div class="wrapper">
@@ -37,15 +45,15 @@
         <div contenteditable="true" class="content"></div>
 
         <div class="toolbar">
-            <a href="#" data-action="bold" class="icon font-weight">
+            <a tabindex="-1" href="#" data-action="bold" class="icon is-action font-weight">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bold" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-bold fa-w-12 fa-3x"><path fill="currentColor" d="M304.793 243.891c33.639-18.537 53.657-54.16 53.657-95.693 0-48.236-26.25-87.626-68.626-104.179C265.138 34.01 240.849 32 209.661 32H24c-8.837 0-16 7.163-16 16v33.049c0 8.837 7.163 16 16 16h33.113v318.53H24c-8.837 0-16 7.163-16 16V464c0 8.837 7.163 16 16 16h195.69c24.203 0 44.834-1.289 66.866-7.584C337.52 457.193 376 410.647 376 350.014c0-52.168-26.573-91.684-71.207-106.123zM142.217 100.809h67.444c16.294 0 27.536 2.019 37.525 6.717 15.828 8.479 24.906 26.502 24.906 49.446 0 35.029-20.32 56.79-53.029 56.79h-76.846V100.809zm112.642 305.475c-10.14 4.056-22.677 4.907-31.409 4.907h-81.233V281.943h84.367c39.645 0 63.057 25.38 63.057 63.057.001 28.425-13.66 52.483-34.782 61.284z" class=""></path></svg>
             </a>
 
-            <a href="#" data-action="italic" class="icon font-style">
+            <a tabindex="-1" href="#" data-action="italic" class="icon is-action font-style">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="italic" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-italic fa-w-10"><path fill="currentColor" d="M204.758 416h-33.849l62.092-320h40.725a16 16 0 0 0 15.704-12.937l6.242-32C297.599 41.184 290.034 32 279.968 32H120.235a16 16 0 0 0-15.704 12.937l-6.242 32C96.362 86.816 103.927 96 113.993 96h33.846l-62.09 320H46.278a16 16 0 0 0-15.704 12.935l-6.245 32C22.402 470.815 29.967 480 40.034 480h158.479a16 16 0 0 0 15.704-12.935l6.245-32c1.927-9.88-5.638-19.065-15.704-19.065z" class=""></path></svg>
             </a>
 
-            <label data-action="color" class="icon font-color">
+            <label tabindex="-1" data-action="color" class="icon is-action font-color">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="palette" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-palette fa-w-16 fa-3x"><path fill="currentColor" d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z" class=""></path></svg>
 
                 <div class="color-palette">
@@ -53,27 +61,27 @@
                 </div>
             </label>
 
-            <a href="#" data-action="align" data-value="left" class="icon align-left">
+            <a tabindex="-1" href="#" data-action="align" data-value="left" class="icon is-action align-left">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="align-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-align-left fa-w-14 fa-3x"><path fill="currentColor" d="M288 44v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16V44c0-8.837 7.163-16 16-16h256c8.837 0 16 7.163 16 16zM0 172v40c0 8.837 7.163 16 16 16h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16zm16 312h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm256-200H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16h256c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16z" class=""></path></svg>
             </a>
 
-            <a href="#" data-action="align" data-value="center" class="icon align-center">
+            <a tabindex="-1" href="#" data-action="align" data-value="center" class="icon is-action align-center">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="align-center" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-align-center fa-w-14 fa-3x"><path fill="currentColor" d="M352 44v40c0 8.837-7.163 16-16 16H112c-8.837 0-16-7.163-16-16V44c0-8.837 7.163-16 16-16h224c8.837 0 16 7.163 16 16zM16 228h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 256h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm320-200H112c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16h224c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16z" class=""></path></svg>
             </a>
 
-            <a href="#" data-action="align" data-value="right" class="icon align-right">
+            <a tabindex="-1" href="#" data-action="align" data-value="right" class="icon is-action align-right">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="align-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-align-right fa-w-14 fa-3x"><path fill="currentColor" d="M160 84V44c0-8.837 7.163-16 16-16h256c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H176c-8.837 0-16-7.163-16-16zM16 228h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 256h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm160-128h256c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H176c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg>
             </a>
 
-            <a href="#" data-action="align" data-value="justify" class="icon align-justify">
+            <a tabindex="-1" href="#" data-action="align" data-value="justify" class="icon is-action align-justify">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="align-justify" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-align-justify fa-w-14 fa-3x"><path fill="currentColor" d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm16 144h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 256h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0-128h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg>
             </a>
 
-            <a href="#" data-action="undo" class="icon undo">
+            <a tabindex="-1" href="#" data-action="undo" class="icon is-action undo">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="undo" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-undo fa-w-16 fa-3x"><path fill="currentColor" d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z" class=""></path></svg>
             </a>
 
-            <a href="#" data-action="redo" class="icon redo">
+            <a tabindex="-1" href="#" data-action="redo" class="icon is-action redo">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="redo" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-redo fa-w-16 fa-3x"><path fill="currentColor" d="M500.333 0h-47.411c-6.853 0-12.314 5.729-11.986 12.574l3.966 82.759C399.416 41.899 331.672 8 256.001 8 119.34 8 7.899 119.526 8 256.187 8.101 393.068 119.096 504 256 504c63.926 0 122.202-24.187 166.178-63.908 5.113-4.618 5.354-12.561.482-17.433l-33.971-33.971c-4.466-4.466-11.64-4.717-16.38-.543C341.308 415.448 300.606 432 256 432c-97.267 0-176-78.716-176-176 0-97.267 78.716-176 176-176 60.892 0 114.506 30.858 146.099 77.8l-101.525-4.865c-6.845-.328-12.574 5.133-12.574 11.986v47.411c0 6.627 5.373 12 12 12h200.333c6.627 0 12-5.373 12-12V12c0-6.627-5.373-12-12-12z" class=""></path></svg>
             </a>
         </div>
