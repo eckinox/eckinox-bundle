@@ -335,6 +335,11 @@ class ImportController extends Controller
                         } else if (!$representsEntity && $value != $collectionItem->get($relationKey)) {
                             $matching = false;
                         }
+                    } else if (strpos($originKey, 'value:') === 0) {
+                        # format: "value:hardcoded value"
+                        if (substr($originKey, 6) != $collectionItem->get($relationKey)) {
+                            $matching = false;
+                        }
                     } else {
                         $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
                         if (!isset($row[$this->assignations[$relationPropertyKey]]) || $collectionItem->get($relationKey) != $row[$this->assignations[$relationPropertyKey]]) {
@@ -405,6 +410,9 @@ class ImportController extends Controller
                     } else {
                         $relation->set($relationKey, $value);
                     }
+                } else if (strpos($originKey, 'value:') === 0) {
+                    # format: "value:hardcoded value"
+                    $relation->set($relationKey, substr($originKey, 6));
                 } else {
                     # format: "property"
                     $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
@@ -498,6 +506,11 @@ class ImportController extends Controller
                 }
                 $queryString .= ' AND e.' . $relationProperty . ' = :' . str_replace(':', '_field_', $field);
                 $parameters[str_replace(':', '_field_', $field)] = $value;
+                $validQuery = true;
+            } else if (strpos($field, 'value:') === 0) {
+                # format: "value:hardcoded value"
+                $queryString .= ' AND e.' . $relationProperty . ' = :' . str_replace(':', '_value_', $field);
+                $parameters[str_replace(':', '_value_', $field)] = substr($field, 6);
                 $validQuery = true;
             } else {
                 # format: "property"

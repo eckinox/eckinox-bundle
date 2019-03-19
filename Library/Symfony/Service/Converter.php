@@ -41,6 +41,7 @@ class Converter {
             $highestPoint = $sheet->getHighestRowAndColumn();
 
             $rows = $sheet->rangeToArray('A1:' . $highestPoint['column'] . $highestPoint['row'], null, $calculateFormulas);
+
             foreach ($rows as $rowIndex => $row) {
                 foreach ($row as $colIndex => $value) {
                     if ($formulasAsNull) {

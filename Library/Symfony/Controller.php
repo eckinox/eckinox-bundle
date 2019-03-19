@@ -96,6 +96,7 @@ class Controller extends AbstractController {
 
         foreach($form as $sections) {
             foreach($sections as $field) {
+
                 $value = $field->getViewData();
                 $field_name = $field->getName();
 
