@@ -17,6 +17,7 @@ use Eckinox\Library\Symfony\Annotation\Breadcrumb;
 use Eckinox\Library\Symfony\Annotation\Lang;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  *  @Lang(domain="application", default_key="user")
@@ -130,11 +131,12 @@ class UserController extends Controller
      * @Security(privilege="USER_CREATE_EDIT")
      * @Breadcrumb(parent="index_user")
      */
-    public function edit(Request $request, $user_id = null, AuthorizationCheckerInterface $authChecker)
+    public function edit(Request $request, $user_id = null, AuthorizationCheckerInterface $authChecker, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $currentData = [];
         $isNew = true;
+        $emailIsValid = true;
 
         /*
          * Load user
@@ -175,15 +177,31 @@ class UserController extends Controller
          */
         $currentPassword = $user->getPassword();
 
-
-
         if($request->isMethod('POST')) {
-           /*
-            * Nothing to handle for now
-            */
+            $data = $request->request->all();
+            $email = $data['user']['left']['email'];
+
+            $result = $this->getDoctrine()
+                ->getRepository(User::class)
+                ->findOneBy([
+                    "email" => $email
+                ]);
+
+            if($result && $result->getId() != $user_id) {
+               $emailIsValid = false;
+
+               $this->addFlash('error', $this->trans(
+                   'user.messages.error.emailAlreadyExists',
+                   ["%email%" => $email],
+                   'application'
+               ));
+            }
         }
 
-        $form = $this->createForm(UserType::class, $user, array("privileges" => $privileges));
+        $form = $this->createForm(UserType::class, $user, [
+            "privileges" => $privileges,
+            "emailIsValid" => $emailIsValid,
+        ]);
 
         /*
          * Get data before submit
@@ -192,7 +210,7 @@ class UserController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $emailIsValid) {
             /*
              * Get differences between current and new data
              */
@@ -208,7 +226,6 @@ class UserController extends Controller
             $password = $form->getData()->getPassword();
 
             if (!empty($password))  {
-                $encoder = $this->container->get('security.password_encoder');
                 $encoded = $encoder->encodePassword($user, $password);
 
                 $user->setPassword($encoded);
@@ -246,7 +263,7 @@ class UserController extends Controller
                 )
             );
 
-            return $this->redirectToRoute('index_user');
+            return $this->redirectToRoute('edit_user', [ 'user_id' => $user->getId() ]);
         }
 
         return $this->renderModView('@Eckinox/application/user/edit.html.twig', array(

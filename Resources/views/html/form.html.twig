@@ -6,6 +6,12 @@
     </ui-textarea>
 {%- endblock uitextarea_widget -%}
 
+{%- block number_widget -%}
+    {# https://github.com/symfony/symfony/issues/8106 #}
+    {%- set type = type|default('number') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock number_widget -%}
+
 {% block form_widget_compound %}
     {% if form is rootform %}
         {{ form_errors(form) }}

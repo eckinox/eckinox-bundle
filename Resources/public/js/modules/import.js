@@ -155,16 +155,16 @@ class ImportFlow {
 
         if (this.rawData.length > 1) {
             this.sheetSelector.classList.remove('hide');
-
-            let optionsHtml = '';
-            for (let sheetIndex = 0; sheetIndex < this.rawData.length; sheetIndex++) {
-                optionsHtml += `<option value="${sheetIndex}">${this.rawData[sheetIndex].title ? this.rawData[sheetIndex].title : trans('import.fields.unnamedSheet', {}, 'application')}</option>`;
-            }
-            this.sheetInput.innerHTML = optionsHtml;
-            this.sheetInput.value = 0;
         } else {
             this.sheetSelector.classList.add('hide');
         }
+
+        let optionsHtml = '';
+        for (let sheetIndex = 0; sheetIndex < this.rawData.length; sheetIndex++) {
+            optionsHtml += `<option value="${sheetIndex}">${this.rawData[sheetIndex].title ? this.rawData[sheetIndex].title : trans('import.fields.unnamedSheet', {}, 'application')}</option>`;
+        }
+        this.sheetInput.innerHTML = optionsHtml;
+        this.sheetInput.value = 0;
 
         this.selectDefaultWorksheet();
 

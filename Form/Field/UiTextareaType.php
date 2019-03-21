@@ -35,7 +35,7 @@ class UiTextareaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'rows' => 10,
-            'toolbar' => '',
+            'toolbar' => 'bold italic align-left align-center align-right undo redo',
         ));
     }
 
