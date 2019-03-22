@@ -55,6 +55,8 @@ class ImportController extends Controller
      */
     public function process(Request $request, $importType)
     {
+        set_time_limit(0);
+
         $modules = [];
         $activeModules = $request->request->get('modules') ?: $request->query->get('modules');
         $terms = $request->request->get('terms') ?: $request->query->get('terms');

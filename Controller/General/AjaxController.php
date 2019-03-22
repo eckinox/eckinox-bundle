@@ -421,6 +421,8 @@ class AjaxController extends Controller
      */
     public function getJsonFromExcel(Request $request)
     {
+        set_time_limit(0);
+
         $domain = 'application';
         $file = $request->files->get('file');
 
