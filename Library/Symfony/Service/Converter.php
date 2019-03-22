@@ -26,13 +26,14 @@ class Converter {
         }
 
         $file = new File($path);
-        $supportedExtensions = ['csv', 'xls', 'xlsx', 'xlsm'];
+        $supportedExtensions = ['csv', 'xls', 'xlsx', 'xlsm', 'bin', 'txt', 'zip'];
 
         if (!$file->isReadable()) {
             throw new \Exception($this->translator->trans('converter.errors.fileUnreadable', [], static::DOMAIN));
         }
 
         if (!$file->guessExtension() || !in_array(strtolower($file->guessExtension()), $supportedExtensions)) {
+            var_dump($file->guessExtension());die();
             throw new \Exception($this->translator->trans('converter.errors.fileType', ['%extensions%' => implode(', ', $supportedExtensions)], static::DOMAIN));
         }
 
