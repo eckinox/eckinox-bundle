@@ -108,6 +108,22 @@ class ImportFlow {
             importFlow.previewWrapper.querySelector('input[name="data"]').value = JSON.stringify(importFlow.computeData());
         });
 
+        // Clear assignation on label click
+        document.querySelector("body").addEventListener('click', function(e) {
+        	if (!e.target.matches(".assignation-row, .assignation-row *")) {
+        		return;
+            }
+
+            e.preventDefault();
+
+            let indicator = e.target.matches(".assignation-row") ? e.target : e.target.closest(".assignation-row");
+            let select = document.querySelector(".column-number[data-number='" + indicator.querySelector('.column').textContent.trim() + "'] select");
+
+            select.value = '';
+            indicator.dispatchEvent(new Event('mouseleave'));
+            indicator.remove();
+        });
+
         // Columns highlighting when hovering the assignations
         document.querySelector("body").addEventListener("mouseenter", function(e){
         	if (!e.target.matches(".assignation-row, .assignation-row *")) {
@@ -289,7 +305,7 @@ class ImportFlow {
 
         html += `</tbody>`;
 
-        if (data.length - startingLine > 20) {
+        if (data.length - startingLine > 20) {
             html += `<tfoot>
                         <th colspan="${data[0].length + 1}" class="hidden-rows-label">
                             ${trans('import.excel.partialMissingRows', { '%rowCount%': data.length - startingLine - 20 }, 'application')}
@@ -305,12 +321,12 @@ class ImportFlow {
         let assignationSelects = document.querySelectorAll('select[name^="assignation["]');
 
         // Handle repeatable relations
-        if (typeof this.settings.properties == 'undefined' || !assignationSelects.length) {
+        if (typeof this.settings.properties == 'undefined' || !assignationSelects.length) {
             return;
         }
 
         let newRelationOptgroups = {};
-        for (let propertyKey in this.settings.properties) {
+        for (let propertyKey in this.settings.properties) {
             let property = this.settings.properties[propertyKey];
 
             if (typeof property.relation == 'undefined' || typeof property.repeatable == 'undefined' || !property.repeatable) {
