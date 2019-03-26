@@ -71,14 +71,14 @@
                                     {% set value = v %}
 
                                     {% for f in field.filters %}
-                                        {% set value = value|applyFilter(f.name, f.arguments) %}
+                                        {% set value = value|applyFilter((f.name is defined ? f.name : f), f.arguments is defined ? f.arguments : []) %}
                                     {% endfor %}
 
                                     {{ value }}{% if not loop.last %},{% endif %}
                                 {% endfor %}
                             {% else %}
                                 {% for f in field.filters %}
-                                    {% set value = value|applyFilter(f.name, f.arguments) %}
+                                    {% set value = value|applyFilter((f.name is defined ? f.name : f), f.arguments is defined ? f.arguments : []) %}
                                 {% endfor %}
 
                                 {{ value }} <br />

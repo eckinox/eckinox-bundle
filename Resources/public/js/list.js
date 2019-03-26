@@ -89,3 +89,16 @@ document.addEventListener('click', function(e) {
 
     form.submit();
 });
+
+// Makes paginations work when there's an active search
+let listingSearchNodes = document.querySelectorAll('.list .row.search');
+for (let searchNode of listingSearchNodes) {
+    let searchForm = searchNode.closest('form');
+    for (let paginationLink of searchForm.parentNode.querySelectorAll('.pagination a')) {
+        paginationLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            searchForm.action = paginationLink.getAttribute('href');
+            searchForm.submit();
+        });
+    }
+}

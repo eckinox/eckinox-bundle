@@ -55,6 +55,8 @@ class ImportController extends Controller
      */
     public function process(Request $request, $importType)
     {
+        set_time_limit(0);
+
         $modules = [];
         $activeModules = $request->request->get('modules') ?: $request->query->get('modules');
         $terms = $request->request->get('terms') ?: $request->query->get('terms');
@@ -86,7 +88,9 @@ class ImportController extends Controller
                 $this->updateEntityRelationsFromRow($entity, $row);
                 $this->dispatchEvent('container_post_processing', $entity, $this);
 
-                $containers[] = $entity;
+                if ($entity) {
+                    $containers[] = $entity;
+                }
             } else {
                 $container = $row;
                 $this->dispatchEvent('container_pre_processing', $container, $this);
@@ -342,9 +346,11 @@ class ImportController extends Controller
                         }
                     } else {
                         $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
-                        if (!isset($row[$this->assignations[$relationPropertyKey]]) || $collectionItem->get($relationKey) != $row[$this->assignations[$relationPropertyKey]]) {
+                        if (!isset($this->assignations[$relationPropertyKey]) || !isset($row[$this->assignations[$relationPropertyKey]]) || $collectionItem->get($relationKey) != $row[$this->assignations[$relationPropertyKey]]) {
                             # format: "property"
-                            $matching = false;
+                            if (!is_string($collectionItem->get($relationKey)) || !is_string($row[$this->assignations[$relationPropertyKey]]) || trim($collectionItem->get($relationKey)) != trim($row[$this->assignations[$relationPropertyKey]])) {
+                                $matching = false;
+                            }
                         }
                     }
                 }
@@ -416,7 +422,7 @@ class ImportController extends Controller
                 } else {
                     # format: "property"
                     $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
-                    if (isset($row[$this->assignations[$relationPropertyKey]])) {
+                    if (isset($this->assignations[$relationPropertyKey]) && isset($row[$this->assignations[$relationPropertyKey]])) {
                         $relation->set($relationKey, $row[$this->assignations[$relationPropertyKey]]);
                     }
                 }
@@ -531,7 +537,16 @@ class ImportController extends Controller
                 $query->useQueryCache(true);
                 $relation = $query->getOneOrNullResult();
             } catch (NonUniqueResultException $e) {
-                throw new \Exception("The '" . $property . "' relation's loadingFrom fields specified in the import settings don't always result in a single unique record.");
+                $parametersString = "";
+                foreach ($parameters as $key => $value) {
+                    $parametersString .= $key . ' => "' . ((is_array($value) || is_object($value)) ? json_encode($value) : $value) . "\"\n";
+                }
+                throw new \Exception(
+                    "The '" . $property . "' relation's loadingFrom fields specified in the import settings don't always result in a single unique record.\n
+                    Here is the faulty query: \n" .
+                    $query->getSql() . "\n
+                    Here are the parameters:\n" .
+                    $parametersString);
             }
         }
 

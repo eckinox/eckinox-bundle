@@ -22,6 +22,7 @@ class AutocompleteType extends AbstractType
             'where' => [],
             'search' => [],
             'visual_validation' => true,
+            'value_only' => false
         ]);
     }
 
@@ -45,7 +46,8 @@ class AutocompleteType extends AbstractType
             'search' => $options['search'] ?? [],
             'label' => $options['autocomplete_label'] ?? 'id',
             'where' => $options['where'] ?? [],
-            'use_hidden_id' => true,
+            'use_hidden_id' => !($options['value_only'] ?? false),
+            'unique_label' => $options['value_only'] ?? false,
         ];
 
         if ($options['autocomplete_key'] ?? false) {
