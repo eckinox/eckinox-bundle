@@ -39,6 +39,7 @@ class Extension extends AbstractExtension
             new TwigFilter('icon', array($this, 'getIcon')),
             new TwigFilter('lcfirst', array($this, 'lcfirstFilter')),
             new TwigFilter('sortByField', array($this, 'sortByField')),
+            new TwigFilter('yesNo', array($this, 'getYesNoFromBoolean')),
             new TwigFilter('camelToSnakeCase', array('Eckinox\Library\General\StringEdit', 'camelToSnakeCase')),
             new TwigFilter('normalize', array('Eckinox\Library\General\StringEdit', 'normalize')),
             new TwigFilter('wbr', array('Eckinox\Library\General\StringEdit', 'wbr'), ['is_safe' => ['html']]),
@@ -230,6 +231,10 @@ class Extension extends AbstractExtension
 
     public function getUniqid() {
         return uniqid();
+    }
+
+    public function getYesNoFromBoolean($value) {
+        return $this->container->get('translator')->trans($value ? 'yes' : 'no', [], 'application');
     }
 
     /*

@@ -14,6 +14,7 @@ trait repository {
             $expr = $field['expr'] ?? 'andX';
             $type = $field['type'] ?? 'text';
             $exact = $field['exact'] ?? false;
+            $not = $field['not'] ?? false;
             $column = $entity.'.'.$field['name'];
             $num++;
 
@@ -43,11 +44,11 @@ trait repository {
                     $query->$clause($this->setJsonTerms($query, $entity, $field, $joined_column, $terms, $expr));
 
                 } else {
-                    $query->$clause($this->setTerms($query, $joined_column, $terms, $expr, $exact));
+                    $query->$clause($this->setTerms($query, $joined_column, $terms, $expr, $exact, $not));
                 }
 
             } else {
-                $query->$clause($this->setTerms($query, $column, $terms, $expr, $exact));
+                $query->$clause($this->setTerms($query, $column, $terms, $expr, $exact, $not));
             }
         }
 
@@ -119,14 +120,26 @@ trait repository {
         return $savable;
     }
 
-    private function setTerms(&$query, $column, $terms, $expr = 'andX', $exact = false) {
+    private function setTerms(&$query, $column, $terms, $expr = 'andX', $exact = false, $not = false) {
         $expr = $query->expr()->$expr();
 
         foreach($terms as $term) {
             $param = ':param'.uniqid();
 
-            $expr->add($query->expr()->like($column, $param));
-            $query->setParameter($param, ($exact ? $term : '%'.$term.'%'));
+            if ($term !== null) {
+                if ($not) {
+                    $expr->add($query->expr()->notLike($column, $param));
+                } else {
+                    $expr->add($query->expr()->like($column, $param));
+                }
+                $query->setParameter($param, ($exact ? $term : '%'.$term.'%'));
+            } else {
+                if ($not) {
+                    $expr->add($query->expr()->isNotNull($column));
+                } else {
+                    $expr->add($query->expr()->isNull($column));
+                }
+            }
         }
 
         return $expr;

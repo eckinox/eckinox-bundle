@@ -118,7 +118,12 @@ class ImportFlow {
 
             let indicator = e.target.matches(".assignation-row") ? e.target : e.target.closest(".assignation-row");
             let select = document.querySelector(".column-number[data-number='" + indicator.querySelector('.column').textContent.trim() + "'] select");
+            let selectedOptions = select.querySelectorAll('option:checked, option[selected]');
 
+            for (let option of selectedOptions) {
+                option.selected = false;
+                option.removeAttribute('selected');
+            }
             select.value = '';
             indicator.dispatchEvent(new Event('mouseleave'));
             indicator.remove();

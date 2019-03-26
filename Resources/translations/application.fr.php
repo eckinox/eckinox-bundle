@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "yes" => "Oui",
+    "no" => "Non",
     "title" => [
         "create_user" => "Créer un utilisateur",
         "edit_user" => "Utilisateur %name%",
