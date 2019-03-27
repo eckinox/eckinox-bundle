@@ -9,7 +9,9 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Converter {
     const DOMAIN = "services";
@@ -20,7 +22,7 @@ class Converter {
         $this->translator = $translator;
     }
 
-    public function excelToArray($path, $calculateFormulas = false, $formulasAsNull = true, $stripBackslashes = true, $trimLeadingRows = true, $trimTrailingRows = true, $trimTrailingColumns = true) {
+    public function excelToArray($path, $calculateFormulas = false, $formulasAsNull = true, $stripBackslashes = true, $trimLeadingRows = true, $trimTrailingRows = true, $trimTrailingColumns = true, $trimValues = true) {
         if (!file_exists($path)) {
             throw new \Exception($this->translator->trans('converter.errors.fileNotFound', [], static::DOMAIN));
         }
@@ -134,6 +136,19 @@ class Converter {
                 }
             }
 
+            # Trim cell values
+            if ($trimValues) {
+                $columnCount = count($rows) ? count(current($rows)) : 0;
+                $filledColumns = -1;
+
+                # Loop over every row to check which columns are empty
+                foreach ($rows as $rowIndex => $cells) {
+                    foreach ($cells as $cellIndex => $cell) {
+                        $rows[$rowIndex][$cellIndex] = trim($cell);
+                    }
+                }
+            }
+
             $data[] = [
                 'index' => $sheetIndex,
                 'title' => $sheet->getTitle(),
@@ -190,16 +205,67 @@ class Converter {
                 try {
                     $cellData = is_array($row[$x]) ? $row[$x] : ['value' => $row[$x]];
                 } catch (\Exception $e){
-                    dump($row, $x);
+                    $cellData = [];
                 }
 
                 $cell->setValue($cellData['value'] ?? null);
+
+                if ($y == count($data) - 1) {
+                    $this->autosizeColumn($sheet, $cell);
+                }
+
                 $this->setCellStylesFromData($cell, $cellData);
             }
         }
     }
 
+    protected function autosizeColumn(&$sheet, $cell) {
+        $sheet->getColumnDimension($cell->getColumn())->setAutoSize(true);
+    }
+
     protected function setCellStylesFromData(&$cell, $data) {
+        $this->setCellStyleAndFormatFromData($cell, $data);
+        $this->setCellFontStylesFromData($cell, $data);
+    }
+
+    protected function setCellStyleAndFormatFromData(&$cell, $data) {
+        if ($cellStyles = strtolower($data['cell'] ?? null)) {
+            $format = $cell->getStyle()->getNumberFormat();
+            $fill = $cell->getStyle()->getFill();
+            $parts = array_filter(explode(' ', $cellStyles));
+
+            $formats = [
+                'text' => NumberFormat::FORMAT_GENERAL,
+                'number' => NumberFormat::FORMAT_NUMBER,
+                'float' => NumberFormat::FORMAT_NUMBER_00,
+                'percentage' => NumberFormat::FORMAT_PERCENTAGE,
+                'percentage_decimals' => NumberFormat::FORMAT_PERCENTAGE_00,
+                'date' => NumberFormat::FORMAT_DATE_YYYYMMDD2,
+                'datetime' => NumberFormat::FORMAT_DATE_DATETIME,
+                'monetary' => '#,##0_-$',
+                'monetary_decimals' => '#,##0.00_-$',
+            ];
+
+            foreach ($parts as $part) {
+                if (isset($formats[$part])) {
+                    $format->setFormatCode($formats[$part]);
+                } else if (substr($part, 0, 1) == '#' || substr($part, 0, 4) == 'rgb(' || substr($part, 0, 5) == 'rgba(') {
+                    $fill->setFillType(Fill::FILL_SOLID);
+                    $fill->setStartColor($this->getExcelValidColor($part));
+                }
+            }
+        }
+
+        # Adjust column width
+        $width = strtolower($data['width'] ?? null);
+        if ($width) {
+            $columnDimension = $cell->getWorksheet()->getColumnDimension($cell->getColumn());
+            $columnDimension->setAutoSize(false);
+            $columnDimension->setWidth($width);
+        }
+    }
+
+    protected function setCellFontStylesFromData(&$cell, $data) {
         if ($fontStyles = strtolower($data['font'] ?? null)) {
             $font = $cell->getStyle()->getFont();
             $alignment = $cell->getStyle()->getAlignment();

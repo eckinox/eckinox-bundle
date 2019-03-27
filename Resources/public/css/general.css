@@ -67,6 +67,7 @@
 
 .action-nav { margin-bottom: 30px; }
 .action-nav > * { display: inline-block; }
+.action-nav .float-right > *:last-child { margin-right: 0; }
 
 .left-navigation { display: flex; background: #dcdcdc; height: calc(100vh - 60px); }
 
