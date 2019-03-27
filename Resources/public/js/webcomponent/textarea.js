@@ -161,11 +161,21 @@
                     this.content.removeAttribute('contenteditable');
                 }
 
-                let rows;
+                let rows,
+                    placeholder,
+                    format;
 
                 if ( rows = this.textarea.getAttribute('rows') ) {
                     rows = parseInt(rows);
                     this.content.style.minHeight = ( rows * this.config.base_rows ) + "em";
+                }
+
+                if ( placeholder = this.textarea.getAttribute('placeholder') ) {
+                    this.content.setAttribute('placeholder', placeholder);
+                }
+
+                if ( format = this.getAttribute('format') ) {
+                    this.wrapper.setAttribute('format', format);
                 }
 
                 return true;

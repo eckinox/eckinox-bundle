@@ -3,7 +3,7 @@
         .wrapper {position:relative;max-width:100%;}
         .wrapper:before {content: " ";display: block;position: absolute;height: 100%;top: 0;transition:all ease-in-out 0.3s;background: #fff;z-index: 0;border: 1px solid #bebebe;width: calc(100% - 2px);left: 2px}
         .wrapper:after {content: " ";display: block;position: absolute;width:auto;height:calc(100% - 40px);left: 25px; right:25px;top: 20px; z-index: 0;background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAYAAAABxvaqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QcLAh4Qvp/CQwAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAQSURBVAjXY2CgF3jx4sV/AAmVA7iKudk/AAAAAElFTkSuQmCC')}
-    .wrapper [contenteditable=true]:empty:before{content: attr(placeholder);display: block;/* For Firefox */font-style: italic;color: #c4c4c4;font-weight: 300;}
+        .wrapper [contenteditable=true]:empty:before{content: attr(placeholder);display: block;/* For Firefox */font-style: italic;color: #c4c4c4;font-weight: 300;}
 
         .content {position:relative;font-family:Helvetica;white-space: pre-wrap;padding: 20px 30px 20px 30px;max-width:100%;left:0;right:0;top:0;bottom:0;cursor:text;z-index: 3;font:inherit;min-height:7em;line-height:22px;outline:0;font-size:0.9em;margin:0;}
         .content::-moz-selection {background: rgba(0,0,0,0.10);color:#365766}
@@ -37,6 +37,9 @@
         .toolbar[action~="undo"] .undo,
         .toolbar[action~="redo"] .redo,
         .toolbar[action~="bold"] .font-weight {display:inline-block}
+
+        .wrapper[format=lite] [contenteditable] { min-height: 1.6em; padding: 5px 12px 4px 12px; margin-bottom: 2px; font-family: 'Open Sans', sans-serif; font-size: 1em; }
+        .wrapper[format=lite]:after { height: calc(100% - 9px); left: 12px; right: 12px; top: 5px; }
     </style>
 
     <div class="wrapper">

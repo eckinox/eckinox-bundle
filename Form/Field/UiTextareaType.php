@@ -18,6 +18,7 @@ class UiTextareaType extends AbstractType
         $view->vars['pattern'] = null;
         $view->vars['rows'] = $options['rows'];
         $view->vars['toolbar'] = $options['toolbar'];
+        $view->vars['format'] = $options['format'];
     }
 
     /**
@@ -36,6 +37,7 @@ class UiTextareaType extends AbstractType
         $resolver->setDefaults(array(
             'rows' => 10,
             'toolbar' => 'bold italic align-left align-center align-right undo redo',
+            'format' => ''
         ));
     }
 

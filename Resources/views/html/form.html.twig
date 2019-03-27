@@ -1,5 +1,5 @@
 {%- block uitextarea_widget -%}
-    <ui-textarea toolbar="{{ toolbar }}">
+    <ui-textarea toolbar="{{ toolbar }}"{% if format %} format="{{ format }}"{% endif %}>
         <div slot="input">
             <textarea {{ block('widget_attributes') }} rows="{{ rows }}">{{ value }}</textarea>
         </div>
