@@ -15,6 +15,7 @@ use Eckinox\Library\Symfony\Service\Converter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 
 class AjaxController extends Controller
 {
@@ -431,7 +432,25 @@ class AjaxController extends Controller
         }
 
         $filePath = $file->getPathname();
-        $parsedData = $this->converter->excelToArray($filePath);
+
+        # Generate a hash of the file's content, and check to load the parsed data from cache
+        $fileHash = hash_file('adler32', $filePath);
+        $cacheKey = 'ajax_json2excel_' . $fileHash;
+        $cache = new FilesystemCache();
+
+        $parsedData = null;
+        if ($cache->has($cacheKey)) {
+            $parsedData = $cache->get($cacheKey);
+        }
+
+        # If the data wasn't cached, or the cache was invalid, process the file
+        if (!$parsedData) {
+            $parsedData = $this->converter->excelToArray($filePath);
+            $cache->set($cacheKey, $parsedData);
+        }
+
+        # Set a session variable with the file's hash to allow autoloading in other parts of the application
+        $this->get('session')->set('ajax_json2exel_last_cache_key', $cacheKey);
 
         return new JsonResponse($parsedData);
     }

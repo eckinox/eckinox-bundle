@@ -5,6 +5,7 @@ namespace Eckinox\Controller\Application;
 use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 use Eckinox\Library\Symfony\Annotation\Lang;
 use Eckinox\Library\General\StringEdit;
 use Doctrine\ORM\NonUniqueResultException;
@@ -46,7 +47,24 @@ class ImportController extends Controller
             'settings' => $this->settings,
             'entity' => $entity,
             'title' => $this->lang('title.'.$request->get('_route')),
+            'autoload_data' => $this->getAutoloadData(),
         ), $request);
+    }
+
+    protected function getAutoloadData() {
+        if (!($this->settings['autoload'] ?? false)) {
+            return null;
+        }
+
+        $data = null;
+        $cacheKey = $this->get('session')->get('ajax_json2exel_last_cache_key');
+
+        if ($cacheKey) {
+            $cache = new FilesystemCache();
+            $data = $cache->get($cacheKey, null);
+        }
+
+        return $data;
     }
 
     /**

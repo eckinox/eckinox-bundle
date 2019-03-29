@@ -1,5 +1,5 @@
 class ImportFlow {
-    constructor(settings) {
+    constructor(settings, autoloadedData) {
         this.settings = settings;
         this.form = document.querySelector('form[name="import"]');
         this.fileSelector = this.form.querySelector('.file-selector');
@@ -9,14 +9,19 @@ class ImportFlow {
         this.startingLineInput = document.querySelector('input.starting-line');
         this.previewWrapper = document.querySelector('.import-preview');
         this.preview = this.previewWrapper.querySelector('.excel-preview');
-        this.rawData = null;
+        this.rawData = autoloadedData ? autoloadedData : null;
 
         this.initFileUpload();
         this.initProcessing();
+
+        // If autoloaded data was provided, skip straight to the processing
+        if (this.rawData) {
+            this.initLoadedFile();
+        }
     }
 
-    static init(settings) {
-        return new ImportFlow(settings);
+    static init(settings, autoloadedData) {
+        return new ImportFlow(settings, autoloadedData);
     }
 
     initFileUpload() {

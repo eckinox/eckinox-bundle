@@ -112,7 +112,9 @@
 {% block javascripts %}
     <script src="{{ asset('js/modules/import.js', 'eckinox') }}"></script>
     <script>
-        let flow = ImportFlow.init({{ settings | json_encode() | raw }});
+        window.addEventListener('load', function(){
+            let flow = ImportFlow.init({{ settings | json_encode() | raw }}, {{ autoload_data | json_encode | raw }});
+        });
     </script>
 {% endblock %}
 
