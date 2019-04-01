@@ -88,47 +88,47 @@ class ImportController extends Controller
             return $this->redirectToRoute('home');
         }
 
-        # Validate and pre-process the POST data
-        $data = $this->getProcessingData();
-        $useEntity = $this->settings['entity'] ?? false;
-        $this->em = $this->getDoctrine()->getManager();
-        $containers = [];
+        try {
+            # Validate and pre-process the POST data
+            $data = $this->getProcessingData();
+            $useEntity = $this->settings['entity'] ?? false;
+            $this->em = $this->getDoctrine()->getManager();
+            $containers = [];
 
-        $this->dispatchEvent('data_pre_processing', $data, $this->assignations, $this);
-        $this->dispatchEvent('containers_pre_processing', $containers, $this);
+            $this->dispatchEvent('data_pre_processing', $data, $this->assignations, $this);
+            $this->dispatchEvent('containers_pre_processing', $containers, $this);
 
-        foreach ($data as $rowIndex => $row) {
-            if ($useEntity) {
-                $entity = $this->getEntityFromRow($row);
+            foreach ($data as $rowIndex => $row) {
+                if ($useEntity) {
+                    $entity = $this->getEntityFromRow($row);
 
-                $this->dispatchEvent('container_pre_processing', $entity, $this);
-                $this->updateEntityFromRow($entity, $row);
-                $this->updateEntityRelationsFromRow($entity, $row);
-                $this->dispatchEvent('container_post_processing', $entity, $this);
+                    $this->dispatchEvent('container_pre_processing', $entity, $this);
+                    $this->updateEntityFromRow($entity, $row);
+                    $this->updateEntityRelationsFromRow($entity, $row);
+                    $this->dispatchEvent('container_post_processing', $entity, $this);
 
-                if ($entity) {
-                    $containers[] = $entity;
+                    if ($entity) {
+                        $containers[] = $entity;
+                    }
+                } else {
+                    $container = $row;
+                    $this->dispatchEvent('container_pre_processing', $container, $this);
+                    $containers[] = $container;
                 }
-            } else {
-                $container = $row;
-                $this->dispatchEvent('container_pre_processing', $container, $this);
-                $containers[] = $container;
             }
-        }
 
-        $this->dispatchEvent('containers_post_processing', $containers, $this);
+            $this->dispatchEvent('containers_post_processing', $containers, $this);
 
-        # Persist and save entities
-        if ($useEntity) {
-            try {
+            # Persist and save entities
+            if ($useEntity) {
                 foreach ($containers as $entity) {
                     $this->em->persist($entity);
                 }
                 $this->em->flush();
-            } catch (\Exception $e) {
-                $this->addFlash('error', $e->getMessage());
-                return $this->redirectToRoute('index_import', ['importType' => $importType]);
             }
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('index_import', ['importType' => $importType]);
         }
 
         $this->addFlash('success', $this->trans('import.success', [], 'application'));
@@ -198,7 +198,11 @@ class ImportController extends Controller
         try {
             $entity = $query->getOneOrNullResult() ?: $entity;
         } catch (NonUniqueResultException $e) {
-            throw new \Exception("The loadingFrom fields specified in the import settings don't always result in a single unique record.");
+            if ($_SERVER['APP_DEBUG'] ?? false) {
+                throw new \Exception("The loadingFrom fields specified in the import settings don't always result in a single unique record.");
+            } else {
+                throw new \Exception($this->trans('import.errors.genericServerSide'));
+            }
         }
 
         return $entity;
@@ -299,7 +303,13 @@ class ImportController extends Controller
             } catch (\TypeError $e) {
                 # If the relation isn't marked as optional in the configuration, throw the error as it might be a source of data corruption for the system.
                 if (!($this->settings['properties'][$property]['optional'] ?? false)) {
-                    throw $e;
+                    if ($_SERVER['APP_DEBUG'] ?? false) {
+                        throw $e;
+                    } else {
+                        throw new \Exception($this->trans('import.errors.typeError',
+                            ['%property%' => $this->trans(array_reverse(explode('\\', $this->settings['entity']))[0] . '.fields.' . $property, [], 'application')],
+                            'application'));
+                    }
                 }
             }
         }
@@ -559,12 +569,17 @@ class ImportController extends Controller
                 foreach ($parameters as $key => $value) {
                     $parametersString .= $key . ' => "' . ((is_array($value) || is_object($value)) ? json_encode($value) : $value) . "\"\n";
                 }
-                throw new \Exception(
-                    "The '" . $property . "' relation's loadingFrom fields specified in the import settings don't always result in a single unique record.\n
-                    Here is the faulty query: \n" .
-                    $query->getSql() . "\n
-                    Here are the parameters:\n" .
-                    $parametersString);
+
+                if ($_SERVER['APP_DEBUG'] ?? false) {
+                    throw new \Exception(sprintf(
+                        "The '%s' relation's loadingFrom fields specified in the import settings don't always result in a single unique record.\n
+                        Here is the faulty query: \n
+                        %s\n
+                        Here are the parameters:\n
+                        %s", $property, $query->getSql(), $parametersString));
+                } else {
+                    throw new \Exception($this->trans('import.errors.genericServerSide', [], 'application'));
+                }
             }
         }
 
@@ -577,7 +592,7 @@ class ImportController extends Controller
      */
     protected function getProcessingData() {
         if (empty($_POST)) {
-            throw new \Exception("No POST data to process.");
+            throw new \Exception($this->trans('import.errors.noData', [], 'application'));
         }
 
         $data = json_decode($_POST['data'] ?? '[]');
@@ -585,15 +600,15 @@ class ImportController extends Controller
         $startingLine = $_POST['starting_line'] ?? 1;
 
         if (!count($data)) {
-            throw new \Exception("No import data to process.");
+            throw new \Exception($this->trans('import.errors.noData', [], 'application'));
         }
 
         if (!count($assignations)) {
-            throw new \Exception("No column assignations were made.");
+            throw new \Exception($this->trans('import.errors.noAssignations', [], 'application'));
         }
 
         if ($startingLine > count($data)) {
-            throw new \Exception("Starting line is too high for the number of data rows.");
+            throw new \Exception($this->trans('import.errors.startingLineTooHigh', [], 'application'));
         }
 
         $data = array_slice($data, $startingLine - 1);

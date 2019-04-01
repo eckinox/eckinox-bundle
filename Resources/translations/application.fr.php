@@ -336,6 +336,7 @@ return [
             "partialMissingRows" => "%rowCount% autres rangées qui ne sont pas affichées seront également traitées."
         ],
         "errors" => [
+            "genericServerSide" => "Une erreur serveur s'est produite lors de l'import.",
             "privilege" => "Vous n'avez pas les privilèges nécéssaires afin de procéder à ce type d'importation.",
             "settings" => [
                 "undefinedType" => "Aucune importation n'est définie pour « %importType% ».",
@@ -343,7 +344,11 @@ return [
             ],
             "assignations" => [
                 "requiredProperties" => "Les champs suivants doivent être assignés afin de procéder à l'importation: « %properties% »."
-            ]
+            ],
+            "noData" => "Aucune donnée n'a été reçue pour procéder à l'import.",
+            "noAssignations" => "Vous devez assigner les champs aux colonnes avant de procéder à l'importation.",
+            "startingLineTooHigh" => "La ligne de départ est trop élevée par rapport au nombre de ligne du fichier importé.",
+            "typeError" => "Une valeur définie pour %property% est invalide.",
         ],
         "success" => "Les données ont été importées avec succès."
     ],
