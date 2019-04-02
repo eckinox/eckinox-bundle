@@ -90,6 +90,23 @@ document.addEventListener('click', function(e) {
     form.submit();
 });
 
+// Setup pagination inputs
+document.addEventListener('keydown', function(e) {
+    if (!e.target.matches('.pagination .page-input-wrapper input')) {
+        return;
+    }
+
+    if (e.which != 13) {
+        return;
+    }
+
+    let input = e.target;
+    let page = parseInt(input.value);
+    let url = input.getAttribute('url-template').replace('/0', '/' + page);
+
+    window.location.assign(url);
+});
+
 // Makes paginations work when there's an active search
 let listingSearchNodes = document.querySelectorAll('.list .row.search');
 for (let searchNode of listingSearchNodes) {

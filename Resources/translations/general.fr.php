@@ -86,6 +86,7 @@ return [
     "placeholders" => [
         "search" => "Recherche",
         "select" => "-- Sélectionner --",
+        "paginationInput" => "Aller à la page...",
     ],
 
     "listing" => [
