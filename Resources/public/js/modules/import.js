@@ -223,9 +223,24 @@ class ImportFlow {
         }
     }
 
+    getDefaultStartingLine(data) {
+        let defaultStartingLine = 1;
+        data = typeof data != 'undefined' ? data : [];
+
+        if (typeof this.settings.defaults != 'undefined' && typeof this.settings.defaults.startingLine != 'undefined') {
+            defaultStartingLine = parseInt(this.settings.defaults.startingLine);
+        }
+
+        if (defaultStartingLine > data.length) {
+            defaultStartingLine = 1
+        }
+
+        return defaultStartingLine;
+    }
+
     updateSettingsInputs() {
         let data = this.computeData();
-        this.startingLineInput.value = 1;
+        this.startingLineInput.value = this.getDefaultStartingLine(data);
         this.startingLineInput.setAttribute('max', data.length);
     }
 
