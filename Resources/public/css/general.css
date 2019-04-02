@@ -66,6 +66,7 @@
 
 
 .action-nav { margin-bottom: 30px; }
+.action-nav::after { content: ' '; display: block; clear: both; }
 .action-nav > * { display: inline-block; }
 .action-nav .float-right > *:last-child { margin-right: 0; }
 

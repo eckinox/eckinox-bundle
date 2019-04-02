@@ -89,6 +89,27 @@ trait baseEntity {
         return null;
     }
 
+    public function getRecursively($property) {
+        if (!$property) {
+            return null;
+        }
+
+        $parts = explode('.', $property);
+        $key = array_shift($parts);
+
+        $value = $this->get($key);
+
+        if (count($parts)) {
+            if (method_exists($value, 'getRecursively')) {
+                return $value->getRecursively(implode('.', $parts));
+            } else {
+                return null;
+            }
+        }
+
+        return $value;
+    }
+
     public function getRawObject($return_entity_id = false, $date_format = null) {
         $data = [];
 
