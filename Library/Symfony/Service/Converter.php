@@ -215,6 +215,7 @@ class Converter {
                 }
 
                 $this->setCellStylesFromData($cell, $cellData);
+                $this->setCellPossibleValues($cell, $cellData);
             }
         }
     }
@@ -302,6 +303,21 @@ class Converter {
                     $font->setName($part);
                 }
             }
+        }
+    }
+
+    protected function setCellPossibleValues(&$cell, $data) {
+        if (isset($data['possible_values'])) {
+            $validation = $cell->getDataValidation();
+            $validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
+            $validation->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+            $validation->setAllowBlank(true);
+            $validation->setShowInputMessage(false);
+            $validation->setShowErrorMessage(true);
+            $validation->setShowDropDown(true);
+            $validation->setErrorTitle("Valeur invalide");
+            $validation->setError("Cette valeur ne fait pas partie des valeurs permises.");
+            $validation->setFormula1('"' . implode(',', $data['possible_values']) . '"');
         }
     }
 
