@@ -1,11 +1,7 @@
-document.addEventListener('change', function(e) {
-     if (!e.target.matches('.list .head .more .fields input[type="checkbox"][name^="field_"]')) {
-         return;
-     }
-
-     let field = e.target.value,
+Dom.delegate('change', '.list .head .more .fields input[type="checkbox"][name^="field_"]', function(e) {
+     let field = this.value,
          columns = document.querySelectorAll('.column.' + field),
-         show = e.target.matches('input:checked');
+         show = this.matches('input:checked');
 
      for (let column of columns) {
          if (show) {
@@ -17,27 +13,21 @@ document.addEventListener('change', function(e) {
 });
 
 // Edit shortcut when clicking on the row
-document.addEventListener('click', function(e){
-	if (e.target.matches('.list .rows .row *')) {
-		if (e.target.matches('a, button, input, label') || e.target.closest('a, button, input, label')) {
-			return;
-    	}
+Dom.delegate('click', '.list .rows .row *', function(e){
+	if (this.matches('a, button, input, label') || this.closest('a, button, input, label')) {
+		return;
+	}
 
-    	let editLink = e.target.closest('.row').querySelector('.edit-link');
-		if (editLink) {
-			editLink.click();
-        }
+	let editLink = this.closest('.row').querySelector('.edit-link');
+	if (editLink) {
+		editLink.click();
     }
 });
 
 // Triggered when the user select all rows
-document.addEventListener('change', function(e) {
-     if (!e.target.matches('.list .head .column.checkbox input[type="checkbox"][name$="_select_all"]')) {
-         return;
-     }
-
+Dom.delegate('change', '.list .head .column.checkbox input[type="checkbox"][name$="_select_all"]', function(e){
      let rows = document.querySelectorAll('.list .rows .row'),
-         is_checked = e.target.matches('input:checked');
+         is_checked = this.matches('input:checked');
 
      for (let row of rows) {
          let checkbox = row.querySelector('.column.checkbox input[type="checkbox"]');
@@ -48,14 +38,10 @@ document.addEventListener('change', function(e) {
 });
 
 // Triggered when the user select one row
-document.addEventListener('change', function(e) {
-    if (!e.target.matches('.list .rows .row .column.checkbox input[type="checkbox"]')) {
-        return;
-    }
-
-    let checkbox = e.target,
+Dom.delegate('change', '.list .rows .row .column.checkbox input[type="checkbox"]', function(e){
+    let checkbox = this,
         row = checkbox.parentNode.parentNode,
-        is_checked = e.target.matches('input:checked');
+        is_checked = this.matches('input:checked');
 
     checkbox.checked = is_checked;
     row.classList.toggle("active", is_checked);
@@ -66,15 +52,10 @@ document.addEventListener('change', function(e) {
         select_all_checkbox = document.querySelector('.list .head .column.checkbox input[type="checkbox"][name$="_select_all"]');
 
     select_all_checkbox.checked = ( rows.length === active_rows.length );
-
 });
 
 // Triggered when the user clears the search
-document.addEventListener('click', function(e) {
-    if (!e.target.matches('.list .head.search .column.cancel i')) {
-        return;
-    }
-
+Dom.delegate('click', '.list .head.search .column.cancel i', function(e){
     let inputs = document.querySelectorAll('.list .head.search .column input'),
         selects = document.querySelectorAll('.list .head.search select'),
         form = document.querySelector('form[name$="-list-form"]');
@@ -91,19 +72,12 @@ document.addEventListener('click', function(e) {
 });
 
 // Auto-submits the search filters when a select filter is changed
-
-
-// Triggered when the user select one row
 Dom.delegate('change', '.list .row.head.search .column select', function(e){
     this.closest('form').submit();
 });
 
 // Setup pagination inputs
-document.addEventListener('keydown', function(e) {
-    if (!e.target.matches('.pagination .page-input-wrapper input')) {
-        return;
-    }
-
+Dom.delegate('keydown', '.pagination .page-input-wrapper input', function(e){
     if (e.which != 13) {
         return;
     }
