@@ -90,6 +90,14 @@ document.addEventListener('click', function(e) {
     form.submit();
 });
 
+// Auto-submits the search filters when a select filter is changed
+
+
+// Triggered when the user select one row
+Dom.delegate('change', '.list .row.head.search .column select', function(e){
+    this.closest('form').submit();
+});
+
 // Setup pagination inputs
 document.addEventListener('keydown', function(e) {
     if (!e.target.matches('.pagination .page-input-wrapper input')) {
