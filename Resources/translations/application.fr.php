@@ -3,6 +3,7 @@
 return [
     "yes" => "Oui",
     "no" => "Non",
+    "unnamed" => "Sans nom",
     "title" => [
         "create_user" => "Créer un utilisateur",
         "edit_user" => "Utilisateur %name%",

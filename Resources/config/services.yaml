@@ -73,7 +73,7 @@ services:
 
     AjaxController:
         class: Eckinox\Controller\General\AjaxController
-        arguments: ["@service_container", "@eckinox.converter"]
+        arguments: ["@translator", "@service_container", "@eckinox.converter"]
 
     EmailController:
         class: Eckinox\Controller\Application\EmailController

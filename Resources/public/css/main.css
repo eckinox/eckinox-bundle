@@ -37,6 +37,10 @@ input, textarea, select, button { -webkit-appearance: none; -webkit-border-radiu
 /*
  * Form & fields
  */
+
+.form-errors .error { display: block; width: 100%; padding: 8px 10px; padding-left: 35px; margin-bottom: 10px; font-size: 1rem; font-weight: 500; color: white; background-color: #de4646; border-radius: 2px; position: relative; }
+.form-errors .error::before { content: '\f057'; font-family: 'Font Awesome 5 Pro'; font-weight: 600; line-height: 1rem; position: absolute; top: calc(50% - .5rem); left: 10px; }
+
 form .fields { display: flex; flex-flow: row wrap; }
 label.required::after { content: '*'; color: red; margin-left: 5px;  }
 label.title {width: 100%;font-size: 1.6em;margin-bottom: 25px;text-transform: uppercase;padding: 0 10px;}

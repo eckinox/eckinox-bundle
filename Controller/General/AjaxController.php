@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Cache\Simple\FilesystemCache;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AjaxController extends Controller
 {
@@ -28,8 +29,9 @@ class AjaxController extends Controller
     /**
     * @param ContainerInterface $container
     */
-    public function __construct(ContainerInterface $container, Converter $converter)
+    public function __construct(TranslatorInterface $translator, ContainerInterface $container, Converter $converter)
     {
+        $this->translator = $translator;
         $this->container = $container;
         $this->converter = $converter;
     }
@@ -553,7 +555,7 @@ class AjaxController extends Controller
                     continue;
                 }
 
-                $data[] = ['key' => $entity->get($key), 'label' => $entity->get($label), 'object' => method_exists($entity, 'getRawObject') ? $entity->getRawObject() : json_decode(json_encode($entity))];
+                $data[] = ['key' => $entity->get($key), 'label' => $entity->get($label) ?: $this->trans('unnamed', [], 'application'), 'object' => method_exists($entity, 'getRawObject') ? $entity->getRawObject() : json_decode(json_encode($entity))];
                 $foundLabels[] = $entity->get($label);
             }
             try {
