@@ -470,7 +470,8 @@ class AjaxController extends Controller
         $orderByFields = $request->request->get('order') ? json_decode($request->request->get('order')) : [];
         $key = $request->request->get('key') ? $request->request->get('key') : 'id';
         $label = $request->request->get('label') ? $request->request->get('label') : 'id';
-        $uniqueLabel = $request->request->get('unique_label') ? (bool)$request->request->get('unique_label') : false;
+        $uniqueLabel = $request->request->get('unique_label') !== null ? (bool)json_decode($request->request->get('unique_label')) : false;
+        $allowEmpty = $request->request->get('allow_empty') !== null ? (bool)json_decode($request->request->get('allow_empty')) : true;
         $em = $this->getDoctrine()->getManager();
 
         if ($entityClass && class_exists($entityClass) && $searchFields) {
@@ -552,6 +553,10 @@ class AjaxController extends Controller
             $foundLabels = [];
             foreach ($entities as $entity) {
                 if ($uniqueLabel && in_array($entity->get($label), $foundLabels)) {
+                    continue;
+                }
+
+                if (trim($entity->get($label)) == '' && !$allowEmpty) {
                     continue;
                 }
 

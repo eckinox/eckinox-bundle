@@ -48,6 +48,7 @@ class AutocompleteType extends AbstractType
             'where' => $options['where'] ?? [],
             'use_hidden_id' => !($options['value_only'] ?? false),
             'unique_label' => $options['value_only'] ?? false,
+            'allow_empty' => $options['allow_empty'] ?? true,
         ];
 
         if ($options['autocomplete_key'] ?? false) {
