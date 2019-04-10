@@ -4,6 +4,8 @@
 
 .widget-tabs-element .widget-tabs-actions label,
 .widget-tabs-element .widget-tabs-item {display: inline-block;padding: 6px 15px;color: #0050b2;line-height: 25px;cursor: pointer;border-radius: 4px 4px 0 0;margin-top: 1px;}
+.widget-tabs-element .widget-tabs-actions label.disabled,
+.widget-tabs-element .widget-tabs-item.disabled { opacity: .25; pointer-events: none; }
 .widget-tabs-element .widget-tabs-item.active {background: white;color: #333;}
 .widget-tabs-element .widget-tabs-item label { cursor: pointer; }
 

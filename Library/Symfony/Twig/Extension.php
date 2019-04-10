@@ -40,6 +40,7 @@ class Extension extends AbstractExtension
             new TwigFilter('lcfirst', array($this, 'lcfirstFilter')),
             new TwigFilter('sortByField', array($this, 'sortByField')),
             new TwigFilter('yesNo', array($this, 'getYesNoFromBoolean')),
+            new TwigFilter('withCurrentParams', array($this, 'addCurrentQueryParametersToUrl')),
             new TwigFilter('camelToSnakeCase', array('Eckinox\Library\General\StringEdit', 'camelToSnakeCase')),
             new TwigFilter('normalize', array('Eckinox\Library\General\StringEdit', 'normalize')),
             new TwigFilter('wbr', array('Eckinox\Library\General\StringEdit', 'wbr'), ['is_safe' => ['html']]),
@@ -235,6 +236,22 @@ class Extension extends AbstractExtension
 
     public function getYesNoFromBoolean($value) {
         return $this->container->get('translator')->trans($value ? 'yes' : 'no', [], 'application');
+    }
+
+    public function addCurrentQueryParametersToUrl($url) {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $parameters = $request->query->all();
+        $path = array_shift($parameters);
+
+        $queryString = http_build_query($parameters);
+
+        if (strpos($url, '?') === false) {
+            $queryString = '?' . $queryString;
+        } else {
+            $queryString = '&' . $queryString;
+        }
+
+        return $url . $queryString;
     }
 
     /*

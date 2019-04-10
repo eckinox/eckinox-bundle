@@ -134,6 +134,14 @@ i.red { color: var(--red); }
 .button.red:hover { filter: brightness(1.1); }
 .button.green { background: var(--green); border-color: var(--green); }
 .button.green:hover { filter: brightness(1.1); }
+.button.gray,
+.button.grey { background: var(--grey); border-color: var(--grey); }
+.button.light-gray,
+.button.light-grey { color: #777; background: #ddd; border-color: #ddd; border-bottom-color: #bbb !important; }
+.button.light-gray:hover,
+.button.light-grey:hover { filter: brightness(0.95); }
+.button.yellow { background: var(--yellow); border-color: var(--yellow); }
+.button.orange { background: var(--orange); border-color: var(--orange); }
 .button-container { padding: 0 5px; margin-top: 20px; }
 .button-container.right { text-align: right }
 .button.small { padding-top: 7px; padding-bottom: 7px;}

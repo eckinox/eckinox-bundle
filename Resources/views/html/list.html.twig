@@ -1,6 +1,6 @@
 {% trans_default_domain listing.domain %}
 
-<form name="{{ listing.module }}-list-form" action="{{ path('index_' ~ listing.module, {'page': 1}) }}" method="post">
+<form name="{{ listing.module }}-list-form" action="{{ path('index_' ~ listing.module, {'page': 1}) | withCurrentParams }}" method="post">
     <div class="action-nav">
         {% block list_actions %}{% endblock %}
     </div>

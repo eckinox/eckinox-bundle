@@ -2,41 +2,41 @@
     {% if nbPages == 0 %}
         {# Only one page: show only the current page #}
         <div class="page page-1 current">
-            <a href="{{ path(view, {'page': 1}) }}"><span>{{ 1 }}</span></a>
+            <a href="{{ path(view, {'page': 1}) | withCurrentParams }}"><span>{{ 1 }}</span></a>
         </div>
     {% elseif nbPages <= 12 %}
         {# Just a few pages: display every page in the pagination #}
         {% if currentPage != 1 %}
             {% set page = currentPage - 1 %}
             <div class="page prev">
-                <a href="{{ path(view, {'page': page}) }}"><span>&lt;</span></a>
+                <a href="{{ path(view, {'page': page}) | withCurrentParams }}"><span>&lt;</span></a>
             </div>
         {% endif %}
 
         {% for i in 1..nbPages %}
             <div class="page page-{{ i }} {{ i == currentPage ? 'current' : '' }}">
-                <a href="{{ path(view, {'page': i}) }}"><span>{{ i }}</span></a>
+                <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
             </div>
         {% endfor %}
 
         {% if currentPage != nbPages %}
             {% set page = currentPage + 1 %}
             <div class="page next">
-                <a href="{{ path(view, {'page': page}) }}"><span>&gt;</span></a>
+                <a href="{{ path(view, {'page': page}) | withCurrentParams }}"><span>&gt;</span></a>
             </div>
         {% endif %}
     {% else %}
         {# Too many pages to display: Show the starting, current, and ending pages with spacers in between #}
         {% if currentPage > 1 %}
             <div class="page prev">
-                <a href="{{ path(view, { 'page': currentPage - 1 }) }}"><span>&lt;</span></a>
+                <a href="{{ path(view, { 'page': currentPage - 1 }) | withCurrentParams }}"><span>&lt;</span></a>
             </div>
         {% endif %}
 
         {# First few pages #}
         {% for i in 1..2 if (i < currentPage - 1) %}
             <div class="page page-{{ i }}">
-                <a href="{{ path(view, {'page': i}) }}"><span>{{ i }}</span></a>
+                <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
             </div>
         {% endfor %}
 
@@ -50,7 +50,7 @@
         {# Current page and its surrounding pages #}
         {% for i in (currentPage - 1)..(currentPage + (currentPage == 1 ? 2 : 1)) if (i > 0 and i <= nbPages) %}
             <div class="page page-{{ i }} {{ i == currentPage ? 'current' : '' }}">
-                <a href="{{ path(view, {'page': i}) }}"><span>{{ i }}</span></a>
+                <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
             </div>
         {% endfor %}
 
@@ -64,18 +64,18 @@
         {# Last few pages #}
         {% for i in (nbPages - 1)..nbPages if (i > currentPage + 1) %}
             <div class="page page-{{ i }}">
-                <a href="{{ path(view, {'page': i}) }}"><span>{{ i }}</span></a>
+                <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
             </div>
         {% endfor %}
 
         {% if currentPage < nbPages %}
             <div class="page next">
-                <a href="{{ path(view, { 'page': currentPage + 1 }) }}"><span>&gt;</span></a>
+                <a href="{{ path(view, { 'page': currentPage + 1 }) | withCurrentParams }}"><span>&gt;</span></a>
             </div>
         {% endif %}
 
         <div class="page-input-wrapper">
-            <input type="number" step="1" placeholder="{{ 'placeholders.paginationInput' | trans([], 'general') }}" url-template="{{ path(view, { 'page': 0 }) }}">
+            <input type="number" step="1" placeholder="{{ 'placeholders.paginationInput' | trans([], 'general') }}" url-template="{{ path(view, { 'page': 0 }) | withCurrentParams }}">
         </div>
     {% endif %}
 </div>
