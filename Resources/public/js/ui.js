@@ -8,7 +8,6 @@ class BundleUI {
             BundleUI.initFlashMessageDismissal();
             BundleUI.initTabWidgets();
             BundleUI.initGroupedCheckboxes();
-            BundleUI.initAutocompleteFocusOut();
         }, false);
     }
 
@@ -205,9 +204,7 @@ class BundleUI {
 
     static showFlashMessage(type, message, timeout) {
         let wrapper = document.querySelector('#flash .flash-content');
-        let html = `<div class="flash-message ${type}">
-                        ${message}
-                    </div>`;
+        let html = `<div class="flash-message ${type}">${message}</div>`;
         let node = BundleUI.createNodeFromString(html);
         BundleUI.appendTo(wrapper, node);
 

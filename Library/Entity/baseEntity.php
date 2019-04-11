@@ -99,11 +99,21 @@ trait baseEntity {
 
         $value = $this->get($key);
 
-        if (count($parts)) {
+        while (count($parts)) {
             if (method_exists($value, 'getRecursively')) {
                 return $value->getRecursively(implode('.', $parts));
             } else {
-                return null;
+                $key = array_shift($parts);
+
+                if (is_array($value) && array_key_exists($key, $value)) {
+                    $value = $value[$key];
+                } else if ($value instanceof \ArrayAccess && $value->offsetExists($key)) {
+                    $value = $value[$key];
+                } else if (is_object($value) && property_exists($value, $key)) {
+                    $value = $value->$key;
+                } else {
+                    return null;
+                }
             }
         }
 

@@ -273,9 +273,11 @@ class ImportFlow {
         select.classList.remove('hide');
         select.setAttribute('name', 'assignation[' + columnIndex + ']');
 
-        let defaultOption = select.querySelector(`option[data-key="${defaultValue}"]`);
-        if (defaultOption) {
-            defaultOption.setAttribute('selected', 'selected');
+        if (defaultValue !== null) {
+            let defaultOption = select.querySelector(`option[value="${defaultValue}"]`);
+            if (defaultOption) {
+                defaultOption.setAttribute('selected', 'selected');
+            }
         }
 
         return select;
@@ -406,8 +408,12 @@ class ImportFlow {
                         newOptgroup.setAttribute('label', lastOptgroup.getAttribute('original-label') + ' (' + (optgroups.length + 1) + ')');
                         newOptgroup.setAttribute('data-index', optgroups.length);
 
-                        if (newOptgroup.querySelector('option:checked')) {
-                            newOptgroup.querySelector('option:checked').checked = false;
+                        let selectedOptions = newOptgroup.querySelectorAll('option:checked, option[selected]');
+                        if (selectedOptions.length) {
+                            for (let option of selectedOptions) {
+                                option.checked = false;
+                                option.removeAttribute('selected');
+                            }
                         }
 
                         for (let option of newOptgroup.querySelectorAll('option')) {

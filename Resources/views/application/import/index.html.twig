@@ -69,7 +69,7 @@
                                       (settings.properties[property].relation is not defined or not settings.properties[property].relation) and
                                       settings.properties[property].value is not defined and
                                       property not in ["createdAt", "updatedAt", "isArchived", "_temporaryData"] %}
-                                    <option value="{{ property }}" data-key="{{ property }}">{{ (entity.transKey ~ '.fields.' ~ property) | trans }}</option>
+                                    <option value="{{ property }}" data-key="{{ property }}">{{ ((settings.transKey is defined ? settings.transKey : entity.transKey) ~ '.fields.' ~ property) | trans }}</option>
                                 {% endif %}
                             {% endfor %}
                         </optgroup>

@@ -579,11 +579,7 @@ class ImportController extends Controller
 
                 if ($_SERVER['APP_DEBUG'] ?? false) {
                     throw new \Exception(sprintf(
-                        "The '%s' relation's loadingFrom fields specified in the import settings don't always result in a single unique record.\n
-                        Here is the faulty query: \n
-                        %s\n
-                        Here are the parameters:\n
-                        %s", $property, $query->getSql(), $parametersString));
+                        "The '%s' relation's loadingFrom fields specified in the import settings don't always result in a single unique record.\nHere is the faulty query: \n%s\nHere are the parameters:\n%s", $property, $query->getSql(), $parametersString));
                 } else {
                     throw new \Exception($this->trans('import.errors.genericServerSide', [], 'application'));
                 }
