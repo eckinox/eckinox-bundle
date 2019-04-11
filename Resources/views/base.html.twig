@@ -77,11 +77,11 @@
             <script src="{{ asset(script) }}"></script>
         {% endfor %}
 
-        {% block javascripts %}{% endblock %}
-
         <script src="{{ asset('js/dom.js', 'eckinox') }}"></script>
         <script src="{{ asset('js/helpers.js', 'eckinox') }}"></script>
         <script src="{{ asset('js/list.js', 'eckinox') }}" defer></script>
         <script src="{{ asset('js/ajax.js', 'eckinox') }}" defer></script>
+
+        {% block javascripts %}{% endblock %}
     </body>
 </html>

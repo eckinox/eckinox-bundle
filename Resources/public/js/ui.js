@@ -8,6 +8,7 @@ class BundleUI {
             BundleUI.initFlashMessageDismissal();
             BundleUI.initTabWidgets();
             BundleUI.initGroupedCheckboxes();
+            BundleUI.initAutocompleteFocusOut();
         }, false);
     }
 
@@ -113,7 +114,7 @@ class BundleUI {
         });
     }
 
-    static initTabWidgets() {
+    static initTabWidgets() {
         document.addEventListener('click', function(e){
         	if (!e.target.matches('[widget-tabs] [widget-tab], [widget-tabs] [widget-tab] *')) {
                 return;
@@ -190,7 +191,7 @@ class BundleUI {
     static appendTo(element, content) {
         if (typeof content == 'string') {
             content = BundleUI.createNodesFromString(content);
-            for (let i = 0; i < content.length; i++) {
+            for (let i = 0; i < content.length; i++) {
                 element.appendChild(content[i]);
             }
         } else if (['Node', 'object'].indexOf(typeof content) != -1) {
@@ -311,6 +312,21 @@ class BundleUI {
                     }
                 }, 250);
             });
+        }
+    }
+
+    static focusNext() {
+        const currentNode = document.querySelector(':focus');
+
+        if (!currentNode) {
+            return;
+        }
+
+        const focusableElements = document.querySelectorAll('input, button, a, area, object, select, textarea, [contenteditable]');
+        const currentIndex = Array.from(focusableElements).findIndex(el => currentNode.isEqualNode(el))
+
+        if (typeof focusableElements[currentIndex + 1] != 'undefined') {
+            focusableElements[currentIndex + 1].focus();
         }
     }
 }

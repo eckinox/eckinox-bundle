@@ -6,9 +6,7 @@
     <div class="flash-content">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="flash-message {{ label }}">
-                    {{ message }}
-                </div>
+                <div class="flash-message {{ label }}">{{ message }}</div>
             {% endfor %}
         {% endfor %}
     </div>

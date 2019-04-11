@@ -188,6 +188,9 @@ class ImportController extends Controller
             } else if ($this->settings['properties'][$field]['relation'] ?? null) {
                 $queryString .= ' AND e.' . $field . ' = :' . $field;
                 $parameters[$field] = $entity->get($field) && $entity->get($field)->getId() ? $entity->get($field) : null;
+            } else if (array_key_exists('value', $this->settings['properties'][$field])) {
+                $queryString .= ' AND e.' . $field . ' = :' . $field;
+                $parameters[$field] = $this->settings['properties'][$field]['value'];
             }
         }
 
@@ -199,7 +202,11 @@ class ImportController extends Controller
             $entity = $query->getOneOrNullResult() ?: $entity;
         } catch (NonUniqueResultException $e) {
             if ($_SERVER['APP_DEBUG'] ?? false) {
-                throw new \Exception("The loadingFrom fields specified in the import settings don't always result in a single unique record.");
+                $parametersString = "";
+                foreach ($parameters as $key => $value) {
+                    $parametersString .= $key . ' => "' . ((is_array($value) || is_object($value)) ? json_encode($value) : $value) . "\"\n";
+                }
+                throw new \Exception(sprintf("The loadingFrom fields specified in the import settings don't always result in a single unique record.\n\nHere's the query: %s \n\nHere are the parameters: %s, %s", $queryString, $parametersString, implode(', ', $loadingFields)));
             } else {
                 throw new \Exception($this->trans('import.errors.genericServerSide'));
             }
