@@ -86,9 +86,19 @@
                         </div>
                     {% endfor %}
 
+                    {# Allow custom edit link generation #}
+                    {% if editLink is defined %}
+                        {% set editRouteParameters = {} %}
+                        {% if editLink.parameters is defined %}
+                            {% for parameter, valueKey in editLink.parameters %}
+                                {% set editRouteParameters = editRouteParameters|merge({ (parameter): row.getRecursively(valueKey) }) %}
+                            {% endfor %}
+                        {% endif %}
+                        {% set customEditUrl = path(editLink.route, editRouteParameters) ~ (editLink.hash is defined ? editLink.hash : '') %}
+                    {% endif %}
 
-                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (readonly is not defined or not readonly) %}
-                        <a class="column edit-link" href="{{ path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (customEditUrl is defined or (readonly is not defined or not readonly)) %}
+                        <a class="column edit-link" href="{{ customEditUrl is defined ? customEditUrl : path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     {% else %}
                         <div class="column edit-link"></div>
                     {% endif %}
