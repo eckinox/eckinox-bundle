@@ -44,6 +44,7 @@ class Extension extends AbstractExtension
             new TwigFilter('camelToSnakeCase', array('Eckinox\Library\General\StringEdit', 'camelToSnakeCase')),
             new TwigFilter('normalize', array('Eckinox\Library\General\StringEdit', 'normalize')),
             new TwigFilter('wbr', array('Eckinox\Library\General\StringEdit', 'wbr'), ['is_safe' => ['html']]),
+            new TwigFilter('money', array('Eckinox\Library\General\StringEdit', 'formatMoney')),
 
             /*
              * Call filters dynamically

@@ -38,4 +38,14 @@ class StringEdit {
 
         return $string;
     }
+
+    public static function formatMoney($amount, $decimals = 2) {
+        if ($amount === null || $amount === '') {
+            return $amount;
+        }
+
+        $amount = floatval(preg_replace('/[^0-9.-]/', '', $amount));
+
+        return number_format($amount, $decimals, '.', ',') . ' $';
+    }
 }
