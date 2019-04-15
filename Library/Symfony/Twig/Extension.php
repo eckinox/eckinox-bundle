@@ -68,6 +68,7 @@ class Extension extends AbstractExtension
             new TwigFunction("data", [ $this, "getData" ] ),
             new TwigFunction("custom_field", [ $this, "generateCustomField" ] ),
             new TwigFunction("autocomplete", [ $this, "generateAutocompleteField" ] ),
+            new TwigFunction("entity_dropdown", [ $this, "generateEntityDropdownField" ] ),
             new TwigFunction("uniqid", [ $this, "getUniqid" ] ),
         ];
     }
@@ -228,6 +229,25 @@ class Extension extends AbstractExtension
             $settings['entity'] = str_replace('\\', '\\\\', $settings['entity']);
         }
         $html = $this->container->get('twig')->render('@Eckinox/html/input/autocomplete.html.twig', ['settings' => $settings]);
+        return new Markup($html, []);
+    }
+
+    public function generateEntityDropdownField($entityClass, $name, $labelProperty, $currentValue = null) {
+        $entities = $this->container->get('doctrine')->getRepository($entityClass)->findAll();
+        $choices = [];
+
+        foreach ($entities as $entity) {
+            $choices[$entity->getId()] = $entity->get($labelProperty);
+        }
+
+        $html = $this->container->get('twig')->render('@Eckinox/html/input/select.html.twig', [
+            'infos' => [
+                'name' => $name,
+                'choices' => $choices,
+                'value' => $currentValue ? $currentValue->getId() : null
+            ]
+        ]);
+
         return new Markup($html, []);
     }
 
