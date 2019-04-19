@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 
 class Converter {
     const DOMAIN = "services";
@@ -227,6 +228,7 @@ class Converter {
     protected function setCellStylesFromData(&$cell, $data) {
         $this->setCellStyleAndFormatFromData($cell, $data);
         $this->setCellFontStylesFromData($cell, $data);
+        $this->setCellBorderFromData($cell, $data);
     }
 
     protected function setCellStyleAndFormatFromData(&$cell, $data) {
@@ -263,6 +265,29 @@ class Converter {
             $columnDimension = $cell->getWorksheet()->getColumnDimension($cell->getColumn());
             $columnDimension->setAutoSize(false);
             $columnDimension->setWidth($width);
+        }
+    }
+
+    protected function setCellBorderFromData(&$cell, $data) {
+        if ($borderStyles = strtolower($data['border'] ?? null)) {
+            $border = $cell->getStyle()->getBorders()->getAllBorders();
+            $parts = array_filter(explode(' ', $borderStyles));
+
+            foreach ($parts as $part) {
+                if ($part == 'thin') {
+                    $border->setBorderStyle(Border::BORDER_THIN);
+                } else if ($part == 'thick') {
+                    $border->setBorderStyle(Border::BORDER_THICK);
+                } else if ($part == 'medium') {
+                    $border->setBorderStyle(Border::BORDER_MEDIUM);
+                } else if ($part == 'hair') {
+                    $border->setBorderStyle(Border::BORDER_HAIR);
+                } else if ($part == 'none') {
+                    $border->setBorderStyle(Border::BORDER_NONE);
+                } else if (substr($part, 0, 1) == '#' || substr($part, 0, 4) == 'rgb(' || substr($part, 0, 5) == 'rgba(') {
+                    $border->setColor($this->getExcelValidColor($part));
+                }
+            }
         }
     }
 
@@ -340,7 +365,13 @@ class Converter {
         }
 
         if (strpos($string, '#') === 0) {
-            return new Color(substr($string, 1));
+            $string = substr($string, 1);
+
+            if (strlen($string) == 3) {
+                $string = str_repeat($string[0], 2) . str_repeat($string[1], 2) . str_repeat($string[2], 2);
+            }
+
+            return new Color($string);
         }
 
         if (strpos($string, 'rgb(') === 0 || strpos($string, 'rgba(') === 0) {

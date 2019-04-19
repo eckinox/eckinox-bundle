@@ -126,6 +126,8 @@ class ImportController extends Controller
                 }
                 $this->em->flush();
             }
+
+            $this->dispatchEvent('containers_post_flush', $containers, $this);
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());
             return $this->redirectToRoute('index_import', ['importType' => $importType]);
