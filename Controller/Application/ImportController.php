@@ -57,7 +57,7 @@ class ImportController extends Controller
         }
 
         $data = null;
-        $cacheKey = $this->get('session')->get('ajax_json2exel_last_cache_key');
+        $cacheKey = $this->get('session')->get('ajax_json2excel_last_cache_key');
 
         if ($cacheKey) {
             $cache = new FilesystemCache();

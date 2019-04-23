@@ -452,7 +452,7 @@ class AjaxController extends Controller
         }
 
         # Set a session variable with the file's hash to allow autoloading in other parts of the application
-        $this->get('session')->set('ajax_json2exel_last_cache_key', $cacheKey);
+        $this->get('session')->set('ajax_json2excel_last_cache_key', $cacheKey);
 
         return new JsonResponse($parsedData);
     }
