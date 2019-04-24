@@ -149,16 +149,19 @@ class ImportController extends Controller
      * Returns true if is archived
      */
     protected function handleEntityArchiving(&$entity, $row) {
+        $useEntity = $this->settings['entity'] ?? false;
+
         if (($this->settings['allowArchive'] ?? false) && in_array('_archive_', $this->assignations)) {
             if (isset($this->assignations['_archive_'])) {
                 $value = trim($row[$this->assignations['_archive_']] ?? '');
 
                 if (strlen($value) && !in_array(strtolower($value), ['non', 'no'])) {
-                    if ($entity->getId()) {
+                    if ($useEntity && $entity->getId()) {
                         $entity->archive();
                     } else {
                         $entity = null;
                     }
+
                     return true;
                 }
             }
