@@ -325,7 +325,9 @@ return [
             "worksheet" => "Sélectionner la feuille à importer",
             "startingLine" => "Ligne de départ",
             "columnField" => "Colonne %column%",
-            "assignations" => "Assignation des colonnes"
+            "assignations" => "Assignation des colonnes",
+            "managementOptgroup" => "Gestion",
+            "archiveOption" => "Archiver",
         ],
         "title" => [
             "index_import" => "Import",

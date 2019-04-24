@@ -88,6 +88,9 @@ class ImportController extends Controller
             return $this->redirectToRoute('home');
         }
 
+        # Before any of the heavy processing starts, save the session to allow smooth navigating on other pages for the user
+        $this->get('session')->isStarted() && $this->get('session')->save();
+
         try {
             # Validate and pre-process the POST data
             $data = $this->getProcessingData();
@@ -102,10 +105,12 @@ class ImportController extends Controller
                 if ($useEntity) {
                     $entity = $this->getEntityFromRow($row);
 
-                    $this->dispatchEvent('container_pre_processing', $entity, $this);
-                    $this->updateEntityFromRow($entity, $row);
-                    $this->updateEntityRelationsFromRow($entity, $row);
-                    $this->dispatchEvent('container_post_processing', $entity, $this);
+                    if (!$this->handleEntityArchiving($entity, $row)) {
+                        $this->dispatchEvent('container_pre_processing', $entity, $this);
+                        $this->updateEntityFromRow($entity, $row);
+                        $this->updateEntityRelationsFromRow($entity, $row);
+                        $this->dispatchEvent('container_post_processing', $entity, $this);
+                    }
 
                     if ($entity) {
                         $containers[] = $entity;
@@ -136,6 +141,30 @@ class ImportController extends Controller
         $this->addFlash('success', $this->trans('import.success', [], 'application'));
 
         return $this->redirectToRoute('index_import', ['importType' => $importType]);
+    }
+
+    /*
+     * Checks whether the entity should be archived
+     * Any non-empty value that isn't "no" or "non" will be considered as a yes.
+     * Returns true if is archived
+     */
+    protected function handleEntityArchiving(&$entity, $row) {
+        if (($this->settings['allowArchive'] ?? false) && in_array('_archive_', $this->assignations)) {
+            if (isset($this->assignations['_archive_'])) {
+                $value = trim($row[$this->assignations['_archive_']] ?? '');
+
+                if (strlen($value) && !in_array(strtolower($value), ['non', 'no'])) {
+                    if ($entity->getId()) {
+                        $entity->archive();
+                    } else {
+                        $entity = null;
+                    }
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /*
@@ -653,6 +682,20 @@ class ImportController extends Controller
         # Throw an exception with the error message if there is one
         if ($error) {
             throw new \Exception($error);
+        }
+
+        # Shift default columns by one to add the archive column (if the setting is on)
+        if ($settings['allowArchive'] ?? false && isset($settings['defaults'])) {
+            $newDefaults = ['A' => '_archive_'];
+
+            foreach ($settings['defaults']['columns'] ?? [] as $key => $value) {
+                $columnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($key);
+                $columnIndex++;
+                $newKey = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($columnIndex);
+                $newDefaults[$newKey] = $value;
+            }
+
+            $settings['defaults']['columns'] = $newDefaults;
         }
 
         $this->settings = $settings;

@@ -89,6 +89,12 @@
                                 </optgroup>
                             {% endif %}
                         {% endfor %}
+
+                        {% if settings.allowArchive is defined and settings.allowArchive %}
+                            <optgroup label="{% trans %}import.fields.managementOptgroup{% endtrans %}">
+                                <option value="_archive_" data-key="_archive_">{% trans %}import.fields.archiveOption{% endtrans %}</option>
+                            </optgroup>
+                        {% endif %}
                     </select>
                     <div class="field-wrapper">
                         <label>{% trans %}import.fields.assignations{% endtrans %}</label>
