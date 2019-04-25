@@ -105,11 +105,15 @@ class ImportController extends Controller
                 if ($useEntity) {
                     $entity = $this->getEntityFromRow($row);
 
+                    $this->dispatchEvent('container_pre_processing', $entity, $this);
+                    $this->updateEntityFromRow($entity, $row);
+                    $this->updateEntityRelationsFromRow($entity, $row);
+
                     if (!$this->handleEntityArchiving($entity, $row)) {
-                        $this->dispatchEvent('container_pre_processing', $entity, $this);
-                        $this->updateEntityFromRow($entity, $row);
-                        $this->updateEntityRelationsFromRow($entity, $row);
                         $this->dispatchEvent('container_post_processing', $entity, $this);
+                    } else {
+                        $this->dispatchEvent('container_post_processing', $entity, $this);
+                        $entity = null;
                     }
 
                     if ($entity) {
@@ -134,7 +138,6 @@ class ImportController extends Controller
 
             $this->dispatchEvent('containers_post_flush', $containers, $this);
         } catch (\Exception $e) {
-            dump($e);die();
             $this->addFlash('error', $e->getMessage());
             return $this->redirectToRoute('index_import', ['importType' => $importType]);
         }
@@ -157,10 +160,8 @@ class ImportController extends Controller
                 $value = trim($row[$this->assignations['_archive_']] ?? '');
 
                 if (strlen($value) && !in_array(strtolower($value), ['non', 'no'])) {
-                    if ($useEntity && $entity->getId()) {
+                    if ($useEntity) {
                         $entity->archive();
-                    } else {
-                        $entity = null;
                     }
 
                     return true;
