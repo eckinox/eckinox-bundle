@@ -134,6 +134,7 @@ class ImportController extends Controller
 
             $this->dispatchEvent('containers_post_flush', $containers, $this);
         } catch (\Exception $e) {
+            dump($e);die();
             $this->addFlash('error', $e->getMessage());
             return $this->redirectToRoute('index_import', ['importType' => $importType]);
         }
@@ -430,14 +431,13 @@ class ImportController extends Controller
                         }
                     } else {
                         $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
-                        if (!isset($this->assignations[$relationPropertyKey]) || !isset($row[$this->assignations[$relationPropertyKey]]) || $collectionItem->get($relationKey) != $row[$this->assignations[$relationPropertyKey]]) {
-                            # format: "property"
-                            $valueA = $row[$this->assignations[$relationPropertyKey]] ?? null;
-                            $valueA = !$caseSensitive && is_string($valueA) ? strtoupper(trim($valueA)) : $valueA;
 
-                            if (!is_string($valueB) || !is_string($valueB) || $valueB != $valueA) {
-                                $matching = false;
-                            }
+                        $valueA = $row[$this->assignations[$relationPropertyKey] ?? null] ?? null;
+                        $valueA = !$caseSensitive && is_string($valueA) ? strtoupper(trim($valueA)) : $valueA;
+
+                        # format: "property"
+                        if (!isset($this->assignations[$relationPropertyKey]) || !isset($row[$this->assignations[$relationPropertyKey]]) || !is_string($valueA) || !is_string($valueB) || $valueB != $valueA) {
+                            $matching = false;
                         }
                     }
                 }
