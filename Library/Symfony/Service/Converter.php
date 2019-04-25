@@ -9,6 +9,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -246,11 +247,16 @@ class Converter {
                 'date' => NumberFormat::FORMAT_DATE_YYYYMMDD2,
                 'datetime' => NumberFormat::FORMAT_DATE_DATETIME,
                 'monetary' => '#,##0_-$',
+                'monetary_k' => '[=0]"-";#,k $',
                 'monetary_decimals' => '#,##0.00_-$',
             ];
 
             foreach ($parts as $part) {
                 if (isset($formats[$part])) {
+                    if (in_array($part, ['monetary', 'monetary_k', 'monetary_decimals', 'number', 'float', 'percentage', 'percentage_decimals'])) {
+                        $cell->setDataType(DataType::TYPE_NUMERIC);
+                    }
+
                     $format->setFormatCode($formats[$part]);
                 } else if (substr($part, 0, 1) == '#' || substr($part, 0, 4) == 'rgb(' || substr($part, 0, 5) == 'rgba(') {
                     $fill->setFillType(Fill::FILL_SOLID);
