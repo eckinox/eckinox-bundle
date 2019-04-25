@@ -385,6 +385,11 @@ class ImportController extends Controller
                 $matching = true;
 
                 foreach ($this->settings['properties'][$property]['loadFrom'] as $relationKey => $originKey) {
+                    $caseSensitive = $this->settings['properties'][$property]['caseSensitive'] ?? false;
+
+                    $valueB = $collectionItem->get($relationKey);
+                    $valueB = !$caseSensitive && is_string($valueB) ? strtoupper(trim($valueB)) : $valueB;
+
                     if ($originKey == 'this') {
                         # format: "this"
                         # this refers to the current entity, not the relation itself.
@@ -394,30 +399,43 @@ class ImportController extends Controller
                     } else if (strpos($originKey, 'this.') === 0) {
                         # format: "this.property"
                         # this refers to the current entity, not the relation itself.
-                        if ($entity->get(str_replace('this.', '', $originKey)) != $collectionItem->get($relationKey)) {
+                        $valueA = $entity->get(str_replace('this.', '', $originKey));
+                        $valueA = !$caseSensitive && is_string($valueA) ? strtoupper(trim($valueA)) : $valueA;
+
+                        if ($valueA != $valueB) {
                             $matching = false;
                         }
                     } else if (strpos($originKey, 'custom:') === 0) {
                         # format: "custom:fieldName"
                         $key = explode(':', $originKey)[1];
-                        $value = $_POST[$key] ?? null;
                         $representsEntity = isset($this->settings['customFields'][$key]['entity']);
 
-                        if ($representsEntity && (($collectionItem->get($relationKey) && !$value || !$collectionItem->get($relationKey) && $value) || ($collectionItem->get($relationKey) && $collectionItem->get($relationKey)->getId() != $value))) {
-                            $matching = false;
-                        } else if (!$representsEntity && $value != $collectionItem->get($relationKey)) {
+                        $valueA = $_POST[$key] ?? null;
+                        $valueA = !$caseSensitive && is_string($valueA) ? strtoupper(trim($valueA)) : $valueA;
+
+                        if ($representsEntity) {
+                            if ((($valueB && !$valueA) || (!$valueB && $valueA)) || ($valueB && $valueB->getId() != $valueA)) {
+                                $matching = false;
+                            }
+                        } else if ($valueA != $valueB) {
                             $matching = false;
                         }
                     } else if (strpos($originKey, 'value:') === 0) {
                         # format: "value:hardcoded value"
-                        if (substr($originKey, 6) != $collectionItem->get($relationKey)) {
+                        $valueA = substr($originKey, 6);
+                        $valueA = !$caseSensitive && is_string($valueA) ? strtoupper(trim($valueA)) : $valueA;
+
+                        if ($valueA != $valueB) {
                             $matching = false;
                         }
                     } else {
                         $relationPropertyKey = $property . '.' . ($index !== null ? $index . '.' : '') . $originKey;
                         if (!isset($this->assignations[$relationPropertyKey]) || !isset($row[$this->assignations[$relationPropertyKey]]) || $collectionItem->get($relationKey) != $row[$this->assignations[$relationPropertyKey]]) {
                             # format: "property"
-                            if (!is_string($collectionItem->get($relationKey)) || !is_string($row[$this->assignations[$relationPropertyKey]]) || trim($collectionItem->get($relationKey)) != trim($row[$this->assignations[$relationPropertyKey]])) {
+                            $valueA = $row[$this->assignations[$relationPropertyKey]] ?? null;
+                            $valueA = !$caseSensitive && is_string($valueA) ? strtoupper(trim($valueA)) : $valueA;
+
+                            if (!is_string($valueB) || !is_string($valueB) || $valueB != $valueA) {
                                 $matching = false;
                             }
                         }
