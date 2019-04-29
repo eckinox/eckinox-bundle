@@ -90,21 +90,23 @@ class Dom {
         return setMode ? this : null;
     }
 
-    static delegate(event, selector, callback, strict) {
+    static delegate(events, selector, callback, strict) {
         strict = typeof strict != 'undefined' ? strict : false;
 
-        document.querySelector('body').addEventListener(event, (e) => {
-        	if (!e.target.matches(selector) && (strict || !e.target.closest(selector))) {
-        		return;
-            }
+        for (let event of events.split(' ')) {
+            document.querySelector('body').addEventListener(event, (e) => {
+                if (!e.target.matches(selector) && (strict || !e.target.closest(selector))) {
+                    return;
+                }
 
-            let node = e.target;
-            if (!strict && !e.target.matches(selector)) {
-                node = e.target.closest(selector);
-            }
+                let node = e.target;
+                if (!strict && !e.target.matches(selector)) {
+                    node = e.target.closest(selector);
+                }
 
-            callback.bind(node)(e);
-        }, true);
+                callback.bind(node)(e);
+            }, true);
+        }
     }
 
     static index(node) {
