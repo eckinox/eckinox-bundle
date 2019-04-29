@@ -51,7 +51,9 @@ Dom.delegate('change', '.list .rows .row .column.checkbox input[type="checkbox"]
         active_rows = document.querySelectorAll('.list .rows .row.active'),
         select_all_checkbox = document.querySelector('.list .head .column.checkbox input[type="checkbox"][name$="_select_all"]');
 
-    select_all_checkbox.checked = ( rows.length === active_rows.length );
+    if (select_all_checkbox) {
+        select_all_checkbox.checked = ( rows.length === active_rows.length );
+    }
 });
 
 // Triggered when the user clears the search
