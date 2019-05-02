@@ -9,7 +9,7 @@
 
         {% block stylesheets %}{% endblock %}
     </head>
-    <body class="layout-application">
+    <body class="layout-application {{ bodyClass is defined ? bodyClass : '' }}">
         <div class="page-wrapper">
             <div class="top-bar" unselectable>
                 <div class="logo">
