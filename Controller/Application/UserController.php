@@ -158,17 +158,23 @@ class UserController extends Controller
         $privileges = [];
 
         if($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES')) {
-            foreach($this->data('privileges.privileges') as $moduleName => $items) {
-                $cleanModuleName = $this->trans(implode('.', ['privileges', 'modules', $moduleName]), [], 'application');
-                foreach($items as $privilegeId) {
-                    $privileges[$cleanModuleName][$this->trans(implode('.', ['privileges', 'labels', $moduleName, $privilegeId]), [], 'application')] = $privilegeId;
+            $privilegeData = $this->data('privileges.privileges');
+            if ($privilegeData && (is_array($privilegeData) || $privilegeData instanceof \Traversable)) {
+                foreach($privilegeData as $moduleName => $items) {
+                    $cleanModuleName = $this->trans(implode('.', ['privileges', 'modules', $moduleName]), [], 'application');
+                    foreach($items as $privilegeId) {
+                        $privileges[$cleanModuleName][$this->trans(implode('.', ['privileges', 'labels', $moduleName, $privilegeId]), [], 'application')] = $privilegeId;
+                    }
                 }
             }
 
-            foreach ($this->data('import') as $importType => $settings) {
-                $cleanModuleName = $this->trans('privileges.modules.import'    , [], 'application');
-                $privilegeId = 'IMPORT_' . strtoupper(StringEdit::camelToSnakeCase($importType));
-                $privileges[$cleanModuleName][$this->trans(implode('.', ['privileges', 'labels', 'import', $privilegeId]), [], 'application')] = $privilegeId;
+            $importData = $this->data('import');
+            if ($importData && (is_array($importData) || $importData instanceof \Traversable)) {
+                foreach ($importData as $importType => $settings) {
+                    $cleanModuleName = $this->trans('privileges.modules.import'    , [], 'application');
+                    $privilegeId = 'IMPORT_' . strtoupper(StringEdit::camelToSnakeCase($importType));
+                    $privileges[$cleanModuleName][$this->trans(implode('.', ['privileges', 'labels', 'import', $privilegeId]), [], 'application')] = $privilegeId;
+                }
             }
         }
 
