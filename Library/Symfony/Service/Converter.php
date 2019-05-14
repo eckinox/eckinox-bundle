@@ -14,6 +14,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class Converter {
     const DOMAIN = "services";
@@ -37,7 +38,6 @@ class Converter {
         }
 
         if (!$file->guessExtension() || !in_array(strtolower($file->guessExtension()), $supportedExtensions)) {
-            var_dump($file->guessExtension());die();
             throw new \Exception($this->translator->trans('converter.errors.fileType', ['%extensions%' => implode(', ', $supportedExtensions)], static::DOMAIN));
         }
 
@@ -211,12 +211,11 @@ class Converter {
                 }
 
                 $cell->setValue($cellData['value'] ?? null);
-
                 if ($y == count($data) - 1) {
                     $this->autosizeColumn($sheet, $cell);
                 }
 
-                $this->setCellStylesFromData($cell, $cellData);
+                $this->setCellStylesFromData($cell, $cellData, $sheet);
                 $this->setCellPossibleValues($cell, $cellData);
             }
         }
@@ -226,16 +225,29 @@ class Converter {
         $sheet->getColumnDimension($cell->getColumn())->setAutoSize(true);
     }
 
-    protected function setCellStylesFromData(&$cell, $data) {
-        $this->setCellStyleAndFormatFromData($cell, $data);
-        $this->setCellFontStylesFromData($cell, $data);
-        $this->setCellBorderFromData($cell, $data);
+    protected function setCellStylesFromData(&$cell, $data, &$sheet) {
+        $stylesArray = ['font' => [], 'alignment' => [], 'borders' => [], 'fill' => [], 'numberFormat' => []];
+        $cellStyle = $cell->getStyle();
+
+        $this->setCellStyleAndFormatFromData($cell, $data, $stylesArray);
+        $this->setCellFontStylesFromData($data, $stylesArray);
+        $this->setCellBorderFromData($data, $stylesArray);
+
+        if ($stylesArray) {
+            $cellStyle->applyFromArray($stylesArray);
+        }
+
+        # Adjust column width
+        $width = strtolower($data['width'] ?? null);
+        if ($width) {
+            $columnDimension = $sheet->getColumnDimension($cell->getColumn());
+            $columnDimension->setAutoSize(false);
+            $columnDimension->setWidth($width);
+        }
     }
 
-    protected function setCellStyleAndFormatFromData(&$cell, $data) {
+    protected function setCellStyleAndFormatFromData(&$cell, $data, &$stylesArray) {
         if ($cellStyles = strtolower($data['cell'] ?? null)) {
-            $format = $cell->getStyle()->getNumberFormat();
-            $fill = $cell->getStyle()->getFill();
             $parts = array_filter(explode(' ', $cellStyles));
 
             $formats = [
@@ -257,81 +269,74 @@ class Converter {
                         $cell->setDataType(DataType::TYPE_NUMERIC);
                     }
 
-                    $format->setFormatCode($formats[$part]);
+                    $stylesArray['numberFormat']['formatCode'] = $formats[$part];
                 } else if (substr($part, 0, 1) == '#' || substr($part, 0, 4) == 'rgb(' || substr($part, 0, 5) == 'rgba(') {
-                    $fill->setFillType(Fill::FILL_SOLID);
-                    $fill->setStartColor($this->getExcelValidColor($part));
+                    $stylesArray['fill']['fillType'] = Fill::FILL_SOLID;
+                    $stylesArray['fill']['color'] = ['rgb' => $this->getExcelValidColor($part, true)];
                 }
             }
         }
-
-        # Adjust column width
-        $width = strtolower($data['width'] ?? null);
-        if ($width) {
-            $columnDimension = $cell->getWorksheet()->getColumnDimension($cell->getColumn());
-            $columnDimension->setAutoSize(false);
-            $columnDimension->setWidth($width);
-        }
     }
 
-    protected function setCellBorderFromData(&$cell, $data) {
+    protected function setCellBorderFromData($data, &$stylesArray) {
         if ($borderStyles = strtolower($data['border'] ?? null)) {
-            $border = $cell->getStyle()->getBorders()->getAllBorders();
             $parts = array_filter(explode(' ', $borderStyles));
+
+            if (count($parts)) {
+                $stylesArray['borders']['allBorders'] = [];
+            }
 
             foreach ($parts as $part) {
                 if ($part == 'thin') {
-                    $border->setBorderStyle(Border::BORDER_THIN);
+                    $stylesArray['borders']['allBorders']['borderStyle'] = Border::BORDER_THIN;
                 } else if ($part == 'thick') {
-                    $border->setBorderStyle(Border::BORDER_THICK);
+                    $stylesArray['borders']['allBorders']['borderStyle'] = Border::BORDER_THICK;
                 } else if ($part == 'medium') {
-                    $border->setBorderStyle(Border::BORDER_MEDIUM);
+                    $stylesArray['borders']['allBorders']['borderStyle'] = Border::BORDER_MEDIUM;
                 } else if ($part == 'hair') {
-                    $border->setBorderStyle(Border::BORDER_HAIR);
+                    $stylesArray['borders']['allBorders']['borderStyle'] = Border::BORDER_HAIR;
                 } else if ($part == 'none') {
-                    $border->setBorderStyle(Border::BORDER_NONE);
+                    $stylesArray['borders']['allBorders']['borderStyle'] = Border::BORDER_NONE;
                 } else if (substr($part, 0, 1) == '#' || substr($part, 0, 4) == 'rgb(' || substr($part, 0, 5) == 'rgba(') {
-                    $border->setColor($this->getExcelValidColor($part));
+                    $stylesArray['borders']['allBorders']['color'] = ['rgb' => $this->getExcelValidColor($part, true)];
                 }
             }
         }
     }
 
-    protected function setCellFontStylesFromData(&$cell, $data) {
+    protected function setCellFontStylesFromData($data, &$stylesArray) {
         if ($fontStyles = strtolower($data['font'] ?? null)) {
-            $font = $cell->getStyle()->getFont();
-            $alignment = $cell->getStyle()->getAlignment();
             $parts = array_filter(explode(' ', $fontStyles));
 
             foreach ($parts as $part) {
                 if ($part == 'bold') {
-                    $font->setBold(true);
+                    $stylesArray['font']['bold'] = true;
                 } else if ($part == 'italic') {
-                    $font->setItalic(true);
+                    $stylesArray['font']['italic'] = true;
                 } else if ($part == 'underline') {
-                    $font->setUnderline(true);
+                    $stylesArray['font']['underline'] = true;
                 } else if ($part == 'sub') {
-                    $font->setSubscript(true);
+                    $stylesArray['font']['subscript'] = true;
                 } else if ($part == 'sup') {
-                    $font->setSuperscript(true);
+                    $stylesArray['font']['superscript'] = true;
                 } else if ($part == 'strike') {
-                    $font->setStrikethrough(true);
+                    $stylesArray['font']['strikethrough'] = true;
                 } else if ($part == 'center') {
-                    $alignment->setHorizontal($alignment::HORIZONTAL_CENTER);
+                    $stylesArray['alignment']['horizontal'] = Alignment::HORIZONTAL_CENTER;
                 } else if ($part == 'left') {
-                    $alignment->setHorizontal($alignment::HORIZONTAL_LEFT);
+                    $stylesArray['alignment']['horizontal'] = Alignment::HORIZONTAL_LEFT;
                 } else if ($part == 'right') {
-                    $alignment->setHorizontal($alignment::HORIZONTAL_RIGHT);
+                    $stylesArray['alignment']['horizontal'] = Alignment::HORIZONTAL_RIGHT;
                 } else if ($part == 'justify') {
-                    $alignment->setHorizontal($alignment::HORIZONTAL_JUSTIFY);
+                    $stylesArray['alignment']['horizontal'] = Alignment::HORIZONTAL_JUSTIFY;
                 } else if ($part == 'wrap') {
-                    $alignment->setWrapText(true);
+                    $stylesArray['alignment']['wrapText'] = true;
                 } else if (substr($part, 0, 1) == '#' || substr($part, 0, 4) == 'rgb(' || substr($part, 0, 5) == 'rgba(') {
-                    $font->setColor($this->getExcelValidColor($part));
+                    $stylesArray['font']['color'] = ['rgb' => $this->getExcelValidColor($part, true)];
                 } else if (is_numeric($part)) {
-                    $font->setSize($part);
+                    $stylesArray['font']['size'] = $part;
                 } else {
-                    $font->setName($part);
+                    $stylesArray['font']['name'] = $part;
                 }
             }
         }
@@ -352,7 +357,7 @@ class Converter {
         }
     }
 
-    protected function getExcelValidColor($string) {
+    protected function getExcelValidColor($string, $returnAsString = false) {
         $knownColors = [
             'black' => '000000',
             'white' => 'FFFFFF',
@@ -367,7 +372,7 @@ class Converter {
         ];
 
         if (isset($knownColors[$string])) {
-            return new Color($knownColors[$string]);
+            return $returnAsString ? $knownColors[$string] : new Color($knownColors[$string]);
         }
 
         if (strpos($string, '#') === 0) {
@@ -377,13 +382,13 @@ class Converter {
                 $string = str_repeat($string[0], 2) . str_repeat($string[1], 2) . str_repeat($string[2], 2);
             }
 
-            return new Color($string);
+            return $returnAsString ? $string : new Color($string);
         }
 
         if (strpos($string, 'rgb(') === 0 || strpos($string, 'rgba(') === 0) {
             $rbgParts = explode(',', preg_replace('/[^0-9,]/', '', $string));
             $hex = sprintf("%02x%02x%02x", $rbgParts[0], $rbgParts[1], $rbgParts[2]);
-            return new Color($hex);
+            return $returnAsString ? $hex : new Color($hex);
         }
     }
 }
