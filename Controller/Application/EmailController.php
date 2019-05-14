@@ -6,7 +6,6 @@ use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Eckinox\Entity\Application\Email;
-use Eckinox\Entity\Application\User;
 use Eckinox\Form\Application\EmailType;
 use Eckinox\Library\General\Arrays;
 use Symfony\Component\HttpFoundation\Response;
@@ -208,7 +207,7 @@ class EmailController extends Controller
 
         $form = $this->createForm(EmailType::class, $email, [
             'users' => $this->getDoctrine()
-                ->getRepository(User::class)
+                ->getRepository($this->getParameter('user_class'))
                 ->getSelectableEmail(),
             'disabled' => $templates ? false : $email->isSent(),
             'from' => $email->getFrom() ?: $this->getUser()->getEmail(),
@@ -377,7 +376,7 @@ class EmailController extends Controller
 
         $form = $this->createForm(EmailType::class, $email, [
             'users' => $this->getDoctrine()
-                ->getRepository(User::class)
+                ->getRepository($this->getParameter('user_class'))
                 ->getSelectableEmail(),
             'disabled' => $email->isSent(),
             'to' => $email->getTo() ?: [''],
@@ -590,7 +589,7 @@ class EmailController extends Controller
          * Users
          */
         $users = $this->getDoctrine()
-            ->getRepository(User::class)
+            ->getRepository($this->getParameter('user_class'))
             ->getSelectableEmail();
 
         return array_merge(["Utilisateurs" => $users], $contacts);
