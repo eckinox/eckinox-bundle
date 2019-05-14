@@ -2,6 +2,8 @@
 
 namespace Eckinox\Library\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 trait baseEntity {
 
     /**
@@ -120,17 +122,24 @@ trait baseEntity {
         return $value;
     }
 
-    public function getRawObject($return_entity_id = false, $date_format = null) {
+    public function getRawObject($returnEntityId = false, $dateFormat = null, $includeRelations = false) {
         $data = [];
 
         foreach (static::getClassProperties() as $property) {
             $value = $this->get($property);
 
-            if(is_object($value)) {
-                if($return_entity_id && method_exists($value, 'getId')) {
+            if ($value instanceof Collection) {
+                $relationData = [];
+                foreach ($value as $entity) {
+                    # @TODO: Inlcude sub-relations by managing recursion correctly
+                    $relationData[] = $entity->getRawObject($returnEntityId, $dateFormat, false);
+                }
+                $value = $relationData;
+            } else if (is_object($value)) {
+                if($returnEntityId && method_exists($value, 'getId')) {
                     $value =  $value->getId();
-                } else if($date_format && method_exists($value, 'format')) {
-                    $value = $value->format($date_format);
+                } else if($dateFormat && method_exists($value, 'format')) {
+                    $value = $value->format($dateFormat);
                 }
             }
 
