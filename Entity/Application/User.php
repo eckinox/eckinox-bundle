@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Criteria;
 /**
  * @ORM\Table(name="ei_users")
  * @ORM\Entity(repositoryClass="Eckinox\Repository\Application\UserRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  */
 class User implements UserInterface, \Serializable
 {

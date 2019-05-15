@@ -6,9 +6,7 @@ use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Eckinox\Entity\Application\User;
 use Eckinox\Entity\Application\Log;
-use Eckinox\Form\Application\UserType;
 use Eckinox\Library\General\Arrays;
 use Eckinox\Library\General\Serializer;
 use Eckinox\Library\General\StringEdit;
@@ -46,12 +44,12 @@ class UserController extends Controller
 
             if($ids && $action) {
                 $users = $this->getDoctrine()
-                    ->getRepository(User::class)
+                    ->getRepository($this->getParameter('user_class'))
                     ->findById($ids);
 
                 $names = [];
 
-                if(method_exists(User::class, $action)) {
+                if(method_exists($this->getParameter('user_class'), $action)) {
                     foreach($users as $user) {
 
                         if($this->getUser()->getId() == $user->getId()) {
@@ -103,10 +101,11 @@ class UserController extends Controller
 
         }
 
-        $listing = UserType::getListing($this);
+        $userFormType = $this->getParameter('user_form_type_class');
+        $listing = $userFormType::getListing($this);
         $search = $this->prepareSearch($request, $listing);
 
-        $user_repository = $this->getDoctrine()->getRepository(User::class);
+        $user_repository = $this->getDoctrine()->getRepository($this->getParameter('user_class'));
         $maxResults = $this->data('application.user.config.list.items_shown') ?: 10;
 
         $users = $user_repository->getList($page, $maxResults, $search);
@@ -133,7 +132,8 @@ class UserController extends Controller
      */
     public function edit(Request $request, $user_id = null, AuthorizationCheckerInterface $authChecker, UserPasswordEncoderInterface $encoder)
     {
-        $user = new User();
+        $userClass = $this->getParameter('user_class');
+        $user = new $userClass();
         $currentData = [];
         $isNew = true;
         $emailIsValid = true;
@@ -145,7 +145,7 @@ class UserController extends Controller
             $isNew = false;
 
             $user = $this->getDoctrine()
-                ->getRepository(User::class)
+                ->getRepository($userClass)
                 ->find($user_id);
         }
         else {
@@ -188,7 +188,7 @@ class UserController extends Controller
             $email = $data['user']['left']['email'];
 
             $result = $this->getDoctrine()
-                ->getRepository(User::class)
+                ->getRepository($userClass)
                 ->findOneBy([
                     "email" => $email
                 ]);
@@ -204,7 +204,7 @@ class UserController extends Controller
             }
         }
 
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm($this->getParameter('user_form_type_class'), $user, [
             "privileges" => $privileges,
             "emailIsValid" => $emailIsValid,
         ]);

@@ -7,7 +7,7 @@ security:
     providers:
         our_db_provider:
             entity:
-                class: Eckinox\Entity\Application\User
+                class: "%user_class%"
 
     firewalls:
         dev:

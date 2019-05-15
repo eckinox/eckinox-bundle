@@ -11,7 +11,6 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Eckinox\Entity\Application\User;
 
 class Install extends Command
 {
@@ -112,16 +111,17 @@ class Install extends Command
     }
 
     protected function createDeveloperUser() {
+        $userClass = $this->container->getParameter('user_class');
         $doctrine = $this->container->get('doctrine');
         $em = $doctrine->getManager();
         $user_email = 'dev@eckinox.ca';
         $user_password = 'Lumiere1!';
-        $user = $doctrine->getRepository(User::class)->findBy(['username' => $user_email]);
+        $user = $doctrine->getRepository($userClass)->findBy(['username' => $user_email]);
 
         if($user) {
             $this->output->writeln('The user '. $user_email .' already exists.');
         } else {
-            $user = new User();
+            $user = new $userClass();
 
             $user->setFullName('Eckinox User')
                 ->setEmail($user_email)
