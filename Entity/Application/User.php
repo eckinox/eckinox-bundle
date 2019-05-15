@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\Criteria;
  * @ORM\Table(name="ei_users")
  * @ORM\Entity(repositoryClass="Eckinox\Repository\Application\UserRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorMap({"bundle": "Eckinox\Entity\Application\User", "app": "App\Entity\User"})
  */
 class User implements UserInterface, \Serializable
 {
