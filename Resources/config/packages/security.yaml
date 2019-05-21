@@ -31,6 +31,7 @@ security:
                 target: /login
 
     access_control:
+        - { path: ^/service-worker.js, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/manifest.json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/cron, roles: IS_AUTHENTICATED_ANONYMOUSLY }
