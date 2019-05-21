@@ -132,12 +132,18 @@ trait baseEntity {
                 $relationData = [];
                 foreach ($value as $entity) {
                     # @TODO: Inlcude sub-relations by managing recursion correctly
-                    $relationData[] = $entity->getRawObject($returnEntityId, $dateFormat, false);
+                    if (method_exists($entity, 'getRawObject')) {
+                        $relationData[] = $entity->getRawObject($returnEntityId, $dateFormat, false);
+                    }
                 }
                 $value = $relationData;
             } else if (is_object($value)) {
-                if($returnEntityId && method_exists($value, 'getId')) {
-                    $value =  $value->getId();
+                if(method_exists($value, 'getId')) {
+                    if ($returnEntityId) {
+                        $value = $value->getId();
+                    } else if (method_exists($value, 'getRawObject')) {
+                        $value = $value->getRawObject(true, $dateFormat, false);
+                    }
                 } else if($dateFormat && method_exists($value, 'format')) {
                     $value = $value->format($dateFormat);
                 }
