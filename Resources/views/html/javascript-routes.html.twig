@@ -1,0 +1,47 @@
+<script>
+    const _routes = {{ get_routes_json() }};
+
+    function path(name, parameters) {
+        name = typeof name != 'undefined' ? name : null;
+        parameters = typeof parameters != 'undefined' ? parameters : {};
+
+        if (typeof _routes[name] == 'undefined') {
+            throw new Error(`There is no matching route for "${name}".`);
+        }
+
+        let parameterPattern = /\{([^}]+)\}/g;
+        let route = _routes[name];
+        let path = _routes[name].path;
+        let match;
+
+        // Parse and fill the parameters
+        do {
+            match = parameterPattern.exec(path);
+
+            if (match) {
+                let placeholder = match[0];
+                let parameter = match[1];
+                let defaultValue = typeof route.defaults[parameter] != 'undefined' ? route.defaults[parameter] : null;
+                let requirement = typeof route.requirements[parameter] != 'undefined' ? route.requirements[parameter] : null;
+                let value = typeof parameters[parameter] != 'undefined' ? parameters[parameter] : defaultValue;
+
+                if (requirement) {
+                    let requirementRegex = new RegExp('^' + requirement + '$', 'g');
+
+                    if (!requirementRegex.test(value)) {
+                        throw new Error(`The value "${value}" for the parameter "${parameter}" does not respect the required pattern: ${requirement}`);
+                    }
+                }
+
+                path = path.replace(placeholder, value);
+            }
+        } while (match);
+
+        return path;
+    }
+
+    function url(name, parameters) {
+        let pathPart = path(name, parameters);
+        return window.location.protocol + '//' + window.location.host + pathPart;
+    }
+</script>
