@@ -35,7 +35,7 @@ return [
         "reset" => [
             "title" => "Réinitialiser votre mot de passe",
             "subtitle" => "Vous avez oublié votre mot de passe?",
-            "explanation" => "Envoyez le formulaire ci-dessous, et nous allons vous envoyer un lien via courriel afin de changer votre mot de passe.",
+            "explanation" => "Inscrivez ci-dessous l’adresse courriel associée à votre compte afin de recevoir un lien de réinitialisation de mot de passe.",
             "email:label" => "Adresse courriel",
             "email:placeholder" => "john.doe@mail.com",
             "submit" => "Envoyer le lien de réinitialisation",
@@ -52,7 +52,7 @@ return [
             "email" => [
                 "subject" => "Réinitialiser votre mot de passe",
                 "content" =>
-                    "Une demande de réinitialisation de mot de passe a été fait pour votre compte.\n\n" .
+                    "Une demande de réinitialisation de mot de passe a été soumise pour votre compte.\n\n" .
                     "Pour procéder au changement, <a href='%reset_url%' target='_blank'>cliquez ici</a> ou tapez le lien ci-dessous dans la barre d'adresse de votre navigateur:\n" .
                     "%reset_url%\n\n" .
                     "Si vous n'avez pas fait cette demande, veuillez ignorer ce courriel.",
