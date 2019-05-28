@@ -1,0 +1,100 @@
+{% extends '@Eckinox/public_base.html.twig' %}
+{% trans_default_domain 'application' %}
+
+{% block content %}
+    <div class="login-container">
+        <div class="login-form">
+            <div class="logo">
+                {% set logo_url = data('assets.theme.logo.login') %}
+
+                {% if logo_url %}
+                    <img src="{{ asset(logo_url) }}" />
+                {% else %}
+                    <img src="{{ asset('image/logo.png', 'eckinox') }}" />
+                {% endif %}
+            </div>
+
+            <form action="{{ path('login') }}" method="post">
+                <div class="field-wrapper username">
+                    <label for="username">{% trans %}login.fields.email{% endtrans %}</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" autocomplete="off" placeholder="{% trans %}login.fields.email{% endtrans %}" />
+                </div>
+
+                <div class="field-wrapper password">
+                    <label for="password">{% trans %}login.fields.password{% endtrans %}</label>
+                    <input type="password" id="password" name="_password" autocomplete="off" placeholder="{% trans %}login.fields.password{% endtrans %}" />
+                </div>
+
+                <div class="button-container">
+                    <button class="button" type="submit">{% trans %}login.fields.login{% endtrans %}</button>
+                </div>
+
+                <a href="#" class="password-reset" eckinox-popup="password-reset">{% trans %}login.actions.forgotPassword{% endtrans %}</a>
+            </form>
+        </div>
+    </div>
+
+    <eckinox-popup id="password-reset" name="password-reset" class="eckinox-popup">
+        <header slot="title">
+            <p class="title">{% trans %}login.reset.title{% endtrans %}</p>
+            <a class="close" aria-label="close" action="close">
+                <i class="far fa-times"></i>
+            </a>
+        </header>
+
+        <div slot="message" class="message">
+            <p class="subtitle">{% trans %}login.reset.subtitle{% endtrans %}</p>
+            <p class="explanation">{% trans %}login.reset.explanation{% endtrans %}</p>
+
+            <form action="{{ url('password_reset_json') }}">
+                <div class="field-wrapper email">
+                    <label for="email">{% trans %}login.reset.email:label{% endtrans %}</label>
+                    <input type="email" id="email" name="email" autocomplete="off" placeholder="{% trans %}login.reset.email:placeholder{% endtrans %}" required>
+                </div>
+
+                <button class="button" type="submit">{% trans %}login.reset.submit{% endtrans %}</button>
+            </form>
+        </div>
+    </eckinox-popup>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        // Password reset link
+        let passwordResetForm = document.querySelector('#password-reset form');
+        let passwordResetButton = passwordResetForm.querySelector('button');
+
+        passwordResetForm.addEventListener('submit', function(e){
+            e.preventDefault();
+
+            let emailInput = passwordResetForm.querySelector('input[name="email"]');
+            let email = emailInput.value.trim();
+            let url = new URL(passwordResetForm.getAttribute('action'));
+            url.search = new URLSearchParams({ email: email })
+
+            passwordResetButton.disabled = true;
+
+            if (!email) {
+                BundleUI.showFlashMessage('error', trans('login.reset.message.noEmail', [], 'application'), 5000);
+                passwordResetButton.disabled = false;
+                return;
+            }
+
+            fetch(url).then((response) => {
+                return response.json();
+            }).then((data) => {
+                BundleUI.showFlashMessage(data.success ? 'success' : 'error', data.message, 5000);
+
+                if (data.success) {
+                    passwordResetForm.closest('eckinox-popup').hide();
+                    passwordResetForm.reset();
+                }
+
+                passwordResetButton.disabled = false;
+            }).catch((error) => {
+                BundleUI.showFlashMessage('error', trans('login.reset.message.unknownError', [], 'application'), 5000);
+                passwordResetButton.disabled = false;
+            });
+        });
+    </script>
+{% endblock %}

@@ -3,7 +3,7 @@
 parameters:
     app.symfony_config.path: '%kernel.project_dir%/config/'
     app.eckinox_config.path: '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Resources/config/'
-    app.controllers.path: {'App\Controler': '%kernel.project_dir%/src/Controller', 'Eckinox\Controller': '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Controller'}
+    app.controllers.path: {'App\Controller': '%kernel.project_dir%/src/Controller', 'Eckinox\Controller': '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Controller'}
     app.forms.path: {'App\Form': '%kernel.project_dir%/src/Form', 'Eckinox\Form': '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Form'}
     app.data.privileges: '%kernel.project_dir%/data/privileges.json'
     app.data.path: '%kernel.project_dir%/data/'

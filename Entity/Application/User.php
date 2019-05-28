@@ -88,6 +88,11 @@ class User implements UserInterface, \Serializable
      */
     private $status;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="PasswordResetRequest", mappedBy="user")
+	 */
+	protected $passwordResetRequests;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -290,6 +295,18 @@ class User implements UserInterface, \Serializable
 
     public function hasPrivilege($privilege) {
         return in_array($privilege, $this->getPrivileges());
+    }
+
+    public function getPasswordResetRequests()
+    {
+        return $this->passwordResetRequests;
+    }
+
+    public function setPasswordResetRequests($passwordResetRequests)
+    {
+        $this->passwordResetRequests = $passwordResetRequests;
+
+        return $this;
     }
 
     public function getVariables()

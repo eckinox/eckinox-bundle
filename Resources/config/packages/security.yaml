@@ -34,5 +34,8 @@ security:
         - { path: ^/service-worker.js, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/manifest.json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/json/password-reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/password-reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/cron, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }

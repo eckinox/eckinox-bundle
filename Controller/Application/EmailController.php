@@ -467,7 +467,7 @@ class EmailController extends Controller
 
         $emails = $this->getDoctrine()
             ->getRepository(Email::class)
-            ->getUnsent(5, date("Y-m-d H:i:s", strtotime("now - 5 minutes")));
+            ->getUnsent(5);
 
          /*
           * Prevent to reload mails being sent
@@ -488,11 +488,11 @@ class EmailController extends Controller
             $email->setUpdatedAt();
 
             try {
-                if($this->send($email, $mailer)) {
+                if ($this->send($email, $mailer)) {
                     $email->setStatus('sent');
                     $email->setSentAt();
                 }
-            } catch(\Exception $e){
+            } catch (\Exception $e){
                 $email->setStatus('unsent_error');
             }
 
