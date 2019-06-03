@@ -1,3 +1,7 @@
+parameters:
+    user_class: 'Eckinox\Entity\Application\User'
+    user_form_type_class: 'Eckinox\Form\Application\UserType'
+
 doctrine:
     orm:
         mappings:

@@ -1,0 +1,31 @@
+{% trans_default_domain 'application' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include '@Eckinox/html/head.html.twig' %}
+        <link rel="stylesheet" href="{{ asset('css/webcomponent/popup.css', 'eckinox') }}">
+        <style>
+            #modal, #flash { padding-left: 0px; padding-right: 0px; }
+            #flash { max-width: 500px }
+            .field-wrapper { padding-bottom: 15px; }
+            .field-wrapper input[type=text],
+            .field-wrapper input[type=date],
+            .field-wrapper input[type=email],
+            .field-wrapper input[type=number],
+            .field-wrapper input[type=password],
+            .field-wrapper input[type=tel],
+            .field-wrapper select { height: 50px; line-height: 50px;}
+        </style>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+
+        {% include "@Eckinox/html/modal.html.twig" %}
+
+        <script src="{{ asset('js/ui.js', 'eckinox') }}"></script>
+        <script src="{{ asset('js/webcomponent/popup.js', 'eckinox') }}"></script>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

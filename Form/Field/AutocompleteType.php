@@ -2,7 +2,6 @@
 
 namespace Eckinox\Form\Field;
 
-use Eckinox\Entity\Application\User;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\AbstractType;

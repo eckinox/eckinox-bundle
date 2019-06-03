@@ -2,6 +2,7 @@
 namespace Eckinox\Library\Symfony\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -19,10 +20,12 @@ class Extension extends AbstractExtension
     use \Eckinox\Library\General\appData;
 
     private $container;
+    private $router;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, RouterInterface $router)
     {
         $this->container = $container;
+        $this->router = $router;
     }
 
     public function getFilters()
@@ -65,6 +68,7 @@ class Extension extends AbstractExtension
             new TwigFunction("git_branch", [ $git, "getBranch" ] ),
             new TwigFunction("git_commit_date", [ $git, "getCommitDate" ] ),
             new TwigFunction("get_translations_json", [ $this, "getTranslationsAsJson" ] ),
+            new TwigFunction("get_routes_json", [ $this, "getRoutesAsJson" ] ),
             new TwigFunction("data", [ $this, "getData" ] ),
             new TwigFunction("custom_field", [ $this, "generateCustomField" ] ),
             new TwigFunction("autocomplete", [ $this, "generateAutocompleteField" ] ),
@@ -177,6 +181,24 @@ class Extension extends AbstractExtension
     public function getTranslationsAsJson() {
         $messages = $this->container->get('translator')->getCatalogue()->all();
         return new Markup(json_encode($messages, true), []);
+    }
+
+    public function getRoutesAsJson() {
+        $routes = [];
+
+        foreach ($this->router->getRouteCollection() as $name => $route) {
+            $defaults = $route->getDefaults();
+            unset($defaults['_controller']);
+
+            $routes[$name] = [
+                'name' => $name,
+                'path' => $route->getPath(),
+                'defaults' => $defaults,
+                'requirements' => $route->getRequirements() ?: [],
+            ];
+        }
+
+        return new Markup(json_encode($routes, true), []);
     }
 
     public function generateCustomField($name, $field) {

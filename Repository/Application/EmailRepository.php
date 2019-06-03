@@ -45,16 +45,23 @@ class EmailRepository extends ServiceEntityRepository
     }
 
     public function getUnsent($maxResults = 5, $olderThan = null) {
-        return $this->createQueryBuilder('e')
+        $query = $this->createQueryBuilder('e')
             ->where('e.sentAt is null')
-            ->andWhere('e.draft != 1 or e.draft is null')
-            ->andWhere('e.updatedAt <= :date')
-            // TODO: causing bugs ... emails aren't loaded
-            //->andWhere("( ( SELECT count(c.id) FROM App\Entity\Application\Connection c WHERE c.url LIKE CONCAT('%/email/edit/', e.id, '%') ) = 0 )")
-            ->setParameter('date', $olderThan)
-            ->orderBy('e.createdAt', 'ASC')
+            ->andWhere('e.draft != 1 or e.draft is null');
+
+        if ($olderThan) {
+            $query->andWhere('e.updatedAt <= :date')
+                ->setParameter('date', $olderThan);
+        }
+
+        // TODO: causing bugs ... emails aren't loaded
+        //->andWhere("( ( SELECT count(c.id) FROM App\Entity\Application\Connection c WHERE c.url LIKE CONCAT('%/email/edit/', e.id, '%') ) = 0 )")
+
+        $query->orderBy('e.createdAt', 'ASC')
             ->setMaxResults($maxResults)
             ->getQuery()->getResult();
+
+        return $query->getQuery()->getResult();
     }
 
     public function getCount($search = []) {

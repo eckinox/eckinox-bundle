@@ -52,17 +52,17 @@
 .top-bar .user .name { font-size: 1em; }
 .top-bar .user .photo { width: 40px; height: 40px; border-radius: 20px; margin-left: 10px; background: rgba(255,255,255,.15); }
 .content-wrapper { display: flex; min-height: calc(100vh - 60px); }
-.content-wrapper .content { display: flex; flex-wrap: wrap; flex: 1; height: calc(100vh - 60px); flex-direction: column; }
-.content-wrapper .content .header { width: 100%; padding: 30px; padding-bottom: 0; background: #f9f9f9; border-bottom: 1px solid rgba(0, 80, 178, 0.09); padding-top: 15px; }
-.content-wrapper .content .scrollable { height: 100%; padding: 0 30px; overflow-y: scroll; position: relative; flex: 1; }
-.content-wrapper .content .scrollable::before,
-.content-wrapper .content .scrollable::after { content: ''; display: block; height: 30px; width: 100%; }
-.content-wrapper .content .block-wrapper { display: flex; flex-flow: row wrap; margin-bottom: 30px; }
+.content-wrapper > .content { display: flex; flex-wrap: wrap; flex: 1; height: calc(100vh - 60px); flex-direction: column; }
+.content-wrapper > .content .header { width: 100%; padding: 30px; padding-bottom: 0; background: #f9f9f9; border-bottom: 1px solid rgba(0, 80, 178, 0.09); padding-top: 15px; }
+.content-wrapper > .content .scrollable { height: 100%; padding: 0 30px; overflow-y: scroll; position: relative; flex: 1; }
+.content-wrapper > .content .scrollable::before,
+.content-wrapper > .content .scrollable::after { content: ''; display: block; height: 30px; width: 100%; }
+.content-wrapper > .content .block-wrapper { display: flex; flex-flow: row wrap; margin-bottom: 30px; }
 
 
-.content-wrapper .content .block-wrapper .block { width: 100%; flex: 1; }
-.content-wrapper .content .block-wrapper .block.full { flex: none; margin-bottom: 75px; }
-.content-wrapper .content .block-wrapper .block.full:last-of-type { margin-bottom: 0; }
+.content-wrapper > .content .block-wrapper .block { width: 100%; flex: 1; }
+.content-wrapper > .content .block-wrapper .block.full { flex: none; margin-bottom: 75px; }
+.content-wrapper > .content .block-wrapper .block.full:last-of-type { margin-bottom: 0; }
 
 
 .action-nav { margin-bottom: 30px; }
