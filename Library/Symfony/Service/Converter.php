@@ -162,7 +162,7 @@ class Converter {
         return $data;
     }
 
-    public function arrayToExcel($array, $saveFilepath = null, $download = null) {
+    public function arrayToExcel($array, $saveFilepath = null, $download = null, $preventExit = false) {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->removeSheetByIndex(0);
 
@@ -188,7 +188,10 @@ class Converter {
             header('Cache-Control: max-age=0');
 
             $writer->save('php://output');
-            die();
+
+            if (!$preventExit) {
+                die();
+            }
         }
     }
 
