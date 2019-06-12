@@ -21,7 +21,8 @@ document.addEventListener('submit', function(e) {
     // If there's file upload within the form, display a loading screen
     let loadingScreen = null;
     let loadingScreenProgress = null;
-    if (form.querySelectorAll('input[type="file"]').length) {
+
+    if (form.getAttribute('loading-screen') != 'off') {
         // Display a loading screen while the upload and processing takes place
         loadingScreen = document.createElement('div');
         loadingScreen.innerHTML = '<div><i class="fa fa-spinner fa-spin"></i></div><progress value="0" max="100"></progress>';

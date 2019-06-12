@@ -326,6 +326,37 @@ class BundleUI {
             focusableElements[currentIndex + 1].focus();
         }
     }
+
+    static showModal(title, content, buttons, classes) {
+        title = typeof title != 'undefined' ? title : '';
+        content = typeof content != 'undefined' ? content : '';
+        classes = typeof classes != 'undefined' ? classes : '';
+
+        let node = BundleUI.createNodeFromString(`
+            <eckinox-popup id="js-instant-modal" name="js-instant-modal" class="eckinox-popup js-instant-modal ${classes}">
+                <header slot="title">
+                    <p class="title">
+                        ${title}
+
+                        <a class="close" aria-label="close" action="close">
+                            <i class="far fa-times"></i>
+                        </a>
+                    </p>
+                </header>
+
+                <div slot="message" class="message">
+                    ${content}
+                </div>
+
+                <div slot="buttons" class="button-list">
+                    ${buttons}
+                </div>
+            </eckinox-popup>
+        `);
+
+        BundleUI.appendTo(document.body, node);
+        node.show();
+    }
 }
 
 // On load, initiate the basic UI listeners and behaviors
