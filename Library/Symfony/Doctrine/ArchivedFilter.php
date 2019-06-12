@@ -12,6 +12,7 @@ class ArchivedFilter extends SQLFilter
         $isArchivable = false;
         $isDeletable = false;
         $isStatusDeletable = false;
+        $statusPropertyKey = 'status';
         $queryString = '';
 
         foreach ($targetEntity->reflClass->getProperties() as $property) {
@@ -24,6 +25,11 @@ class ArchivedFilter extends SQLFilter
                     break;
                 case 'status':
                     $isStatusDeletable = true;
+
+                    if ($property->getDocComment() && strpos($property->getDocComment(), 'name=') !== false) {
+                        preg_match('/name="([^"]+)"/', $property->getDocComment(), $matches);
+                        $statusPropertyKey = $matches[1] ?? 'status';
+                    }
                     break;
             }
         }
@@ -40,7 +46,7 @@ class ArchivedFilter extends SQLFilter
 
         # Or deleted ones, using statuses...
         if ($isStatusDeletable) {
-            $queryString .= ($queryString ? ' AND ' : '') . $targetTableAlias . '.status != \'deleted\' or ' . $targetTableAlias . '.status is NULL';
+            $queryString .= ($queryString ? ' AND ' : '') . $targetTableAlias . '.' . $statusPropertyKey . ' != \'deleted\' or ' . $targetTableAlias . '.' . $statusPropertyKey . ' is NULL';
         }
 
         return $queryString;

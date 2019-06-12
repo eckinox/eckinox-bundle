@@ -23,6 +23,23 @@
 .login-container .logo img { display: block; width: 90%; max-width: 300px; margin: auto; }
 .login-form button { height: 50px; }
 .login-form .field-wrapper { margin: 0; }
+.login-container .password-reset { display: block; margin-top: 20px; font-size: .85rem; text-align: center; color: #777; transition: all .15s ease; }
+.login-container .password-reset:hover { color: #333; }
+/* Login form: password reset */
+eckinox-popup#password-reset { width: 400px; max-width: 90%; }
+eckinox-popup#password-reset header { display: flex; justify-content: space-between; align-items: center; }
+eckinox-popup#password-reset header .close { margin-right: 20px; font-size: 20px; color: var(--grey); cursor: pointer; transition: all .15s ease; }
+eckinox-popup#password-reset header .close:hover { color: var(--black); }
+eckinox-popup#password-reset .message p { margin: 1em 0; }
+eckinox-popup#password-reset .message p:first-child { margin-top: 0; }
+eckinox-popup#password-reset .message form { padding-top: 20px; margin-top: 20px; border-top: 1px solid #eeee; }
+eckinox-popup#password-reset .message form .field-wrapper { padding: 0; margin-bottom: 15px; }
+eckinox-popup#password-reset .message form button { margin-left: auto; }
+/* Password reset form */
+.password-reset-form h3 { margin-top: 0; }
+.password-reset-form .field-wrapper { padding: 0; }
+.password-reset-form form > * > div + div { margin-top: 15px; }
+.password-reset-form form ul li { padding: 8px 10px; margin-bottom: 15px; font-size: .85rem; font-weight: 600; line-height: 1.35em; color: white; background-color: var(--red); border-radius: 3px; }
 
 /*
  *  Software

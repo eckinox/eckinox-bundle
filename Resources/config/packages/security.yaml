@@ -7,7 +7,7 @@ security:
     providers:
         our_db_provider:
             entity:
-                class: Eckinox\Entity\Application\User
+                class: "%user_class%"
 
     firewalls:
         dev:
@@ -31,7 +31,11 @@ security:
                 target: /login
 
     access_control:
+        - { path: ^/service-worker.js, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/manifest.json, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/json/password-reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/password-reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/cron, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }

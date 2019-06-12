@@ -1,0 +1,32 @@
+{% trans_default_domain 'application' %}
+
+{% if response.success %}
+    {% set resultsCount = 0 %}
+
+    <div class="import-results-preview success">
+        <div class="title">{% trans %}import.preview.success{% endtrans %}</div>
+        <div class="content">
+            {% for changeType, entityChanges in response.data if entityChanges | length %}
+                <div class="changes-wrapper">
+                    <div class="subtitle">{{ ('import.preview.' ~ changeType) | trans }}</div>
+                    {% for entityClass, count in entityChanges if entityClass not in (settings.previewIgnore is defined ? settings.previewIgnore : []) %}
+                        <div class="change-entry {{ changeType }}">
+                            <span class="count">{{ count }}</span> {{ ((entityClass | lcfirst) ~ '.title') | trans | lcfirst }}
+                        </div>
+
+                        {% set resultsCount = resultsCount + 1 %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {% if resultsCount == 0 %}
+                {% trans %}import.preview.noChanges{% endtrans %}
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+    <div class="import-results-preview error">
+        <div class="title">{% trans %}import.preview.error{% endtrans %}</div>
+        <div class="content">{{ response.error }}</div>
+    </div>
+{% endif %}

@@ -17,6 +17,14 @@
                         this.hide();
                     }
                 }.bind(this));
+
+                document.body.addEventListener('click', function(e){
+                    let openPopup = document.querySelector('eckinox-popup.visible:not(.opening)');
+
+                    if (openPopup && !e.target.matches('eckinox-popup') && !e.target.closest('eckinox-popup') && !e.target.matches('#flash, #flash *')) {
+                        openPopup.hide();
+                    }
+                });
             }
 
             attach() {
@@ -30,13 +38,9 @@
             }
 
             render() {
-                let btn = this._get_slot("buttons");
-
-                if ( btn ) {
-                    btn.querySelectorAll('[action]').forEach(function(element) {
-                        element.addEventListener("click", this.action.bind(this, element), false);
-                    }.bind(this));
-                }
+                this.querySelectorAll('[action]:not(form)').forEach(function(element) {
+                    element.addEventListener("click", this.action.bind(this, element), false);
+                }.bind(this));
 
                 this.hide();
             }
@@ -54,7 +58,10 @@
                     case "yes":
                     case "ok":
                         this.hide();
-                    break;
+                        break;
+                    case "remove":
+                        this.remove();
+                        break;
                 }
 
                 this.dispatchEvent(new CustomEvent('action:' + element.attributes.action.value));
@@ -62,10 +69,27 @@
             }
 
             hide() {
-                this.classList.remove('visible');
+                this.classList.remove('visible', 'opening');
+            }
+
+            remove() {
+                let node = this;
+                node.classList.remove('visible', 'opening');
+
+                setTimeout(function(){
+                    node.parentNode.removeChild(node);
+                }, 500);
             }
 
             show() {
+                if (!this.classList.contains('visible')) {
+                    this.classList.add('opening');
+
+                    setTimeout(function() {
+                        this.classList.remove('opening');
+                    }.bind(this), 300);
+                }
+
                 this.classList.add('visible');
             }
 

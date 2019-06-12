@@ -8,10 +8,6 @@ use Symfony\{
     Component\Finder\Finder
 };
 
-use App\{
-    Form\Application\UserType
-};
-
 use Eckinox\{
     Entity,
     Library\General\Arrays,

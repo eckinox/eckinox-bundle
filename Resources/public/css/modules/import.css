@@ -19,3 +19,14 @@
 .assignation-row { display: inline-block; padding-right: 10px; margin-top: 5px; margin-right: 8px; border: 1px solid #ccc; border-radius: 50px; overflow: hidden; cursor: pointer; user-select: none; }
 .assignation-row .column { display: inline-block; padding: 5px 10px; padding-right: 5px; font-weight: 600; vertical-align: middle; }
 .assignation-row .field { font-size: .85em; vertical-align: middle; }
+
+.import-results-preview .title { padding: 0; margin-bottom: 15px; }
+.import-results-preview.error .title { color: #bf3e3e; }
+.import-results-preview.error .content { white-space: pre-line; }
+.import-results-preview .changes-wrapper + .changes-wrapper { margin-top: 15px; }
+.import-results-preview .change-entry { margin-top: 5px; margin-left: 15px; font-weight: 600; }
+.import-results-preview .change-entry.created { color: var(--green); }
+.import-results-preview .change-entry.archived { color: var(--red); }
+.import-results-preview .change-entry.deleted { color: var(--red); }
+.import-results-preview .change-entry.updated { color: var(--blue); }
+.import-results-preview .changes-wrapper .subtitle:only-child { display: none; }

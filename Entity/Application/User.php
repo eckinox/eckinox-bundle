@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Criteria;
 /**
  * @ORM\Table(name="ei_users")
  * @ORM\Entity(repositoryClass="Eckinox\Repository\Application\UserRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  */
 class User implements UserInterface, \Serializable
 {
@@ -86,6 +87,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=125)
      */
     private $status;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="PasswordResetRequest", mappedBy="user")
+	 */
+	protected $passwordResetRequests;
 
     public function __construct()
     {
@@ -289,6 +295,18 @@ class User implements UserInterface, \Serializable
 
     public function hasPrivilege($privilege) {
         return in_array($privilege, $this->getPrivileges());
+    }
+
+    public function getPasswordResetRequests()
+    {
+        return $this->passwordResetRequests;
+    }
+
+    public function setPasswordResetRequests($passwordResetRequests)
+    {
+        $this->passwordResetRequests = $passwordResetRequests;
+
+        return $this;
     }
 
     public function getVariables()

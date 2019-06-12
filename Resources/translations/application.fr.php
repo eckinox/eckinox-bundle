@@ -3,6 +3,10 @@
 return [
     "yes" => "Oui",
     "no" => "Non",
+    "cancel" => "Annuler",
+    "continue" => "Continuer",
+    "submit" => "Envoyer",
+    "save" => "Enregistrer",
     "unnamed" => "Sans nom",
     "title" => [
         "create_user" => "Créer un utilisateur",
@@ -19,6 +23,62 @@ return [
         "edit_email_template" => "Gabarit « %name% »",
         "create_email_template" => "Nouveau gabarit de courriel",
         "index_email_templates" => "Liste des gabarits de courriel",
+    ],
+
+    "login" => [
+        "fields" => [
+            "email" => "Courriel",
+            "password" => "Mot de passe",
+            "login" => "Connexion",
+        ],
+
+        "actions" => [
+            "forgotPassword" => "Mot de passe oublié?"
+        ],
+
+        "reset" => [
+            "title" => "Réinitialiser votre mot de passe",
+            "subtitle" => "Vous avez oublié votre mot de passe?",
+            "explanation" => "Inscrivez ci-dessous l’adresse courriel associée à votre compte afin de recevoir un lien de réinitialisation de mot de passe.",
+            "email:label" => "Adresse courriel",
+            "email:placeholder" => "john.doe@mail.com",
+            "submit" => "Envoyer le lien de réinitialisation",
+
+            "message" => [
+                "noEmail" => "Vous devez entrez l'adresse courriel associée à votre compte.",
+                "invalidEmail" => "L'adresse courriel que vous avez entrée est invalide.",
+                "userNotFound" => "Aucun compte ne semble correspondre à cette adresse courriel.",
+                "userInactivee" => "Le compte associé à cette adresse courriel est banni ou désactivé.",
+                "unknownError" => "Une erreur s'est produite, veuillez réessayer plus tard.",
+                "emailSent" => "Un courriel vous a été envoyé afin de réinitialiser votre mot de passe.",
+            ],
+
+            "email" => [
+                "subject" => "Réinitialiser votre mot de passe",
+                "content" =>
+                    "Une demande de réinitialisation de mot de passe a été soumise pour votre compte.\n\n" .
+                    "Pour procéder au changement, <a href='%reset_url%' target='_blank'>cliquez ici</a> ou tapez le lien ci-dessous dans la barre d'adresse de votre navigateur:\n" .
+                    "%reset_url%\n\n" .
+                    "Si vous n'avez pas fait cette demande, veuillez ignorer ce courriel.",
+            ],
+
+            "change" => [
+                "title" => "Changer votre mot de passe",
+                "explanation" => "Entrez votre nouveau mot de passe ci-dessous.",
+                "newPassword" => "Nouveau mot de passe",
+                "newPassword:placeholder" => "Entrez un nouveau mot de passe",
+                "newPasswordConfirmation" => "Confirmation",
+                "newPasswordConfirmation:placeholder" => "Confirmez votre nouveau mot de passe",
+                "submit" => "Mettre à jour",
+
+                "message" => [
+                    "invalidLink" => "Ce lien de réinitialisation de mot de passe est invalide ou a expiré.",
+                    "alreadyUsedLink" => "Ce lien de réinitialisation de mot de passe a déjà été utilisé.",
+                    "passwordsDontMatch" => "Les mots de passe ne correspondent pas.",
+                    "success" => "Votre mot de passe a été mis à jour avec succès!",
+                ],
+            ]
+        ],
     ],
 
     "privileges" => [
@@ -353,7 +413,20 @@ return [
             "startingLineTooHigh" => "La ligne de départ est trop élevée par rapport au nombre de ligne du fichier importé.",
             "typeError" => "Une valeur définie pour %property% est invalide.",
         ],
-        "success" => "Les données ont été importées avec succès."
+
+        "success" => "Les données ont été importées avec succès.",
+
+        "preview" => [
+            "modalTitle" => "Prévisualisation de l'import",
+            "success" => "En poursuivant, l'import entraînera les changements ci-dessous.",
+            "error" => "En poursuivant, l'import risque d'échouer avec le message d'erreur ci-dessous.",
+            "created" => "Les éléments suivant seront créés:",
+            "deleted" => "Les éléments suivant seront supprimés:",
+            "archived" => "Les éléments suivant seront archivés:",
+            "updated" => "Les éléments suivant seront mis à jour:",
+            "noChanges" => "Aucun changement ne sera apporté.",
+            "submit" => "Procéder à l'import",
+        ]
     ],
 
     "ajax" => [

@@ -1,6 +1,8 @@
 {% extends '@Eckinox/base.html.twig' %}
 {% trans_default_domain 'application' %}
 
+{% set previewResultsFirst = settings.preview is defined and settings.preview %}
+
 {% block header %}
     <h2>{{ ('privileges.labels.import.IMPORT_' ~ (importType | camelToSnakeCase | upper )) | trans }}</h2>
 {% endblock %}
@@ -37,7 +39,7 @@
 
     <div class="block-wrapper import-processing hide">
         <div class="block block-full">
-            <form class="import-preview hide" id="import-form" method="POST" action="{{ path('process_import', { importType: importType }) }}">
+            <form class="import-preview hide" id="import-form" method="POST" {{ previewResultsFirst ? 'ajax-action' : 'action' }}="{{ path(previewResultsFirst ? 'preview_import' : 'process_import', { importType: importType }) }}">
                 <input type="hidden" name="data">
 
                 <div class="fields">
@@ -120,6 +122,30 @@
     <script>
         window.addEventListener('load', function(){
             let flow = ImportFlow.init({{ settings | json_encode() | raw }}, {{ autoload_data | json_encode | raw }});
+        });
+
+        let importForm = document.querySelector('#import-form');
+        let modalButtonsHtml = `
+            <button class="button cancel grey" action="remove">{% trans %}cancel{% endtrans %}</button>
+            <button class="button submit">{% trans %}import.preview.submit{% endtrans %}</button>
+        `;
+
+        importForm.addEventListener('ajax-response', function(e) {
+            BundleUI.showModal("{% trans %}import.preview.modalTitle{% endtrans %}", e.detail, modalButtonsHtml, 'import-results-preview-modal');
+        });
+
+        Dom.delegate('click', '.import-results-preview-modal .submit', function(e){
+            e.preventDefault();
+
+            importForm.removeAttribute('ajax-action');
+            importForm.setAttribute('action', '{{ path('process_import', { importType: importType }) }}');
+            importForm.submit();
+
+            for (let button of (this.closest('.import-results-preview-modal').querySelectorAll('button'))) {
+                button.disabled = true;
+            }
+
+            this.classList.add('loading');
         });
     </script>
 {% endblock %}
