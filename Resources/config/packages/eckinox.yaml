@@ -22,3 +22,7 @@ framework:
         packages:
             eckinox:
                 base_path: bundles/eckinox/
+
+twig:
+    globals:
+        available_locales: '%available_locales%'
