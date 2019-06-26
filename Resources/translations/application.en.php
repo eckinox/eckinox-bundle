@@ -368,10 +368,7 @@ return [
             "submit" => "Search"
         ],
         "modules" => [
-            "quote" => "Submissions",
-            "project" => "Projects",
-            "organization" => "Organizations",
-            "product" => "Products"
+            "user" => "Users",
         ],
         "noResult" => "No result"
     ],

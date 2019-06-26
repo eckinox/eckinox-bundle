@@ -43,59 +43,88 @@ class MasterSearchController extends Controller
             if(method_exists($className, $methodName)) {
                 $listing = call_user_func($className.'::'.$methodName, $this);
 
-                if($listing['mastersearch']['types'] ?? false) {
-
-                    foreach($listing['mastersearch']['types'] as $type) {
-                        $modules[$type['name']] = $this->addModule($listing, $type['fields'], $type['name']);
+                if ($listing['mastersearch']['types'] ?? false) {
+                    foreach ($listing['mastersearch']['types'] as $type) {
+                        $module = $this->addModule($listing, $type['fields'], $type['name']);
+                        $modules[$type['name']] = $module;
                     }
+                } else if ($listing['mastersearch']['fields'] ?? false) {
+                    $module = $this->addModule($listing, $listing['mastersearch']['fields']);
 
-                } else if($listing['mastersearch']['fields'] ?? false) {
-                    $modules[$listing['module']] = $this->addModule($listing, $listing['mastersearch']['fields']);
+                    if (!isset($modules[$listing['module']]) || ($module['redefines'] ?? null)) {
+                        $modules[$listing['module']] = $module;
+                    }
                 }
             }
         }
 
-        if($terms) {
+        if ($terms) {
             $terms = $this->normalizeTerms($terms);
 
-            $entityPath = 'App\\Entity\\__DOMAIN__\\__MODULE__';
+            $entityPaths = [
+                'Eckinox\\Entity\\__DOMAIN__\    \__MODULE__',
+                'App\\Entity\\__DOMAIN__\\__MODULE__',
+                'App\\Entity\\__MODULE__',
+            ];
 
-            foreach($modules as &$module) {
-                foreach($module['fields'] as &$field) {
+            foreach ($modules as &$module) {
+                foreach ($module['fields'] as &$field) {
                     $field['terms'] = $terms;
+                }
+            }
+
+            # Fetch the list of redefined entities
+            $redefinedClasses = [];
+            foreach ($modules as &$module) {
+                $redefinedClass = $module['redefines'] ?? null;
+
+                if ($redefinedClass) {
+                    $redefinedClasses[] = $redefinedClass;
                 }
             }
 
             /*
              * Search in selected modules
              */
-            foreach($modules as &$module) {
-                $entityClass = str_replace(['__DOMAIN__', '__MODULE__'], [ucfirst($module['domain']), ucfirst($module['module'])], $entityPath);
+            foreach ($modules as &$module) {
+                $entityClass = null;
+                $className = ucfirst($module['module_class'] ?? $module['module']);
 
-                if(class_exists($entityClass)) {
+                foreach ($entityPaths as $possiblePath) {
+                    $class = str_replace(['__DOMAIN__', '__MODULE__'], [ucfirst($module['domain']), $className], $possiblePath);
+
+                    if (class_exists($class)) {
+                        $entityClass = $class;
+                        break;
+                    }
+                }
+
+                if ($entityClass && class_exists($entityClass) && !in_array($entityClass, $redefinedClasses)) {
                     $repository = $this->getDoctrine()->getRepository($entityClass);
 
-
-                    if(method_exists($repository, 'getList')) {
+                    if (method_exists($repository, 'getList')) {
                         /*
                          * According to his privileges, restrict the user to see only his own objects
                          */
                         $user = null;
-                        if(!$this->getUser()->hasPrivilege(strtoupper($module['module']).'_ALL')) {
+                        if (!$this->getUser()->hasPrivilege(strtoupper($module['module']).'_ALL')) {
                            $user = $this->getUser();
                         }
 
                         $module['result'] = $repository->getList(1, $this->data('application.mastersearch.config.list.items_shown'), $module['fields'], $module['type'] ?? null, $user);
                     } else {
-                        /*
-                         *
-                         */
                         $module['result'] = [];
                     }
 
+                } else {
                 }
             }
         }
+
+        $modules = array_filter($modules, function($module) {
+            return array_key_exists('result', $module);
+        });
+
         uasort($modules, function($a, $b) {
             return count($b['result']) <=> count($a['result']);
         });
@@ -139,6 +168,8 @@ class MasterSearchController extends Controller
         $module = [];
         $module['module'] = $listing['module'];
         $module['domain'] = $listing['domain'];
+        $module['module_class'] = $listing['module_class'] ?? null;
+        $module['redefines'] = $listing['redefines'] ?? null;
 
         $type ? $module['type'] = $type : false;
 

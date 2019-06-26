@@ -1,0 +1,6 @@
+.mastersearch-results .group { padding: 0; background: none; }
+.mastersearch-results .group .result-container { margin-top: 30px; margin-bottom: 45px; }
+.mastersearch-results .group .module-name { display: block; margin-bottom: 10px; font-size: 1.1rem; font-weight: 600; }
+.mastersearch-results .group .action-nav:empty { display: none; }
+.mastersearch-results .group .add-row { display: none; }
+.mastersearch-results .group .no-result { color: var(--grey); }

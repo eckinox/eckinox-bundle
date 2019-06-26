@@ -1,9 +1,7 @@
 {% trans_default_domain listing.domain %}
 
 <form name="{{ listing.module }}-list-form" action="{{ path('index_' ~ listing.module, {'page': 1}) | withCurrentParams }}" method="post">
-    <div class="action-nav">
-        {% block list_actions %}{% endblock %}
-    </div>
+    <div class="action-nav">{% block list_actions %}{% endblock %}</div>
 
     {% block before_list %}{% endblock %}
 
@@ -39,7 +37,9 @@
             </div>
         </div>
 
-        {% include '@Eckinox/html/widget/search.html.twig' %}
+        {% if search is not defined or search %}
+            {% include '@Eckinox/html/widget/search.html.twig' %}
+        {% endif %}
 
         <div class="rows">
             {% for row in rows %}
@@ -125,4 +125,6 @@
     {% block after_list %}{% endblock %}
 </form>
 
-{% include '@Eckinox/html/pagination.html.twig' with {'view': 'index_' ~ listing.module, 'nbPages': nbPages, 'currentPage': currentPage} %}
+{% if pagination is not defined or pagination %}
+    {% include '@Eckinox/html/pagination.html.twig' with {'view': 'index_' ~ listing.module, 'nbPages': nbPages, 'currentPage': currentPage} %}
+{% endif %}

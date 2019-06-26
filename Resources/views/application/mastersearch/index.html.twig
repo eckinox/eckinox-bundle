@@ -43,7 +43,7 @@
         </div>
     </form>
 
-    <div class="block-wrapper">
+    <div class="block-wrapper mastersearch-results">
         <div class="block block-full">
             <div class="fields">
                 <div id="search_result" class="field-wrapper result">
@@ -51,11 +51,14 @@
                         <label>{% trans %}mastersearch.fields.result{% endtrans %}</label>
                         <div class="group">
                             {% set displayed_modules = 0 %}
-                            {% for module in modules %}
+                            {% for module in modules if module.result is defined %}
                                 {% set module_name = module.type is defined ? module.type : module.module %}
 
                                 {% if module_name in activeModules %}
-                                    {% include '@Eckinox/application/mastersearch/modules/' ~ module_name ~ '.html.twig' with {module: module} %}
+                                    {% include [
+                                        ('@Eckinox/application/mastersearch/modules/' ~ module_name ~ '.html.twig'),
+                                        '@Eckinox/application/mastersearch/module.html.twig'
+                                        ] with { module: module } %}
                                     {% set displayed_modules = displayed_modules + 1 %}
                                 {% endif %}
                             {% endfor %}
@@ -80,5 +83,5 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/mastersearch.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/mastersearch.css', 'eckinox') }}" />
 {% endblock %}

@@ -92,6 +92,9 @@ class UserType extends AbstractType
         return [
             "module" => "user",
             "domain" => "application",
+            "mastersearch" => [
+                "fields" => ["fullName", "email"]
+            ],
             "fields" => [
                 [
                     "name" => "status",

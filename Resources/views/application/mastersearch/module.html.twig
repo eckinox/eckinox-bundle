@@ -1,0 +1,17 @@
+{% trans_default_domain 'application' %}
+
+<div class="result-container generic">
+    <label class="module-name">
+        {{ ('mastersearch.modules.' ~ module.module) | trans }}
+    </label>
+
+    {% if module.result|length %}
+        {% embed '@Eckinox/html/list.html.twig' with { rows: module.result, listing: module, search: false, pagination: false } %}
+            {% trans_default_domain 'application' %}
+        {% endembed %}
+    {% else %}
+        <div class="no-result">
+            {% trans %}mastersearch.noResult{% endtrans %}
+        </div>
+    {% endif %}
+</div>
