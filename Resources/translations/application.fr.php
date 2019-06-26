@@ -3,6 +3,10 @@
 return [
     "yes" => "Oui",
     "no" => "Non",
+    "cancel" => "Annuler",
+    "continue" => "Continuer",
+    "submit" => "Envoyer",
+    "save" => "Enregistrer",
     "unnamed" => "Sans nom",
     "title" => [
         "create_user" => "Créer un utilisateur",
@@ -409,7 +413,20 @@ return [
             "startingLineTooHigh" => "La ligne de départ est trop élevée par rapport au nombre de ligne du fichier importé.",
             "typeError" => "Une valeur définie pour %property% est invalide.",
         ],
-        "success" => "Les données ont été importées avec succès."
+
+        "success" => "Les données ont été importées avec succès.",
+
+        "preview" => [
+            "modalTitle" => "Prévisualisation de l'import",
+            "success" => "En poursuivant, l'import entraînera les changements ci-dessous.",
+            "error" => "En poursuivant, l'import risque d'échouer avec le message d'erreur ci-dessous.",
+            "created" => "Les éléments suivant seront créés:",
+            "deleted" => "Les éléments suivant seront supprimés:",
+            "archived" => "Les éléments suivant seront archivés:",
+            "updated" => "Les éléments suivant seront mis à jour:",
+            "noChanges" => "Aucun changement ne sera apporté.",
+            "submit" => "Procéder à l'import",
+        ]
     ],
 
     "ajax" => [

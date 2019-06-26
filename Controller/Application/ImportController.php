@@ -4,6 +4,7 @@ namespace Eckinox\Controller\Application;
 
 use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Eckinox\Library\Symfony\Annotation\Lang;
@@ -19,6 +20,7 @@ class ImportController extends Controller
     use \Eckinox\Library\General\appData;
 
     protected $settings;
+    protected $isDryRun;
     public $em;
 
     /**
@@ -67,13 +69,88 @@ class ImportController extends Controller
         return $data;
     }
 
+    public function isDryRun() {
+        return $this->isDryRun;
+    }
+
+    /**
+     * @Route("/import/{importType}/preview", name="preview_import")
+     * This returns a summary of changes that would occur if the user was to proceed to the import
+     */
+    public function preview(Request $request, $importType) {
+        $response = [
+            'success' => true,
+            'data' => [
+                'deleted' => [],
+                'archived' => [],
+                'created' => [],
+                'updated' => [],
+            ]
+        ];
+
+        # Run the "process" method in dry run mode to fill the entity manager with the import data
+        $error = $this->process($request, $importType, true);
+        $response['success'] = !$error;
+
+        if ($response['success']) {
+            $unitOfWork = $this->em->getUnitOfWork();
+            $unitOfWork->computeChangeSets();
+
+            # Process new entities
+            $newEntities = $unitOfWork->getScheduledEntityInsertions();
+            foreach ($newEntities as $entity) {
+                $class = explode('\\', get_class($entity));
+                $class = end($class);
+                $response['data']['created'][$class] = ($response['data']['created'][$class] ?? 0) + 1;
+            }
+
+            # Process deleted entities
+            $deletedEntities = $unitOfWork->getScheduledEntityDeletions();
+            foreach ($deletedEntities as $entity) {
+                $class = explode('\\', get_class($entity));
+                $class = end($class);
+                $response['data']['deleted'][$class] = ($response['data']['deleted'][$class] ?? 0) + 1;
+            }
+
+            # Process updated entities
+            $updatedEntities = $unitOfWork->getScheduledEntityUpdates();
+            foreach ($updatedEntities as $entity) {
+                $class = explode('\\', get_class($entity));
+                $class = end($class);
+                $changes = $unitOfWork->getEntityChangeSet($entity);
+
+                foreach ($changes as $property => $values) {
+                    if ($values[0] != $values[1]) {
+                        if ($property == 'isArchived') {
+                            $response['data']['archived'][$class] = ($response['data']['archived'][$class] ?? 0) + 1;
+                        } else {
+                            $response['data']['updated'][$class] = ($response['data']['updated'][$class] ?? 0) + 1;
+                        }
+
+                        break;
+                    }
+                }
+            }
+        } else {
+            $response['error'] = $error;
+        }
+
+        return $this->renderModView('@Eckinox/application/import/results_preview.html.twig', array(
+            'importType' => $importType,
+            'response' => $response,
+            'settings' => $this->settings
+        ), $request);
+    }
+
     /**
      * @Route("/import/{importType}/process", name="process_import")
      * This wraps the entire backend import processing, calling events at different stages
      */
-    public function process(Request $request, $importType)
+    public function process(Request $request, $importType, $isDryRun = false)
     {
         set_time_limit(0);
+
+        $this->isDryRun = $isDryRun;
 
         $modules = [];
         $activeModules = $request->request->get('modules') ?: $request->query->get('modules');
@@ -133,11 +210,22 @@ class ImportController extends Controller
                 foreach ($containers as $entity) {
                     $this->em->persist($entity);
                 }
-                $this->em->flush();
+
+                if (!$this->isDryRun()) {
+                    $this->em->flush();
+                }
             }
 
             $this->dispatchEvent('containers_post_flush', $containers, $this);
+
+            if ($this->isDryRun()) {
+                return false;
+            }
         } catch (\Exception $e) {
+            if ($this->isDryRun()) {
+                return $e->getMessage();
+            }
+
             $this->addFlash('error', $e->getMessage());
             return $this->redirectToRoute('index_import', ['importType' => $importType]);
         }

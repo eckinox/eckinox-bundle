@@ -1,6 +1,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    allowed_locales: ['fr_CA']
     app.symfony_config.path: '%kernel.project_dir%/config/'
     app.eckinox_config.path: '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Resources/config/'
     app.controllers.path: {'App\Controller': '%kernel.project_dir%/src/Controller', 'Eckinox\Controller': '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Controller'}

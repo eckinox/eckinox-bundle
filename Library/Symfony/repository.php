@@ -7,6 +7,9 @@ trait repository {
         $num = 0;
 
         foreach ($search as $field) {
+            if (($field['search'] ?? null) === false) {
+                continue;
+            }
 
             $terms = (array)$field['terms'];
             $field = isset($field['search']) ? array_merge($field, $field['search']) : $field;

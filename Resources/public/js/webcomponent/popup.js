@@ -58,7 +58,10 @@
                     case "yes":
                     case "ok":
                         this.hide();
-                    break;
+                        break;
+                    case "remove":
+                        this.remove();
+                        break;
                 }
 
                 this.dispatchEvent(new CustomEvent('action:' + element.attributes.action.value));
@@ -67,6 +70,15 @@
 
             hide() {
                 this.classList.remove('visible', 'opening');
+            }
+
+            remove() {
+                let node = this;
+                node.classList.remove('visible', 'opening');
+
+                setTimeout(function(){
+                    node.parentNode.removeChild(node);
+                }, 500);
             }
 
             show() {

@@ -47,6 +47,13 @@
                         </ul>
                     </div>
                 </label>
+                {% if (available_locales | length > 1) %}
+                    <ul class="lang-menu">
+                        {% for locale in available_locales %}
+                            <li><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': locale})) }}">{{ ('locale.' ~ locale) | trans({}, 'application') }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
             <div class="content-wrapper" zen-responsive-element>
                 <div class="left-navigation" unselectable>

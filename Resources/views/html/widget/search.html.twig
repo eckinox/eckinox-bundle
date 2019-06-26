@@ -4,7 +4,9 @@
     <div class="column checkbox"></div>
     {% for field in listing.fields %}
         <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }}" data-name="{{ field.name }}">
-            {% if status is defined and 'status' in field.name|lower %}
+            {% if field.search is defined and not field.search %}
+                {# DO NOTHING #}
+            {% elseif status is defined and 'status' in field.name|lower %}
                 <div class="actions-button status">
                     <label for="status_checkbox" class="actions"><div class="icon"><i class="fas fa-check-circle"></i></div> <i class="fa fa-caret-down" aria-hidden="true"></i></label>
                     <input type="checkbox" id="status_checkbox" name="status_checkbox">
