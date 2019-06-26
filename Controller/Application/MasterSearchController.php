@@ -30,14 +30,14 @@ class MasterSearchController extends Controller
         /*
          * Get all forms
          */
-        foreach($formsPath as $namespace => $path) {
+        foreach ($formsPath as $namespace => $path) {
             $this->forms = array_merge($this->forms, $this->getFormTypes($path, $namespace));
         }
 
         /*
          * Set modules
          */
-        foreach($this->forms as $className) {
+        foreach ($this->forms as $className) {
             $methodName = 'getListing';
 
             if(method_exists($className, $methodName)) {
@@ -173,8 +173,8 @@ class MasterSearchController extends Controller
 
         $type ? $module['type'] = $type : false;
 
-        foreach($fields as $field) {
-            if($id = array_search($field, array_column($listing['fields'], 'name'))) {
+        foreach ($fields as $field) {
+            if (($id = array_search($field, array_column($listing['fields'], 'name'))) !== false) {
                 $module['fields'][] = $listing['fields'][$id] + ["search" => [
                     "clause" => "orWhere"
                 ]];
