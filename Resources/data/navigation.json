@@ -29,14 +29,17 @@
             "sections": [
                 {
                     "title": "navigation.modules.admin.user.title",
+                    "privilege": ["USER_LIST", "USER_CREATE_EDIT"],
                     "items": [
                         {
                             "title": "navigation.modules.admin.user.links.list",
-                            "route": "index_user"
+                            "route": "index_user",
+                            "privilege": "USER_LIST"
                         },
                         {
                             "title": "navigation.modules.admin.user.links.create",
-                            "route": "create_user"
+                            "route": "create_user",
+                            "privilege": "USER_CREATE_EDIT"
                         }
                     ]
                 },

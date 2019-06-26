@@ -293,8 +293,22 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function hasPrivilege($privilege) {
-        return in_array($privilege, $this->getPrivileges());
+    public function hasPrivilege($privilege, $join = 'OR') {
+        $hasPrivilege = false;
+        $privilege = (array)$privilege;
+
+        if (strtoupper($join) == 'AND') {
+            $hasPrivilege = true;
+            foreach ($privilege as $individualPrivilege) {
+                $hasPrivilege = $hasPrivilege && in_array($individualPrivilege, $this->getPrivileges());
+            }
+        } else {
+            foreach ($privilege as $individualPrivilege) {
+                $hasPrivilege = $hasPrivilege || in_array($individualPrivilege, $this->getPrivileges());
+            }
+        }
+
+        return $hasPrivilege;
     }
 
     public function getPasswordResetRequests()
