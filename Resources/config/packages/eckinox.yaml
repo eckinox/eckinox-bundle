@@ -15,6 +15,10 @@ doctrine:
             archivedFilter:
                 class: Eckinox\Library\Symfony\Doctrine\ArchivedFilter
                 enabled: true
+            localeFilter:
+                class: Eckinox\Library\Symfony\Doctrine\LocaleFilter
+                enabled: false
+                # This filter is enabled in the LocaleSubscriber event subscriber
 
 framework:
     assets:

@@ -72,6 +72,14 @@ services:
         tags:
            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
+    Eckinox\Library\Symfony\EventListener\TranslationsListener:
+        arguments: [ "@service_container", "@request_stack", "@doctrine.orm.entity_manager" ]
+        tags:
+           - { name: doctrine.event_listener, event: loadClassMetadata }
+           - { name: doctrine.event_listener, event: prePersist }
+           - { name: doctrine.event_listener, event: preUpdate }
+           - { name: doctrine.event_listener, event: preRemove }
+
     AjaxController:
         class: Eckinox\Controller\General\AjaxController
         arguments: ["@translator", "@service_container", "@eckinox.converter"]
