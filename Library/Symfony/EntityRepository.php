@@ -11,6 +11,7 @@ class EntityRepository extends ServiceEntityRepository
     use \Eckinox\Library\Symfony\repository;
 
     protected static $entityClass = null;
+    protected static $defaultSortBy = 'name';
 
     public function __construct(RegistryInterface $registry) {
         parent::__construct($registry, static::$entityClass);
@@ -43,7 +44,7 @@ class EntityRepository extends ServiceEntityRepository
         $firstResult = ($page - 1) * $maxResults;
 
         $query = $this->createQueryBuilder('e')
-            ->orderBy('e.name', 'ASC')
+            ->orderBy('e.' . static::$defaultSortBy, 'ASC')
             ->setFirstResult($firstResult)
             ->setMaxResults($maxResults);
 
