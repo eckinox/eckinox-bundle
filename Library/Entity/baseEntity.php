@@ -126,6 +126,10 @@ trait baseEntity {
         $data = [];
 
         foreach (static::getClassProperties() as $property) {
+            if ($property == 'translations') {
+                continue;
+            }
+
             $value = $this->get($property);
 
             if ($value instanceof Collection) {
