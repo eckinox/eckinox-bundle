@@ -196,11 +196,11 @@ trait baseEntity {
      */
     public function verifyTranslatableRelations() {
         $traits = class_uses(static::class);
-        $traitName = 'Eckinox\\Library\\Entity\\translatableEntity';
+        $translatabletraitName = 'Eckinox\\Library\\Entity\\translatableEntity';
         $properties = array_keys(get_object_vars($this));
 
         # If this is a translatable entity, the relations are kept as is.
-        if (in_array('Eckinox\\Library\\Entity\\translatableEntity', $traits)) {
+        if (in_array($translatabletraitName, $traits)) {
             return;
         }
 
@@ -214,7 +214,7 @@ trait baseEntity {
             $relationTraits = class_uses($this->$property->first());
 
             # Skip relations that aren't translatable
-            if (!in_array('Eckinox\\Library\\Entity\\translatableEntity', $relationTraits)) {
+            if (!in_array($translatabletraitName, $relationTraits)) {
                 continue;
             }
 
