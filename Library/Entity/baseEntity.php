@@ -190,4 +190,50 @@ trait baseEntity {
         return lcfirst($key);
     }
 
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function verifyTranslatableRelations() {
+        $traits = class_uses(static::class);
+        $traitName = 'Eckinox\\Library\\Entity\\translatableEntity';
+        $properties = array_keys(get_object_vars($this));
+
+        # If this is a translatable entity, the relations are kept as is.
+        if (in_array('Eckinox\\Library\\Entity\\translatableEntity', $traits)) {
+            return;
+        }
+
+        # Find each relation to translatable entities, and add all translations of the selected entities to the collection
+        foreach ($properties as $property) {
+            # Skip properties that aren't collections
+            if (!($this->$property instanceof Collection) || !count($this->$property)) {
+                continue;
+            }
+
+            $relationTraits = class_uses($this->$property->first());
+
+            # Skip relations that aren't translatable
+            if (!in_array('Eckinox\\Library\\Entity\\translatableEntity', $relationTraits)) {
+                continue;
+            }
+
+            # Fetch every translation of the entities contained in this relation
+            $translations = [];
+            foreach ($this->$property as $entity) {
+                foreach ($entity->getTranslations() as $translation) {
+                    $translations[] = $translation;
+                }
+            }
+
+            # Add every translation to the relation
+            foreach ($translations as $translation) {
+                if (!$this->$property->contains($translation)) {
+                    $this->$property->add($translation);
+                }
+            }
+
+        }
+    }
+
 }
