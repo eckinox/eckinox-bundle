@@ -75,7 +75,16 @@ class UserType extends AbstractType
 
         $right = $builder->create('right', FormType::class, array('inherit_data' => true));
 
-        if($options['privileges']) {
+        if ($options['privilegesGroup']) {
+            $right->add('privilegesGroup', ChoiceType::class, array(
+                'placeholder' => 'user.fields.privilegesGroup:none',
+                'label' => 'user.fields.privilegesGroup',
+                'choices' => $options['privilegesGroup'],
+                'attr' => array('class' => 'privilegesGroup'),
+            ));
+        }
+
+        if ($options['privileges']) {
             $right->add('privileges', ChoiceType::class, array(
                 'label' => 'user.fields.privileges',
                 'multiple' => true,
@@ -176,6 +185,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'privilegesGroup' => [],
             'privileges' => [],
             'emailIsValid' => true,
             'translation_domain' => 'application',

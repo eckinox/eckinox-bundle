@@ -156,6 +156,13 @@ class UserController extends Controller
          * Get privileges list and group
          */
         $privileges = [];
+        $privilegesGroups = [];
+
+        if ($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES_GROUP')) {
+            foreach ($this->data('privileges.groups') as $group => $unused) {
+                $privilegesGroups[$this->trans(implode('.', ['privileges', 'groups', $group]), [], 'application')] = $group;
+            }
+        }
 
         if($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES')) {
             $privilegeData = $this->data('privileges.privileges');
@@ -205,6 +212,7 @@ class UserController extends Controller
         }
 
         $form = $this->createForm($this->getParameter('user_form_type_class'), $user, [
+            "privilegesGroup" => $privilegesGroups,
             "privileges" => $privileges,
             "emailIsValid" => $emailIsValid,
         ]);

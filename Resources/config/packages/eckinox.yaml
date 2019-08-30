@@ -1,6 +1,7 @@
 parameters:
     user_class: 'Eckinox\Entity\Application\User'
     user_form_type_class: 'Eckinox\Form\Application\UserType'
+    default_available_locales: ['fr_CA']
 
 doctrine:
     orm:
@@ -15,6 +16,10 @@ doctrine:
             archivedFilter:
                 class: Eckinox\Library\Symfony\Doctrine\ArchivedFilter
                 enabled: true
+            localeFilter:
+                class: Eckinox\Library\Symfony\Doctrine\LocaleFilter
+                enabled: false
+                # This filter is enabled in the LocaleSubscriber event subscriber
 
 framework:
     assets:
@@ -25,4 +30,4 @@ framework:
 
 twig:
     globals:
-        available_locales: '%available_locales%'
+        available_locales: '%env(default:default_available_locales:available_locales)%'
