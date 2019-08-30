@@ -158,8 +158,10 @@ class UserController extends Controller
         $privileges = [];
         $privilegesGroups = [];
 
-        foreach ($this->data('privileges.groups') as $group => $unused) {
-            $privilegesGroups[$this->trans(implode('.', ['privileges', 'groups', $group]), [], 'application')] = $group;
+        if ($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES_GROUP')) {
+            foreach ($this->data('privileges.groups') as $group => $unused) {
+                $privilegesGroups[$this->trans(implode('.', ['privileges', 'groups', $group]), [], 'application')] = $group;
+            }
         }
 
         if($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES')) {
