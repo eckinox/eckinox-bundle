@@ -7,7 +7,7 @@ return [
         "folder" => "Folder(s)",
         "message" => [
             "error" => [
-                "already_exists" => "A file of the same name already exists",
+                "already_exists" => "A file with the same name already exists",
                 "you_must_save" => "You must register to open the attached files",
             ]
         ]
@@ -59,7 +59,7 @@ return [
                     "title" => "Users",
                     "links" => [
                         "create" => "Create a user",
-                        "list" => "Users list",
+                        "list" => "List of users",
                     ],
                 ],
 

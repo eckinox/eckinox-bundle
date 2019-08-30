@@ -11,11 +11,11 @@ return [
     "title" => [
         "create_user" => "Create a user",
         "edit_user" => "User %name%",
-        "index_user" => "Users list",
+        "index_user" => "List of users",
         "profile" => "Edit my profile",
         "create_email" => "New email",
         "edit_email" => "Email « %name% »",
-        "forward_email" => "Transfer from « %name% »",
+        "forward_email" => "Forward from « %name% »",
         "index_email" => "List of emails",
         "search_index" => "Advanced search",
         "index_import" => "Importing data",
@@ -47,8 +47,8 @@ return [
             "message" => [
                 "noEmail" => "You must enter the email address associated with your account.",
                 "invalidEmail" => "The email address you entered is invalid.",
-                "userNotFound" => "No account appears to match this email address.",
-                "userInactivee" => "The account associated with this email address is banned or disabled.",
+                "userNotFound" => "There is no account matching with this email address.",
+                "userInactivee" => "The account associated with this email address is either banned or disabled.",
                 "unknownError" => "An error has occurred, please try again later.",
                 "emailSent" => "An email has been sent to reset your password.",
             ],
@@ -57,7 +57,7 @@ return [
                 "subject" => "Reset your password",
                 "content" =>
                     "A password reset request has been submitted on your behalf.\n\n" .
-                    "To make the change, <a href='%reset_url%' target='_blank'>click here</a> or type the link below in the address bar of your browser:\n" .
+                    "To proceed with the change, <a href='%reset_url%' target='_blank'>click here</a> or type the link below in the address bar of your browser:\n" .
                     "%reset_url%\n\n" .
                     "If you have not made this request, please ignore this email.",
             ],
@@ -106,7 +106,7 @@ return [
             "create" => "New email",
             "createTemplate" => "New template",
             "returnToList" => "Back to the list of emails",
-            "forward" => "Transfer the selection",
+            "forward" => "Forward the selection",
             "deleteSelection" => "Delete selection",
             "forwardEmail" => "Forward",
             "forceSend" => "Force sending",
@@ -169,13 +169,13 @@ return [
             "success" => [
                 "hasBeenCreated" => "The email « %name% » was successfully created",
                 "hasBeenUpdated" => "The email « %name% » has been successfully modified",
-                "hasBeenForwarded" => "The email « %name% » has been successfully transferred",
+                "hasBeenForwarded" => "The email « %name% » has been successfully forwarded",
                 "hasBeenForceSent" => "The email « %name% » was sent successfully",
-                "actionForward" => "{1}The email « %subjects% » a été enregistré pour être transféré|]1,Inf]Emails « %subjects% » have been saved to be forwarded",
-                "actionDelete" => "{1}The email « %subjects% » a été supprimé avec succès|]1,Inf]Emails « %subjects% » have been removed successfully",
+                "actionForward" => "{1}The email « %subjects% » has been saved to be forwarded|]1,Inf]Emails « %subjects% » have been saved to be forwarded",
+                "actionDelete" => "{1}The email « %subjects% » has been removed successfully|]1,Inf]Emails « %subjects% » have been removed successfully",
             ],
             "warning" => [
-                "actionDelete" => "The email « %subject% » could not be deleted because it is already sent",
+                "actionDelete" => "The email « %subject% » could not be deleted because it has already been already sent",
             ]
         ],
 
@@ -197,7 +197,7 @@ return [
         "javascript" => [
             "action" => [
                 "message" => [
-                    "forward" => "You are about to transfer the selected emails, they will be saved as « draft » so you can add one or more recipients. Do you want to continue ?",
+                    "forward" => "You are about to forward the selected emails, they will be saved as « draft » so you can add one or more recipients. Do you want to continue ?",
                     "delete" => "You are about to delete the selected emails, do you want to continue?",
                 ]
             ]
@@ -281,7 +281,7 @@ return [
 
         "errors" => [
             "password" => [
-                "mustBeIdentical" => "Password fields must be the same",
+                "mustBeIdentical" => "The password fields must match",
             ],
         ],
 
@@ -316,8 +316,8 @@ return [
 
         "messages" => [
             "success" => [
-                "actionActivate" => "{1}User « %names% » a été activé avec succès|]1,Inf]Users « %names% » have been successfully activated",
-                "actionDelete" => "{1}User « %names% » a été supprimé avec succès|]1,Inf]Users « %names% » ont été supprimés avec succès",
+                "actionActivate" => "{1}User « %names% » has been successfully activated|]1,Inf]Users « %names% » have been successfully activated",
+                "actionDelete" => "{1}User « %names% » has been successfully deleted|]1,Inf]Users « %names% » have been successfully deleted",
                 "actionDeactivate" => "{1}User « %names% » has been successfully disabled|]1,Inf]Users « %names% » have been successfully disabled",
                 "hasBeenCreated" => "User « %name% » was successfully created",
                 "hasBeenUpdated" => "User « %name% » has been successfully changed",
@@ -429,7 +429,7 @@ return [
     ],
 
     "ajax" => [
-        "processing" => "Treatment...",
+        "processing" => "Processing...",
         "excelToJson" => [
             "errors" => [
                 "noFile" => "No files have been sent."
