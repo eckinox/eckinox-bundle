@@ -298,7 +298,9 @@ return [
             "password" => "Password",
             "privileges" => "Privileges",
             "status" => "Status",
-            "isActive" => "Active member"
+            "isActive" => "Active member",
+            "privilegesGroup" => "Privilege group",
+            "privilegesGroup:none" => "None"
         ],
 
         "label" => [
