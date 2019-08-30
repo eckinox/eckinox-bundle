@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\TranslatorInterface;
+use Eckinox\Entity\Application\User;
 
 class SecurityListener {
 
@@ -54,6 +55,11 @@ class SecurityListener {
         $request = $event->getRequest();
 
         list($controller, $methodName) = $controllerArray;
+
+        // Load the available privilege groups into the User entity
+        if (method_exists($controller, 'data')) {
+            User::setAvailablePrivilegeGroups($controller->data('privileges.groups'));
+        }
 
         $reflectionClass = new \ReflectionClass($controller);
         $classAnnotation = $this->reader->getClassAnnotation($reflectionClass, CheckRequest::class);

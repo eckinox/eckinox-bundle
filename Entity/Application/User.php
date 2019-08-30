@@ -18,6 +18,8 @@ class User implements UserInterface, \Serializable
     use \Eckinox\Library\Entity\baseEntity;
     use \Eckinox\Library\Entity\loggableEntity;
 
+    protected static $availablePrivilegeGroups = [];
+
     /**
      * @ORM\Column(type="string", length=125, unique=true)
      */
@@ -37,6 +39,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=125, unique=true)
      */
     private $email;
+
+    /**
+     * @ORM\Column(name="privileges_group", type="string", length=125)
+     */
+    private $privilegesGroup;
 
     /**
      * @ORM\Column(name="privileges_list", type="json")
@@ -162,6 +169,18 @@ class User implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPrivilegesGroup()
+    {
+        return $this->privilegesGroup;
+    }
+
+    public function setPrivilegesGroup($privilegesGroup)
+    {
+        $this->privilegesGroup = $privilegesGroup;
 
         return $this;
     }
@@ -296,15 +315,16 @@ class User implements UserInterface, \Serializable
     public function hasPrivilege($privilege, $join = 'OR') {
         $hasPrivilege = false;
         $privilege = (array)$privilege;
+        $userPrivileges = array_merge($this->getPrilegeGroupPrivileges(), $this->getPrivileges());
 
         if (strtoupper($join) == 'AND') {
             $hasPrivilege = true;
             foreach ($privilege as $individualPrivilege) {
-                $hasPrivilege = $hasPrivilege && in_array($individualPrivilege, $this->getPrivileges());
+                $hasPrivilege = $hasPrivilege && in_array($individualPrivilege, $userPrivileges);
             }
         } else {
             foreach ($privilege as $individualPrivilege) {
-                $hasPrivilege = $hasPrivilege || in_array($individualPrivilege, $this->getPrivileges());
+                $hasPrivilege = $hasPrivilege || in_array($individualPrivilege, $userPrivileges);
             }
         }
 
@@ -398,5 +418,17 @@ class User implements UserInterface, \Serializable
      */
     public function isEnabled() {
         return $this->status === 'active';
+    }
+
+    public static function setAvailablePrivilegeGroups($privilegeGroups) {
+        static::$availablePrivilegeGroups = $privilegeGroups;
+    }
+
+    public static function getAvailablePrivilegeGroups() {
+        return static::$availablePrivilegeGroups;
+    }
+
+    public function getPrilegeGroupPrivileges() {
+        return static::getAvailablePrivilegeGroups()[$this->getPrivilegesGroup()] ?? [];
     }
 }
