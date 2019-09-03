@@ -35,3 +35,7 @@ eckinox-popup .message {
 eckinox-popup:before {left:0;right:0;top:0;bottom:0;background:rgba(0,0,0,0.1);content:" ";}
 
 .js-instant-modal header .title { justify-content: space-between; }
+
+eckinox-popup.confirm { top: calc(50% - 200px); }
+eckinox-popup.confirm header { display: none; }
+eckinox-popup.confirm:not(.visible) { top: 0; }

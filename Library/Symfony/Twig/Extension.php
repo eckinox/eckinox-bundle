@@ -179,7 +179,23 @@ class Extension extends AbstractExtension
      * Returns all of the available translation messages as JSON
      */
     public function getTranslationsAsJson() {
-        $messages = $this->container->get('translator')->getCatalogue()->all();
+        $translator = $this->container->get('translator');
+        $currentLocale = $translator->getLocale();
+        $catalogue = $translator->getCatalogue();
+        $catalogues = [$catalogue];
+        $messages = [];
+
+        while ($cat = $catalogue->getFallbackCatalogue()) {
+            $catalogue = $cat;
+            $catalogues[] = $catalogue;
+        }
+
+        $catalogues = array_reverse($catalogues);
+
+        foreach ($catalogues as $catalogue) {
+            $messages = array_replace_recursive($messages, $catalogue->all());
+        }
+
         return new Markup(json_encode($messages, true), []);
     }
 
