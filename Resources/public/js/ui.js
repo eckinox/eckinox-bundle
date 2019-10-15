@@ -356,6 +356,35 @@ class BundleUI {
 
         BundleUI.appendTo(document.body, node);
         node.show();
+
+        return node;
+    }
+
+    static confirm(message, confirmCallback = null, cancelCallback = null, yesNo = false) {
+        const modalNode = BundleUI.showModal("", message, `
+            <button type="button" class="button cancel no grey" action="remove">${trans(yesNo ? 'modal.buttons.no' : 'modal.buttons.cancel', {}, 'general')}</button>
+            <button type="button" class="button confirm yes" action="remove">${trans(yesNo ? 'modal.buttons.yes' : 'modal.buttons.confirm', {}, 'general')}</button>
+        `, 'confirm');
+
+        if (confirmCallback) {
+            modalNode.querySelector('.button-list .button.confirm').addEventListener('click', function(e){
+                e.preventDefault();
+                confirmCallback();
+            });
+        }
+
+        if (cancelCallback) {
+            modalNode.querySelector('.button-list .button.cancel').addEventListener('click', function(e){
+                e.preventDefault();
+                cancelCallback();
+            });
+        }
+
+        return modalNode;
+    }
+
+    static yesNoConfirm(message, confirmCallback = null, cancelCallback = null) {
+        return confirm(message, confirmCallback, cancelCallback, true);
     }
 }
 
