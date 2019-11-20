@@ -41,7 +41,7 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\Column(name="privileges_group", type="string", length=125)
+     * @ORM\Column(name="privileges_group", type="string", length=125, nullable=true)
      */
     private $privilegesGroup;
 
