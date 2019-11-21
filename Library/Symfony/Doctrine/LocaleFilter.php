@@ -42,6 +42,8 @@ class LocaleFilter extends SQLFilter
             return '';
         }
 
-        return sprintf('%1$s.locale = "%2$s" OR %1$s.locale = "" OR %1$s.locale IS NULL', $targetTableAlias, static::$locale);
+        $locale = $this->getParameter('locale');
+
+        return sprintf('%1$s.locale = %2$s OR %1$s.locale = "" OR %1$s.locale IS NULL', $targetTableAlias, $locale);
     }
 }

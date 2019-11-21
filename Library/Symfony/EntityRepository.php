@@ -4,7 +4,7 @@ namespace Eckinox\Library\Symfony;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Eckinox\Library\Symfony\Doctrine\LocaleFilter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 class EntityRepository extends ServiceEntityRepository
 {
@@ -13,7 +13,7 @@ class EntityRepository extends ServiceEntityRepository
     protected static $entityClass = null;
     protected static $defaultSortBy = 'name';
 
-    public function __construct(RegistryInterface $registry) {
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, static::$entityClass);
     }
 

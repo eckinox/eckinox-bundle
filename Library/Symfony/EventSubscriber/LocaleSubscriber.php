@@ -36,6 +36,7 @@ class LocaleSubscriber implements EventSubscriberInterface
 
         # Enable the Doctrine SQL filter for entity locales
         $filter = $this->em->getFilters()->enable('localeFilter');
+        $filter->setParameter('locale', $request->getLocale());
 
         # This is a fairly dirty workaround to injecting permanent data to the filter
         LocaleFilter::setLocale($request->getLocale());
