@@ -213,7 +213,7 @@ class Converter {
                     $cellData = [];
                 }
 
-                $cell->setValue($cellData['value'] ?? null);
+                $this->setCellValue($cell, $cellData);
                 if ($y == count($data) - 1) {
                     $this->autosizeColumn($sheet, $cell);
                 }
@@ -342,6 +342,14 @@ class Converter {
                     $stylesArray['font']['name'] = $part;
                 }
             }
+        }
+    }
+
+    protected function setCellValue(&$cell, $data) {
+        if ($formula = $data['formula'] ?? null) {
+            $cell->setValue('=' . $formula);
+        } else {
+            $cell->setValue($data['value'] ?? null);
         }
     }
 
