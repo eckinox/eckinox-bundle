@@ -4,6 +4,7 @@ namespace Eckinox\Library\Symfony\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Eckinox\Library\Symfony\Doctrine\LocaleFilter;
 
@@ -21,6 +22,7 @@ class LocaleSubscriber implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
+
         if (!$request->hasPreviousSession()) {
             return;
         }
@@ -34,13 +36,15 @@ class LocaleSubscriber implements EventSubscriberInterface
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
 
-        # Enable the Doctrine SQL filter for entity locales
-        $filter = $this->em->getFilters()->enable('localeFilter');
-        $filter->setParameter('locale', $request->getLocale());
-
         # This is a fairly dirty workaround to injecting permanent data to the filter
         LocaleFilter::setLocale($request->getLocale());
         LocaleFilter::setEntityManager($this->em);
+
+        # Enable the Doctrine SQL filter for entity locales
+        if (!LocaleFilter::isEnabled()) {
+            $filter = $this->em->getFilters()->enable('localeFilter');
+            $filter->setParameter('locale', $request->getLocale());
+        }
     }
 
     public static function getSubscribedEvents()
