@@ -269,7 +269,9 @@ class Converter {
             foreach ($parts as $part) {
                 if (isset($formats[$part])) {
                     if (in_array($part, ['monetary', 'monetary_k', 'monetary_decimals', 'number', 'float', 'percentage', 'percentage_decimals'])) {
-                        $cell->setDataType(DataType::TYPE_NUMERIC);
+                        if ($cell->getDataType() != DataType::TYPE_FORMULA) {
+                            $cell->setDataType(DataType::TYPE_NUMERIC);
+                        }
                     }
 
                     $stylesArray['numberFormat']['formatCode'] = $formats[$part];
@@ -347,7 +349,8 @@ class Converter {
 
     protected function setCellValue(&$cell, $data) {
         if ($formula = $data['formula'] ?? null) {
-            $cell->setValue('=' . $formula);
+            $cell->setValue((strpos($formula, '=') === 0 ? '' : '=') . $formula);
+            $cell->setDataType(DataType::TYPE_FORMULA);
         } else {
             $cell->setValue($data['value'] ?? null);
         }
