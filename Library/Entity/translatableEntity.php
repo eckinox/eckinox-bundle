@@ -91,6 +91,7 @@ trait translatableEntity {
     }
 
     public function getTranslations(): Collection {
+        $reenableFilter = LocaleFilter::isEnabled();
         LocaleFilter::disable();
         $this->translations = $this->translations ?: (new ArrayCollection());
 
@@ -101,7 +102,10 @@ trait translatableEntity {
         # Otherwise, we would always end up with a single translation: the one corresponding to the current locale
         $this->translations->toArray();
 
-        LocaleFilter::enable();
+        if ($reenableFilter) {
+            LocaleFilter::enable();
+        }
+
         return $this->translations;
     }
 
