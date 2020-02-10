@@ -11,6 +11,8 @@ use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 
 class Install extends Command
 {
@@ -43,10 +45,10 @@ class Install extends Command
 
         $this->moveConfigFiles();
         $this->createFolders();
+        //$this->clearCache();
         $this->migrateDatabase();
         $this->installAssets();
         $this->createDeveloperUser();
-        $this->clearCache();
     }
 
     protected function moveConfigFiles() {
