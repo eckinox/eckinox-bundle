@@ -43,6 +43,7 @@ class Install extends Command
         ]);
 
         $this->moveConfigFiles();
+        $this->createFolders();
         //$this->clearCache();
         $this->migrateDatabase();
         $this->installAssets();
@@ -63,6 +64,17 @@ class Install extends Command
             copy($eckinox_config_path.$path, $symfony_config_path.$path);
 
             $this->output->writeln('Moved ' . $eckinox_config_path.$path . ' to ' . $symfony_config_path.$path);
+        }
+    }
+
+    protected function createFolders() {
+        $folders = [
+            $this->container->getParameter('app.translations.custom'),
+            $this->container->getParameter('app.data.path_custom')
+        ];
+
+        foreach($folders as $folder) {
+            mkdir($folder, 0755);
         }
     }
 
