@@ -2,7 +2,7 @@
 
 **Composer must be installed to the latest version**
 
-1. Run `composer create-project symfony/website-skeleton my-project`
+1. Run `composer create-project symfony/website-skeleton:4.3.* my-domain.com`
 2. Edit the DATABASE_URL in .env file `DATABASE_URL=mysql://database_user:password@localhost:3306/database_name`
 3. Add the DEBUG_EMAIL variable to .env file `DEBUG_EMAIL=dev@eckinox.ca`
 4. Run `composer config repositories.eckinox vcs https://git.eckidev.com/Eckidev/eckinox-bundle.git`

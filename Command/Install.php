@@ -44,7 +44,7 @@ class Install extends Command
 
         $this->moveConfigFiles();
         $this->createFolders();
-        //$this->clearCache();
+        $this->clearCache();
         $this->migrateDatabase();
         $this->installAssets();
         $this->createDeveloperUser();
@@ -74,7 +74,9 @@ class Install extends Command
         ];
 
         foreach($folders as $folder) {
-            mkdir($folder, 0755);
+            if(!file_exists($folder)) {
+                mkdir($folder, 0755);
+            }
         }
     }
 
