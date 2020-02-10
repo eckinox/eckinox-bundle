@@ -19,10 +19,14 @@ class EntityRepository extends ServiceEntityRepository
 
     # The find() method is redefined to add locale handling
     public function find($id, $lockMode = null, $lockVersion = null) {
+        $reenableFilter = LocaleFilter::isEnabled();
         LocaleFilter::disable();
         $result = parent::find($id, $lockMode, $lockVersion);
         $resultLocale = property_exists($result, 'locale') ? $result->getLocale() : null;
-        LocaleFilter::enable();
+
+        if ($reenableFilter) {
+            LocaleFilter::enable();
+        }
 
         # Check if the current locale is wrong for the specified ID
         if ($resultLocale && $resultLocale != LocaleFilter::getLocale()) {

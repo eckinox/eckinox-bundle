@@ -2,7 +2,8 @@
 
 namespace Eckinox\Library\Symfony\Doctrine;
 
-use Eckinox\Library\Symfony\EventListener\TranslationsListener;;
+use Eckinox\Library\Symfony\EventListener\TranslationsListener;
+use Eckinox\Library\Symfony\EventSubscriber\LocaleSubscriber;
 use Doctrine\ORM\Mapping\ClassMetaData;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 
@@ -28,11 +29,20 @@ class LocaleFilter extends SQLFilter
     }
 
     public static function disable() {
-        static::$em->getFilters()->disable('localeFilter');
+        if (static::isEnabled()) {
+            static::$em->getFilters()->disable('localeFilter');
+        }
     }
 
     public static function enable() {
-        static::$em->getFilters()->enable('localeFilter');
+        $filter = static::$em->getFilters()->enable('localeFilter');
+
+        # When the filter is disabled, all of its parameters are cleared, so we need to set them again.
+        $filter->setParameter('locale', static::getLocale());
+    }
+
+    public static function isEnabled() {
+        return isset(static::$em->getFilters()->getEnabledFilters()['localeFilter']);
     }
 
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
@@ -42,6 +52,8 @@ class LocaleFilter extends SQLFilter
             return '';
         }
 
+        # The only way to pass data dynamically to this method is the via the setParameter() and getParameter() methods
+        # Anything else (static properties and such) will be rendered useless, as the method is cached (except for the parameters) in the production environment.
         $locale = $this->getParameter('locale');
 
         return sprintf('%1$s.locale = %2$s OR %1$s.locale = "" OR %1$s.locale IS NULL', $targetTableAlias, $locale);
