@@ -17,6 +17,11 @@
 	    "symfony/monolog-bundle": "^3.3",
         "phpoffice/phpspreadsheet": "^1.5"
     },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd"
+        }
+    },
     "autoload": {
         "psr-4": { "Eckinox\\": "" }
     }
