@@ -22,6 +22,9 @@ doctrine:
                 # This filter is enabled in the LocaleSubscriber event subscriber
 
 framework:
+    translator:
+        paths:
+            - '%app.translations.custom%'
     assets:
         version_strategy: 'Eckinox\Library\General\Asset'
         packages:

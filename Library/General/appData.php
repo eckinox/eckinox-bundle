@@ -122,4 +122,12 @@ trait appData {
         return $str;
     }
 
+    protected function _purge_cache() {
+        register_shutdown_function(function() {
+            $input = new \Symfony\Component\Console\Input\ArgvInput(array('console','cache:clear'));
+            $application = new \Symfony\Bundle\FrameworkBundle\Console\Application($this->get('kernel'));
+
+            $application->run($input);
+        });
+    }
 }

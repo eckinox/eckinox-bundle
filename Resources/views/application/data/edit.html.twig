@@ -1,48 +1,293 @@
 {% extends '@Eckinox/base.html.twig' %}
-{% trans_default_domain 'application' %}
+{% trans_default_domain 'app_data' %}
 
 {% block header %}
-    <h2>{% trans %}json.title.dataFile{% endtrans %}</h2>
+    <h2>{{ ('data.' ~ data_name ~ '.title')|trans() }}</h2>
 {% endblock %}
 
-{% block json_action_nav %}
-   <div class="action-nav">
-        {% if ( readonly == false and writeable == true ) %}
-            <button type="submit" name="action" value="save" class="button">{% trans %}general.buttons.save{% endtrans %}</button>
-            <a class="button red" href="{{ path('index_software_data') }}">{% trans %}general.buttons.cancel{% endtrans %}</a>
-        {% else %}
-            <a class="button red" href="{{ path('index_software_data') }}">{% trans %}general.buttons.return{% endtrans %}</a>
+{% block tabs %}
+    <nav class="widget-tabs-element" ei-widget-tabs="data" unselectable>
+        <div class="widget-tabs-wrapper"></div>
 
-        {% endif %}
-    </div>
+        <div class="widget-tabs-actions">
+            <div class="tab-item save-button">
+                <label id="save_button">
+                    <i class="far fa-save"></i>
+                </label>
+            </div>
+        </div>
+    </nav>
 {% endblock %}
 
 {% block content %}
-    <div class="json-row cf hide">
-        <div class="json-key field-wrapper">
-            <input type="text" {{ readonly ? 'readonly="readonly"' : '' }}>
+    <form method="post" class="data-form">
+        <div class="action-nav">
+            <button type="button" data-action="add_item{{ data.group is defined ? '_to_group' : '' }}" class="button">{% trans %}actions.add{% endtrans %}</button>
+            <button type="button" data-action="remove_items" class="button red">{% trans %}actions.delete{% endtrans %}</button>
         </div>
 
-        <div class="json-value field-wrapper">
-            <input type="text" {{ readonly ? 'readonly="readonly"' : '' }}>
+        <div class="data-list list">
+            <div class="row head">
+                <label class="column checkbox">
+                    <input type="checkbox" id="select_all" name="{{ data_name }}_select_all" value="" />
+                    <div class="check"></div>
+                </label>
+
+                {% if data.fields is not defined %}
+                    <div class="column {{ data_name }}">{{ ('data.' ~ data_name ~ '.title')|trans() }}</div>
+                {% else %}
+                    {% for field in data.fields %}
+                        <div class="column {{ field.name }} {{ data.group is defined and data.group == field.name ? 'hide' : '' }}">{{ ('data.' ~ data_name ~ '.fields.' ~ field.name)|trans() }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+                {% if data.fields is not defined %}
+                    <div class="rows active" ei-widget-tabs-data="{% trans %}all{% endtrans %}">
+                        {% for key, value in rows %}
+                            <div class="row">
+                                <label class="column checkbox"><input type="checkbox" name="ids[]" value="{{ key }}" /><div class="check"></div></label>
+                                <div class="column {{ data_name }}">
+                                    <input name="translations[{{ key }}]" type="text" value="{{ value|trans([], data.translation.domain) }}" />
+                                    <input name="data[{{ key }}]" type="hidden" value="{{ value }}" />
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {% if data.group is not defined %}
+                        <div class="rows active" ei-widget-tabs-data="{% trans %}all{% endtrans %}">
+                    {% endif %}
+
+                    {% set current_group = false %}
+                    {% set tabs = [] %}
+
+                    {% for key, row in rows %}
+
+                        {% if data.group is defined and data.group %}
+                            {% set group = row[data.group] %}
+
+                            {% if current_group is same as(false) or current_group != group %}
+                                {% if current_group is not same as(false) %}</div>{% endif %}
+
+                                {% set current_group = group %}
+                                {% set tabs = tabs|merge([ current_group ]) %}
+                                {% set tab_label = current_group ? all_options[data.group][current_group] : ('data.' ~ data_name ~ '.no_group')|trans() %}
+
+                                <div class="rows" data-group-value="{{ current_group }}" data-group-field-name="{{ data.group }}" ei-widget-tabs-data="{{ tab_label }}">
+                            {% endif %}
+
+                        {% endif %}
+
+                        <div class="row">
+                            <label class="column checkbox"><input type="checkbox" name="ids[]" value="{{ key }}" /><div class="check"></div></label>
+                            {% for field in data.fields %}
+                                <div class="column {{ field.name }} {{ data.group is defined and data.group == field.name ? 'hide' : '' }}">
+                                    {% set field_name = 'data[' ~ key ~ '][' ~ field.name ~ ']' %}
+                                    {% set field_value = attribute(row, field.name) %}
+                                    {% set required = field.required is defined and field.required %}
+
+                                    {% if field.type == 'select' %}
+                                        {% set options = all_options[field.name] %}
+
+                                        <select name="{{ field_name }}" {{ required ? 'required' : '' }}>
+                                            <option value="">{% trans %}actions.select{% endtrans %}</option>
+                                            {% for option_value, option_label in options %}
+                                                <option value="{{ option_value }}" {{ field_value == option_value ? 'selected' : '' }}>
+                                                    {{ option_label }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        {% set input_type = field.type == 'float' or field.type == 'integer' ? 'number' : 'text' %}
+                                        <input name="{{ field_name }}"
+                                            type="{{ input_type }}"
+                                            {{ field.type == 'float' ? 'step="0.01"' : '' }}
+                                            {{ required ? 'required' : '' }}
+                                            value="{{ field_value }}" />
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if data.group is defined and data.group %}
+                    {% for group in all_options[data.group]|keys %}
+                        {% if group not in tabs %}
+                            <div class="rows"
+                                data-group-value="{{ group }}"
+                                data-group-field-name="{{ data.group }}"
+                                ei-widget-tabs-data="{{ all_options[data.group][group] }}"
+                            ></div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            <div class="empty" {% if not rows %}style="display: block;"{% endif %}>{{ ('data.' ~ data_name ~ '.empty_list')|trans() }}</div>
+            <div class="add-row" unselectable>
+                <a href="javascript:void(0)" data-action="add_item{{ data.group is defined ? '_to_group' : '' }}">
+                    <i class="fas fa-plus-circle"></i> Ajouter
+                </a>
+            </div>
         </div>
-        <a class="json-add button small" href="#">+</a>
-    </div>
 
-    <form class="json-data" method="post">
-        {{ block("json_action_nav") }}
-
-        <div class="json-filename"><span>{{ filename }}</span><span class="readonly">{{ writeable ? '' : 'json.readonly'|trans }}</span></div>
-
-        {% for key, value in data %}
-            {% include '@Eckinox/application/data/row.html.twig' with { "key" : key, parent_key : "", "value" : value, name : "data", meta : meta } %}
-        {% endfor %}
-
-        {{ block("json_action_nav") }}
+        <input type="submit" class="button" value="{% trans from 'application' %}general.buttons.save{% endtrans %}" />
     </form>
+
+    <div id="row_prototype" class="row" style="display: none !important;">
+            <label class="column checkbox"><input type="checkbox" name="ids[]" value="__KEY__" /><div class="check"></div></label>
+
+            {% if data.fields is not defined %}
+                <div class="column {{ data_name }}">
+                    <input name="translations[__KEY__]" type="text" value="" />
+                    <input name="data[__KEY__]" type="hidden" value="{{ data.translation.path }}.__KEY__" />
+                </div>
+            {% else %}
+                {% for field in data.fields %}
+                    <div class="column {{ field.name }} {{ data.group is defined and data.group == field.name ? 'hide' : '' }}">
+                        {% set field_name = 'data[__KEY__][' ~ field.name ~ ']' %}
+                        {% set default_value = field.default_value is defined ? field.default_value : '' %}
+                        {% set required = field.required is defined and field.required %}
+
+                        {% if field.type == 'select' %}
+                            {% set options = all_options[field.name] %}
+
+                            <select name="{{ field_name }}" {{ required ? 'required' : '' }}>
+                                <option value="">{% trans %}actions.select{% endtrans %}</option>
+                                {% for option_value, option_label in options %}
+                                    <option value="{{ option_value }}" {{ option_value == default_value ? 'selected' : '' }}>
+                                        {{ option_label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            {% set input_type = field.type == 'float' or field.type == 'integer' ? 'number' : 'text' %}
+                            <input name="{{ field_name }}"
+                                type="{{ input_type }}"
+                                {{ field.type == 'float' ? 'step="0.01"' : '' }}
+                                {{ required ? 'required' : '' }}
+                                value="{{ default_value }}" />
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 
-
 {% block javascripts %}
-    <script src="{{ asset('js/json.js', 'eckinox') }}"></script>
+    <script>
+        document.addEventListener('focusin', function(e) {
+            if (!e.target.matches('.column input, .column select')) {
+                return;
+            }
+
+            let row = e.target.closest('.row');
+
+            row.classList.add('editing');
+        });
+
+        document.addEventListener('focusout', function(e) {
+            if (!e.target.matches('.column input, .column select')) {
+                return;
+            }
+
+            let row = e.target.closest('.row');
+
+            row.classList.remove('editing');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('[data-action="add_item"]')) {
+                return;
+            }
+
+            let rows = document.querySelector('.data-list .rows'),
+                prototype = document.querySelector('#row_prototype').cloneNode(true),
+                uniqid = (new Date().getTime()).toString(16);
+
+            prototype.removeAttribute('id');
+            prototype.removeAttribute('style');
+            prototype.innerHTML = prototype.innerHTML.replace(/__KEY__/g, uniqid);
+
+            rows.appendChild(prototype);
+
+            let first_input = prototype.querySelector('input:not([type=checkbox]):first-of-type, select:first-of-type');
+
+            first_input.focus();
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('[data-action="add_item_to_group"]')) {
+                return;
+            }
+
+            let rows = document.querySelector('.data-list .rows.active'),
+                group_value = rows.getAttribute('data-group-value'),
+                group_field_name = rows.getAttribute('data-group-field-name'),
+                prototype = document.querySelector('#row_prototype').cloneNode(true),
+                uniqid = (new Date().getTime()).toString(16);
+
+            prototype.removeAttribute('id');
+            prototype.removeAttribute('style');
+
+            prototype.innerHTML = prototype.innerHTML.replace(/__KEY__/g, uniqid);
+            prototype.querySelector(`[name$="[${group_field_name}]"]`).value = group_value;
+
+            rows.appendChild(prototype);
+
+            let first_input = prototype.querySelector('input:not([type=checkbox]):first-of-type, select:first-of-type');
+
+            first_input.focus();
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('[data-action="remove_items"]')) {
+                return;
+            }
+
+            let containers = document.querySelectorAll('.rows');
+
+            [].forEach.call(containers, function(container){
+                let active_rows = container.querySelectorAll('.row.active');
+
+                [].forEach.call(active_rows, function(row){
+                    row.remove();
+                });
+
+                if(container.querySelectorAll('.row').length === 0) {
+                    container.innerHTML = null;
+                }
+            });
+
+            document.querySelector('#select_all').checked = false;
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('.widget-tabs-item')) {
+                return;
+            }
+
+            let rows = document.querySelector('.rows.active').children,
+                empty_row = document.querySelector('.data-list .empty');
+
+            empty_row.style.display = 'none';
+
+            if(rows.length === 0) {
+                empty_row.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function(){
+            let group_container = document.querySelector('[data-group-value=""]');
+
+            if(group_container) {
+                let tab_index = group_container.getAttribute('data-tab-index'),
+                    tabs_container = document.querySelector('.widget-tabs-wrapper'),
+                    tab = tabs_container.querySelector(`[data-tab-index="${tab_index}"]`);
+
+                    // move the tab element to first
+            }
+        }, false);
+    </script>
 {% endblock %}

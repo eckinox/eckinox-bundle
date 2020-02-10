@@ -114,30 +114,44 @@ class Install extends Command
         $userClass = $this->container->getParameter('user_class');
         $doctrine = $this->container->get('doctrine');
         $em = $doctrine->getManager();
-        $user_email = 'dev@eckinox.ca';
-        $user_password = 'Lumiere1!';
-        $user = $doctrine->getRepository($userClass)->findBy(['username' => $user_email]);
+        $userEmail = 'bundle@eckinox.ca';
+        $userPassword = $this->randomRassword();
+        $user = $doctrine->getRepository($userClass)->findBy(['username' => $userEmail]);
 
         if($user) {
-            $this->output->writeln('The user '. $user_email .' already exists.');
+            $this->output->writeln('The user '. $userEmail .' already exists.');
         } else {
             $user = new $userClass();
 
             $user->setFullName('Eckinox User')
-                ->setEmail($user_email)
-                ->setUsername($user_email)
+                ->setEmail($userEmail)
+                ->setUsername($userEmail)
                 ->setPrivileges(['USER_LIST', 'USER_CREATE_EDIT', 'USER_EDIT_PRIVILEGES']);
 
             $encoder = $this->container->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($user, $user_password);
+            $encoded = $encoder->encodePassword($user, $userPassword);
 
             $user->setPassword($encoded);
 
             $em->persist($user);
             $em->flush();
 
-            $this->output->writeln('The user '. $user_email .' has been created.');
+            $this->output->writeln(sprintf("The user %s has been created.", $userEmail));
+            $this->output->writeln(sprintf("The password is %s", $userPassword));
         }
+    }
+
+    protected function randomRassword($length = 15) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
+        $password = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $random = mt_rand(0, strlen($chars) - 1);
+
+            $password .= $chars[$random];
+        }
+
+        return $password;
     }
 
 }

@@ -1,29 +1,26 @@
 {% extends '@Eckinox/base.html.twig' %}
-{% trans_default_domain 'application' %}
+{% trans_default_domain 'app_data' %}
 
 {% block header %}
-    <h2>{% trans %}json.title.list{% endtrans %}</h2>
+    <h2>{% trans %}list.title{% endtrans %}</h2>
 {% endblock %}
 
 {% block content %}
 
-    <!--div class="action-nav">
-        <a class="button" href="{{ path('edit_software_data') }}">{% trans %}json.actions.createFile{% endtrans %}</a>
-    </div-->
-
-    <div class="json-list list">
+    <div class="data-list list">
         <div class="row head">
-            <div class="column name">{% trans %}json.fields.file{% endtrans %}</div>
-            <div class="column email">{% trans %}json.fields.updatedAt{% endtrans %}</div>
+            <div class="column link name">{% trans %}list.fields.name{% endtrans %}</div>
+            <div class="column link json">{% trans %}list.fields.json{% endtrans %}</div>
             <div class="column edit-link"></div>
         </div>
 
-        {% for key, row in list %}
-            <div class="row item-{{key}}">
-                <div class="column name link">{{row.filename}}</div>
-                <div class="column last_mod link">{{row.last_mod ? row.last_mod|date('Y-m-d H:i:s') : "" }}</div>
-                <a class="column edit-link" href="{{ path("edit_software_data", { "file" : row.filename }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+        {% for key, obj in data_list %}
+            <div class="row item-{{ key }}">
+                <div class="column name link">{{ ('data.' ~ key ~ '.title')|trans() }}</div>
+                <div class="column json link">{{ obj.json }}</div>
+                <a class="column edit-link" href="{{ path('edit_software_data', { data_name: key }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
             </div>
         {% endfor %}
     </div>
+
 {% endblock %}
