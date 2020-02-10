@@ -24,7 +24,6 @@ class Install extends Command
         $this->container = $container;
     }
 
-
     protected function configure()
     {
         $this->setName('eckinox:install')
@@ -44,10 +43,10 @@ class Install extends Command
 
         $this->moveConfigFiles();
         $this->createFolders();
-        $this->clearCache();
         $this->migrateDatabase();
         $this->installAssets();
         $this->createDeveloperUser();
+        $this->clearCache();
     }
 
     protected function moveConfigFiles() {
@@ -128,7 +127,7 @@ class Install extends Command
         $userClass = $this->container->getParameter('user_class');
         $doctrine = $this->container->get('doctrine');
         $em = $doctrine->getManager();
-        $userEmail = 'bundle@eckinox.ca';
+        $userEmail = 'dev@eckinox.ca';
         $userPassword = $this->randomRassword();
         $user = $doctrine->getRepository($userClass)->findBy(['username' => $userEmail]);
 
@@ -152,6 +151,7 @@ class Install extends Command
 
             $this->output->writeln(sprintf("The user %s has been created.", $userEmail));
             $this->output->writeln(sprintf("The password is %s", $userPassword));
+            $this->output->writeln("");
         }
     }
 
@@ -167,5 +167,4 @@ class Install extends Command
 
         return $password;
     }
-
 }
