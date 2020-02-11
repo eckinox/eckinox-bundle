@@ -1,3 +1,11 @@
+parameters:
+    user_class: 'Eckinox\Entity\Application\User'
+    user_form_type_class: 'Eckinox\Form\Application\UserType'
+    default_available_locales: ['fr_CA']
+    allowed_locales: ['fr_CA']
+    app.translations.custom: '%kernel.project_dir%/var/translations/'
+    app.data.path_custom: '%kernel.project_dir%/var/data/'
+
 doctrine:
     orm:
         mappings:

@@ -1,22 +1,16 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    allowed_locales: ['fr_CA']
     app.symfony_config.path: '%kernel.project_dir%/config/'
     app.eckinox_config.path: '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Resources/config/'
     app.controllers.path: {'App\Controller': '%kernel.project_dir%/src/Controller', 'Eckinox\Controller': '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Controller'}
     app.forms.path: {'App\Form': '%kernel.project_dir%/src/Form', 'Eckinox\Form': '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Form'}
     app.data.privileges: '%kernel.project_dir%/data/privileges.json'
     app.data.path: '%kernel.project_dir%/data/'
-    app.data.path_custom: '%kernel.project_dir%/var/data/'
     app.data.path_bundle: '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/Resources/data/'
     app.public.directory: '%kernel.project_dir%/public'
     app.attachments.path: '%kernel.project_dir%/private/attachments/'
     app.updates.path: ['%kernel.project_dir%/private/updates/', '%kernel.project_dir%/vendor/eckinox/eckinox-bundle/private/updates/']
-    user_class: 'Eckinox\Entity\Application\User'
-    user_form_type_class: 'Eckinox\Form\Application\UserType'
-    default_available_locales: ['fr_CA']
-    app.translations.custom: '%kernel.project_dir%/var/translations/'
 
 services:
     # default configuration for services in *this* file

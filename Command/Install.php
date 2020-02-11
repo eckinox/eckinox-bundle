@@ -8,11 +8,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Config\FileLocator;
 
 class Install extends Command
 {
@@ -45,10 +45,10 @@ class Install extends Command
 
         $this->moveConfigFiles();
         $this->createFolders();
-        //$this->clearCache();
         $this->migrateDatabase();
         $this->installAssets();
         $this->createDeveloperUser();
+        // $this->clearCache();
     }
 
     protected function moveConfigFiles() {
@@ -62,23 +62,45 @@ class Install extends Command
         ];
 
         foreach($config as $path) {
-            copy($eckinox_config_path.$path, $symfony_config_path.$path);
+            if(!file_exists($symfony_config_path.$path)) {
+                copy($eckinox_config_path.$path, $symfony_config_path.$path);
 
-            $this->output->writeln('Moved ' . $eckinox_config_path.$path . ' to ' . $symfony_config_path.$path);
+                $this->output->writeln(sprintf('The file %s has been created.', $symfony_config_path.$path));
+            } else {
+                $this->output->writeln(sprintf('The file %s already exists.', $symfony_config_path.$path));
+            }
         }
+
+        $translationConfigPath = sprintf('%s%s', $symfony_config_path, 'packages/translation.yaml');
+        if(file_exists($translationConfigPath)) {
+            $content = file_get_contents($translationConfigPath);
+            $content = str_replace('default_locale: en', 'default_locale: fr_CA', $content);
+
+            file_put_contents($translationConfigPath, $content);
+
+            $this->output->writeln($translationConfigPath);
+        }
+
+        $this->output->writeln('');
     }
 
     protected function createFolders() {
         $folders = [
-            $this->container->getParameter('app.translations.custom'),
-            $this->container->getParameter('app.data.path_custom')
+            sprintf('%s/%s', $this->container->getParameter('kernel.project_dir'), 'var/translations/'),
+            sprintf('%s/%s', $this->container->getParameter('kernel.project_dir'), 'var/data/')
         ];
 
         foreach($folders as $folder) {
             if(!file_exists($folder)) {
                 mkdir($folder, 0755);
+
+                $this->output->writeln(sprintf('The folder %s has been created.', $folder));
+            } else {
+                $this->output->writeln(sprintf('The folder %s already exists.', $folder));
             }
         }
+
+        $this->output->writeln('');
     }
 
     protected function clearCache() {
@@ -115,6 +137,8 @@ class Install extends Command
         } else {
             $this->output->writeln('No need to run the migrate command: there are no new migrations to apply.');
         }
+
+        $this->output->writeln('');
     }
 
     protected function installAssets() {
@@ -126,7 +150,7 @@ class Install extends Command
     }
 
     protected function createDeveloperUser() {
-        $userClass = $this->container->getParameter('user_class');
+        $userClass = \Eckinox\Entity\Application\User::class;
         $doctrine = $this->container->get('doctrine');
         $em = $doctrine->getManager();
         $userEmail = 'dev@eckinox.ca';
