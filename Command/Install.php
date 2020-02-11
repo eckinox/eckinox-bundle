@@ -62,13 +62,9 @@ class Install extends Command
         ];
 
         foreach($config as $path) {
-            if(!file_exists($symfony_config_path.$path)) {
-                copy($eckinox_config_path.$path, $symfony_config_path.$path);
+            copy($eckinox_config_path.$path, $symfony_config_path.$path);
 
-                $this->output->writeln(sprintf('The file %s has been created.', $symfony_config_path.$path));
-            } else {
-                $this->output->writeln(sprintf('The file %s already exists.', $symfony_config_path.$path));
-            }
+            $this->output->writeln(sprintf('The file %s has been created.', $symfony_config_path.$path));
         }
 
         $translationConfigPath = sprintf('%s%s', $symfony_config_path, 'packages/translation.yaml');
