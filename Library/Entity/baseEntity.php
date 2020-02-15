@@ -3,6 +3,9 @@
 namespace Eckinox\Library\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Eckinox\Library\Symfony\Doctrine\LocaleFilter;
 
 trait baseEntity {
 
@@ -198,7 +201,11 @@ trait baseEntity {
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function verifyTranslatableRelations() {
+    public function verifyTranslatableRelations(LifecycleEventArgs $args = null) {
+        $em = $args->getEntityManager();
+        $metadata = $em->getClassMetadata(get_class($this));
+        $db = $em->getConnection();
+
         $traits = class_uses(static::class);
         $translatabletraitName = 'Eckinox\\Library\\Entity\\translatableEntity';
         $properties = array_keys(get_object_vars($this));
@@ -223,20 +230,86 @@ trait baseEntity {
             }
 
             # Fetch every translation of the entities contained in this relation
-            $translations = [];
+            $newTranslations = [];
+            $deletedRelations = [];
             foreach ($this->$property as $entity) {
-                foreach ($entity->getTranslations() as $translation) {
-                    $translations[] = $translation;
+                if ($args instanceof PreUpdateEventArgs) {
+                    if ($this->$property->getDeleteDiff()) {
+                        $deletedRelations = $this->$property->getDeleteDiff();
+                    }
+                }
+
+                if (in_array($entity, $this->$property->getInsertDiff())) {
+                    foreach ($entity->getTranslations() as $translation) {
+                        $newTranslations[] = $translation;
+                    }
                 }
             }
 
-            # Add every translation to the relation
-            foreach ($translations as $translation) {
+            # Add every new translation to the relation
+            foreach ($newTranslations as $translation) {
                 if (!$this->$property->contains($translation)) {
                     $this->$property->add($translation);
                 }
             }
 
+            # Remove translation from the relation as well
+            # This bit probably requires some explanation, so please read this before atetmpting to change anything inside this IF statement.
+            # We can't simply do a $this->$property->remove($translation) to remove translations, because the locale SQL filter restricts Doctrine from loading said translations
+            # We cannot simply disable the SQL filter to load the translations, as Doctrine has already cached the results of those queries with the filter turned on.
+            # We cannot detach or refresh entity from the EntityManager, because we are in the middle of processing the flush(), and Doctrine very much dislikes us doing that.
+            # Therefore, the solution that has been found as a counter to these issues, in order to remove all translations of a relation when removing said translation, is as follows.
+            # We fetch the metadata of the relation and of that relation's translations property in order to manually build an SQL query that will remove relations to those relations' translations
+            if ($deletedRelations) {
+                # Get the association data between the current entity class and the relation entity class
+                $associationMapping = $metadata->getAssociationMapping($property);
+                $associationTable = $associationMapping['joinTable']['name'];
+                $associationSourceColumn = $associationMapping['joinTable']['joinColumns'][0]['name'];
+                $associationTargetColumn = $associationMapping['joinTable']['inverseJoinColumns'][0]['name'];
+
+                # Get the target entity class translation metadata
+                $targetMetadata = $em->getClassMetadata($associationMapping['targetEntity']);
+                $targetTranslationsMapping = $targetMetadata->getAssociationMapping('translations');
+                $targetTranslationsTable = $targetTranslationsMapping['joinTable']['name'];
+                $targetTranslationSourceColumn = $targetTranslationsMapping['joinTable']['joinColumns'][0]['name'];
+                $targetTranslationTargetColumn = $targetTranslationsMapping['joinTable']['inverseJoinColumns'][0]['name'];
+
+                # Build the data array for the prepared statement
+                $sqlData = [
+                    'sourceId' => $this->get($associationMapping['joinTable']['joinColumns'][0]['referencedColumnName']),
+                ];
+
+                # Get the IDs of every relation that has been deleted, and add prepare the query for said IDs
+                $inStatementPlaceholders = '';
+                $deletedRelationIds = [];
+                foreach ($deletedRelations as $i => $deletedRelation) {
+                    $sqlData['relationId' . $i] = $deletedRelation->get($associationMapping['joinTable']['inverseJoinColumns'][0]['referencedColumnName']);
+                    $inStatementPlaceholders .= ':relationId' . $i . ', ';
+                }
+                $inStatementPlaceholders = substr($inStatementPlaceholders, 0, strlen($inStatementPlaceholders) - 2);
+
+                # Build the removal query with all of the data collected above
+                $sql = strtr('
+                    DELETE R FROM `%associationTable` as R
+                    WHERE R.`%associationSourceColumn` = :sourceId
+                    AND R.`%associationTargetColumn` IN (
+                        SELECT T.`%targetTranslationTargetColumn`
+                        FROM `%targetTranslationsTable` T
+                        WHERE T.`%targetTranslationSourceColumn` IN (%inStatementPlaceholders)
+                    )',
+                    [
+                        '%associationTable' => $associationTable,
+                        '%associationSourceColumn' => $associationSourceColumn,
+                        '%associationTargetColumn' => $associationTargetColumn,
+                        '%targetTranslationsTable' => $targetTranslationsTable,
+                        '%targetTranslationTargetColumn' => $targetTranslationTargetColumn,
+                        '%targetTranslationSourceColumn' => $targetTranslationSourceColumn,
+                        '%inStatementPlaceholders' => $inStatementPlaceholders,
+                    ]
+                );
+                $translationsRemovalQuery = $db->prepare($sql);
+                $translationsRemovalQuery->execute($sqlData);
+            }
         }
     }
 
