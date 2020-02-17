@@ -1,0 +1,10 @@
+.notice-message { display: flex; justify-content: flex-start; align-items: center; padding: 10px 15px; margin-bottom: 10px; background-color: #fff; border-radius: 3px; border: 1px solid rgba(0, 80, 178, 0.15); white-space: pre-wrap; }
+.notice-message::before { content: "\f058"; font-weight: 900; font-family: Font Awesome\ 5 Pro; margin-right: 12px; }
+.notice-message.success { background-color: #31ac5f; color: #fff; }
+.notice-message.warning { background-color: #ffd241; color: #222; }
+.notice-message.error { background-color: #f85757; color: #fff; }
+.notice-message.info { background-color: #599BF7; color: #fff; }
+.notice-message.success::before { content: "\f058"; }
+.notice-message.warning::before { content: "\f06a"; }
+.notice-message.error::before { content: "\f06a"; }
+.notice-message.info::before { content: "\f05a"; }
