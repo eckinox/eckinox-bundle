@@ -234,12 +234,12 @@ trait baseEntity {
             $deletedRelations = [];
             foreach ($this->$property as $entity) {
                 if ($args instanceof PreUpdateEventArgs) {
-                    if ($this->$property->getDeleteDiff()) {
+                    if (method_exists($this->$property, 'getDeleteDiff') && $this->$property->getDeleteDiff()) {
                         $deletedRelations = $this->$property->getDeleteDiff();
                     }
                 }
 
-                if (in_array($entity, $this->$property->getInsertDiff())) {
+                if (method_exists($this->$property, 'getInsertDiff') && in_array($entity, $this->$property->getInsertDiff())) {
                     foreach ($entity->getTranslations() as $translation) {
                         $newTranslations[] = $translation;
                     }
