@@ -52,6 +52,11 @@ class EntityRepository extends ServiceEntityRepository
             ->setFirstResult($firstResult)
             ->setMaxResults($maxResults);
 
+        # If a "preSearchFilter" method is defined in the entity, it will run before applying the search itself.
+        if (method_exists($this, 'preSearchFilter')) {
+            $this->preSearchFilter($query, $search, 'e');
+        }
+
         $this->search($query, $search, 'e');
 
         return $query->getQuery()->getResult();
@@ -60,6 +65,11 @@ class EntityRepository extends ServiceEntityRepository
     public function getCount($search = []) {
         $query = $this->createQueryBuilder('e')
             ->select('count(e)');
+
+        # If a "preSearchFilter" method is defined in the entity, it will run before applying the search itself.
+        if (method_exists($this, 'preSearchFilter')) {
+            $this->preSearchFilter($query, $search, 'e');
+        }
 
         $this->search($query, $search, 'e');
 
