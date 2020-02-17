@@ -132,6 +132,7 @@ class UserController extends Controller
      */
     public function edit(Request $request, $user_id = null, AuthorizationCheckerInterface $authChecker, UserPasswordEncoderInterface $encoder)
     {
+        $self = $this->getUser();
         $userClass = $this->getParameter('user_class');
         $user = new $userClass();
         $currentData = [];
@@ -157,10 +158,17 @@ class UserController extends Controller
          */
         $privileges = [];
         $privilegesGroups = [];
+        $privilegesGroupsAccessible = false;
 
         if ($this->getUser()->hasPrivilege('USER_EDIT_PRIVILEGES_GROUP')) {
             foreach ($this->data('privileges.groups') as $group => $unused) {
-                $privilegesGroups[$this->trans(implode('.', ['privileges', 'groups', $group]), [], 'application')] = $group;
+                if (!$privilegesGroupsAccessible && $group == $self->getPrivilegesGroup()) {
+                    $privilegesGroupsAccessible = true;
+                }
+
+                if ($privilegesGroupsAccessible) {
+                    $privilegesGroups[$this->trans(implode('.', ['privileges', 'groups', $group]), [], 'application')] = $group;
+                }
             }
         }
 
