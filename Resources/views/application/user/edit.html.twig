@@ -30,5 +30,28 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        // Displays privileges that are included in the selected privilege group at all times
+        const privilegeGroups = {{ data('privileges.groups') | json_encode | raw }};
+        const privilegeGroupSelect = document.querySelector('select.privilegesGroup');
+        const privilegeCheckboxes = document.querySelectorAll('.field-wrapper.privileges input[type="checkbox"]');
 
+        if (privilegeGroupSelect && privilegeCheckboxes.length) {
+            // On group change, the included privileges are checked and "locked in"
+            privilegeGroupSelect.addEventListener('change', function() {
+                const selectedGroup = privilegeGroupSelect.value;
+                const includedPrivileges = typeof privilegeGroups[selectedGroup] != 'undefined' ? privilegeGroups[selectedGroup] : [];
+
+                for (const checkbox of privilegeCheckboxes) {
+                    const isIncluded = includedPrivileges.indexOf(checkbox.value) != -1;
+                    checkbox.checked = isIncluded;
+                    checkbox.disabled = isIncluded;
+                    checkbox.nextElementSibling.classList.toggle('locked', isIncluded);
+                }
+            });
+
+            // Trigger the checkbox checking & locking on page load
+            privilegeGroupSelect.dispatchEvent(new Event('change'));
+        }
+    </script>
 {% endblock %}
