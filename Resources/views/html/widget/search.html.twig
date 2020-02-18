@@ -34,14 +34,17 @@
                 <select name="search[{{ field.name }}]" value="">
                     <option value="">{{ "placeholders.select"|trans([], 'general') }}</option>
                     {% for key, value in field.search.choices %}
-                        {% set selected = (app.request.request.get('search') ?? [])[field.name] is defined and (app.request.request.get('search') ?? [])[field.name] == key %}
+                        {% set selected = (app.request.query.get('search') is defined and app.request.query.get(field.name) is defined and app.request.query.get(field.name) == key) %}
+                        {% set selected = selected or ((app.request.request.get('search') ?? [])[field.name] is defined and (app.request.request.get('search') ?? [])[field.name] == key) %}
                         {% set value = field.search.transOptions is defined and field.search.transOptions ? (value | trans) : value %}
                         <option value="{{ key }}" {{ selected ? 'selected' : '' }}>{{ value }}</option>
                     {% endfor %}
                 </select>
 
             {% else %}
-                <input type="text" name="search[{{ field.name }}]" value="{{ app.request.request.get('search')[field.name] ?? '' }}" />
+                {% set requestValue = app.request.query.get('search') ? app.request.query.get(field.name) ?? '' : '' %}
+                {% set requestValue = requestValue ?: app.request.request.get('search')[field.name] ?? '' %}
+                <input type="text" name="search[{{ field.name }}]" value="{{ requestValue }}" />
             {% endif %}
 
         </div>
