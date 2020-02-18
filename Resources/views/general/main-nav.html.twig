@@ -5,17 +5,19 @@
 {% block main_left_nav %}
     <nav id="main-navigation" class="{{ data("navigation.showTitles") ? "show-titles" : "" }}">
         {% for item in data("navigation.items")|sortByField('order') %}
-            {% if item.privilege is not defined or app.user.hasPrivilege(item.privilege) %}
-                <div class="link-item {{ item.modules is defined and currentModule in item.modules ? 'current' : '' }}" {{ (item.panel is defined ? 'data-panel="' ~ item.panel ~ '"' : '') | raw }}>
-                    <a class="link-detail" href="{{ item.route is defined ? path(item.route, (item.route_parameters is defined ? item.route_parameters : {})) : '#' }}">
-                        <i class="{{ item.icon is defined ? item.icon : '' }}"></i>
-                        <div class="main-title">
-                            {% if item.title is defined %}
-                                {{ item.title | trans }}
-                            {% endif %}
-                        </div>
-                    </a>
-                </div>
+            {% if not (item.panel is defined) or data("navigation.panel." ~ item.panel ~ ".sections") %}
+                {% if item.privilege is not defined or app.user.hasPrivilege(item.privilege) %}
+                    <div class="link-item {{ item.modules is defined and currentModule in item.modules ? 'current' : '' }}" {{ (item.panel is defined ? 'data-panel="' ~ item.panel ~ '"' : '') | raw }}>
+                        <a class="link-detail" href="{{ item.route is defined ? path(item.route, (item.route_parameters is defined ? item.route_parameters : {})) : '#' }}">
+                            <i class="{{ item.icon is defined ? item.icon : '' }}"></i>
+                            <div class="main-title">
+                                {% if item.title is defined %}
+                                    {{ item.title | trans }}
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
     </nav>

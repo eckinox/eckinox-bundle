@@ -85,6 +85,7 @@ return [
         "default_message" => "You do not have the required privileges to perform this action",
         "modules" => [
             "user" => "User",
+            "email" => "Courriels",
             "software" => "Software",
             "import" => "Import"
         ],
@@ -93,6 +94,11 @@ return [
     			"USER_EDIT_PRIVILEGES" => "Change a user's privileges",
     			"USER_CREATE_EDIT" => "Create / edit a user",
     			"USER_LIST" => "List users"
+    		],
+    		"email" => [
+    			"EMAIL_CREATE_EDIT" => "Create / edit an email",
+    			"EMAIL_LIST" => "View emails history",
+                "EMAIL_TEMPLATES" => "Manage email templates",
     		],
             "software" => [
                 "SOFTWARE_UPDATE" => "Edit software data"

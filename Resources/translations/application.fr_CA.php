@@ -85,6 +85,7 @@ return [
         "default_message" => "Vous n'avez pas les privilèges requis pour effectuer cette action",
         "modules" => [
             "user" => "Utilisateurs",
+            "email" => "Courriels",
             "software" => "Logiciel",
             "import" => "Importation"
         ],
@@ -93,6 +94,11 @@ return [
     			"USER_EDIT_PRIVILEGES" => "Modifier les privilèges d'un utilisateur",
     			"USER_CREATE_EDIT" => "Créer / éditer un utilisateur",
     			"USER_LIST" => "Lister les utilisateurs"
+    		],
+    		"email" => [
+    			"EMAIL_CREATE_EDIT" => "Créer / éditer un courriel",
+    			"EMAIL_LIST" => "Visionner l'historique des courriels",
+                "EMAIL_TEMPLATES" => "Gérer les gabarits courriels",
     		],
             "software" => [
                 "SOFTWARE_UPDATE" => "Modifier les données du logiciel"

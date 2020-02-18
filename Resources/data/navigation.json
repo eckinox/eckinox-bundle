@@ -45,14 +45,17 @@
                 },
                 {
                     "title": "navigation.modules.admin.email.title",
+                    "privilege": "EMAIL_LIST",
                     "items": [
                         {
                             "title": "navigation.modules.admin.email.links.create",
-                            "route": "create_email"
+                            "route": "create_email",
+                            "privilege": "EMAIL_CREATE_EDIT"
                         },
                         {
                             "title": "navigation.modules.admin.email.links.list",
-                            "route": "index_email"
+                            "route": "index_email",
+                            "privilege": "EMAIL_LIST"
                         },
                         {
                             "title": "navigation.modules.admin.email.links.listTemplates",

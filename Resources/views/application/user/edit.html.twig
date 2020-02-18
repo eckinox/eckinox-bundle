@@ -32,6 +32,7 @@
 {% block javascripts %}
     <script>
         // Displays privileges that are included in the selected privilege group at all times
+        let isFirstLoad = true;
         const privilegeGroups = {{ data('privileges.groups') | json_encode | raw }};
         const privilegeGroupSelect = document.querySelector('select.privilegesGroup');
         const privilegeCheckboxes = document.querySelectorAll('.field-wrapper.privileges input[type="checkbox"]');
@@ -44,10 +45,12 @@
 
                 for (const checkbox of privilegeCheckboxes) {
                     const isIncluded = includedPrivileges.indexOf(checkbox.value) != -1;
-                    checkbox.checked = isIncluded;
+                    checkbox.checked = isIncluded || (isFirstLoad && checkbox.checked);
                     checkbox.disabled = isIncluded;
                     checkbox.nextElementSibling.classList.toggle('locked', isIncluded);
                 }
+
+                isFirstLoad = false;
             });
 
             // Trigger the checkbox checking & locking on page load

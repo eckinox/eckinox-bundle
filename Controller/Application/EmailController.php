@@ -27,6 +27,7 @@ class EmailController extends Controller
 
     /**
      * @Route("/email/{page}", name="index_email", requirements={"page"="\d+", "templates"="\d+"})
+     * @Security("EMAIL_LIST")
      * @Breadcrumb(parent="home")
      */
     public function index(Request $request, $page = 1, $templates = false)
@@ -131,6 +132,7 @@ class EmailController extends Controller
      * @Route("/email/create", name="create_email")
      * @Route("/email/edit/{email_id}", name="edit_email", requirements={"email_id"="\d+", "templates"="\d+"})
      * @Breadcrumb(parent="index_email")
+     * @Security("EMAIL_CREATE_EDIT")
      */
     public function edit(Request $request, $email_id = null, AuthorizationCheckerInterface $authChecker, $templates = false)
     {
@@ -341,6 +343,7 @@ class EmailController extends Controller
     /**
      * @Route("/email/forward/{email_id}", name="forward_email", requirements={"email_id"="\d+"})
      * @Breadcrumb(parent="index_email")
+     * @Security("EMAIL_CREATE_EDIT")
      */
     public function forwardEmail(Request $request, $email_id)
     {
