@@ -5,126 +5,138 @@
 
     {% block before_list %}{% endblock %}
 
-    <div class="{{ listing.module }}-list list">
-        <div class="row head fields">
-            <label class="column checkbox">
-                <input type="checkbox" id="{{ listing.module }}_select_all" name="{{ listing.module }}_select_all" value="" />
-                <div class="check"></div>
-            </label>
+	{% block list %}
+	    <div class="{{ listing.module }}-list list">
+			{% block listHead %}
+		        <div class="row head fields">
+		            <label class="column checkbox">
+		                <input type="checkbox" id="{{ listing.module }}_select_all" name="{{ listing.module }}_select_all" value="" />
+		                <div class="check"></div>
+		            </label>
 
-            {% for field in listing.fields %}
-                <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</div>
-            {% endfor %}
+		            {% for field in listing.fields %}
+		                <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</div>
+		            {% endfor %}
 
-            <div class="column more">
-                <div class="actions-button">
-                    <label for="more_checkbox"><i class="far fa-ellipsis-v"></i></label>
-                    <input type="checkbox" id="more_checkbox" name="more_checkbox">
-                    <ul class="dropdown">
-                        <li>
-                            <ul class="fields">
-                                {% for field in listing.fields %}
-                                    <li>
-                                        <input type="checkbox" id="field_{{ field.name }}" name="field_{{ field.name }}" value="{{ field.name }}" {% if field.visible %}checked="checked"{% endif %} />
-                                        <label for="field_{{ field.name }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</label>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
-                    <button type="submit" class="hide"></button>
-                </div>
-            </div>
-        </div>
+		            <div class="column more">
+		                <div class="actions-button">
+		                    <label for="more_checkbox"><i class="far fa-ellipsis-v"></i></label>
+		                    <input type="checkbox" id="more_checkbox" name="more_checkbox">
+		                    <ul class="dropdown">
+		                        <li>
+		                            <ul class="fields">
+		                                {% for field in listing.fields %}
+		                                    <li>
+		                                        <input type="checkbox" id="field_{{ field.name }}" name="field_{{ field.name }}" value="{{ field.name }}" {% if field.visible %}checked="checked"{% endif %} />
+		                                        <label for="field_{{ field.name }}">{{ (listing.module ~ '.fields.' ~ field.name)|trans }}</label>
+		                                    </li>
+		                                {% endfor %}
+		                            </ul>
+		                        </li>
+		                    </ul>
+		                    <button type="submit" class="hide"></button>
+		                </div>
+		            </div>
+		        </div>
+			{% endblock %}
 
-        {% if search is not defined or search %}
-            {% include '@Eckinox/html/widget/search.html.twig' %}
-        {% endif %}
+			{% block listSearch %}
+		        {% if search is not defined or search %}
+		            {% include '@Eckinox/html/widget/search.html.twig' %}
+		        {% endif %}
+			{% endblock %}
 
-        <div class="rows">
-            {% for row in rows %}
-                <div class="row item-{{ row.id }}">
-                    <label class="column checkbox"><input type="checkbox" name="ids[]" value="{{ row.id }}" /><div class="check"></div></label>
+			{% block listRows %}
+		        <div class="rows">
+		            {% for row in rows %}
+		                <div class="row item-{{ row.id }}">
+		                    <label class="column checkbox"><input type="checkbox" name="ids[]" value="{{ row.id }}" /><div class="check"></div></label>
 
-                    {% for field in listing.fields %}
+		                    {% for field in listing.fields %}
 
-                        <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }} link" data-name="{{ field.name }}">
-                            {% if field.entity is defined %}
-                                {% set vars = field.entity|split('.') %}
-                                {% set value = row %}
+		                        <div class="column {{ field.name }} {{ field.class }} {{ field.visible ? '' : 'hide' }} link" data-name="{{ field.name }}">
+		                            {% if field.entity is defined %}
+		                                {% set vars = field.entity|split('.') %}
+		                                {% set value = row %}
 
-                                {% for var in vars %}
-                                    {% if value is null %}
-                                        {% set value = null %}
-                                    {% else %}
-                                        {% set value = attribute(value, var) %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                {% set value = attribute(row, field.name) %}
-                            {% endif %}
+		                                {% for var in vars %}
+		                                    {% if value is null %}
+		                                        {% set value = null %}
+		                                    {% else %}
+		                                        {% set value = attribute(value, var) %}
+		                                    {% endif %}
+		                                {% endfor %}
+		                            {% else %}
+		                                {% set value = attribute(row, field.name) %}
+		                            {% endif %}
 
-                            {% if value is iterable %}
-                                {% set values = value %}
+		                            {% if value is iterable %}
+		                                {% set values = value %}
 
-                                {% for v in values %}
-                                    {% set value = v %}
+		                                {% for v in values %}
+		                                    {% set value = v %}
 
-                                    {% for f in field.filters %}
-                                        {% set value = value|applyFilter((f.name is defined ? f.name : f), f.arguments is defined ? f.arguments : []) %}
-                                    {% endfor %}
+		                                    {% for f in field.filters %}
+		                                        {% set value = value|applyFilter((f.name is defined ? f.name : f), f.arguments is defined ? f.arguments : []) %}
+		                                    {% endfor %}
 
-                                    {{ value }}{% if not loop.last %},{% endif %}
-                                {% endfor %}
-                            {% else %}
-                                {% for f in field.filters %}
-                                    {% set value = value|applyFilter((f.name is defined ? f.name : f), f.arguments is defined ? f.arguments : []) %}
-                                {% endfor %}
+		                                    {{ value }}{% if not loop.last %},{% endif %}
+		                                {% endfor %}
+		                            {% else %}
+		                                {% for f in field.filters %}
+		                                    {% set value = value|applyFilter((f.name is defined ? f.name : f), f.arguments is defined ? f.arguments : []) %}
+		                                {% endfor %}
 
-                                {{ value }} <br />
-                            {% endif %}
-                        </div>
-                    {% endfor %}
+		                                {{ value }} <br />
+		                            {% endif %}
+		                        </div>
+		                    {% endfor %}
 
-                    {# Allow custom edit link generation #}
-                    {% if editLink is defined %}
-                        {% set editRouteParameters = {} %}
-                        {% if editLink.parameters is defined %}
-                            {% for parameter, valueKey in editLink.parameters %}
-                                {% set editRouteParameters = editRouteParameters|merge({ (parameter): row.getRecursively(valueKey) }) %}
-                            {% endfor %}
-                        {% endif %}
-                        {% set customEditUrl = path(editLink.route, editRouteParameters) ~ (editLink.hash is defined ? editLink.hash : '') %}
-                    {% endif %}
+		                    {# Allow custom edit link generation #}
+		                    {% if editLink is defined %}
+		                        {% set editRouteParameters = {} %}
+		                        {% if editLink.parameters is defined %}
+		                            {% for parameter, valueKey in editLink.parameters %}
+		                                {% set editRouteParameters = editRouteParameters|merge({ (parameter): row.getRecursively(valueKey) }) %}
+		                            {% endfor %}
+		                        {% endif %}
+		                        {% set customEditUrl = path(editLink.route, editRouteParameters) ~ (editLink.hash is defined ? editLink.hash : '') %}
+		                    {% endif %}
 
-                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (customEditUrl is defined or (readonly is not defined or not readonly)) %}
-                        <a class="column edit-link" href="{{ customEditUrl is defined ? customEditUrl : path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    {% else %}
-                        <div class="column edit-link"></div>
-                    {% endif %}
-                </div>
-            {% endfor %}
+		                    {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (customEditUrl is defined or (readonly is not defined or not readonly)) %}
+		                        <a class="column edit-link" href="{{ customEditUrl is defined ? customEditUrl : path('edit_' ~ listing.module, {(listing.module ~ '_id'): row.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+		                    {% else %}
+		                        <div class="column edit-link"></div>
+		                    {% endif %}
+		                </div>
+		            {% endfor %}
 
-            {% if rows|length == 0 %}
-                <div class="empty">
-                    {{ (listing.module ~ '.emptyList')|trans() }}
-                </div>
-            {% endif %}
-        </div>
+		            {% if rows|length == 0 %}
+		                <div class="empty">
+		                    {{ (listing.module ~ '.emptyList')|trans() }}
+		                </div>
+		            {% endif %}
+		        </div>
+			{% endblock %}
 
-        {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (readonly is not defined or not readonly) %}
-            <div class="add-row">
-                <a href="{{ path('create_' ~ listing.module) }}">
-                    <i class="fas fa-plus-circle"></i>
-                    {{ (listing.module ~ '.actions.create')|trans() }}
-                </a>
-            </div>
-        {% endif %}
-    </div>
+			{% block listFoot %}
+		        {% if app.user.hasPrivilege(listing.module|upper ~ "_CREATE_EDIT") and (readonly is not defined or not readonly) %}
+		            <div class="add-row">
+		                <a href="{{ path('create_' ~ listing.module) }}">
+		                    <i class="fas fa-plus-circle"></i>
+		                    {{ (listing.module ~ '.actions.create')|trans() }}
+		                </a>
+		            </div>
+		        {% endif %}
+			{% endblock %}
+	    </div>
+	{% endblock %}
 
     {% block after_list %}{% endblock %}
 </form>
 
-{% if pagination is not defined or pagination %}
-    {% include '@Eckinox/html/pagination.html.twig' with {'view': 'index_' ~ listing.module, 'nbPages': nbPages, 'currentPage': currentPage} %}
-{% endif %}
+{% block listPagination %}
+	{% if pagination is not defined or pagination %}
+	    {% include '@Eckinox/html/pagination.html.twig' with {'view': 'index_' ~ listing.module, 'nbPages': nbPages, 'currentPage': currentPage} %}
+	{% endif %}
+{% endblock %}
