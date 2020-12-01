@@ -1,6 +1,7 @@
 {% trans_default_domain listing.domain %}
-
+{% block list_form_start %}
 <form name="{{ listing.module }}-list-form" action="{{ path('index_' ~ listing.module, {'page': 1}) | withCurrentParams }}" method="post">
+{% endblock %}
     <div class="action-nav">{% block list_actions %}{% endblock %}</div>
 
     {% block before_list %}{% endblock %}
@@ -133,8 +134,9 @@
 	{% endblock %}
 
     {% block after_list %}{% endblock %}
+{% block list_form_end %}
 </form>
-
+{% endblock %}
 {% block listPagination %}
 	{% if pagination is not defined or pagination %}
 	    {% include '@Eckinox/html/pagination.html.twig' with {'view': 'index_' ~ listing.module, 'nbPages': nbPages, 'currentPage': currentPage} %}
