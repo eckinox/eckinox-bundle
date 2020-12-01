@@ -3,6 +3,26 @@
 namespace Eckinox\Library\Symfony;
 
 trait repository {
+    public function findAllRows($properties = [], $relations = []) {
+        $query = $this->createQueryBuilder('e', 'e.id');
+
+        if($properties) {
+            if(!in_array('id', $properties)) { array_unshift($properties, 'id'); }
+
+            foreach($properties as &$property) {
+                if(in_array($property, $relations)) {
+                    $property = strtr('IDENTITY(e.%name%) as %name%', [ '%name%' => $property ]);
+                } else {
+                    $property = 'e.'.$property;
+                }
+            }
+
+            $query->select(implode(', ', $properties));
+        }
+
+        return $query->getQuery()->getArrayResult();
+    }
+    
     private function search(&$query, $search, $entity = 'e') {
         $num = 0;
 
