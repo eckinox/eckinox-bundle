@@ -9,13 +9,13 @@
             throw new Error(`There is no matching route for "${name}".`);
         }
 
-        let parameterPattern = /\{([^}]+)\}/g;
         let route = _routes[name];
         let path = _routes[name].path;
         let match;
 
         // Parse and fill the parameters
         do {
+            let parameterPattern = /\{([^}]+)\}/g;
             match = parameterPattern.exec(path);
 
             if (match) {
