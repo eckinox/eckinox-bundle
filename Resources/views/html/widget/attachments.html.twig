@@ -2,17 +2,22 @@
 
 {% macro recursiveTree(folder, data, path, tmp) %}
     {% import _self as self %}
-    <li class="folder" data-folder-name="{{ folder.directory }}" data-count-total-files="{{folder.total_files}}" data-count-files="{{ folder.files|length }}" data-count-folders="{{ folder.children|length }}">
+    <li class="folder" data-folder-name="{{ folder.directory }}" data-count-total-files="{{ folder.total_files }}" data-count-files="{{ folder.files|length }}" data-count-folders="{{ folder.children|length }}">
         {% set path = path|merge([folder.directory])  %}
         <div class="folder-name">
             <i class="fas fa-folder"></i>
             {{ folder.name }}
             <div class="count">
-                <span class="folders-count">{{ folder.children|length }}</span> {% trans %}attachments.folder{% endtrans %} -
-                <span class="files-count">{{ folder.files|length }}</span> {% trans %}attachments.file{% endtrans %}
+                <span class="folders-count-wrapper"><span class="folders-count">{{ folder.children|length }}</span> {% trans %}attachments.folder{% endtrans %}</span>
+				<span class="dash-wrapper"> -</span>
+				<span class="files-count-wrapper"><span class="files-count">{{ folder.files|length }}</span> {% trans %}attachments.file{% endtrans %}</span>
             </div>
+            <label class="upload green">
+                <i class="fas fa-upload"></i>
+                <input type="file" multiple />
+            </label>
         </div>
-        <div class="folder-content">
+        <div class="folder-content" style="display: none;">
             {% if folder.children is defined and folder.children %}
                 <ul class="folders">
                     {% for child in folder.children %}
@@ -28,21 +33,20 @@
                           <a class="file-name" href="{{ tmp ? "javascript:void(0)" : path('attachments_open', {'domain': data.domain, 'module': data.module, 'objectId': data.objectId ?: 0, 'path': path|join('-'), 'fileName': file}) }}" target="_blank"><i class="far fa-file"></i> {{ file }}</a>
 
                           <input type="checkbox" value="1" id="{{uniqkey}}">
-                          <label class="file-trash" for="{{uniqkey}}"><i class="far fa-trash-alt"></i></label>
+                          <label class="file-trash" for="{{uniqkey}}"><i class="fas fa-trash-alt"></i></label>
 
                           <div class="file-delete">
                             <div class="confirm">
-                                <a class="button green" href="{{ tmp ? "javascript:void(0)" : path('attachments_open', {'domain': data.domain, 'module': data.module, 'objectId': data.objectId ?: 0, 'path': path|join('-'), 'fileName': file, 'action' : 'delete'}) }}">
-                                    <i class="far fa-check"></i>
+                                <a href="{{ tmp ? "javascript:void(0)" : path('attachments_open', {'domain': data.domain, 'module': data.module, 'objectId': data.objectId ?: 0, 'path': path|join('-'), 'fileName': file, 'action' : 'delete'}) }}">
+                                    Supprimer
                                 </a>
-                                <label class="button red" for="{{uniqkey}}"><i class="far fa-times"></i></label>
+                                <label for="{{uniqkey}}">Annuler</label>
                             </div>
                           </div>
                         </li>
                     {% endfor %}
-                {% else %}
-                    <li class="file empty">{% trans %}attachments.empty{% endtrans %}</li>
                 {% endif %}
+                <li class="file empty">{% trans %}attachments.empty{% endtrans %}</li>
             </ul>
         </div>
     </li>
@@ -72,3 +76,4 @@
         </div>
     </div>
 </div>
+

@@ -6,10 +6,6 @@ use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Eckinox\Library\General\Arrays;
-use Eckinox\Library\General\Serializer;
-use Eckinox\Library\Symfony\Annotation\Security;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -17,11 +13,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AttachmentController extends Controller
 {
-    use \Eckinox\Library\Application\log;
-    use \Eckinox\Library\General\appData;
-
-    protected $securityRedirect = 'home';
-
     /**
      * @Route("/attachments/tree", name="attachments_tree")
      */
@@ -79,7 +70,7 @@ class AttachmentController extends Controller
         $tmpFolder = $request->request->get('tmp_folder');
         $currentPath = implode(DIRECTORY_SEPARATOR, $tmpFolder ? [ sys_get_temp_dir() , $tmpFolder, $path ] : [$attachmentsPath.$domain,  $module, $objectId, $path]);
         $file = $request->files->get('file');
-        $fileName = $file->getClientOriginalName();
+        $fileName = $request->request->get('file_name');
         $result = [];
 
         if(!file_exists(implode(DIRECTORY_SEPARATOR, [$currentPath, $fileName]))) {
@@ -136,7 +127,7 @@ class AttachmentController extends Controller
 
         }
 
-        return '';
+        return $this->renderText('Pièce jointe supprimé');
     }
 
     public static function setFoldersFiles($path, &$tree) {
@@ -165,3 +156,4 @@ class AttachmentController extends Controller
         return $total;
     }
 }
+
