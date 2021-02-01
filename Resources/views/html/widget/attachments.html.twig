@@ -10,7 +10,7 @@
             <div class="count">
                 <span class="folders-count-wrapper"><span class="folders-count">{{ folder.children|length }}</span> {% trans %}attachments.folder{% endtrans %}</span>
 				<span class="dash-wrapper"> -</span>
-				<span class="files-count-wrapper"><span class="files-count">{{ folder.files|length }}</span> {% trans %}attachments.file{% endtrans %}</span>
+				<span class="files-count-wrapper"><span class="files-count">{{ folder.total_files }}</span> {% trans %}attachments.file{% endtrans %}</span>
             </div>
             <label class="upload green">
                 <i class="fas fa-upload"></i>
