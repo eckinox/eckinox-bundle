@@ -6,7 +6,7 @@
 2. Run `cd my-project-domain.com`
 3. Edit the DATABASE_URL in .env file `DATABASE_URL=mysql://database_user:password@localhost:3306/database_name`
 4. Add the DEBUG_EMAIL variable to .env file `DEBUG_EMAIL=dev@eckinox.ca`
-5. Run `composer config repositories.eckinox vcs https://git.eckidev.com/Eckidev/eckinox-bundle.git`
+5. Run `composer config repositories.eckinox vcs https://github.com/eckinox/eckinox-bundle.git`
 6. Run `composer require eckinox/eckinox-bundle`
 7. Run `bin/console eckinox:install`
 
