@@ -9,8 +9,8 @@
                 {% set itemHasContent = not (item.panel is defined) %}
 
                 {% if item.panel is defined %}
-                    {% for section in data("navigation.panel." ~ item.panel ~ ".sections") if section.privilege is defined %}
-                        {% if app.user.hasPrivilege(section.privilege) %}
+                    {% for section in data("navigation.panel." ~ item.panel ~ ".sections") %}
+                        {% if  section.privilege is defined and app.user.hasPrivilege(section.privilege) %}
                             {% set itemHasContent = true %}
                         {% endif %}
                     {% endfor %}
