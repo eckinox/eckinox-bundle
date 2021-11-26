@@ -2,6 +2,7 @@
 
 namespace Eckinox\Repository\Application;
 
+use Eckinox\Entity\Application\User;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Doctrine\ORM\EntityRepository;
 
