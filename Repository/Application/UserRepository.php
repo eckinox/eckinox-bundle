@@ -9,6 +9,16 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 {
     use \Eckinox\Library\Symfony\repository;
 
+    public function loadUserByIdentifier($identifier): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.username = :username OR u.email = :email')
+            ->setParameter('username', $identifier)
+            ->setParameter('email', $identifier)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function loadUserByUsername($username)
     {
         return $this->createQueryBuilder('u')
