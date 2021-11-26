@@ -2,21 +2,24 @@
 
 namespace Eckinox\Command;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Eckinox\Controller\Application\SoftwareController;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class Update extends Command
 {
     const ALLOWED_DATA_EXTENSION = [ 'json' ];
 
-    private $container;
+    private $doctrineRegistry;
+    private $parameterBag;
 
-    public function __construct($name = null, ContainerInterface $container) {
+    public function __construct($name = null, ManagerRegistry $doctrineRegistry, ParameterBagInterface $parameterBag) {
         parent::__construct($name);
-        $this->container = $container;
+        
+        $this->doctrineRegistry = $doctrineRegistry;
+        $this->parameterBag = $parameterBag;
     }
 
 
@@ -39,12 +42,12 @@ class Update extends Command
     }
 
     protected function _update_database($output) {
-        $doctrine = $this->container->get('doctrine');
+        $doctrine = $this->doctrineRegistry;
 
         $stack = [];
         $em = $doctrine->getManager();
 
-        foreach((array)$this->container->getParameter('app.updates.path') as $path) {
+        foreach((array)$this->parameterBag->get('app.updates.path') as $path) {
 
             if(is_dir($path)) {
                 foreach(scandir($path) as $item) {

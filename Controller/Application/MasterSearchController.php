@@ -68,7 +68,7 @@ class MasterSearchController extends Controller
             ];
 
             foreach ($modules as &$module) {
-                foreach ($module['fields'] as &$field) {
+                foreach ($module['fields'] ?? [] as &$field) {
                     $field['terms'] = $terms;
                 }
             }
@@ -111,7 +111,7 @@ class MasterSearchController extends Controller
                            $user = $this->getUser();
                         }
 
-                        $module['result'] = $repository->getList(1, $this->data('application.mastersearch.config.list.items_shown'), $module['fields'], $module['type'] ?? null, $user);
+                        $module['result'] = $repository->getList(1, $this->data('application.mastersearch.config.list.items_shown'), $module['fields'] ?? [], $module['type'] ?? null, $user);
                     } else {
                         $module['result'] = [];
                     }

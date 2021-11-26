@@ -21,7 +21,7 @@ class FormTypeExtension extends AbstractTypeExtension
         $builder->addEventSubscriber($this->formListener);
     }
 
-    static public function getExtendedTypes()
+    static public function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }

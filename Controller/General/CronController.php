@@ -7,10 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Eckinox\Library\Symfony\Annotation\Cron as CronAnnotation;
 use Symfony\Component\HttpFoundation\Response;
-use Eckinox\Library\Symfony\Annotation\Security;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Eckinox\Library\General\Cron;
 

@@ -2,19 +2,19 @@
 
 namespace Eckinox\Library\Symfony\Service;
 
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Translation\TranslatorInterface;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Color;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Converter {
     const DOMAIN = "services";

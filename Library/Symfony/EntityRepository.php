@@ -4,7 +4,7 @@ namespace Eckinox\Library\Symfony;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Eckinox\Library\Symfony\Doctrine\LocaleFilter;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 class EntityRepository extends ServiceEntityRepository
 {

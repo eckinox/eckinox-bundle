@@ -34,10 +34,12 @@
         {% endif %}
 
         {# First few pages #}
-        {% for i in 1..2 if (i < currentPage - 1) %}
-            <div class="page page-{{ i }}">
-                <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
-            </div>
+        {% for i in 1..2 %}
+            {% if (i < currentPage - 1) %}
+                <div class="page page-{{ i }}">
+                    <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
+                </div>
+            {% endif %}
         {% endfor %}
 
         {# Spacer #}
@@ -48,10 +50,12 @@
         {% endif %}
 
         {# Current page and its surrounding pages #}
-        {% for i in (currentPage - 1)..(currentPage + (currentPage == 1 ? 2 : 1)) if (i > 0 and i <= nbPages) %}
-            <div class="page page-{{ i }} {{ i == currentPage ? 'current' : '' }}">
-                <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
-            </div>
+        {% for i in (currentPage - 1)..(currentPage + (currentPage == 1 ? 2 : 1)) %}
+            {% if (i > 0 and i <= nbPages) %}
+                <div class="page page-{{ i }} {{ i == currentPage ? 'current' : '' }}">
+                    <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
+                </div>
+            {% endif %}
         {% endfor %}
 
         {# Spacer #}
@@ -62,10 +66,12 @@
         {% endif %}
 
         {# Last few pages #}
-        {% for i in (nbPages - 1)..nbPages if (i > currentPage + 1) %}
-            <div class="page page-{{ i }}">
-                <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
-            </div>
+        {% for i in (nbPages - 1)..nbPages %}
+            {% if (i > currentPage + 1) %}
+                <div class="page page-{{ i }}">
+                    <a href="{{ path(view, {'page': i}) | withCurrentParams }}"><span>{{ i }}</span></a>
+                </div>
+            {% endif %}
         {% endfor %}
 
         {% if currentPage < nbPages %}

@@ -2,17 +2,19 @@
 
 namespace Eckinox\Library\Symfony\EventListener;
 
-use Eckinox\Library\Symfony\Annotation\Security;
 use Doctrine\Common\Annotations\Reader;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Eckinox\Entity\Application\User;
+use Eckinox\Library\Symfony\Annotation\Security;
+use Eckinox\Library\Symfony\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Eckinox\Library\Symfony\Controller;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Translation\TranslatorInterface;
-use Eckinox\Entity\Application\User;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityListener {
 
@@ -22,11 +24,11 @@ class SecurityListener {
     protected $session;
     protected $translator;
 
-    public function __construct(Session $session, TranslatorInterface $translator, Reader $reader, TokenStorageInterface $tokenStorage, $router)
+    public function __construct(RequestStack $requestStack, TranslatorInterface $translator, Reader $reader, TokenStorageInterface $tokenStorage, $router)
     {
         $this->reader = $reader;
         $this->router = $router;
-        $this->session = $session;
+        $this->session = $requestStack->getSession();
         $this->translator = $translator;
 
         if($token = $tokenStorage->getToken()) {
@@ -35,7 +37,7 @@ class SecurityListener {
 
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         /*
          * If the user is inactive but still logged in, redirect to logout url

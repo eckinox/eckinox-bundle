@@ -8,12 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Eckinox\Library\General\Arrays;
-use Eckinox\Library\General\Convert;
-use Eckinox\Library\General\Serializer;
-use Eckinox\Library\Symfony\Annotation\Security;
 use Eckinox\Library\Symfony\Service\Converter;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,13 +21,9 @@ class AjaxController extends Controller
     protected $securityRedirect = 'home';
     protected $converter;
 
-    /**
-    * @param ContainerInterface $container
-    */
-    public function __construct(TranslatorInterface $translator, ContainerInterface $container, Converter $converter)
+    public function __construct(TranslatorInterface $translator, Converter $converter)
     {
         $this->translator = $translator;
-        $this->container = $container;
         $this->converter = $converter;
     }
 

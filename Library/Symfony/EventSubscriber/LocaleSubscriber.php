@@ -1,12 +1,11 @@
 <?php
 namespace Eckinox\Library\Symfony\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Eckinox\Library\Symfony\Doctrine\LocaleFilter;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
@@ -19,7 +18,7 @@ class LocaleSubscriber implements EventSubscriberInterface
         $this->defaultLocale = $defaultLocale;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event)
     {
         $request = $event->getRequest();
 

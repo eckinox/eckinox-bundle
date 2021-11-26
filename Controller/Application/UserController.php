@@ -2,20 +2,20 @@
 
 namespace Eckinox\Controller\Application;
 
-use Eckinox\Library\Symfony\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
 use Eckinox\Entity\Application\Log;
 use Eckinox\Library\General\Arrays;
 use Eckinox\Library\General\Serializer;
 use Eckinox\Library\General\StringEdit;
-use Eckinox\Library\Symfony\Annotation\Security;
 use Eckinox\Library\Symfony\Annotation\Breadcrumb;
 use Eckinox\Library\Symfony\Annotation\Lang;
+use Eckinox\Library\Symfony\Annotation\Security;
+use Eckinox\Library\Symfony\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  *  @Lang(domain="application", default_key="user")
@@ -130,7 +130,7 @@ class UserController extends Controller
      * @Security(privilege="USER_CREATE_EDIT")
      * @Breadcrumb(parent="index_user")
      */
-    public function edit(Request $request, $user_id = null, AuthorizationCheckerInterface $authChecker, UserPasswordEncoderInterface $encoder)
+    public function edit(Request $request, $user_id = null, AuthorizationCheckerInterface $authChecker, UserPasswordHasherInterface $passwordHasher)
     {
         $self = $this->getUser();
         $userClass = $this->getParameter('user_class');
@@ -248,7 +248,7 @@ class UserController extends Controller
             $password = $form->getData()->getPassword();
 
             if (!empty($password))  {
-                $encoded = $encoder->encodePassword($user, $password);
+                $encoded = $passwordHasher->hashPassword($user, $password);
 
                 $user->setPassword($encoded);
             } else {

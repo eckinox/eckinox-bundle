@@ -2,18 +2,19 @@
 
 namespace Eckinox\Entity\Application;
 
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Eckinox\Entity\Application\Log;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Mapping as ORM;
+use Eckinox\Entity\Application\Log;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="ei_users")
  * @ORM\Entity(repositoryClass="Eckinox\Repository\Application\UserRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
     use \Eckinox\Library\Entity\baseEntity;
     use \Eckinox\Library\Entity\loggableEntity;
@@ -118,6 +119,11 @@ class User implements UserInterface, \Serializable
         $this->addIgnoredAttributes(array('logs', 'emails'));
     }
 
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
+    }
+
     public function getUsername()
     {
         return $this->username;
@@ -161,7 +167,7 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }

@@ -1,15 +1,18 @@
 <?php
 namespace Eckinox\Library\Symfony\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Eckinox\Library\General\Data;
+use Eckinox\Library\General\Git;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\Markup;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use Twig\Environment;
-use Twig\Markup;
-use Eckinox\Library\General\Git;
-use Eckinox\Library\General\Data;
 
 # This needs to be moved !
 setlocale(LC_COLLATE, 'fr_CA.UTF-8');
@@ -19,12 +22,20 @@ class Extension extends AbstractExtension
 {
     use \Eckinox\Library\General\appData;
 
-    private $container;
+    private $doctrineRegistry;
+    private $twig;
+    private $requestStack;
+    private $translator;
+    private $parameterBag;
     private $router;
 
-    public function __construct(ContainerInterface $container, RouterInterface $router)
+    public function __construct(ManagerRegistry $doctrineRegistry, Environment $twig, TranslatorInterface $translator, ParameterBagInterface $parameterBag, RequestStack $requestStack, RouterInterface $router)
     {
-        $this->container = $container;
+        $this->doctrineRegistry = $doctrineRegistry;
+        $this->twig = $twig;
+        $this->translator = $translator;
+        $this->parameterBag = $parameterBag;
+        $this->requestStack = $requestStack;
         $this->router = $router;
     }
 
@@ -179,7 +190,7 @@ class Extension extends AbstractExtension
      * Returns all of the available translation messages as JSON
      */
     public function getTranslationsAsJson() {
-        $translator = $this->container->get('translator');
+        $translator = $this->translator;
         $currentLocale = $translator->getLocale();
         $catalogue = $translator->getCatalogue();
         $catalogues = [$catalogue];
@@ -224,7 +235,7 @@ class Extension extends AbstractExtension
         $field['attrs'] = $field['attrs'] ?? [];
 
         if ($entityClass = $field['entity'] ?? null) {
-            $em = $this->container->get('doctrine')->getManager();
+            $em = $this->doctrineRegistry->getManager();
             $entity = new $entityClass();
 
             $queryEntityName = str_replace('Entity:', '', str_replace('\\', ':', $entityClass));
@@ -258,7 +269,7 @@ class Extension extends AbstractExtension
             $input = $field['type'];
         }
 
-        $html = $this->container->get('twig')->render('@Eckinox/html/input/' . $input . '.html.twig', ['infos' => $field]);
+        $html = $this->twig->render('@Eckinox/html/input/' . $input . '.html.twig', ['infos' => $field]);
         return new Markup($html, []);
     }
 
@@ -266,19 +277,19 @@ class Extension extends AbstractExtension
         if (isset($settings['entity'])) {
             $settings['entity'] = str_replace('\\', '\\\\', $settings['entity']);
         }
-        $html = $this->container->get('twig')->render('@Eckinox/html/input/autocomplete.html.twig', ['settings' => $settings]);
+        $html = $this->twig->render('@Eckinox/html/input/autocomplete.html.twig', ['settings' => $settings]);
         return new Markup($html, []);
     }
 
     public function generateEntityDropdownField($entityClass, $name, $labelProperty, $currentValue = null) {
-        $entities = $this->container->get('doctrine')->getRepository($entityClass)->findAll();
+        $entities = $this->doctrineRegistry->getRepository($entityClass)->findAll();
         $choices = [];
 
         foreach ($entities as $entity) {
             $choices[$entity->getId()] = $entity->get($labelProperty);
         }
 
-        $html = $this->container->get('twig')->render('@Eckinox/html/input/select.html.twig', [
+        $html = $this->twig->render('@Eckinox/html/input/select.html.twig', [
             'infos' => [
                 'name' => $name,
                 'choices' => $choices,
@@ -294,11 +305,11 @@ class Extension extends AbstractExtension
     }
 
     public function getYesNoFromBoolean($value) {
-        return $this->container->get('translator')->trans($value ? 'yes' : 'no', [], 'application');
+        return $this->translator->trans($value ? 'yes' : 'no', [], 'application');
     }
 
     public function addCurrentQueryParametersToUrl($url) {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
         $parameters = $request->query->all();
         $path = array_shift($parameters);
 
@@ -317,7 +328,7 @@ class Extension extends AbstractExtension
      * Get app parameters
      */
     public function getParameter($param) {
-        return $this->container->getParameter($param);
+        return $this->parameterBag->get($param);
     }
 
     /*

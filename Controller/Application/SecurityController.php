@@ -4,16 +4,16 @@ namespace Eckinox\Controller\Application;
 
 use Eckinox\Entity\Application\PasswordResetRequest;
 use Eckinox\Library\Symfony\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints\Length;
 
 class SecurityController extends Controller
@@ -100,7 +100,7 @@ class SecurityController extends Controller
     /**
      * @Route("/password-reset/{code}", name="password_reset")
      */
-    public function passwordReset(Request $request, UserPasswordEncoderInterface $encoder, $code)
+    public function passwordReset(Request $request, UserPasswordHasherInterface $passwordHasher, $code)
     {
         $userId = PasswordResetRequest::getUserIdFromCode($code);
 
@@ -155,7 +155,7 @@ class SecurityController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) {
                 if ($user->getPassword()) {
-                    $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+                    $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
                 } else {
                     $user->setPassword($originalPassword);
                 }

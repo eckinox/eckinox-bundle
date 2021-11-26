@@ -31,7 +31,7 @@ trait repository {
                 continue;
             }
 
-            $terms = (array)$field['terms'];
+            $terms = (array)($field['terms'] ?? []);
             $field = isset($field['search']) ? array_merge($field, $field['search']) : $field;
             $clause = $field['clause'] ?? 'andWhere';
             $expr = $field['expr'] ?? 'andX';

@@ -14,8 +14,10 @@ class Entity {
     }
 
     load(id) {
-        if(typeof data[this.getEntityName().toLowerCase()][id] != 'undefined') {
-            this.hydrate(data[this.getEntityName().toLowerCase()][id]);
+        var key = this.getEntityName();
+        key = key.substr(0, 1).toLowerCase() + key.substr(1);
+        if(typeof data[key][id] != 'undefined') {
+            this.hydrate(data[key][id]);
         } else {
             this.load(id);
         }

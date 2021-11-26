@@ -44,14 +44,7 @@ services:
 
     eckinox.security.event_listener:
         class: Eckinox\Library\Symfony\EventListener\SecurityListener
-        arguments: ["@session", "@translator", "@annotation_reader", "@security.token_storage", "@router"]
-        #autowire: true
-        tags:
-           - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
-    eckinox.cron.event_listener:
-        class: Eckinox\Library\Symfony\EventListener\CronListener
-        arguments: ["@annotation_reader", "@service_container", "@router"]
+        arguments: ["@request_stack", "@translator", "@annotation_reader", "@security.token_storage", "@router"]
         #autowire: true
         tags:
            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

@@ -2,28 +2,31 @@
 
 namespace Eckinox\Command;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Event\ConsoleErrorEvent;
-use Symfony\Component\Console\ConsoleEvents;
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class Install extends Command
 {
     const ALLOWED_DATA_EXTENSION = [ 'json' ];
 
-    private $container;
+    private $doctrineRegistry;
+    private $parameterBag;
+    private $passwordHasher;
     private $output;
 
-    public function __construct($name = null, ContainerInterface $container) {
+    public function __construct($name = null, ManagerRegistry $doctrineRegistry, ParameterBagInterface $parameterBag, UserPasswordHasherInterface $passwordHasher)
+    {
         parent::__construct($name);
-        $this->container = $container;
+        
+        $this->doctrineRegistry = $doctrineRegistry;
+        $this->parameterBag = $parameterBag;
+        $this->passwordHasher = $passwordHasher;
     }
 
     protected function configure()
@@ -52,8 +55,8 @@ class Install extends Command
     }
 
     protected function moveConfigFiles() {
-        $symfony_config_path = $this->container->getParameter('app.symfony_config.path');
-        $eckinox_config_path = $this->container->getParameter('app.eckinox_config.path');
+        $symfony_config_path = $this->parameterBag->get('app.symfony_config.path');
+        $eckinox_config_path = $this->parameterBag->get('app.eckinox_config.path');
         $config = [
             'packages/eckinox.yaml',
             'packages/security.yaml',
@@ -82,8 +85,8 @@ class Install extends Command
 
     protected function createFolders() {
         $folders = [
-            sprintf('%s/%s', $this->container->getParameter('kernel.project_dir'), 'var/translations/'),
-            sprintf('%s/%s', $this->container->getParameter('kernel.project_dir'), 'var/data/')
+            sprintf('%s/%s', $this->parameterBag->get('kernel.project_dir'), 'var/translations/'),
+            sprintf('%s/%s', $this->parameterBag->get('kernel.project_dir'), 'var/data/')
         ];
 
         foreach($folders as $folder) {
@@ -147,7 +150,7 @@ class Install extends Command
 
     protected function createDeveloperUser() {
         $userClass = \Eckinox\Entity\Application\User::class;
-        $doctrine = $this->container->get('doctrine');
+        $doctrine = $this->doctrineRegistry;
         $em = $doctrine->getManager();
         $userEmail = 'dev@eckinox.ca';
         $userPassword = $this->randomRassword();
@@ -163,8 +166,8 @@ class Install extends Command
                 ->setUsername($userEmail)
                 ->setPrivileges(['USER_LIST', 'USER_CREATE_EDIT', 'USER_EDIT_PRIVILEGES']);
 
-            $encoder = $this->container->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($user, $userPassword);
+            $encoder = $this->passwordHasher;
+            $encoded = $encoder->hashPassword($user, $userPassword);
 
             $user->setPassword($encoded);
 

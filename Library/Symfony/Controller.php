@@ -2,10 +2,10 @@
 
 namespace Eckinox\Library\Symfony;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController,
-    Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\Request,
-    Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use Eckinox\Library\{
     Application\log,
