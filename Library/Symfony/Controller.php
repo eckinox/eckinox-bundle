@@ -156,10 +156,6 @@ class Controller extends AbstractController {
         return $this->translator->trans(...$args);
     }
 
-    public function transChoice(...$args) {
-        return $this->translator->transChoice(...$args);
-    }
-
     public function getLocalities($type, $key = null, $return_response = false) {
         $controller = $this->get('AjaxController');
         $function = "get".ucfirst($type);
