@@ -51,10 +51,12 @@ class EmailController extends Controller
                         if($email->isSent() && $action === "delete" && !$templates){
                             $this->addFlash(
                                 'warning',
-                                $this->transChoice(
+                                $this->translator->trans(
                                     'email.messages.warning.actionDelete',
-                                    1,
-                                    ["%subject%" => $email->getSubject()],
+                                    [
+                                        "%count%" => 1,
+                                        "%subject%" => $email->getSubject()
+                                    ],
                                     'application'
                                 )
                             );
@@ -83,10 +85,12 @@ class EmailController extends Controller
                 if(count($subjects)){
                     $this->addFlash(
                         'success',
-                        $this->transChoice(
+                        $this->translator->trans(
                             'email.messages.success.action'.ucfirst($action),
-                            count($subjects),
-                            ["%subjects%" => implode(', ', $subjects)],
+                            [
+                                "%count%" => count($subjects),
+                                "%subjects%" => implode(', ', $subjects)
+                            ],
                             'application'
                         )
                     );

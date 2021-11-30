@@ -89,10 +89,12 @@ class UserController extends Controller
 
                     $this->addFlash(
                         'success',
-                        $this->transChoice(
+                        $this->translator->trans(
                             'user.messages.success.action' . ucfirst($action),
-                            count($names),
-                            ["%names%" => implode(', ', $names)],
+                            [
+                                "%count%" => count($names),
+                                "%names%" => implode(', ', $names)
+                            ],
                             'application'
                         )
                     );
