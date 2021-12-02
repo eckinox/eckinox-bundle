@@ -16,10 +16,9 @@ class Entity {
     load(id) {
         var key = this.getEntityName();
         key = key.substr(0, 1).toLowerCase() + key.substr(1);
+        
         if(typeof data[key][id] != 'undefined') {
             this.hydrate(data[key][id]);
-        } else {
-            this.load(id);
         }
     }
 
