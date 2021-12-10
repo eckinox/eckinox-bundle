@@ -4,7 +4,7 @@ namespace Eckinox\Repository\Application;
 
 use Eckinox\Entity\Application\Alert;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 class AlertRepository extends ServiceEntityRepository
 {
