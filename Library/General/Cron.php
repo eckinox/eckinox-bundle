@@ -51,7 +51,6 @@ class Cron {
         if ( $this->validate_cron($this->tab) ) {
             $retval = call_user_func_array($callback ?: $this->callback, []);
         }
-        dump($this->validate_cron($this->tab));
 
         $this->reset();
         return $retval;
