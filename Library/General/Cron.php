@@ -51,6 +51,7 @@ class Cron {
         if ( $this->validate_cron($this->tab) ) {
             $retval = call_user_func_array($callback ?: $this->callback, []);
         }
+        dump($this->validate_cron($this->tab));
 
         $this->reset();
         return $retval;
@@ -106,7 +107,12 @@ class Cron {
      * @return $this
      */
     public function every_min($value = "*", $range = "*") {
-        $this->tab['min'] = "$range/$value";
+        if ($value == "1") {
+            $this->tab['min'] = "*";
+        } else {
+            $this->tab['min'] = "$range/$value";
+        }
+            
         return $this;
     }
 

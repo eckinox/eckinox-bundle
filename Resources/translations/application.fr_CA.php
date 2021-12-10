@@ -75,6 +75,7 @@ return [
                     "invalidLink" => "Ce lien de réinitialisation de mot de passe est invalide ou a expiré.",
                     "alreadyUsedLink" => "Ce lien de réinitialisation de mot de passe a déjà été utilisé.",
                     "passwordsDontMatch" => "Les mots de passe ne correspondent pas.",
+                    "passwordTooShort" => "Ce mot de passe est trop court - la longueur minimale est de 16 charactères.",
                     "success" => "Votre mot de passe a été mis à jour avec succès!",
                 ],
             ]

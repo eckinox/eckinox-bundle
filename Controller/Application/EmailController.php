@@ -467,7 +467,7 @@ class EmailController extends Controller
 
     /**
      * @Route("/cron/emails", name="cron_send_emails")
-     * @Cron("every_min(5)")
+     * @Cron("every_min(1)")
      */
     public function sendBatch(\Swift_Mailer $mailer) {
         $em = $this->getDoctrine()->getManager();

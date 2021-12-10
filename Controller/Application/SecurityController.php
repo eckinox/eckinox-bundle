@@ -10,11 +10,13 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
 class SecurityController extends Controller
 {
@@ -139,10 +141,11 @@ class SecurityController extends Controller
                     'second_options' => array('label' => $this->trans('login.reset.change.newPasswordConfirmation', [], 'application'), 'attr' => ['placeholder' => $this->trans('login.reset.change.newPasswordConfirmation:placeholder', [], 'application')]),
                     'constraints' => [
                         new Length([
-                            'min' => 1,
-                            'minMessage' => $this->trans('login.reset.change.message.passwordTooLong', [], 'application'),
+                            'min' => 16,
+                            'minMessage' => $this->trans('login.reset.change.message.passwordTooShort', [], 'application'),
                             'max' => 4096,
                         ]),
+                        new NotCompromisedPassword(),
                     ]
                 ))
                 ->add('save', SubmitType::class, array('label' => $this->trans('login.reset.change.submit', [], 'application'), 'attr' => ['class' => 'button']));
@@ -176,7 +179,7 @@ class SecurityController extends Controller
 
                 return $this->redirectToRoute('login');
             }
-        } catch (\Exception $e) {
+        } catch (HttpException $e) {
             # All of the exceptions that are manually triggered above are 404 - catch them and output their message as an error flash message on the login screen.
             if ($e->getStatusCode() == 404) {
                 $this->addFlash('error', $e->getMessage());

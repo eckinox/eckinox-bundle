@@ -2,10 +2,11 @@
 
 namespace Eckinox\Repository\Application;
 
-use Eckinox\Entity\Application\Email;
-use Eckinox\Entity\Application\Connection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Eckinox\Entity\Application\Connection;
+use Eckinox\Entity\Application\Email;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+
 
 class EmailRepository extends ServiceEntityRepository
 {

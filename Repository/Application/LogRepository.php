@@ -4,7 +4,7 @@ namespace Eckinox\Repository\Application;
 
 use Eckinox\Entity\Application\Log;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 
 class LogRepository extends ServiceEntityRepository
 {
