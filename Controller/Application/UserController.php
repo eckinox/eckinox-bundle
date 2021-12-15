@@ -232,6 +232,7 @@ class UserController extends Controller
          */
         $currentData = $this->getFormValues($form, []);
 
+        $em = $this->getDoctrine()->getManager();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $emailIsValid) {
@@ -241,7 +242,6 @@ class UserController extends Controller
             $newData = $this->getFormValues($form, []);
             $dataDifferences = Arrays::diff($newData, $currentData);
 
-            $em = $this->getDoctrine()->getManager();
             $user->setUsername($user->getEmail());
 
             /*
@@ -289,6 +289,10 @@ class UserController extends Controller
 
             return $this->redirectToRoute('edit_user', [ 'user_id' => $user->getId() ]);
         }
+
+        // For some reason, the user is persisted and flushed even if there are validation errors in the form.
+        // This prevents invalid data from being saved when an error occurs.
+        $em->detach($user);
 
         return $this->renderModView('@Eckinox/application/user/edit.html.twig', array(
             'form' => $form->createView(),
